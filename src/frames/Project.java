@@ -98,7 +98,7 @@ import frames.swing.comp.MainMenu;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class Orders extends javax.swing.JFrame implements ListenerReload, ListenerAction {
+public class Project extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
     public boolean norm_otx = !(eGroups.find(2007).getInt(eGroups.val) == 0); //учитывать норму отхода в себестоимости
     private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
@@ -126,7 +126,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         }
     };
 
-    public Orders(boolean menureport) {
+    public Project(boolean menureport) {
         initComponents();
         scene = new Scene(canvas, this, this);
         //btnReport.setVisible(menureport);
@@ -276,7 +276,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     record.add(iwin2);
 
                 } catch (Exception e) {
-                    System.err.println("Ошибка:Order.loadingTab2() " + e);
+                    System.err.println("Ошибка:Project.loadingTab2() " + e);
                 }
             }
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
@@ -328,7 +328,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             winTree.setModel(new DefaultTreeModel(root));
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Order.loadingWinTree() " + e);
+            System.err.println("Ошибка:Project.loadingWinTree() " + e);
         }
     }
 
@@ -513,7 +513,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 List.of(pan12, pan13, pan15, pan16).forEach(it -> it.repaint());
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Orders.selectionTree() " + e);
+            System.err.println("Ошибка:Project.selectionTree() " + e);
         }
     }
 
@@ -553,7 +553,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         });
 
         UGui.buttonCellEditor(tab1, 5).addActionListener(event -> {
-            new Partner(Orders.this, (record) -> {
+            new Partner(Project.this, (record) -> {
                 UGui.stopCellEditing(tab1, tab2, tab3, tab4);
                 Record record2 = qProject.get(UGui.getIndexRec(tab1));
                 record2.set(eProject.prjpart_id, record.getInt(ePrjpart.id));
@@ -562,7 +562,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         });
 
         UGui.buttonCellEditor(tab1, 6).addActionListener(event -> {
-            new Partner(Orders.this, (record) -> {
+            new Partner(Project.this, (record) -> {
                 UGui.stopCellEditing(tab1, tab2, tab3, tab4);
                 Record record2 = qProject.get(UGui.getIndexRec(tab1));
                 record2.set(eProject.vendor_id, record.getInt(ePrjpart.id));
@@ -592,7 +592,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                     }
                 }, grup);
             } else {
-                JOptionPane.showMessageDialog(Orders.this, "Неизменяемый параметр в системе", "ВНИМАНИЕ!", 1);
+                JOptionPane.showMessageDialog(Project.this, "Неизменяемый параметр в системе", "ВНИМАНИЕ!", 1);
             }
         });
 
@@ -601,7 +601,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             if (index != -1) {
                 Record projectRec = qProject.get(index);
 
-                new DicPrjprod(Orders.this, (record) -> {
+                new DicPrjprod(Project.this, (record) -> {
                     UGui.stopCellEditing(tab1, tab2, tab3, tab4);
                     Record record2 = qPrjkit.get(UGui.getIndexRec(tab4));
                     if (record.size() == 2) {
@@ -720,7 +720,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
             selectionTree();
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Order.updateScript() " + e);
+            System.err.println("Ошибка:Project.updateScript() " + e);
         }
     }
 
@@ -860,7 +860,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Orders.btnCalc() " + e);
+            System.err.println("Ошибка:Project.btnCalc() " + e);
         }
     }
 
@@ -1069,10 +1069,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         setTitle("Заказы");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(900, 600));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
-                Orders.this.windowClosed(evt);
+                Project.this.windowClosed(evt);
             }
         });
 
@@ -1310,7 +1309,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
         tabb1.setPreferredSize(new java.awt.Dimension(800, 500));
         tabb1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                Orders.this.stateChanged(evt);
+                Project.this.stateChanged(evt);
             }
         });
 
@@ -1353,7 +1352,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 tabMouseClicked(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                Orders.this.mousePressed(evt);
+                Project.this.mousePressed(evt);
             }
         });
         scr1.setViewportView(tab1);
@@ -1534,7 +1533,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 tabMouseClicked(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                Orders.this.mousePressed(evt);
+                Project.this.mousePressed(evt);
             }
         });
         scr2.setViewportView(tab2);
@@ -3109,7 +3108,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                         });
                     }
                 } else if (((JButton) evt.getSource()) == btnSet) { //вставляем сразу несколько записей
-                    DicKits frame = new DicKits(Orders.this, (q) -> {
+                    DicKits frame = new DicKits(Project.this, (q) -> {
                         loadingTab4();
                         return true;
                     }, qProject.getAs(index1, eProject.id), qPrjprod.getAs(index2, ePrjprod.id));
@@ -3486,7 +3485,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
     }//GEN-LAST:event_artiklToGlass
 
     private void btnCalc(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalc
-        ProgressBar.create(Orders.this, new ListenerFrame() {
+        ProgressBar.create(Project.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 calculate();
             }
@@ -3604,9 +3603,9 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 ProgressBar.create(this, new ListenerFrame() {
                     public void actionRequest(Object obj) {
                         if (tab1.getSelectedColumn() == 5) {
-                            App.Partner.createFrame(Orders.this, record.getInt(eProject.prjpart_id));
+                            App.Partner.createFrame(Project.this, record.getInt(eProject.prjpart_id));
                         } else {
-                            App.Partner.createFrame(Orders.this, record.getInt(eProject.vendor_id));
+                            App.Partner.createFrame(Project.this, record.getInt(eProject.vendor_id));
                         }
                     }
                 });
@@ -3617,7 +3616,7 @@ public class Orders extends javax.swing.JFrame implements ListenerReload, Listen
                 Record record2 = eArtikl.find(record.getInt(ePrjkit.artikl_id), false);
                 ProgressBar.create(this, new ListenerFrame() {
                     public void actionRequest(Object obj) {
-                        App.Artikles.createFrame(Orders.this, record2);
+                        App.Artikles.createFrame(Project.this, record2);
                     }
                 });
             }

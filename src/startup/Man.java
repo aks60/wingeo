@@ -556,7 +556,7 @@ public class Man extends javax.swing.JFrame {
     private void btn6(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6
         ProgressBar.create(Man.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                App.Order.createFrame(Man.this, false);
+                App.Project.createFrame(Man.this, false);
             }
         });
     }//GEN-LAST:event_btn6

@@ -62,7 +62,7 @@ import frames.Groups;
 import frames.Joinings;
 import frames.Kits;
 import frames.Models;
-import frames.Orders;
+import frames.Project;
 import frames.Param;
 import frames.Partner;
 import frames.Rulecalc;
@@ -87,7 +87,7 @@ import javax.swing.Timer;
 public enum App {
 
     Top, Setting, Groups, Colors, Artikles, Joining, Element, Param,
-    Filling, Furniture, Kits, Systree, Partner, Order, AboutBox, Models,
+    Filling, Furniture, Kits, Systree, Partner, Project, AboutBox, Models,
     Specification, Syssize, RuleCalc, PSFrame, PSCompare;
     public javax.swing.JFrame frame;
     public static javax.swing.JFrame active;
@@ -210,8 +210,8 @@ public enum App {
                         frame = new Partner((int) param[0]);
                     }
                     break;
-                case Order:
-                    frame = new Orders((boolean) param[0]);
+                case Project:
+                    frame = new Project((boolean) param[0]);
                     break;
                 case Models:
                     frame = new Models();

@@ -22,7 +22,7 @@ public class PSFrame extends javax.swing.JFrame {
     private TableRowSorter<DefTableModel> sorter2 = null;
     private TableRowSorter<DefTableModel> sorter3 = null;
     private Connection cn = Test.connect1();
-    private Query qOrders = new Query(eProject.values());
+    private Query qProject = new Query(eProject.values());
 
     public PSFrame() {
         initComponents();
