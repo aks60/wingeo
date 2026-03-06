@@ -57,15 +57,15 @@ public class TFurniture extends Cal5e {
                 Record sysfurnRec = sysfurnList.get(0); //значение по умолчанию, первая SYSFURN в списке системы
 
                 //Цикл по створкам      
-                for (AreaSimple areaStv : stvorkaList) {
-                    AreaStvorka stv = (AreaStvorka) areaStv;
+                for (AreaSimple areaSimple : stvorkaList) {
+                    AreaStvorka areaStv = (AreaStvorka) areaSimple;
 
                     //Найдём из списка сист.фурн. фурнитуру которая установлена в створку                 
-                    sysfurnRec = sysfurnList.stream().filter(rec -> rec.getInt(eSysfurn.id) == stv.sysfurnRec.getInt(eSysfurn.id)).findFirst().orElse(sysfurnRec);
+                    sysfurnRec = sysfurnList.stream().filter(rec -> rec.getInt(eSysfurn.id) == areaStv.sysfurnRec.getInt(eSysfurn.id)).findFirst().orElse(sysfurnRec);
                     Record furnityreRec = eFurniture.find(sysfurnRec.getInt(eSysfurn.furniture_id));
 
                     //Проверка с предупреждением на max высоту, ширину, периметр
-                    Envelope env = stv.area.getEnvelopeInternal();
+                    Envelope env = areaStv.area.getEnvelopeInternal();
                     double stv_width = env.getWidth();
                     double stv_height = env.getHeight();
                     boolean p2_max = (furnityreRec.getDbl(eFurniture.max_p2) < (stv_width * 2 + stv_height * 2) / 2);
@@ -76,7 +76,7 @@ public class TFurniture extends Cal5e {
                         }
                         max_size_message = false;
                     }
-                    variant(stv, furnityreRec, 1); //основная фурнитура
+                    variant(areaStv, furnityreRec, 1); //основная фурнитура
                 }
             }
         } catch (Exception e) {
