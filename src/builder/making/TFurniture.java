@@ -54,14 +54,16 @@ public class TFurniture extends Cal5e {
             //Подбор фурнитуры по параметрам
             List<Record> sysfurnList = eSysfurn.filter(winc.nuni); //список фурнитур в системе
             if (sysfurnList.isEmpty() == false) {
-                Record sysfurnRec = sysfurnList.get(0); //значение по умолчанию, первая SYSFURN в списке системы
 
                 //Цикл по створкам      
                 for (AreaSimple areaSimple : stvorkaList) {
                     AreaStvorka areaStv = (AreaStvorka) areaSimple;
 
                     //Найдём из списка сист.фурн. фурнитуру которая установлена в створку                 
-                    sysfurnRec = sysfurnList.stream().filter(rec -> rec.getInt(eSysfurn.id) == areaStv.sysfurnRec.getInt(eSysfurn.id)).findFirst().orElse(sysfurnRec);
+                    Record sysfurnRec = sysfurnList.stream().filter(rec -> rec.getInt(eSysfurn.id) == areaStv.sysfurnRec.getInt(eSysfurn.id)).findFirst().orElse(null);
+                    if (sysfurnRec == null) {
+                        sysfurnRec = sysfurnList.get(0); //значение по умолчанию, первая SYSFURN в списке системы
+                    }
                     Record furnityreRec = eFurniture.find(sysfurnRec.getInt(eSysfurn.furniture_id));
 
                     //Проверка с предупреждением на max высоту, ширину, периметр
@@ -81,14 +83,14 @@ public class TFurniture extends Cal5e {
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Furniture.furn() " + e);
-        } 
+        }
     }
 
     protected void variant(AreaSimple areaStv, Record furnitureRec, int count) {
         try {
             List<Record> furndetList1 = eFurndet.filter(furnitureRec.getInt(eFurniture.id)); //детализация первый уровень
-            List<Record> furndetList2 = furndetList1.stream().filter(rec -> 
-                    rec.getInt(eFurndet.id) != rec.getInt(eFurndet.furndet_id)).collect(toList()); //детализация второй уровень
+            List<Record> furndetList2 = furndetList1.stream().filter(rec
+                    -> rec.getInt(eFurndet.id) != rec.getInt(eFurndet.furndet_id)).collect(toList()); //детализация второй уровень
 
             //Цикл по описанию сторон фурнитуры
             List<Record> furnsidetList = eFurnside1.filter(furnitureRec.getInt(eFurniture.id)); //список описания сторон
