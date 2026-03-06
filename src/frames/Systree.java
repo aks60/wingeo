@@ -509,7 +509,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     //Створка
                 } else if (winNode.com5t().type == enums.Type.STVORKA) {
                     //расчёт ручки, 
-                    new TFurniture(wincalc(), true).furn();   //петли, замка
+                    new TFurniture(wincalc(), true).furn();   //петли, замки
                     //через сокр. тарификацию
                     ((CardLayout) pan7.getLayout()).show(pan7, "card16");
                     AreaStvorka stv = (AreaStvorka) winNode.com5t();
