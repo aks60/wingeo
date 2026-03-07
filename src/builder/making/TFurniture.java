@@ -92,8 +92,10 @@ public class TFurniture extends Cal5e {
             List<Record> furndetList2 = furndetList1.stream().filter(rec
                     -> rec.getInt(eFurndet.id) != rec.getInt(eFurndet.furndet_id)).collect(toList()); //детализация второй уровень
 
+            
+            //TODO Реализовать описание сторон фурнитуры
             //Цикл по описанию сторон фурнитуры
-            List<Record> furnsidetList = eFurnside1.filter(furnitureRec.getInt(eFurniture.id)); //список описания сторон
+            /*List<Record> furnsidetList = eFurnside1.filter(furnitureRec.getInt(eFurniture.id)); //список описания сторон
             for (Record furnside1Rec : furnsidetList) {
                 Layout layout = (Layout) Layout.ANY.find(furnside1Rec.getInt(eFurnside1.side_num));
                 ElemSimple elemFrame = areaStv.frames.stream().filter(e -> e.layout() == layout).findFirst().get();
@@ -102,7 +104,7 @@ public class TFurniture extends Cal5e {
                 if (furnitureVar.filter(elemFrame, furnside1Rec) == false) {
                     return;
                 }
-            }
+            }*/
 
             //Цикл по детализации (первый уровень)        
             for (Record furndetRec1 : furndetList1) {

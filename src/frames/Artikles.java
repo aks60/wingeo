@@ -1062,8 +1062,8 @@ public class Artikles extends javax.swing.JFrame {
         lab1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lab1.setText("___");
         lab1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        lab1.setMaximumSize(new java.awt.Dimension(110, 14));
-        lab1.setPreferredSize(new java.awt.Dimension(110, 14));
+        lab1.setMaximumSize(new java.awt.Dimension(120, 14));
+        lab1.setPreferredSize(new java.awt.Dimension(120, 14));
         lab1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         south.add(lab1);
 
