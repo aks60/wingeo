@@ -32,7 +32,7 @@ public class TFurniture extends Cal5e {
 
     private FurnitureVar furnitureVar = null;
     private FurnitureDet furnitureDet = null;
-    private final List list = List.of(9, 11, 12); //замок, ручка, петля 
+    private final List artLevel = List.of(9, 10, 11, 12, 13, 14); //замок, ручка, петля 
     private boolean max_size_message = true;
 
     public TFurniture(Wincalc winc) {
@@ -59,26 +59,26 @@ public class TFurniture extends Cal5e {
                 for (AreaSimple areaSimple : stvorkaList) {
                     AreaStvorka areaStv = (AreaStvorka) areaSimple;
 
-                    //Найдём из списка сист.фурн. фурнитуру которая установлена в створку                 
+                    //Найдём из списка систем.фурн. фурнитуру которая установлена в створку                 
                     Record sysfurnRec = sysfurnList.stream().filter(rec -> rec.getInt(eSysfurn.id) == areaStv.sysfurnRec.getInt(eSysfurn.id)).findFirst().orElse(null);
-                    if (sysfurnRec == null) {
+                    if (sysfurnRec == null) {  //если запрошенной areaStv.sysfurnRec нет в списке то первая по умолч.
                         sysfurnRec = sysfurnList.get(0); //значение по умолчанию, первая SYSFURN в списке системы
                     }
-                    Record furnityreRec = eFurniture.find(sysfurnRec.getInt(eSysfurn.furniture_id));
+                    Record furnitureRec = eFurniture.find(sysfurnRec.getInt(eSysfurn.furniture_id));
 
                     //Проверка с предупреждением на max высоту, ширину, периметр
                     Envelope env = areaStv.area.getEnvelopeInternal();
                     double stv_width = env.getWidth();
                     double stv_height = env.getHeight();
-                    boolean p2_max = (furnityreRec.getDbl(eFurniture.max_p2) < (stv_width * 2 + stv_height * 2) / 2);
-                    if (p2_max || furnityreRec.getDbl(eFurniture.max_height) < stv_height
-                            || furnityreRec.getDbl(eFurniture.max_width) < stv_width) {
+                    boolean p2_max = (furnitureRec.getDbl(eFurniture.max_p2) < (stv_width * 2 + stv_height * 2) / 2);
+                    if (p2_max || furnitureRec.getDbl(eFurniture.max_height) < stv_height
+                            || furnitureRec.getDbl(eFurniture.max_width) < stv_width) {
                         if (max_size_message == true) {
                             JOptionPane.showMessageDialog(null, "Размер створки превышает максимальный размер фурнитуры.", "ВНИМАНИЕ!", 1);
                         }
                         max_size_message = false;
                     }
-                    variant(areaStv, furnityreRec, 1); //основная фурнитура
+                    variant(areaStv, furnitureRec, 1); //основная фурнитура
                 }
             }
         } catch (Exception e) {
@@ -92,7 +92,6 @@ public class TFurniture extends Cal5e {
             List<Record> furndetList2 = furndetList1.stream().filter(rec
                     -> rec.getInt(eFurndet.id) != rec.getInt(eFurndet.furndet_id)).collect(toList()); //детализация второй уровень
 
-            
             //TODO Реализовать описание сторон фурнитуры
             //Цикл по описанию сторон фурнитуры
             /*List<Record> furnsidetList = eFurnside1.filter(furnitureRec.getInt(eFurniture.id)); //список описания сторон
@@ -105,7 +104,6 @@ public class TFurniture extends Cal5e {
                     return;
                 }
             }*/
-
             //Цикл по детализации (первый уровень)        
             for (Record furndetRec1 : furndetList1) {
                 if (furndetRec1.getInt(eFurndet.furndet_id) == furndetRec1.getInt(eFurndet.id)) {
@@ -137,14 +135,13 @@ public class TFurniture extends Cal5e {
         try {
             Record artiklRec = eArtikl.find(furndetRec.getInt(eFurndet.artikl_id), false);
             HashMap<Integer, String> mapParam = new HashMap<Integer, String>(); //тут накапливаются параметры element и specific
-
             //Сделано для убыстрения поиска ручки, 
             //подвеса, замка при конструировании окна
             if (shortPass == true) {
                 if (furndetRec.getInt(eFurndet.furndet_id) == furndetRec.getInt(eFurndet.id) && furndetRec.get(eFurndet.furniture_id2) == null) {
-                    if ((artiklRec.getInt(eArtikl.level1) == 2 && list.contains(artiklRec.getInt(eArtikl.level2)) == false)
-                            || artiklRec.getInt(eArtikl.level1) != 2) { //т.к. ручки, подвеса, замка на этом уровне нет
-                        return false;
+                    if (artiklRec.getInt(eArtikl.level1) != 2
+                            || (artiklRec.getInt(eArtikl.level1) == 2 && artLevel.contains(artiklRec.getInt(eArtikl.level2)) == false)) {
+                        return false;  //т.к. ручки, подвеса, замка на этом уровне нет
                     }
                 }
             }
@@ -200,13 +197,14 @@ public class TFurniture extends Cal5e {
                     ElemSimple sideStv = determOfSide(mapParam, areaStv);
                     TRecord spcAdd = new TRecord("ФУРН", furndetRec, artiklRec, sideStv, mapParam);
 
-                    //Ловим ручку, петлю, замок и 
-                    //присваиваем знач. в свойства створки
-                    if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2
-                            && list.contains(spcAdd.artiklRec.getInt(eArtikl.level2)) == true) {
-                        setPropertyStv(areaStv, spcAdd);
-                    } else {
-                        UColor.colorFromElemOrSeri(spcAdd);
+                    //Ловим ручку, петлю, замок и присваиваем 
+                    //артикул и цвет в spcAdd и в свойства створки
+                    if (shortPass == true && spcAdd.artiklRec.getInt(eArtikl.level1) == 2 
+                            && artLevel.contains(artiklRec.getInt(eArtikl.level2)) == true) {                        
+                        setPropertyStvAndSpc(areaStv, spcAdd);
+                        
+                    } else { //цвет элемента в spcAdd
+                        UColor.findFromArtOrSeri(spcAdd);
                     }
                     //Добавим спецификацию в элемент
                     if (shortPass == false) {
@@ -216,12 +214,11 @@ public class TFurniture extends Cal5e {
                     }
                 }
 
-                //Это НАБОР 
+                //Это НАБОР (зацикливание)
             } else {
                 int countKi2 = (mapParam.get(24030) == null) ? 1 : Integer.valueOf((mapParam.get(24030)));
                 Record furnitureRec2 = eFurniture.find(furndetRec.getInt(eFurndet.furniture_id2));
-
-                variant(areaStv, furnitureRec2, countKi2); //рекурсия обработки наборов
+                variant(areaStv, furnitureRec2, countKi2); //рекурсия для обработки наборов
             }
             return true;
 
@@ -232,51 +229,57 @@ public class TFurniture extends Cal5e {
     }
 
     //Ловим ручку, подвес, замок и 
-    //присваиваем знач. в створку    
-    private void setPropertyStv(AreaSimple areaStv, TRecord spcAdd) {
-        AreaStvorka stv = (AreaStvorka) areaStv;
+    //присваиваем знач. в spcAdd и створку    
+    private void setPropertyStvAndSpc(AreaSimple stvArea, TRecord spcAdd) {
+        AreaStvorka areaStv = (AreaStvorka) stvArea;
 
         if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2) {
-            //Ручка
+            //РУЧКА
             if (spcAdd.artiklRec.getInt(eArtikl.level2) == 11) {
-                if (stv.isFinite(stv.gson.param, PKjson.artiklHand)) {
-                    spcAdd.artiklRec(stv.handRec); //выбр. вручную
+
+                //Артикл
+                if (areaStv.isFinite(areaStv.gson.param, PKjson.artiklHand)) {
+                    spcAdd.artiklRec(areaStv.handRec); //выбр. вручную
                 } else {
-                    stv.handRec = spcAdd.artiklRec; //из детализации авто
+                    areaStv.handRec = spcAdd.artiklRec; //из детализации авто
                 }
                 //Цвет
-                spcAdd.color(stv.handColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
-                if (stv.isFinite(stv.gson.param, PKjson.colorHand) == false) {
-                    if (UColor.colorFromElemOrSeri(spcAdd) == true) { //подбор по цвету
-                        stv.handColor = spcAdd.colorID1;
+                spcAdd.color(areaStv.handColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
+                if (areaStv.isFinite(areaStv.gson.param, PKjson.colorHand) == false) {
+                    if (UColor.findFromArtOrSeri(spcAdd) == true) { //подбор по цвету
+                        areaStv.handColor = spcAdd.colorID1;
                     }
                 }
-                //Подвес
+                //ПОДВЕС
             } else if (spcAdd.artiklRec.getInt(eArtikl.level2) == 12) {
-                if (stv.isFinite(stv.gson.param, PKjson.artiklLoop)) {
-                    spcAdd.artiklRec(stv.loopRec); //выбр. вручную
+
+                //Артикл
+                if (areaStv.isFinite(areaStv.gson.param, PKjson.artiklLoop)) {
+                    spcAdd.artiklRec(areaStv.loopRec); //выбр. вручную
                 } else {
-                    stv.loopRec = spcAdd.artiklRec; //из детализации авто
+                    areaStv.loopRec = spcAdd.artiklRec; //из детализации авто
                 }
                 //Цвет
-                spcAdd.color(stv.loopColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
-                if (stv.isFinite(stv.gson.param, PKjson.colorLoop) == false) {
-                    if (UColor.colorFromElemOrSeri(spcAdd) == true) { //подбор по цвету
-                        stv.loopColor = spcAdd.colorID1;
+                spcAdd.color(areaStv.loopColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
+                if (areaStv.isFinite(areaStv.gson.param, PKjson.colorLoop) == false) {
+                    if (UColor.findFromArtOrSeri(spcAdd) == true) { //подбор по цвету
+                        areaStv.loopColor = spcAdd.colorID1;
                     }
                 }
-                //Замок  
+                //ЗАМОК
             } else if (spcAdd.artiklRec.getInt(eArtikl.level2) == 9) {
-                if (stv.isFinite(stv.gson.param, PKjson.artiklLock)) {
-                    spcAdd.artiklRec(stv.lockRec); //выбр. вручную
+
+                //Артикл
+                if (areaStv.isFinite(areaStv.gson.param, PKjson.artiklLock)) {
+                    spcAdd.artiklRec(areaStv.lockRec); //выбр. вручную
                 } else {
                     //stv.lockRec = spcAdd.artiklRec; //из детализации авто
                 }
                 //Цвет
-                spcAdd.color(stv.lockColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
-                if (stv.isFinite(stv.gson.param, PKjson.colorLock) == false) {
-                    if (UColor.colorFromElemOrSeri(spcAdd) == true) { //подбор по цвету
-                        stv.lockColor = spcAdd.colorID1;
+                spcAdd.color(areaStv.lockColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
+                if (areaStv.isFinite(areaStv.gson.param, PKjson.colorLock) == false) {
+                    if (UColor.findFromArtOrSeri(spcAdd) == true) { //подбор по цвету
+                        areaStv.lockColor = spcAdd.colorID1;
                     }
                 }
             }
@@ -314,4 +317,19 @@ public class TFurniture extends Cal5e {
         }
         return area5e.frames.stream().findFirst().get();  //первая попавшаяся        
     }
+
+//    public boolean isChortPass(Record furndetRec, Record artiklRec) {
+//        if (shortPass == true) {
+//            if (furndetRec.getInt(eFurndet.furndet_id) == furndetRec.getInt(eFurndet.id)
+//                    && furndetRec.get(eFurndet.furniture_id2) == null) {
+//                if (artiklRec.getInt(eArtikl.level1) != 2
+//                        || (artiklRec.getInt(eArtikl.level1) == 2
+//                        && artLevel.contains(artiklRec.getInt(eArtikl.level2)) == false)) {
+//
+//                    return true;  //т.к. ручки, подвеса, замка на этом уровне нет
+//                }
+//            }
+//        }
+//        return false;
+//    }
 }

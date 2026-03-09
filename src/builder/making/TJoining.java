@@ -139,7 +139,7 @@ public class TJoining extends Cal5e {
                     TRecord spcAdd = new TRecord("СОЕД", joindetRec, artiklRec, elemJoin.elem1, mapParam);
 
                     //Подбор текстуры
-                    if (UColor.colorFromElemOrSeri(spcAdd)) {
+                    if (UColor.findFromArtOrSeri(spcAdd)) {
                         elemJoin.addSpecific(spcAdd);
                     }
                 }

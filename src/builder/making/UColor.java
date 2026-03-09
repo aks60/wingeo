@@ -51,20 +51,22 @@ public class UColor {
      * Выбор подбора по текстуре элемента или серии элементов
      *
      * @param spcAdd - спецификацм элемента
-     * @param side - строна элемента по которой ведётся подбор текстуры
      */
-    public static boolean colorFromElemOrSeri(TRecord spcAdd) {  //см. http://help.profsegment.ru/?id=1107 
+    public static boolean findFromArtOrSeri(TRecord spcAdd) {  //см. http://help.profsegment.ru/?id=1107 
 
         TRecord spcClon = new TRecord(spcAdd);
         int typesUS = spcClon.detailRec.getInt(COLOR_US);
-        if (UseColor.isSeries(typesUS)) { //если серия
+
+        //Серия артикулов
+        if (UseColor.isSeries(typesUS)) {
 
             List<Record> artseriList = eArtikl.filter(spcClon.artiklRec.getInt(eArtikl.groups4_id));
             for (Record artseriRec : artseriList) {
                 spcClon.artiklRec(artseriRec);
-                if (UColor.colorFromProduct(spcClon, 1, true)
-                        && UColor.colorFromProduct(spcClon, 2, true)
-                        && UColor.colorFromProduct(spcClon, 3, true)) {
+                if (UColor.colorFromSetting(spcClon, 1, true)
+                        && UColor.colorFromSetting(spcClon, 2, true)
+                        && UColor.colorFromSetting(spcClon, 3, true)) {
+
                     spcAdd.copy(spcClon);
                     return true;
                 }
@@ -73,10 +75,11 @@ public class UColor {
             spcClon.colorID2 = getID_colorUS(spcClon, (typesUS & 0x000000f0) >> 4);
             spcClon.colorID3 = getID_colorUS(spcClon, (typesUS & 0x00000f00) >> 8);
 
+            //Не серия артикулов
         } else {
-            if (UColor.colorFromProduct(spcAdd, 1, false)
-                    && UColor.colorFromProduct(spcAdd, 2, false)
-                    && UColor.colorFromProduct(spcAdd, 3, false)) {
+            if (UColor.colorFromSetting(spcAdd, 1, false)
+                    && UColor.colorFromSetting(spcAdd, 2, false)
+                    && UColor.colorFromSetting(spcAdd, 3, false)) {
                 return true;
             }
         }
@@ -91,7 +94,7 @@ public class UColor {
      * @param seri
      * @return
      */
-    private static boolean colorFromProduct(TRecord spcAdd, int side, boolean seri) {  //см. http://help.profsegment.ru/?id=1107        
+    private static boolean colorFromSetting(TRecord spcAdd, int side, boolean seri) {  //см. http://help.profsegment.ru/?id=1107        
 
         int srcNumberUS = spcAdd.detailRec.getInt(COLOR_US);
         int srcColorFk = spcAdd.detailRec.getInt(COLOR_FK);
@@ -109,7 +112,6 @@ public class UColor {
             //Цвет элемента по которому подбираю из варианта подбора
             int originColorID = getID_colorUS(spcAdd, srcColorUS);
 
-            
             ////= ВРУЧНУЮ =////
             if (srcColorFk > 0 && srcColorFk != 100000) {
 
@@ -137,8 +139,7 @@ public class UColor {
                     }
                 }
 
-                
-                ////= АВТОПОДБОР =////
+              ////= АВТОПОДБОР =////
             } else if (srcColorFk == 0 || srcColorFk == 100000) {
                 //Для точн.подбора в спецификпцию не попадёт. См. HELP "Конструктив=>Подбор текстур"
 
@@ -157,8 +158,7 @@ public class UColor {
                     }
                 }
 
-                
-                ////= ПАРАМЕТР =////
+              ////= ПАРАМЕТР =////
             } else if (srcColorFk < 0) {  //если artdetColorFK == -1 в спецификпцию не попадёт. См. HELP "Конструктив=>Подбор текстур" 
                 Record syspar1Rec = spcAdd.elem5e.winc.mapPardef.get(srcColorFk);
 

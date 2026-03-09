@@ -1,5 +1,6 @@
 package builder;
 
+import builder.making.TFurniture;
 import builder.model.AreaRectangl;
 import builder.model.AreaSimple;
 import builder.model.AreaStvorka;
@@ -125,7 +126,7 @@ public class Wincalc {
             } else if (Type.DOOR == gson.type) {
                 root = new AreaDoor(this, gson);
             }
-            
+
             //Инит конструктива
             nuni = (gson.nuni == null) ? -3 : gson.nuni;
             root.sysprofRec = eSysprof.find2(nuni, UseType.FRAME); //первая.запись коробки
@@ -134,7 +135,6 @@ public class Wincalc {
             root.colorID1 = (gson.color1 == -3) ? UColor.colorFromArtikl(root.sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1; //базовый
             root.colorID2 = (gson.color2 == -3) ? UColor.colorFromArtikl(root.sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2; //внутр
             root.colorID3 = (gson.color3 == -3) ? UColor.colorFromArtikl(root.sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3; //внещний           
-            
 
             //Параметры
             parametr(gson.param);
@@ -359,6 +359,13 @@ public class Wincalc {
         try {
 
             if (this.sceleton == false) {
+
+                //Пересчёт фурнитуры с учётом настроек 
+                //конструктива ручки, петли, замка см. форму "Фурнитура"
+                if (this.scale > .1) {
+                    TFurniture furniture = new TFurniture(this, true);
+                    furniture.furn();
+                }
                 //Прорисовка стеклопакетов
                 UCom.filter(this.listElem, Type.GLASS).stream().forEach(el -> el.paint());
 

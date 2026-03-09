@@ -1,6 +1,7 @@
 package builder.model;
 
 import builder.Wincalc;
+import builder.making.TFurniture;
 import builder.making.TRecord;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
@@ -166,7 +167,7 @@ public class AreaStvorka extends AreaSimple {
                     handLayout = (position == LayoutHand.MIDL.id) ? LayoutHand.MIDL : LayoutHand.CONST;
                     //handHeight = owner.area.getEnvelopeInternal().getHeight() / 2;
                 }
-            }
+            }            
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.initArtikle() " + e);
         }

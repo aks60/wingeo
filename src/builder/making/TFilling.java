@@ -116,7 +116,7 @@ public class TFilling extends Cal5e {
                     TRecord spcAdd = new TRecord("ЗАП", glasdetRec, artiklRec, elemGlass, mapParam);
                     spcAdd.variantRec = glasgrpRec;
                     //Подбор текстуры
-                    if (UColor.colorFromElemOrSeri(spcAdd)) {
+                    if (UColor.findFromArtOrSeri(spcAdd)) {
                         elemGlass.addSpecific(spcAdd);
                     }
                 }
