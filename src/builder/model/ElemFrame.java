@@ -189,13 +189,13 @@ public class ElemFrame extends ElemSimple {
                     AreaStvorka elemStv = ((AreaStvorka) owner);
                     AreaSimple areaStv = ((AreaSimple) owner);
                     if ("по текстуре ручки".equals(spcAdd.getParam("null", 24006))) {
-                        colorID = UColor.colorFromArtikl(spcAdd.artiklRec.getInt(eArtikl.id), 1, elemStv.handColor[0]);
+                        colorID = UColor.findColorFromArtdet(spcAdd.artiklRec.getInt(eArtikl.id), 1, elemStv.handColor[0]);
 
                     } else if ("по текстуре подвеса".equals(spcAdd.getParam("null", 24006))) {
                         for (ElemSimple elem : areaStv.frames) {
                             for (TRecord spc : elem.spcRec.spcList) {
                                 if (spc.artiklRec.getInt(eArtikl.level1) == 2 && spc.artiklRec.getInt(eArtikl.level2) == 12) {
-                                    colorID = UColor.colorFromArtikl(spcAdd.artiklRec.getInt(eArtikl.id), 1, spc.colorID1);
+                                    colorID = UColor.findColorFromArtdet(spcAdd.artiklRec.getInt(eArtikl.id), 1, spc.colorID1);
                                 }
                             }
                         }
@@ -204,7 +204,7 @@ public class ElemFrame extends ElemSimple {
                         for (ElemSimple elem : areaStv.frames) {
                             for (TRecord spc : elem.spcRec.spcList) {
                                 if (spc.artiklRec.getInt(eArtikl.level1) == 2 && spc.artiklRec.getInt(eArtikl.level2) == 9) {
-                                    colorID = UColor.colorFromArtikl(spcAdd.artiklRec.getInt(eArtikl.id), 1, spc.colorID1);
+                                    colorID = UColor.findColorFromArtdet(spcAdd.artiklRec.getInt(eArtikl.id), 1, spc.colorID1);
                                 }
                             }
                         }
