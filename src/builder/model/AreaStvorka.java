@@ -3,6 +3,7 @@ package builder.model;
 import builder.Wincalc;
 import builder.making.TFurniture;
 import builder.making.TRecord;
+import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import common.UCom;
@@ -37,20 +38,20 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 public class AreaStvorka extends AreaSimple {
 
     public TRecord spcRec = null; //спецификация москитки
-    public Record sysfurnRec = eSysfurn.up.newRecord(Query.SEL); //фурнитура
-    public Record handRec = eArtikl.virtualRec(); //ручка
-    public Record loopRec = eArtikl.virtualRec(); //подвес(петли)
-    public Record lockRec = eArtikl.up.newRecord(Query.SEL); //замок
-    public Record mosqRec = eArtikl.virtualRec(); //москитка
+    public Record sysfurnRec = eSysfurn.up.newRecord(Query.SEL); //фурнитура 
+    public Record handRec[] = {eArtikl.virtualRec(), eArtikl.virtualRec()}; //ручка 0-настр. 1-авторасчёт
+    public Record loopRec[] = {eArtikl.virtualRec(), eArtikl.virtualRec()}; //подвес(петли) 0-настр. 1-авторасчёт
+    public Record lockRec[] = {eArtikl.virtualRec(), eArtikl.virtualRec()}; //замок 0-настр. 1-авторасчёт
+    public Record mosqRec[] = {eArtikl.virtualRec(), eArtikl.virtualRec()}; //москитка 0-настр. 1-авторасчёт
     public Record elementRec = eElement.up.newRecord(Query.SEL); //состав москидки 
 
     public LineString lineOpenHor = null; //линии горизонт. открывания
     public LineString lineOpenVer = null; //линии вертик. открывания
     public Polygon handOpen = null; //ручка открывания    
-    public int handColor = -3; //цвет ручки вирт...
-    public int loopColor = -3; //цвет подвеса вирт...
-    public int lockColor = -3; //цвет замка вирт...
-    public int mosqColor = -3; //цвет москитки вирт...
+    public int handColor[] = {-3, -3}; //цвет ручки вирт. 0-настр. 1-авторасчёт
+    public int loopColor[] = {-3, -3}; //цвет подвеса вирт. 0-настр. 1-авторасчёт
+    public int lockColor[] = {-3, -3}; //цвет замка вирт. 0-настр. 1-авторасчёт
+    public int mosqColor[] = {-3, -3}; //цвет москитки вирт. 0-настр. 1-авторасчёт
 
     public double handHeight = 0; //высота ручки
     public TypeOpen1 typeOpen = TypeOpen1.EMPTY; //направление открывания
@@ -113,37 +114,37 @@ public class AreaStvorka extends AreaSimple {
             }
             //Ручка
             if (isFinite(param, PKjson.artiklHand)) {
-                handRec = eArtikl.find(param.get(PKjson.artiklHand).getAsInt(), false);
+                handRec[0] = eArtikl.find(param.get(PKjson.artiklHand).getAsInt(), false);
             } else { //по умолчанию
-                handRec = eArtikl.find(sysfurnRec.getInt(eSysfurn.artikl_id1), false);
+                handRec[0] = eArtikl.find(sysfurnRec.getInt(eSysfurn.artikl_id1), false);
             }
             //Текстура ручки
             if (isFinite(param, PKjson.colorHand)) {
-                handColor = param.get(PKjson.colorHand).getAsInt();
-            } else if (handColor == -3) { //по умолчанию (первая в списке)
-                handColor = eArtdet.find(handRec.getInt(eArtikl.id)).getInt(eArtdet.color_fk);
-                if (handColor < 0) { //если все текстуры группы
-                    List<Record> recordList = eColor.filter(handColor);
+                handColor[0] = param.get(PKjson.colorHand).getAsInt();
+            } else if (handColor[0] == -3) { //по умолчанию (первая в списке)
+                handColor[0] = eArtdet.find(handRec[0].getInt(eArtikl.id)).getInt(eArtdet.color_fk);
+                if (handColor[0] < 0) { //если все текстуры группы
+                    List<Record> recordList = eColor.filter(handColor[0]);
                     if (recordList.isEmpty() == false) {
-                        handColor = eColor.filter(handColor).get(0).getInt(eColor.id);
+                        handColor[0] = eColor.filter(handColor[0]).get(0).getInt(eColor.id);
                     }
                 }
             }
             //Подвес (петли)
             if (isFinite(param, PKjson.artiklLoop)) {
-                loopRec = eArtikl.find(param.get(PKjson.artiklLoop).getAsInt(), false);
+                loopRec[0] = eArtikl.find(param.get(PKjson.artiklLoop).getAsInt(), false);
             }
             //Текстура подвеса
             if (isFinite(param, PKjson.colorLoop)) {
-                loopColor = param.get(PKjson.colorLoop).getAsInt();
+                loopColor[0] = param.get(PKjson.colorLoop).getAsInt();
             }
             //Замок
             if (isFinite(param, PKjson.artiklLock)) {
-                lockRec = eArtikl.find(param.get(PKjson.artiklLock).getAsInt(), false);
+                lockRec[0] = eArtikl.find(param.get(PKjson.artiklLock).getAsInt(), false);
             }
             //Текстура замка
             if (isFinite(param, PKjson.colorLock)) {
-                lockColor = param.get(PKjson.colorLock).getAsInt();
+                lockColor[0] = param.get(PKjson.colorLock).getAsInt();
             }
             //Сторона открывания
             if (isFinite(param, PKjson.typeOpen)) {
@@ -167,7 +168,7 @@ public class AreaStvorka extends AreaSimple {
                     handLayout = (position == LayoutHand.MIDL.id) ? LayoutHand.MIDL : LayoutHand.CONST;
                     //handHeight = owner.area.getEnvelopeInternal().getHeight() / 2;
                 }
-            }            
+            }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.initArtikle() " + e);
         }
@@ -315,7 +316,8 @@ public class AreaStvorka extends AreaSimple {
                     winc.gc2d.draw(shape);
                 }
                 Shape shape = new ShapeWriter().toShape(this.handOpen);
-                Record colorRec = eColor.find(handColor);
+                int handColor2 = (handColor[1] == -3) ? handColor[0] : handColor[1];
+                Record colorRec = eColor.find(handColor2);
                 int rgb = colorRec.getInt(eColor.rgb);
                 winc.gc2d.setColor(new java.awt.Color(rgb));
                 winc.gc2d.fill(shape);

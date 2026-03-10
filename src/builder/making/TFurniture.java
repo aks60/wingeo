@@ -32,7 +32,7 @@ public class TFurniture extends Cal5e {
 
     private FurnitureVar furnitureVar = null;
     private FurnitureDet furnitureDet = null;
-    private final List artLevel = List.of(9, 10, 11, 12, 13, 14); //замок, ручка, петля 
+    private final List artLevel = List.of(9, 11, 12); //замок, ручка, петля 
     private boolean max_size_message = true;
 
     public TFurniture(Wincalc winc) {
@@ -94,7 +94,7 @@ public class TFurniture extends Cal5e {
 
             //TODO Реализовать описание сторон фурнитуры
             //Цикл по описанию сторон фурнитуры
-            /*List<Record> furnsidetList = eFurnside1.filter(furnitureRec.getInt(eFurniture.id)); //список описания сторон
+            List<Record> furnsidetList = eFurnside1.filter(furnitureRec.getInt(eFurniture.id)); //список описания сторон
             for (Record furnside1Rec : furnsidetList) {
                 Layout layout = (Layout) Layout.ANY.find(furnside1Rec.getInt(eFurnside1.side_num));
                 ElemSimple elemFrame = areaStv.frames.stream().filter(e -> e.layout() == layout).findFirst().get();
@@ -103,7 +103,7 @@ public class TFurniture extends Cal5e {
                 if (furnitureVar.filter(elemFrame, furnside1Rec) == false) {
                     return;
                 }
-            }*/
+            }
             //Цикл по детализации (первый уровень)        
             for (Record furndetRec1 : furndetList1) {
                 if (furndetRec1.getInt(eFurndet.furndet_id) == furndetRec1.getInt(eFurndet.id)) {
@@ -199,6 +199,7 @@ public class TFurniture extends Cal5e {
 
                     //Ловим ручку, петлю, замок и присваиваем 
                     //артикул и цвет в spcAdd и в свойства створки
+                    //если level2 = 13 идет только в тарификацию 
                     if (shortPass == true && spcAdd.artiklRec.getInt(eArtikl.level1) == 2
                             && artLevel.contains(artiklRec.getInt(eArtikl.level2)) == true) {
                         setPropertyStvAndSpc(areaStv, spcAdd);
@@ -235,20 +236,19 @@ public class TFurniture extends Cal5e {
 
         if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2) {
             //РУЧКА
-            if (spcAdd.artiklRec.getInt(eArtikl.level2) == 11
-                    || spcAdd.artiklRec.getInt(eArtikl.level2) == 13) {
+            if (spcAdd.artiklRec.getInt(eArtikl.level2) == 11) {
 
                 //Артикл
                 if (areaStv.isFinite(areaStv.gson.param, PKjson.artiklHand)) {
-                    spcAdd.artiklRec(areaStv.handRec); //выбр. вручную
+                    spcAdd.artiklRec(areaStv.handRec[0]); //выбр. вручную
                 } else {
-                    areaStv.handRec = spcAdd.artiklRec; //из детализации авто
+                    areaStv.handRec[1] = spcAdd.artiklRec; //из детализации авто
                 }
                 //Цвет
-                spcAdd.color(areaStv.handColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
+                spcAdd.color(areaStv.handColor[0], -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
                 if (areaStv.isFinite(areaStv.gson.param, PKjson.colorHand) == false) {
                     if (UColor.findFromArtOrSeri(spcAdd) == true) { //подбор по цвету
-                        areaStv.handColor = spcAdd.colorID1;
+                        areaStv.handColor[1] = spcAdd.colorID1; //из детализации авто
                     }
                 }
                 //ПОДВЕС
@@ -256,15 +256,15 @@ public class TFurniture extends Cal5e {
 
                 //Артикл
                 if (areaStv.isFinite(areaStv.gson.param, PKjson.artiklLoop)) {
-                    spcAdd.artiklRec(areaStv.loopRec); //выбр. вручную
+                    spcAdd.artiklRec(areaStv.loopRec[0]); //выбр. вручную
                 } else {
-                    areaStv.loopRec = spcAdd.artiklRec; //из детализации авто
+                    areaStv.loopRec[1] = spcAdd.artiklRec; //из детализации авто
                 }
                 //Цвет
-                spcAdd.color(areaStv.loopColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
+                spcAdd.color(areaStv.loopColor[0], -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
                 if (areaStv.isFinite(areaStv.gson.param, PKjson.colorLoop) == false) {
                     if (UColor.findFromArtOrSeri(spcAdd) == true) { //подбор по цвету
-                        areaStv.loopColor = spcAdd.colorID1;
+                        areaStv.loopColor[0] = spcAdd.colorID1;
                     }
                 }
                 //ЗАМОК
@@ -272,15 +272,15 @@ public class TFurniture extends Cal5e {
 
                 //Артикл
                 if (areaStv.isFinite(areaStv.gson.param, PKjson.artiklLock)) {
-                    spcAdd.artiklRec(areaStv.lockRec); //выбр. вручную
+                    spcAdd.artiklRec(areaStv.lockRec[0]); //выбр. вручную
                 } else {
-                    //stv.lockRec = spcAdd.artiklRec; //из детализации авто
+                    areaStv.lockRec[1] = spcAdd.artiklRec; //из детализации авто
                 }
                 //Цвет
-                spcAdd.color(areaStv.lockColor, -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
+                spcAdd.color(areaStv.lockColor[0], -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
                 if (areaStv.isFinite(areaStv.gson.param, PKjson.colorLock) == false) {
                     if (UColor.findFromArtOrSeri(spcAdd) == true) { //подбор по цвету
-                        areaStv.lockColor = spcAdd.colorID1;
+                        areaStv.lockColor[1] = spcAdd.colorID1; //из детализации авто
                     }
                 }
             }
@@ -318,19 +318,4 @@ public class TFurniture extends Cal5e {
         }
         return area5e.frames.stream().findFirst().get();  //первая попавшаяся        
     }
-    
-//    public boolean isChortPass(Record furndetRec, Record artiklRec) {
-//        if (shortPass == true) {
-//            if (furndetRec.getInt(eFurndet.furndet_id) == furndetRec.getInt(eFurndet.id)
-//                    && furndetRec.get(eFurndet.furniture_id2) == null) {
-//                if (artiklRec.getInt(eArtikl.level1) != 2
-//                        || (artiklRec.getInt(eArtikl.level1) == 2
-//                        && artLevel.contains(artiklRec.getInt(eArtikl.level2)) == false)) {
-//
-//                    return true;  //т.к. ручки, подвеса, замка на этом уровне нет
-//                }
-//            }
-//        }
-//        return false;
-//    }
 }

@@ -452,19 +452,19 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                         txt31.setEditable(false);
                         setText(txt31, "");
                     }
-                    setText(txt21, stv.handRec.getStr(eArtikl.code) + " ? " + stv.handRec.getStr(eArtikl.name));
+                    setText(txt21, stv.handRec[0].getStr(eArtikl.code) + " ? " + stv.handRec[0].getStr(eArtikl.name));
                     setIcon(btn12, stv.isFinite(stv.gson.param, PKjson.artiklHand));
-                    setText(txt25, eColor.find(stv.handColor).getStr(eColor.name));
+                    setText(txt25, eColor.find(stv.handColor[0]).getStr(eColor.name));
                     setIcon(btn14, stv.isFinite(stv.gson.param, PKjson.colorHand));
-                    setText(txt45, stv.loopRec.getStr(eArtikl.code));
-                    setText(txt58, stv.loopRec.getStr(eArtikl.name));
+                    setText(txt45, stv.loopRec[0].getStr(eArtikl.code));
+                    setText(txt58, stv.loopRec[0].getStr(eArtikl.name));
                     setIcon(btn15, stv.isFinite(stv.gson.param, PKjson.artiklLoop));
-                    setText(txt47, eColor.find(stv.loopColor).getStr(eColor.name));
+                    setText(txt47, eColor.find(stv.loopColor[0]).getStr(eColor.name));
                     setIcon(btn17, stv.isFinite(stv.gson.param, PKjson.colorLoop));
-                    setText(txt46, stv.lockRec.getStr(eArtikl.code));
-                    setText(txt57, stv.lockRec.getStr(eArtikl.name));
+                    setText(txt46, stv.lockRec[0].getStr(eArtikl.code));
+                    setText(txt57, stv.lockRec[0].getStr(eArtikl.name));
                     setIcon(btn23, stv.isFinite(stv.gson.param, PKjson.artiklLock));
-                    setText(txt48, eColor.find(stv.lockColor).getStr(eColor.name));
+                    setText(txt48, eColor.find(stv.lockColor[0]).getStr(eColor.name));
                     setIcon(btn24, stv.isFinite(stv.gson.param, PKjson.colorLock));
                     //Москитка
                     ArrayList<Com5t> mosqList = UCom.filter(((AreaSimple) stv).childs, enums.Type.MOSQUIT);
@@ -3366,7 +3366,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         try {
             double selectID = winNode.com5t().id;
             AreaStvorka stv = (AreaStvorka) winNode.com5t();
-            HashSet<Record> colorSet = UGui.artiklToColorSet(stv.handRec.getInt(eArtikl.id));
+            HashSet<Record> colorSet = UGui.artiklToColorSet(stv.handRec[0].getInt(eArtikl.id));
             DicColor frame = new DicColor(this, (colorRec) -> {
 
                 GsonElem stvArea = UCom.gson(wincalc().listAll, selectID);
@@ -3526,7 +3526,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         try {
             double selectID = winNode.com5t().id;
             AreaStvorka stv = (AreaStvorka) winNode.com5t();
-            HashSet<Record> colorSet = UGui.artiklToColorSet(stv.loopRec.getInt(eArtikl.id));
+            HashSet<Record> colorSet = UGui.artiklToColorSet(stv.loopRec[0].getInt(eArtikl.id));
             DicColor frame = new DicColor(this, (colorRec) -> {
 
                 GsonElem stvArea = UCom.gson(wincalc().listAll, selectID);
@@ -3572,7 +3572,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         try {
             double selectID = winNode.com5t().id;
             AreaStvorka stv = (AreaStvorka) winNode.com5t();
-            HashSet<Record> colorSet = UGui.artiklToColorSet(stv.lockRec.getInt(eArtikl.id));
+            HashSet<Record> colorSet = UGui.artiklToColorSet(stv.lockRec[0].getInt(eArtikl.id));
             DicColor frame = new DicColor(this, (colorRec) -> {
 
                 GsonElem stvArea = UCom.gson(wincalc().listAll, selectID);
