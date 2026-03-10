@@ -475,9 +475,6 @@ public class UColor {
             //Цикл по ARTDET определённого артикула
             for (Record artdetRec : artdetList) {
                 if (artdetRec.getInt(eArtdet.color_fk) >= 0) {
-                    //if ("1".equals(artdetRec.getStr(eArtdet.mark_c1))
-                    //&& ("1".equals(artdetRec.getStr(eArtdet.mark_c1)) || "1".equals(artdetRec.getStr(eArtdet.mark_c2)))
-                    //&& ("1".equals(artdetRec.getStr(eArtdet.mark_c1)) || "1".equals(artdetRec.getStr(eArtdet.mark_c3)))) {
                     if ("1".equals(artdetRec.getStr(eArtdet.mark_c1))) {
                         return artdetRec.getInt(eArtdet.color_fk);
                     }
