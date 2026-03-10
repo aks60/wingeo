@@ -359,12 +359,12 @@ public class Wincalc {
         try {
 
             if (this.sceleton == false) {
-
+                
                 //Пересчёт фурнитуры с учётом настроек 
                 //конструктива ручки, петли, замка см. форму "Фурнитура"
                 if (this.scale > .1) {
                     TFurniture furniture = new TFurniture(this, true);
-                    furniture.furn();
+                    furniture.furn();  
                 }
                 //Прорисовка стеклопакетов
                 UCom.filter(this.listElem, Type.GLASS).stream().forEach(el -> el.paint());
