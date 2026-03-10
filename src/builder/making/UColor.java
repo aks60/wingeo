@@ -469,16 +469,16 @@ public class UColor {
     }
 
     //Текстура профиля или текстура заполнения изделия (неокрашенные)
-    public static int colorFromArtikl(int artiklId) {
+    public static int findColorFromArtdet(int artiklId) {
         try {
             List<Record> artdetList = eArtdet.filter(artiklId);
             //Цикл по ARTDET определённого артикула
             for (Record artdetRec : artdetList) {
                 if (artdetRec.getInt(eArtdet.color_fk) >= 0) {
-                    if ("1".equals(artdetRec.getStr(eArtdet.mark_c1))
-                            && ("1".equals(artdetRec.getStr(eArtdet.mark_c1)) || "1".equals(artdetRec.getStr(eArtdet.mark_c2)))
-                            && ("1".equals(artdetRec.getStr(eArtdet.mark_c1)) || "1".equals(artdetRec.getStr(eArtdet.mark_c3)))) {
-
+                    //if ("1".equals(artdetRec.getStr(eArtdet.mark_c1))
+                    //&& ("1".equals(artdetRec.getStr(eArtdet.mark_c1)) || "1".equals(artdetRec.getStr(eArtdet.mark_c2)))
+                    //&& ("1".equals(artdetRec.getStr(eArtdet.mark_c1)) || "1".equals(artdetRec.getStr(eArtdet.mark_c3)))) {
+                    if ("1".equals(artdetRec.getStr(eArtdet.mark_c1))) {
                         return artdetRec.getInt(eArtdet.color_fk);
                     }
                 }
@@ -492,7 +492,7 @@ public class UColor {
     }
 
     //Поиск текстуры в артикуле
-    public static int colorFromArtikl(int artiklID, int side, int elemColorID) {
+    public static int findColorFromArtdet(int artiklID, int side, int elemColorID) {
         try {
             List<Record> artdetList = eArtdet.filter(artiklID);
             //Цикл по ARTDET определённого артикула
