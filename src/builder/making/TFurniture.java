@@ -199,10 +199,10 @@ public class TFurniture extends Cal5e {
 
                     //Ловим ручку, петлю, замок и присваиваем 
                     //артикул и цвет в spcAdd и в свойства створки
-                    if (shortPass == true && spcAdd.artiklRec.getInt(eArtikl.level1) == 2 
-                            && artLevel.contains(artiklRec.getInt(eArtikl.level2)) == true) {                        
+                    if (shortPass == true && spcAdd.artiklRec.getInt(eArtikl.level1) == 2
+                            && artLevel.contains(artiklRec.getInt(eArtikl.level2)) == true) {
                         setPropertyStvAndSpc(areaStv, spcAdd);
-                        
+
                     } else { //цвет элемента в spcAdd
                         UColor.findFromArtOrSeri(spcAdd);
                     }
@@ -235,7 +235,8 @@ public class TFurniture extends Cal5e {
 
         if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2) {
             //РУЧКА
-            if (spcAdd.artiklRec.getInt(eArtikl.level2) == 11) {
+            if (spcAdd.artiklRec.getInt(eArtikl.level2) == 11
+                    || spcAdd.artiklRec.getInt(eArtikl.level2) == 13) {
 
                 //Артикл
                 if (areaStv.isFinite(areaStv.gson.param, PKjson.artiklHand)) {
@@ -317,7 +318,7 @@ public class TFurniture extends Cal5e {
         }
         return area5e.frames.stream().findFirst().get();  //первая попавшаяся        
     }
-
+    
 //    public boolean isChortPass(Record furndetRec, Record artiklRec) {
 //        if (shortPass == true) {
 //            if (furndetRec.getInt(eFurndet.furndet_id) == furndetRec.getInt(eFurndet.id)

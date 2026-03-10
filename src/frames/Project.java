@@ -433,8 +433,6 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
 
                     //Створка
                 } else if (winNode.com5t().type == enums.Type.STVORKA) {
-                    //расчёт ручки, 
-                    //new TFurniture(wincalc(), true).furn();   //петли, замки
                     //через сокр. тарификацию
                     ((CardLayout) pan8.getLayout()).show(pan8, "card16");
                     AreaStvorka stv = (AreaStvorka) winNode.com5t();
