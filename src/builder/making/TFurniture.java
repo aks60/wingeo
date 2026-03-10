@@ -135,7 +135,8 @@ public class TFurniture extends Cal5e {
         try {
             Record artiklRec = eArtikl.find(furndetRec.getInt(eFurndet.artikl_id), false);
             HashMap<Integer, String> mapParam = new HashMap<Integer, String>(); //тут накапливаютс€ параметры element и specific
-            //—делано дл€ убыстрени€ поиска ручки, 
+            
+            //‘»Ћ№“– сделано дл€ убыстрени€ поиска ручки, 
             //подвеса, замка при конструировании окна
             if (shortPass == true) {
                 if (furndetRec.getInt(eFurndet.furndet_id) == furndetRec.getInt(eFurndet.id) && furndetRec.get(eFurndet.furniture_id2) == null) {
