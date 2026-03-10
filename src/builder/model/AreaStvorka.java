@@ -42,7 +42,7 @@ public class AreaStvorka extends AreaSimple {
     public Record handRec[] = {eArtikl.virtualRec(), eArtikl.virtualRec()}; //ручка 0-настр. 1-авторасчёт
     public Record loopRec[] = {eArtikl.virtualRec(), eArtikl.virtualRec()}; //подвес(петли) 0-настр. 1-авторасчёт
     public Record lockRec[] = {eArtikl.virtualRec(), eArtikl.virtualRec()}; //замок 0-настр. 1-авторасчёт
-    public Record mosqRec[] = {eArtikl.virtualRec(), eArtikl.virtualRec()}; //москитка 0-настр. 1-авторасчёт
+    public Record mosqRec = eArtikl.virtualRec(); //москитка
     public Record elementRec = eElement.up.newRecord(Query.SEL); //состав москидки 
 
     public LineString lineOpenHor = null; //линии горизонт. открывания
@@ -51,7 +51,7 @@ public class AreaStvorka extends AreaSimple {
     public int handColor[] = {-3, -3}; //цвет ручки вирт. 0-настр. 1-авторасчёт
     public int loopColor[] = {-3, -3}; //цвет подвеса вирт. 0-настр. 1-авторасчёт
     public int lockColor[] = {-3, -3}; //цвет замка вирт. 0-настр. 1-авторасчёт
-    public int mosqColor[] = {-3, -3}; //цвет москитки вирт. 0-настр. 1-авторасчёт
+    public int mosqColor = -3; //цвет москитки вирт.
 
     public double handHeight = 0; //высота ручки
     public TypeOpen1 typeOpen = TypeOpen1.EMPTY; //направление открывания
