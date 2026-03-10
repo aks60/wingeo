@@ -32,7 +32,7 @@ public class TFurniture extends Cal5e {
 
     private FurnitureVar furnitureVar = null;
     private FurnitureDet furnitureDet = null;
-    private final List artLevel = List.of(9, 10, 11, 12, 13, 14); //замок, ручка, петля 
+    private final List artLevel = List.of(9, 11, 12); //замок, ручка, петля 
     private boolean max_size_message = true;
 
     public TFurniture(Wincalc winc) {
@@ -94,7 +94,7 @@ public class TFurniture extends Cal5e {
 
             //TODO Реализовать описание сторон фурнитуры
             //Цикл по описанию сторон фурнитуры
-            /*List<Record> furnsidetList = eFurnside1.filter(furnitureRec.getInt(eFurniture.id)); //список описания сторон
+            List<Record> furnsidetList = eFurnside1.filter(furnitureRec.getInt(eFurniture.id)); //список описания сторон
             for (Record furnside1Rec : furnsidetList) {
                 Layout layout = (Layout) Layout.ANY.find(furnside1Rec.getInt(eFurnside1.side_num));
                 ElemSimple elemFrame = areaStv.frames.stream().filter(e -> e.layout() == layout).findFirst().get();
@@ -103,7 +103,7 @@ public class TFurniture extends Cal5e {
                 if (furnitureVar.filter(elemFrame, furnside1Rec) == false) {
                     return;
                 }
-            }*/
+            }
             //Цикл по детализации (первый уровень)        
             for (Record furndetRec1 : furndetList1) {
                 if (furndetRec1.getInt(eFurndet.furndet_id) == furndetRec1.getInt(eFurndet.id)) {
@@ -235,8 +235,7 @@ public class TFurniture extends Cal5e {
 
         if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2) {
             //РУЧКА
-            if (spcAdd.artiklRec.getInt(eArtikl.level2) == 11
-                    || spcAdd.artiklRec.getInt(eArtikl.level2) == 13) {
+            if (spcAdd.artiklRec.getInt(eArtikl.level2) == 11) {
 
                 //Артикл
                 if (areaStv.isFinite(areaStv.gson.param, PKjson.artiklHand)) {
