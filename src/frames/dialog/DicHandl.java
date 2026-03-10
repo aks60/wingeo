@@ -54,15 +54,17 @@ public class DicHandl extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Расположение ручки");
-        setPreferredSize(new java.awt.Dimension(300, 200));
+        setPreferredSize(new java.awt.Dimension(380, 200));
+        setResizable(false);
 
         centr.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         buttonGroup.add(rbt0);
         rbt0.setFont(frames.UGui.getFont(0,0));
         rbt0.setText("По середине");
+        rbt0.setMaximumSize(new java.awt.Dimension(120, 21));
         rbt0.setMinimumSize(new java.awt.Dimension(85, 18));
-        rbt0.setPreferredSize(new java.awt.Dimension(90, 23));
+        rbt0.setPreferredSize(new java.awt.Dimension(120, 23));
         rbt0.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 rbtStateChanged(evt);
@@ -72,6 +74,8 @@ public class DicHandl extends javax.swing.JDialog {
         buttonGroup.add(rbt1);
         rbt1.setFont(frames.UGui.getFont(0,0));
         rbt1.setText("Константная");
+        rbt1.setMaximumSize(new java.awt.Dimension(120, 21));
+        rbt1.setPreferredSize(new java.awt.Dimension(120, 21));
         rbt1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 rbtStateChanged(evt);
@@ -80,8 +84,10 @@ public class DicHandl extends javax.swing.JDialog {
 
         buttonGroup.add(rbt2);
         rbt2.setFont(frames.UGui.getFont(0,0));
-        rbt2.setText("На высоте");
-        rbt2.setPreferredSize(new java.awt.Dimension(90, 23));
+        rbt2.setText("Установлена на высоте");
+        rbt2.setMaximumSize(new java.awt.Dimension(120, 21));
+        rbt2.setMinimumSize(new java.awt.Dimension(80, 21));
+        rbt2.setPreferredSize(new java.awt.Dimension(120, 23));
         rbt2.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 rbtStateChanged(evt);
@@ -100,18 +106,16 @@ public class DicHandl extends javax.swing.JDialog {
             .addGroup(centrLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(centrLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(rbt2, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
-                    .addComponent(rbt0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(centrLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, centrLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(rbt1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, centrLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
+                    .addComponent(rbt0, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                    .addComponent(rbt2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(centrLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(centrLayout.createSequentialGroup()
                         .addComponent(txt01, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel1)))
-                .addContainerGap(59, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1))
+                    .addComponent(rbt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         centrLayout.setVerticalGroup(
             centrLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,7 +123,7 @@ public class DicHandl extends javax.swing.JDialog {
                 .addGap(20, 20, 20)
                 .addGroup(centrLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rbt0, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rbt1))
+                    .addComponent(rbt1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(centrLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(rbt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -138,7 +142,7 @@ public class DicHandl extends javax.swing.JDialog {
         south.setLayout(southLayout);
         southLayout.setHorizontalGroup(
             southLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 296, Short.MAX_VALUE)
+            .addGap(0, 333, Short.MAX_VALUE)
         );
         southLayout.setVerticalGroup(
             southLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,7 +210,7 @@ public class DicHandl extends javax.swing.JDialog {
                 .addComponent(btnChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRemove, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 240, Short.MAX_VALUE)
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
