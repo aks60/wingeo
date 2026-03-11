@@ -315,18 +315,20 @@ public class AreaStvorka extends AreaSimple {
                     Shape shape = new ShapeWriter().toShape(this.lineOpenVer);
                     winc.gc2d.draw(shape);
                 }
-                Shape shape = new ShapeWriter().toShape(this.handOpen);
-                int handColor2 = (handColor[1] == -3) ? handColor[0] : handColor[1];
-                Record colorRec = eColor.find(handColor2);
-                int rgb = colorRec.getInt(eColor.rgb);
-                winc.gc2d.setColor(new java.awt.Color(rgb));
-                winc.gc2d.fill(shape);
-
+                if (this.handOpen != null) {
+                    Shape shape = new ShapeWriter().toShape(this.handOpen);
+                    int handColor2 = (handColor[1] == -3) ? handColor[0] : handColor[1];
+                    Record colorRec = eColor.find(handColor2);
+                    int rgb = colorRec.getInt(eColor.rgb);
+                    winc.gc2d.setColor(new java.awt.Color(rgb));
+                    winc.gc2d.fill(shape);
+                    winc.gc2d.draw(shape);
+                }
                 if (timer.isRunning() == true) {
                     this.frames.stream().filter(e -> e.type == Type.STV_SIDE).forEach(e -> ((Com5t) e).timer.start());
                 }
-                winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
-                winc.gc2d.draw(shape);
+                //winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
+                //winc.gc2d.draw(shape);
             }
         } else {
             winc.gc2d.setColor(new java.awt.Color(000, 000, 255));

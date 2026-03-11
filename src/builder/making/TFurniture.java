@@ -203,7 +203,7 @@ public class TFurniture extends Cal5e {
                     //если level2 = 13 идет только в тарификацию 
                     if (shortPass == true && spcAdd.artiklRec.getInt(eArtikl.level1) == 2
                             && artLevel.contains(artiklRec.getInt(eArtikl.level2)) == true) {
-                        setPropertyStvAndSpc(areaStv, spcAdd);
+                        settingStvAndSpc(areaStv, spcAdd);
 
                     } else { //цвет элемента в spcAdd
                         UColor.findFromArtOrSeri(spcAdd);
@@ -232,7 +232,7 @@ public class TFurniture extends Cal5e {
 
     //Ловим ручку, подвес, замок и 
     //присваиваем знач. в spcAdd и створку    
-    private void setPropertyStvAndSpc(AreaSimple stvArea, TRecord spcAdd) {
+    private void settingStvAndSpc(AreaSimple stvArea, TRecord spcAdd) {
         AreaStvorka areaStv = (AreaStvorka) stvArea;
 
         if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2) {
