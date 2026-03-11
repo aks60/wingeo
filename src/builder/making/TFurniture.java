@@ -240,30 +240,30 @@ public class TFurniture extends Cal5e {
             if (spcAdd.artiklRec.getInt(eArtikl.level2) == 11) {
 
                 //јртикл
-                if (areaStv.isFinite(areaStv.gson.param, PKjson.artiklHand)) {
+                if (areaStv.isFinite(areaStv.gson.param, PKjson.artiklHand)) { //если есть параметр то устан. вручную
                     spcAdd.artiklRec(areaStv.handRec[0]); //выбр. вручную
                 } else {
-                    areaStv.handRec[1] = spcAdd.artiklRec; //из детализации авто
+                    areaStv.handRec[1] = spcAdd.artiklRec; //из детализации подбор
                 }
                 //÷вет
                 spcAdd.color(areaStv.handColor[0], -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
-                if (areaStv.isFinite(areaStv.gson.param, PKjson.colorHand) == false) {
+                if (areaStv.isFinite(areaStv.gson.param, PKjson.colorHand) == false) { //если нет параметра то подбор
                     if (UColor.findFromArtOrSeri(spcAdd) == true) { //подбор по цвету
-                        areaStv.handColor[1] = spcAdd.colorID1; //из детализации авто
+                        areaStv.handColor[1] = spcAdd.colorID1; //из детализации подбор
                     }
                 }
                 //ѕќƒ¬≈—
             } else if (spcAdd.artiklRec.getInt(eArtikl.level2) == 12) {
 
                 //јртикл
-                if (areaStv.isFinite(areaStv.gson.param, PKjson.artiklLoop)) {
+                if (areaStv.isFinite(areaStv.gson.param, PKjson.artiklLoop)) { //если есть параметр то устан. вручную
                     spcAdd.artiklRec(areaStv.loopRec[0]); //выбр. вручную
                 } else {
-                    areaStv.loopRec[1] = spcAdd.artiklRec; //из детализации авто
+                    areaStv.loopRec[1] = spcAdd.artiklRec; //из детализации подбор
                 }
                 //÷вет
                 spcAdd.color(areaStv.loopColor[0], -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
-                if (areaStv.isFinite(areaStv.gson.param, PKjson.colorLoop) == false) {
+                if (areaStv.isFinite(areaStv.gson.param, PKjson.colorLoop) == false) { //если нет параметра то подбор
                     if (UColor.findFromArtOrSeri(spcAdd) == true) { //подбор по цвету
                         areaStv.loopColor[0] = spcAdd.colorID1;
                     }
@@ -275,13 +275,13 @@ public class TFurniture extends Cal5e {
                 if (areaStv.isFinite(areaStv.gson.param, PKjson.artiklLock)) {
                     spcAdd.artiklRec(areaStv.lockRec[0]); //выбр. вручную
                 } else {
-                    areaStv.lockRec[1] = spcAdd.artiklRec; //из детализации авто
+                    areaStv.lockRec[1] = spcAdd.artiklRec; //из детализации подбор
                 }
                 //÷вет
                 spcAdd.color(areaStv.lockColor[0], -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
-                if (areaStv.isFinite(areaStv.gson.param, PKjson.colorLock) == false) {
+                if (areaStv.isFinite(areaStv.gson.param, PKjson.colorLock) == false) { //если нет параметра то подбор
                     if (UColor.findFromArtOrSeri(spcAdd) == true) { //подбор по цвету
-                        areaStv.lockColor[1] = spcAdd.colorID1; //из детализации авто
+                        areaStv.lockColor[1] = spcAdd.colorID1; //из детализации подбор
                     }
                 }
             }
