@@ -344,7 +344,7 @@ public class Wincalc {
             //¬ес издели€
             ArrayList<ElemSimple> glassList = UCom.filter(listElem, Type.GLASS);
             for (ElemSimple el : glassList) {
-                this.weight += el.artiklRecAn.getDbl(eArtikl.density) * el.width() * el.height() / 1000000; //уд.вес * площадь = вес
+                this.weight += el.artiklRec.getDbl(eArtikl.density) * el.width() * el.height() / 1000000; //уд.вес * площадь = вес
             }
 
             Collections.sort(this.listSpec, (o1, o2) -> (o1.place.subSequence(0, 3) + o1.name + o1.width).compareTo(o2.place.subSequence(0, 3) + o2.name + o2.width));

@@ -107,6 +107,7 @@ public enum eArtikl implements Field {
         return query;
     }
 
+    //Если artiklRecAn нет возвращаю artiklRec
     public static Record find(int _id, boolean _analog) {
         if (_id == -3) {
             return virtualRec();
