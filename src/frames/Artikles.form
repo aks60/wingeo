@@ -128,7 +128,7 @@
         </MenuItem>
         <Component class="javax.swing.JPopupMenu$Separator" name="separator2">
         </Component>
-        <MenuItem class="javax.swing.JMenuItem" name="height">
+        <MenuItem class="javax.swing.JMenuItem" name="width">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="frames.UGui.getFont(1,0)" type="code"/>

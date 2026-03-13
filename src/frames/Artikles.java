@@ -133,7 +133,7 @@ public class Artikles extends javax.swing.JFrame {
     public void loadingModel() {
 
         new DefTableModel(tab1, qArtikl, eArtikl.code, eArtikl.name, eArtikl.groups1_id,
-                eArtikl.groups2_id, eArtikl.groups3_id, eArtikl.groups4_id, eArtikl.depth, eArtikl.height, eArtikl.otx_norm, eArtikl.tech_code, eArtikl.analog_id) {
+                eArtikl.groups2_id, eArtikl.groups3_id, eArtikl.groups4_id, eArtikl.height, eArtikl.depth, eArtikl.otx_norm, eArtikl.tech_code, eArtikl.analog_id) {
             @Override
             public Object getValueAt(int col, int row, Object val) {
                 Field field = columns[col];
@@ -526,7 +526,7 @@ public class Artikles extends javax.swing.JFrame {
         texcod = new javax.swing.JMenuItem();
         analog = new javax.swing.JMenuItem();
         separator2 = new javax.swing.JPopupMenu.Separator();
-        height = new javax.swing.JMenuItem();
+        width = new javax.swing.JMenuItem();
         depth = new javax.swing.JMenuItem();
         ppmTab2 = new javax.swing.JPopupMenu();
         mInsert2 = new javax.swing.JMenuItem();
@@ -828,15 +828,15 @@ public class Artikles extends javax.swing.JFrame {
         ppmTab1.add(analog);
         ppmTab1.add(separator2);
 
-        height.setFont(frames.UGui.getFont(1,0));
-        height.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c087.gif"))); // NOI18N
-        height.setText("Ширина");
-        height.addActionListener(new java.awt.event.ActionListener() {
+        width.setFont(frames.UGui.getFont(1,0));
+        width.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c087.gif"))); // NOI18N
+        width.setText("Ширина");
+        width.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ppmClick(evt);
             }
         });
-        ppmTab1.add(height);
+        ppmTab1.add(width);
 
         depth.setFont(frames.UGui.getFont(1,0));
         depth.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c087.gif"))); // NOI18N
@@ -2637,7 +2637,7 @@ public class Artikles extends javax.swing.JFrame {
             index = 9;
         } else if (ppm == analog) {
             index = 10;
-        } else if (ppm == height) {
+        } else if (ppm == width) {
             index = 6;
         } else if (ppm == depth) {
             index = 7;
@@ -2798,7 +2798,6 @@ public class Artikles extends javax.swing.JFrame {
     private javax.swing.JMenuItem groups2_id;
     private javax.swing.JMenuItem groups3_id;
     private javax.swing.JMenuItem groups4_id;
-    private javax.swing.JMenuItem height;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -2943,6 +2942,7 @@ public class Artikles extends javax.swing.JFrame {
     private javax.swing.JTextField txt7;
     private javax.swing.JTextField txt8;
     private javax.swing.JTextField txt9;
+    private javax.swing.JMenuItem width;
     // End of variables declaration//GEN-END:variables
 // </editor-fold> 
 
