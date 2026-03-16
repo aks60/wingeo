@@ -99,7 +99,7 @@ public class Wincalc {
     public void build(String script) {
         try {
             //System.out.println(new GsonBuilder().create().toJson(JsonParser.parseString(script))); //для тестирования
-            System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(script)));
+            //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(script)));
 
             //Инит свойств
             nppID = 0;
@@ -112,7 +112,11 @@ public class Wincalc {
             JsonParser parser = new JsonParser();
             JsonElement rootNode = parser.parse(script);
             gson.setOwner(this);
-
+            nuni = (gson.nuni == null) ? -3 : gson.nuni;   
+            Record sysprofRec = eSysprof.find2(nuni, UseType.FRAME); //первая.запись коробки
+            Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //первый артикул из сист. профилей
+            this.syssizRec = eSyssize.find(artiklRec); //системные константы             
+            
             //Главное окно
             if (Type.RECTANGL == gson.type) {
                 root = new AreaRectangl(this, gson);
@@ -126,12 +130,6 @@ public class Wincalc {
             } else if (Type.DOOR == gson.type) {
                 root = new AreaDoor(this, gson);
             }
-
-            //Инит конструктива
-            nuni = (gson.nuni == null) ? -3 : gson.nuni;
-            root.sysprofRec = eSysprof.find2(nuni, UseType.FRAME); //первая.запись коробки
-            root.artiklRec = eArtikl.find(root.sysprofRec.getInt(eSysprof.artikl_id), false); //первый артикул из сист. профилей
-            syssizRec = eSyssize.find(root.artiklRec); //системные константы
 
             //Параметры
             parametr(gson.param);
@@ -242,6 +240,7 @@ public class Wincalc {
     //Кальк.коорд. элементов конструкции
     public void location() {
         try {
+            root.initArtikle();
             root.colorID1 = (gson.color1 == -3) ? UColor.findColorFromArtdet(root.sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1; //базовый
             root.colorID2 = (gson.color2 == -3) ? UColor.findColorFromArtdet(root.sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2; //внутр
             root.colorID3 = (gson.color3 == -3) ? UColor.findColorFromArtdet(root.sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3; //внещний           

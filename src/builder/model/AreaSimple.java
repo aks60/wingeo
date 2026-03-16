@@ -2,15 +2,11 @@ package builder.model;
 
 import builder.Wincalc;
 import builder.script.GsonElem;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import common.UCom;
-import common.listener.ListenerPaint;
-import dataset.Record;
-import domain.eColor;
-import domain.eParams;
-import domain.eParmap;
+import domain.eArtikl;
 import domain.eSysprof;
+import domain.eSyssize;
 import enums.*;
 import java.awt.Font;
 import java.awt.Shape;
@@ -30,7 +26,6 @@ import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
-import startup.Test;
 
 public class AreaSimple extends Com5t {
 
@@ -39,7 +34,7 @@ public class AreaSimple extends Com5t {
 
     public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson.id, gson, owner);
-        initConstructiv(winc.gson.param);
+        //initConstructiv(winc.gson.param);
         winc.listArea.add(this);
         winc.listAll.add(this);
     }
@@ -56,6 +51,17 @@ public class AreaSimple extends Com5t {
 //        else if(this.owner.id == 0) {
 //            sysprofRec = eSysprof.find4(this.winc.nuni, UseArtiklTo.FRAME.id, UseSideTo.ANY);
 //        }
+    }
+
+    public void initArtikle() {
+        try {
+            if (isFinite(gson.param, PKjson.sysprofID)) {//профили через параметр
+                this.sysprofRec = eSysprof.find3(gson.param.get(PKjson.sysprofID).getAsInt());
+                this.artiklRec = eArtikl.find(this.sysprofRec.getInt(eSysprof.artikl_id), false); //первый артикул из сист. профилей
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:AreaFrame.initArtikle() " + e);
+        }
     }
 
     public void setLocation() {
