@@ -351,6 +351,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         try {
             DefMutableTreeNode root = UTree.loadWinTree(winc);
             winTree.setModel(new DefaultTreeModel(root));
+            winTree.setRootVisible(false);
 
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.loadingWinTree() " + e);
@@ -606,7 +607,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
                 loadingTree2(winc);
 
-                winTree.setSelectionInterval(0, 0);
+                winTree.setSelectionRow(1);
                 scene.init(winc);
                 canvas.draw();
             }

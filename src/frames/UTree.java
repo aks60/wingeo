@@ -6,16 +6,13 @@ import builder.model.Com5t;
 import builder.model.ElemFrame;
 import builder.model.ElemSimple;
 import builder.script.GsonElem;
-import dataset.Record;
 import common.UCom;
-import domain.eArtikl;
 import enums.Layout;
 import enums.Type;
 import enums.TypeArt;
 import frames.swing.comp.DefMutableTreeNode;
 import java.util.ArrayList;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeNode;
 
 public class UTree {
 

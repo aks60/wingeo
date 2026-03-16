@@ -39,19 +39,19 @@ public class AreaSimple extends Com5t {
         winc.listAll.add(this);
     }
 
-    /**
-     * Профиль через параметр. PKjson_sysprofID пример створки:sysprofID:1121,
-     * typeOpen:4, sysfurnID:2916} Этого параметра нет в интерфейсе программы,
-     * он сделан для тестирования с ps4. Делегируется детьми см. класс ElemFrame
-     */
-    public void initConstructiv(JsonObject param) {
-        if (isFinite(param, PKjson.sysprofID)) {//профили через параметр
-            sysprofRec = eSysprof.find3(param.get(PKjson.sysprofID).getAsInt());
-        }
-//        else if(this.owner.id == 0) {
-//            sysprofRec = eSysprof.find4(this.winc.nuni, UseArtiklTo.FRAME.id, UseSideTo.ANY);
+//    /**
+//     * Профиль через параметр. PKjson_sysprofID пример створки:sysprofID:1121,
+//     * typeOpen:4, sysfurnID:2916} Этого параметра нет в интерфейсе программы,
+//     * он сделан для тестирования с ps4. Делегируется детьми см. класс ElemFrame
+//     */
+//    public void initConstructiv(JsonObject param) {
+//        if (isFinite(param, PKjson.sysprofID)) {//профили через параметр
+//            sysprofRec = eSysprof.find3(param.get(PKjson.sysprofID).getAsInt());
 //        }
-    }
+////        else if(this.owner.id == 0) {
+////            sysprofRec = eSysprof.find4(this.winc.nuni, UseArtiklTo.FRAME.id, UseSideTo.ANY);
+////        }
+//    }
 
     public void initArtikle() {
         try {
