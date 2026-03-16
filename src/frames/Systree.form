@@ -161,7 +161,7 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
-    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,-120,0,0,3,-72"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,2,-120,0,0,3,-51"/>
   </AuxValues>
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
@@ -201,7 +201,7 @@
                   <Component id="btnMoveU" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnMoveD" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="602" max="32767" attributes="0"/>
+                  <EmptySpace pref="623" max="32767" attributes="0"/>
                   <Component id="btnTest" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="btnReport1" min="-2" max="-2" attributes="0"/>
@@ -637,6 +637,9 @@
                         <EtchetBorder bevelType="0"/>
                       </Border>
                     </Property>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[300, 280]"/>
+                    </Property>
                   </Properties>
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
@@ -644,7 +647,7 @@
                 <Container class="javax.swing.JPanel" name="pan7">
                   <Properties>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[300, 240]"/>
+                      <Dimension value="[240, 240]"/>
                     </Property>
                   </Properties>
 
@@ -753,7 +756,7 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <EmptySpace min="0" pref="334" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="344" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
@@ -788,7 +791,7 @@
                       <Layout>
                         <DimensionLayout dim="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="pan22" alignment="0" pref="334" max="32767" attributes="0"/>
+                              <Component id="pan22" alignment="0" pref="344" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -802,12 +805,12 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="lab34" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="txt33" pref="236" max="32767" attributes="0"/>
+                                          <Component id="txt33" pref="246" max="32767" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="1" attributes="0">
                                           <Component id="lab76" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="txt52" pref="236" max="32767" attributes="0"/>
+                                          <Component id="txt52" pref="246" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -956,7 +959,7 @@
                                       </Group>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="txt29" alignment="0" pref="199" max="32767" attributes="0"/>
+                                          <Component id="txt29" alignment="0" pref="209" max="32767" attributes="0"/>
                                           <Component id="txt27" alignment="0" pref="0" max="32767" attributes="0"/>
                                           <Component id="txt28" alignment="0" pref="0" max="32767" attributes="0"/>
                                       </Group>
@@ -1303,7 +1306,7 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="lab72" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="txt62" pref="236" max="32767" attributes="0"/>
+                                          <Component id="txt62" pref="246" max="32767" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="1" attributes="0">
                                           <Component id="lab73" max="-2" attributes="0"/>
@@ -2182,7 +2185,7 @@
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="txt16" pref="141" max="32767" attributes="0"/>
+                                                          <Component id="txt16" pref="151" max="32767" attributes="0"/>
                                                           <EmptySpace max="-2" attributes="0"/>
                                                           <Component id="txt31" min="-2" pref="62" max="-2" attributes="0"/>
                                                       </Group>
@@ -2921,12 +2924,12 @@
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="lab3" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="txt58" pref="236" max="32767" attributes="0"/>
+                                                  <Component id="txt58" pref="246" max="32767" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="lab28" max="-2" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="txt54" pref="209" max="32767" attributes="0"/>
+                                                  <Component id="txt54" pref="219" max="32767" attributes="0"/>
                                                   <EmptySpace max="-2" attributes="0"/>
                                                   <Component id="btn16" min="-2" max="-2" attributes="0"/>
                                               </Group>
@@ -3430,7 +3433,7 @@
                                       <Group type="102" attributes="0">
                                           <Component id="lab49" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="txt36" pref="206" max="32767" attributes="0"/>
+                                          <Component id="txt36" pref="216" max="32767" attributes="0"/>
                                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                           <Component id="btn26" min="-2" max="-2" attributes="0"/>
                                       </Group>
@@ -3969,12 +3972,12 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="lab78" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="txt66" pref="236" max="32767" attributes="0"/>
+                                          <Component id="txt66" pref="246" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                               </Group>
-                              <Component id="pan21" alignment="0" pref="334" max="32767" attributes="0"/>
+                              <Component id="pan21" alignment="0" pref="344" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
@@ -4191,7 +4194,7 @@
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="lab32" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" max="-2" attributes="0"/>
-                                              <Component id="txt14" pref="201" max="32767" attributes="0"/>
+                                              <Component id="txt14" pref="211" max="32767" attributes="0"/>
                                           </Group>
                                           <Group type="102" attributes="0">
                                               <Component id="lab27" min="-2" max="-2" attributes="0"/>
@@ -4472,7 +4475,7 @@
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="lab19" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                                      <Component id="txt7" pref="172" max="32767" attributes="0"/>
+                                      <Component id="txt7" pref="183" max="32767" attributes="0"/>
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
                                       <Component id="btn7" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -4492,7 +4495,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="lab24" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                                      <Component id="txt11" pref="173" max="32767" attributes="0"/>
+                                      <Component id="txt11" pref="183" max="32767" attributes="0"/>
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
                                       <Component id="btn11" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -4506,7 +4509,7 @@
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="lab13" min="-2" pref="118" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="txt1" pref="173" max="32767" attributes="0"/>
+                                              <Component id="txt1" pref="183" max="32767" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="btn4" min="-2" max="-2" attributes="0"/>
                                           </Group>
