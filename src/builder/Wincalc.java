@@ -132,9 +132,6 @@ public class Wincalc {
             root.sysprofRec = eSysprof.find2(nuni, UseType.FRAME); //первая.запись коробки
             root.artiklRec = eArtikl.find(root.sysprofRec.getInt(eSysprof.artikl_id), false); //первый артикул из сист. профилей
             syssizRec = eSyssize.find(root.artiklRec); //системные константы
-            root.colorID1 = (gson.color1 == -3) ? UColor.findColorFromArtdet(root.sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1; //базовый
-            root.colorID2 = (gson.color2 == -3) ? UColor.findColorFromArtdet(root.sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2; //внутр
-            root.colorID3 = (gson.color3 == -3) ? UColor.findColorFromArtdet(root.sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3; //внещний           
 
             //Параметры
             parametr(gson.param);
@@ -245,6 +242,10 @@ public class Wincalc {
     //Кальк.коорд. элементов конструкции
     public void location() {
         try {
+            root.colorID1 = (gson.color1 == -3) ? UColor.findColorFromArtdet(root.sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1; //базовый
+            root.colorID2 = (gson.color2 == -3) ? UColor.findColorFromArtdet(root.sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2; //внутр
+            root.colorID3 = (gson.color3 == -3) ? UColor.findColorFromArtdet(root.sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3; //внещний           
+            
             listElem.forEach(e -> e.initArtikle());
             root.setLocation();
 

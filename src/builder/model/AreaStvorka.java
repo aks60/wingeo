@@ -60,7 +60,7 @@ public class AreaStvorka extends AreaSimple {
 
     public AreaStvorka(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
-        this.initArtikle(gson.param);
+        this.initArtikle();
     }
 
     public void initStvorka() {
@@ -103,24 +103,24 @@ public class AreaStvorka extends AreaSimple {
      * или вручную.
      *
      */
-    public void initArtikle(JsonObject param) {
+    public void initArtikle() {
         try {
             //Поиск по параметру или первая запись из списка...
             //Фурнитура
-            if (isFinite(param, PKjson.sysfurnID)) {
-                sysfurnRec = eSysfurn.find2(param.get(PKjson.sysfurnID).getAsInt());
+            if (isFinite(gson.param, PKjson.sysfurnID)) {
+                sysfurnRec = eSysfurn.find2(gson.param.get(PKjson.sysfurnID).getAsInt());
             } else { //по умолчанию
                 sysfurnRec = eSysfurn.find3(winc.nuni); //ищем первую в системе
             }
             //Ручка
-            if (isFinite(param, PKjson.artiklHand)) {
-                handRec[0] = eArtikl.find(param.get(PKjson.artiklHand).getAsInt(), false);
+            if (isFinite(gson.param, PKjson.artiklHand)) {
+                handRec[0] = eArtikl.find(gson.param.get(PKjson.artiklHand).getAsInt(), false);
             } else { //по умолчанию
                 handRec[0] = eArtikl.find(sysfurnRec.getInt(eSysfurn.artikl_id1), false);
             }
             //Текстура ручки
-            if (isFinite(param, PKjson.colorHand)) {
-                handColor[0] = param.get(PKjson.colorHand).getAsInt();
+            if (isFinite(gson.param, PKjson.colorHand)) {
+                handColor[0] = gson.param.get(PKjson.colorHand).getAsInt();
             } else if (handColor[0] == -3) { //по умолчанию (первая в списке)
                 handColor[0] = eArtdet.find(handRec[0].getInt(eArtikl.id)).getInt(eArtdet.color_fk);
                 if (handColor[0] < 0) { //если все текстуры группы
@@ -131,37 +131,37 @@ public class AreaStvorka extends AreaSimple {
                 }
             }
             //Подвес (петли)
-            if (isFinite(param, PKjson.artiklLoop)) {
-                loopRec[0] = eArtikl.find(param.get(PKjson.artiklLoop).getAsInt(), false);
+            if (isFinite(gson.param, PKjson.artiklLoop)) {
+                loopRec[0] = eArtikl.find(gson.param.get(PKjson.artiklLoop).getAsInt(), false);
             }
             //Текстура подвеса
-            if (isFinite(param, PKjson.colorLoop)) {
-                loopColor[0] = param.get(PKjson.colorLoop).getAsInt();
+            if (isFinite(this.gson.param, PKjson.colorLoop)) {
+                loopColor[0] = gson.param.get(PKjson.colorLoop).getAsInt();
             }
             //Замок
-            if (isFinite(param, PKjson.artiklLock)) {
-                lockRec[0] = eArtikl.find(param.get(PKjson.artiklLock).getAsInt(), false);
+            if (isFinite(this.gson.param, PKjson.artiklLock)) {
+                lockRec[0] = eArtikl.find(this.gson.param.get(PKjson.artiklLock).getAsInt(), false);
             }
             //Текстура замка
-            if (isFinite(param, PKjson.colorLock)) {
-                lockColor[0] = param.get(PKjson.colorLock).getAsInt();
+            if (isFinite(gson.param, PKjson.colorLock)) {
+                lockColor[0] = gson.param.get(PKjson.colorLock).getAsInt();
             }
             //Сторона открывания
-            if (isFinite(param, PKjson.typeOpen)) {
-                typeOpen = TypeOpen1.get(param.get(PKjson.typeOpen).getAsInt());
+            if (isFinite(gson.param, PKjson.typeOpen)) {
+                typeOpen = TypeOpen1.get(gson.param.get(PKjson.typeOpen).getAsInt());
             } else {
                 int index = sysfurnRec.getInt(eSysfurn.side_open);
                 typeOpen = (index == TypeOpen2.REQ.id) ? typeOpen : (index == TypeOpen2.LEF.id) ? TypeOpen1.RIGH : TypeOpen1.LEFT;
             }
             //Положение ручки на створке, ручка задана параметром
-            if (isFinite(param, PKjson.positionHand)) {
-                int position = param.get(PKjson.positionHand).getAsInt();
+            if (isFinite(gson.param, PKjson.positionHand)) {
+                int position = gson.param.get(PKjson.positionHand).getAsInt();
                 if (position == LayoutHand.VAR.id) { //вариационная
                     handLayout = LayoutHand.VAR;
-                    if (isFinite(param, PKjson.heightHand)) {
-                        handHeight = param.get(PKjson.heightHand).getAsInt();
-                        if (isFinite(param, PKjson.heightHand)) {
-                            handHeight = param.get(PKjson.heightHand).getAsInt();
+                    if (isFinite(gson.param, PKjson.heightHand)) {
+                        handHeight = gson.param.get(PKjson.heightHand).getAsInt();
+                        if (isFinite(gson.param, PKjson.heightHand)) {
+                            handHeight = gson.param.get(PKjson.heightHand).getAsInt();
                         }
                     }
                 } else { //по середине или константная
