@@ -447,9 +447,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         winc.canvas.repaint();
                     }
                 }
-                //Конструкции
-                if (winNode.com5t().type == enums.Type.RECTANGL || winNode.com5t().type == enums.Type.DOOR || winNode.com5t().type == enums.Type.TRAPEZE || winNode.com5t().type == enums.Type.ARCH) {
-                    ((CardLayout) pan7.getLayout()).show(pan7, "card12");
+                //Коробка
+                if (List.of(enums.Type.RECTANGL, enums.Type.TRAPEZE, enums.Type.ARCH,
+                        enums.Type.DOOR).contains(winNode.com5t().type)) {
+                    ((CardLayout) pan7.getLayout()).show(pan7, "card18");
                     ((TitledBorder) pan12.getBorder()).setTitle(winc.root.type.name);
                     setText(txt9, eColor.find(winc.root.colorID1).getStr(eColor.name));
                     setText(txt13, eColor.find(winc.root.colorID2).getStr(eColor.name));
@@ -577,7 +578,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         lab57.setIcon(UColor.iconFromTypeJoin2(ej3.type().id));
                     }
                 } else {
-                    ((CardLayout) pan7.getLayout()).show(pan7, "card18");
+                    ((CardLayout) pan7.getLayout()).show(pan7, "card12");
                 }
                 lab2.setText("Элемент ID = " + UCom.format(winNode.com5t().id, 2));
                 List.of(pan12, pan13, pan15, pan16).forEach(it -> it.repaint());
@@ -4883,6 +4884,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         }
                     }
                 }
+                Object o3 = winNode.com5t();
                 int paramID = winNode.com5t().artiklRec.getInt(eArtikl.id);
                 Record paramRec = qSysprofFilter.stream().filter(rec -> rec.getInt(eSysprof.artikl_id) == paramID).findFirst().orElse(eSysprof.virtualRec(0));
 

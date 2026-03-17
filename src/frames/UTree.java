@@ -21,13 +21,12 @@ public class UTree {
     private static DefMutableTreeNode frm = null;
 
     //Загрузка tree конструкции
-    public static DefMutableTreeNode loadWinTree(Wincalc w) {
+    public static DefMutableTreeNode loadWinTree(Wincalc winc) {
         try {
-            winc = w;
             root = new DefMutableTreeNode(winc.root);
             root.add(new DefMutableTreeNode(new Com5t(Type.PARAM)));
             //Рама
-            frm = root.add(new DefMutableTreeNode(new Com5t(Type.FRAME)));
+            frm = root.add(new DefMutableTreeNode(new Com5t(winc.root.type)));
             frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.LEF)));
             frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
             frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.BOT)));

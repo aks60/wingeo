@@ -108,14 +108,8 @@ public class Wincalc {
 
             //Создание Gson класса
             gson = new GsonBuilder().create().fromJson(script, GsonRoot.class);
-
-            JsonParser parser = new JsonParser();
-            JsonElement rootNode = parser.parse(script);
             gson.setOwner(this);
-            nuni = (gson.nuni == null) ? -3 : gson.nuni;   
-            Record sysprofRec = eSysprof.find2(nuni, UseType.FRAME); //первая.запись коробки
-            Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //первый артикул из сист. профилей
-            this.syssizRec = eSyssize.find(artiklRec); //системные константы             
+            nuni = (gson.nuni == null) ? -3 : gson.nuni;            
             
             //Главное окно
             if (Type.RECTANGL == gson.type) {
@@ -130,6 +124,11 @@ public class Wincalc {
             } else if (Type.DOOR == gson.type) {
                 root = new AreaDoor(this, gson);
             }
+            
+            root.sysprofRec = eSysprof.find2(nuni, UseType.FRAME); //первая.запись коробки
+            root.artiklRec = eArtikl.find(root.sysprofRec.getInt(eSysprof.artikl_id), false); //первый артикул из сист. профилей
+            root.artiklRecAn = eArtikl.find(root.sysprofRec.getInt(eSysprof.artikl_id), true); //аналог
+            this.syssizRec = eSyssize.find(root.artiklRec); //системные константы             
 
             //Параметры
             parametr(gson.param);

@@ -48,7 +48,7 @@ public class AreaSimple extends Com5t {
 //        if (isFinite(param, PKjson.sysprofID)) {//профили через параметр
 //            sysprofRec = eSysprof.find3(param.get(PKjson.sysprofID).getAsInt());
 //        }
-////        else if(this.owner.id == 0) {
+    ////        else if(this.owner.id == 0) {
 ////            sysprofRec = eSysprof.find4(this.winc.nuni, UseArtiklTo.FRAME.id, UseSideTo.ANY);
 ////        }
 //    }
@@ -56,9 +56,18 @@ public class AreaSimple extends Com5t {
     public void initArtikle() {
         try {
             if (isFinite(gson.param, PKjson.sysprofID)) {//профили через параметр
-                this.sysprofRec = eSysprof.find3(gson.param.get(PKjson.sysprofID).getAsInt());
-                this.artiklRec = eArtikl.find(this.sysprofRec.getInt(eSysprof.artikl_id), false); //первый артикул из сист. профилей
-            }
+                sysprofRec = eSysprof.find3(gson.param.get(PKjson.sysprofID).getAsInt());
+                artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //первый артикул из сист. профилей
+                artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true); //аналог
+            } 
+             
+            
+//            else {
+//                this.sysprofRec = eSysprof.find2(winc.nuni, UseType.FRAME); //первая.запись коробки
+//                this.artiklRec = eArtikl.find(root.sysprofRec.getInt(eSysprof.artikl_id), false); //первый артикул из сист. профилей                           
+//            }
+//            this.winc.syssizRec = eSyssize.find(root.artiklRec); //системные константы 
+            
         } catch (Exception e) {
             System.err.println("Ошибка:AreaFrame.initArtikle() " + e);
         }

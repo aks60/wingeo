@@ -48,7 +48,9 @@ public class Com5t {
     public Geometry area = null; //ареа компонента 
     public Timer timer = new javax.swing.Timer(1200, new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
-            winc.canvas.repaint();
+            if (winc != null && winc.canvas != null) {
+                winc.canvas.repaint();
+            }
         }
     }); //подсветка элемента конструкции
     public int colorID1 = -1, colorID2 = -1, colorID3 = -1; //1-базовый 2-внутренний 3-внешний 
