@@ -448,8 +448,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     }
                 }
                 //Коробка
-                if (List.of(enums.Type.RECTANGL, enums.Type.TRAPEZE, enums.Type.ARCH,
-                        enums.Type.DOOR).contains(winNode.com5t().type)) {
+                if (List.of(enums.Type.RECTANGL, enums.Type.TRAPEZE, 
+                        enums.Type.ARCH, enums.Type.DOOR).contains(winNode.com5t().type)) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card18");
                     ((TitledBorder) pan12.getBorder()).setTitle(winc.root.type.name);
                     setText(txt9, eColor.find(winc.root.colorID1).getStr(eColor.name));
