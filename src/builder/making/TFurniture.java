@@ -16,7 +16,6 @@ import builder.model.AreaSimple;
 import builder.model.AreaStvorka;
 import builder.model.ElemSimple;
 import common.UCom;
-import dataset.Query;
 import enums.PKjson;
 import enums.Type;
 import java.util.ArrayList;
@@ -24,6 +23,7 @@ import java.util.HashMap;
 import static java.util.stream.Collectors.toList;
 import javax.swing.JOptionPane;
 import org.locationtech.jts.geom.Envelope;
+import startup.App;
 
 /**
  * Фурнитура
@@ -74,7 +74,8 @@ public class TFurniture extends Cal5e {
                     if (p2_max || furnitureRec.getDbl(eFurniture.max_height) < stv_height
                             || furnitureRec.getDbl(eFurniture.max_width) < stv_width) {
                         if (max_size_message == true) {
-                            JOptionPane.showMessageDialog(null, "Размер створки превышает максимальный размер фурнитуры.", "ВНИМАНИЕ!", 1);
+                            JOptionPane.showMessageDialog(App.active, "Размер створки превышает максимальный размер фурнитуры.", "ВНИМАНИЕ!", 1);
+                            return;
                         }
                         max_size_message = false;
                     }

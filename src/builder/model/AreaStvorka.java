@@ -105,6 +105,8 @@ public class AreaStvorka extends AreaSimple {
      */
     public void initArtikle() {
         try {
+             super.initArtikle();
+             
             //Поиск по параметру или первая запись из списка...
             //Фурнитура
             if (isFinite(gson.param, PKjson.sysfurnID)) {

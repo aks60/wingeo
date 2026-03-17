@@ -26,7 +26,7 @@ public class UTree {
             root = new DefMutableTreeNode(winc.root);
             root.add(new DefMutableTreeNode(new Com5t(Type.PARAM)));
             //Рама
-            frm = root.add(new DefMutableTreeNode(new Com5t(winc.root.type)));
+            frm = root.add(new DefMutableTreeNode(winc.root));
             frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.LEF)));
             frm.getLastChild().add(new DefMutableTreeNode(new Com5t(Type.JOINING)));
             frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.BOT)));

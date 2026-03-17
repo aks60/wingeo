@@ -239,11 +239,7 @@ public class Wincalc {
     //Кальк.коорд. элементов конструкции
     public void location() {
         try {
-            root.initArtikle();
-            root.colorID1 = (gson.color1 == -3) ? UColor.findColorFromArtdet(root.sysprofRec.getInt(eSysprof.artikl_id)) : gson.color1; //базовый
-            root.colorID2 = (gson.color2 == -3) ? UColor.findColorFromArtdet(root.sysprofRec.getInt(eSysprof.artikl_id)) : gson.color2; //внутр
-            root.colorID3 = (gson.color3 == -3) ? UColor.findColorFromArtdet(root.sysprofRec.getInt(eSysprof.artikl_id)) : gson.color3; //внещний           
-            
+            listArea.forEach(e -> e.initArtikle());
             listElem.forEach(e -> e.initArtikle());
             root.setLocation();
 
@@ -266,6 +262,7 @@ public class Wincalc {
             }
 
             //Создание створки
+            //UCom.filter(listArea, Type.STVORKA).forEach(e -> ((AreaStvorka) e).initArtikle());
             UCom.filter(listArea, Type.STVORKA).forEach(e -> ((AreaStvorka) e).initStvorka());
             UCom.filter(listElem, Type.STV_SIDE).forEach(e -> e.initArtikle());
             UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());

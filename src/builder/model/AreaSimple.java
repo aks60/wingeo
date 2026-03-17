@@ -1,6 +1,7 @@
 package builder.model;
 
 import builder.Wincalc;
+import builder.making.UColor;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import common.UCom;
@@ -34,24 +35,9 @@ public class AreaSimple extends Com5t {
 
     public AreaSimple(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson.id, gson, owner);
-        //initConstructiv(winc.gson.param);
         winc.listArea.add(this);
         winc.listAll.add(this);
     }
-
-//    /**
-//     * Профиль через параметр. PKjson_sysprofID пример створки:sysprofID:1121,
-//     * typeOpen:4, sysfurnID:2916} Этого параметра нет в интерфейсе программы,
-//     * он сделан для тестирования с ps4. Делегируется детьми см. класс ElemFrame
-//     */
-//    public void initConstructiv(JsonObject param) {
-//        if (isFinite(param, PKjson.sysprofID)) {//профили через параметр
-//            sysprofRec = eSysprof.find3(param.get(PKjson.sysprofID).getAsInt());
-//        }
-    ////        else if(this.owner.id == 0) {
-////            sysprofRec = eSysprof.find4(this.winc.nuni, UseArtiklTo.FRAME.id, UseSideTo.ANY);
-////        }
-//    }
 
     public void initArtikle() {
         try {
@@ -59,14 +45,22 @@ public class AreaSimple extends Com5t {
                 sysprofRec = eSysprof.find3(gson.param.get(PKjson.sysprofID).getAsInt());
                 artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //первый артикул из сист. профилей
                 artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true); //аналог
-            } 
-             
+            } else {
+                UseType useType = (this instanceof AreaStvorka) ? UseType.STVORKA : UseType.FRAME;
+                sysprofRec = eSysprof.find2(winc.nuni, useType); //первая.запись коробки
+                artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //первый артикул из сист. профилей
+                artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true); //аналог                
+            }
             
-//            else {
-//                this.sysprofRec = eSysprof.find2(winc.nuni, UseType.FRAME); //первая.запись коробки
-//                this.artiklRec = eArtikl.find(root.sysprofRec.getInt(eSysprof.artikl_id), false); //первый артикул из сист. профилей                           
-//            }
-//            this.winc.syssizRec = eSyssize.find(root.artiklRec); //системные константы 
+            colorID1 = (isFinite(gson.param, PKjson.colorID1)) 
+                    ? gson.param.get(PKjson.colorID1).getAsInt() 
+                    : UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id));
+            colorID2 = (isFinite(gson.param, PKjson.colorID2)) 
+                    ? gson.param.get(PKjson.colorID2).getAsInt() 
+                    : UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id));
+            colorID3 = (isFinite(gson.param, PKjson.colorID3)) 
+                    ? gson.param.get(PKjson.colorID3).getAsInt() 
+                    : UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id));
             
         } catch (Exception e) {
             System.err.println("Ошибка:AreaFrame.initArtikle() " + e);

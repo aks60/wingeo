@@ -101,8 +101,8 @@ public class Com5t {
     public java.awt.Color color() {
         return (timer.isRunning() == true) ? new java.awt.Color(255, 120, 0) : new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb));
     }
-
-    public boolean isFinite(JsonObject jso, String key) {
+    
+    public static boolean isFinite(JsonObject jso, String key) {
         if (key == null) {
             if (jso == null || "".equals(jso)) {
                 return false;
@@ -124,6 +124,17 @@ public class Com5t {
     public boolean equals(Object obj) {
         return (this.id == ((Com5t) obj).id);
     }
+
+//public void setJsonParam(Object obj, List path, Object value) {
+//    path.stream().reduce((acc, key, index) => {
+//        if (index === path.length - 1) {
+//            acc[key] = value;
+//        } else {
+//            acc[key] = acc[key] || {};
+//        }
+//        return acc[key];
+//    }, obj);
+//};
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
     public Double x1() {
