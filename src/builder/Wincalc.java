@@ -101,6 +101,7 @@ public class Wincalc {
             //System.out.println(new GsonBuilder().create().toJson(JsonParser.parseString(script))); //для тестирования
             //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(script)));
 
+            //TODO удалить инит.
             //Инит свойств
             nppID = 0;
             mapPardef.clear();
@@ -109,8 +110,8 @@ public class Wincalc {
             //Создание Gson класса
             gson = new GsonBuilder().create().fromJson(script, GsonRoot.class);
             gson.setOwner(this);
-            nuni = (gson.nuni == null) ? -3 : gson.nuni;            
-            
+            nuni = (gson.nuni == null) ? -3 : gson.nuni;
+
             //Главное окно
             if (Type.RECTANGL == gson.type) {
                 root = new AreaRectangl(this, gson);
@@ -124,20 +125,20 @@ public class Wincalc {
             } else if (Type.DOOR == gson.type) {
                 root = new AreaDoor(this, gson);
             }
-            
+
             root.sysprofRec = eSysprof.find2(nuni, UseType.FRAME); //первая.запись коробки
             root.artiklRec = eArtikl.find(root.sysprofRec.getInt(eSysprof.artikl_id), false); //первый артикул из сист. профилей
             root.artiklRecAn = eArtikl.find(root.sysprofRec.getInt(eSysprof.artikl_id), true); //аналог
             this.syssizRec = eSyssize.find(root.artiklRec); //системные константы             
 
-            //Параметры
-            parametr(gson.param);
+            
+            parametr(gson.param); //параметры
+           
+            creator(root, gson); //элементы конструкции
 
-            //Элементы конструкции
-            creator(root, gson);
-
-            //Обновление конструкции
-            location();
+            artikle(); //получение артиклов
+                        
+            location(); //координаты конструкции
 
         } catch (JsonSyntaxException e) {
             System.err.println("Ошибка: Wincalc.build()");
@@ -236,11 +237,17 @@ public class Wincalc {
         }
     }
 
+    //Получение артиклов
+    public void artikle() {
+        listArea.forEach(e -> e.initArtikle());
+        listElem.forEach(e -> e.initArtikle());
+    }
+
     //Кальк.коорд. элементов конструкции
     public void location() {
         try {
-            listArea.forEach(e -> e.initArtikle());
-            listElem.forEach(e -> e.initArtikle());
+            //listArea.forEach(e -> e.initArtikle());
+            //listElem.forEach(e -> e.initArtikle());
             root.setLocation();
 
             //Исключая импост створки т.к. ств. ещё не создана
@@ -262,7 +269,6 @@ public class Wincalc {
             }
 
             //Создание створки
-            //UCom.filter(listArea, Type.STVORKA).forEach(e -> ((AreaStvorka) e).initArtikle());
             UCom.filter(listArea, Type.STVORKA).forEach(e -> ((AreaStvorka) e).initStvorka());
             UCom.filter(listElem, Type.STV_SIDE).forEach(e -> e.initArtikle());
             UCom.filter(listArea, Type.STVORKA).forEach(e -> e.setLocation());
@@ -355,12 +361,12 @@ public class Wincalc {
         try {
 
             if (this.sceleton == false) {
-                
+
                 //Пересчёт фурнитуры с учётом настроек 
                 //конструктива ручки, петли, замка см. форму "Фурнитура"
                 if (this.scale > .1) {
                     TFurniture furniture = new TFurniture(this, true);
-                    furniture.furn();  
+                    furniture.furn();
                 }
                 //Прорисовка стеклопакетов
                 UCom.filter(this.listElem, Type.GLASS).stream().forEach(el -> el.paint());
