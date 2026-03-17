@@ -453,11 +453,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     ((CardLayout) pan7.getLayout()).show(pan7, "card18");
                     ((TitledBorder) pan12.getBorder()).setTitle(winc.root.type.name);
                     setText(txt9, eColor.find(winc.root.colorID1).getStr(eColor.name));
-                    setIcon(btn9, winc.gson.color1 != -3);
+                    setIcon(btn9, Com5t.isFinite(winc.root.gson.param, PKjson.colorID1));
                     setText(txt13, eColor.find(winc.root.colorID2).getStr(eColor.name));
-                    setIcon(btn13, winc.gson.color2 != -3);
+                    setIcon(btn13, Com5t.isFinite(winc.root.gson.param, PKjson.colorID2));
                     setText(txt14, eColor.find(winc.root.colorID3).getStr(eColor.name));
-                    setIcon(btn2, winc.gson.color3 != -3);
+                    setIcon(btn2, Com5t.isFinite(winc.root.gson.param, PKjson.colorID3));
                     setText(txt17, UCom.format(winc.width(), 1));
                     setText(txt22, UCom.format(winc.height(), 1));
                     setText(txt53, winc.root.artiklRec.get(eArtikl.code));
@@ -4345,24 +4345,18 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 if (rootArea != null) {
                     if (colorRec.get(1) == null) {
                         if (evt.getSource() == btn9) {
-                            //winc.gson.color1 = -3;
                             winc.gson.param.remove(PKjson.colorID1);
                         } else if (evt.getSource() == btn13) {
-                            //winc.gson.color2 = -3;
                             winc.gson.param.remove(PKjson.colorID2);
                         } else {
-                            //winc.gson.color3 = -3;
                             winc.gson.param.remove(PKjson.colorID3);
                         }
                     } else {
                         if (evt.getSource() == btn9) {
-                            //winc.gson.color1 = colorRec.getInt(eColor.id);
                             winc.gson.param.addProperty(PKjson.colorID1, colorRec.getStr(eColor.id));
                         } else if (evt.getSource() == btn13) {
-                            //winc.gson.color2 = colorRec.getInt(eColor.id);
                             winc.gson.param.addProperty(PKjson.colorID2, colorRec.getStr(eColor.id));
                         } else {
-                            //winc.gson.color3 = colorRec.getInt(eColor.id);
                             winc.gson.param.addProperty(PKjson.colorID3, colorRec.getStr(eColor.id));
                         }
                     }
