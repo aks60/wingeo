@@ -946,9 +946,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private void colorToElement(java.awt.event.ActionEvent evt, JButton btn1, JButton btn2) {
         try {
             List<String> keys = new ArrayList();
+            keys.add("param");
             Wincalc winc = wincalc();
             Com5t com5t = winNode.com5t();
-            final JsonObject jso = winNode.com5t().gson.param;
+            final JsonObject json = com5t.gson.param;
             Record systreeRec = eSystree.find(winc.nuni);
             Field colorFilterMark = (evt.getSource() == btn1) ? eArtdet.mark_c1 : (evt.getSource() == btn2) ? eArtdet.mark_c2 : eArtdet.mark_c3;
             String colorFilterTxt = (evt.getSource() == btn1) ? systreeRec.getStr(eSystree.col1) : (evt.getSource() == btn2)
@@ -979,10 +980,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             ListenerRecord listenerColor = (colorRec) -> {
 
                 if (colorRec.get(1) == null) {
-                    UPar.remove(jso, keys);
+                    UPar.remove(json, keys);
 
                 } else {
-                    UPar.addProperty(jso, keys, colorRec.getInt(eColor.id));
+                    UPar.addProperty(json, keys, colorRec.getInt(eColor.id));
                 }
                 changeAndRedraw();
             };
