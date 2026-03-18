@@ -39,7 +39,7 @@ public class Com5t {
     public static GeometricShapeFactory gsf = new GeometricShapeFactory(gf);
     public static AffineTransformation aff = new AffineTransformation();
 
-    public double id;
+    public double id = -3;
     public Wincalc winc = null;
     public AreaSimple owner = null; //владелец
     public AreaSimple root = null; //главный класс конструкции

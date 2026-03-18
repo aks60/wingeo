@@ -51,17 +51,25 @@ public class AreaSimple extends Com5t {
                 artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //первый артикул из сист. профилей
                 artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true); //аналог                
             }
-            
-            colorID1 = (isFinite(gson.param, PKjson.colorID1)) 
-                    ? gson.param.get(PKjson.colorID1).getAsInt() 
-                    : UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id));
-            colorID2 = (isFinite(gson.param, PKjson.colorID2)) 
-                    ? gson.param.get(PKjson.colorID2).getAsInt() 
-                    : UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id));
-            colorID3 = (isFinite(gson.param, PKjson.colorID3)) 
-                    ? gson.param.get(PKjson.colorID3).getAsInt() 
-                    : UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id));
-            
+            if ((this instanceof AreaStvorka)) {
+                colorID1 = (isFinite(gson.param, PKjson.colorID1))
+                        ? gson.param.get(PKjson.colorID1).getAsInt() : owner.colorID1;
+                colorID2 = (isFinite(gson.param, PKjson.colorID2))
+                        ? gson.param.get(PKjson.colorID2).getAsInt() : owner.colorID2;
+                colorID3 = (isFinite(gson.param, PKjson.colorID3))
+                        ? gson.param.get(PKjson.colorID3).getAsInt() : owner.colorID3;
+            } else {
+                colorID1 = (isFinite(gson.param, PKjson.colorID1))
+                        ? gson.param.get(PKjson.colorID1).getAsInt()
+                        : UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id));
+                colorID2 = (isFinite(gson.param, PKjson.colorID2))
+                        ? gson.param.get(PKjson.colorID2).getAsInt()
+                        : UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id));
+                colorID3 = (isFinite(gson.param, PKjson.colorID3))
+                        ? gson.param.get(PKjson.colorID3).getAsInt()
+                        : UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id));
+            }
+
         } catch (Exception e) {
             System.err.println("Ошибка:AreaFrame.initArtikle() " + e);
         }

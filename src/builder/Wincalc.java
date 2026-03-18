@@ -246,8 +246,6 @@ public class Wincalc {
     //Кальк.коорд. элементов конструкции
     public void location() {
         try {
-            //listArea.forEach(e -> e.initArtikle());
-            //listElem.forEach(e -> e.initArtikle());
             root.setLocation();
 
             //Исключая импост створки т.к. ств. ещё не создана

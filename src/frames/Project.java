@@ -723,7 +723,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
             loadingTree(winc);
 
             //Установим курсор
-            UGui.selectionPathWin(id, winTree);
+            UTree.selectionPathWin(id, winTree);
 
             //Перерисуем конструкцию
             canvas.init(winc);
@@ -759,7 +759,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                 loadingTree(winc);
 
                 //Установим курсор
-                UGui.selectionPathWin(id, winTree);
+                UTree.selectionPathWin(id, winTree);
 
                 //Перерисуем конструкцию
                 canvas.init(winc);
@@ -895,6 +895,50 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }
 
+    private void colorToElement(java.awt.event.ActionEvent evt, JButton btn1, JButton btn2) {
+        try {
+            Wincalc winc = wincalc();
+            Com5t com5t = winNode.com5t();
+            Record systreeRec = eSystree.find(winc.nuni);
+            Field colorFilterMark = (evt.getSource() == btn1) ? eArtdet.mark_c1 : (evt.getSource() == btn2) ? eArtdet.mark_c2 : eArtdet.mark_c3;
+            String colorFilterTxt = (evt.getSource() == btn1) ? systreeRec.getStr(eSystree.col1) : (evt.getSource() == btn2)
+                    ? systreeRec.getStr(eSystree.col2) : systreeRec.getStr(eSystree.col3);
+            Query artdetList = new Query(eArtdet.values()).sql(eArtdet.data(), eArtdet.artikl_id, winNode.com5t().artiklRec.getInt(eArtikl.id));
+
+            HashSet<Record> colorFilterSet = DicColor.filterTxt(eColor.data(), colorFilterTxt);
+            HashSet<Record> colorSet = DicColor.filterDet(colorFilterSet, artdetList, colorFilterMark);
+
+            ListenerRecord listenerColor = (colorRec) -> {
+
+                if (colorRec.get(1) == null) {
+                    if (evt.getSource() == btn1) {
+                        com5t.gson.param.remove(PKjson.colorID1);
+                    } else if (evt.getSource() == btn2) {
+                        com5t.gson.param.remove(PKjson.colorID2);
+                    } else {
+                        com5t.gson.param.remove(PKjson.colorID3);
+                    }
+                } else {
+                    if (evt.getSource() == btn1) {
+                        com5t.gson.param.addProperty(PKjson.colorID1, colorRec.getStr(eColor.id));
+                    } else if (evt.getSource() == btn2) {
+                        com5t.gson.param.addProperty(PKjson.colorID2, colorRec.getStr(eColor.id));
+                    } else {
+                        com5t.gson.param.addProperty(PKjson.colorID3, colorRec.getStr(eColor.id));
+                    }
+                }
+                changeAndRedraw();
+            };
+            if (colorFilterTxt.isEmpty()) {
+                new DicColor(this, listenerColor, false, false);
+            } else {
+                new DicColor(this, listenerColor, colorSet, true, false);
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:Systree.colorToElement() " + e);
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -2204,7 +2248,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
 
         tabb2.addTab("Створка", pan22);
 
-        lab26.setFont(frames.UGui.getFont(0,1));
+        lab26.setFont(frames.UGui.getFont(0,0));
         lab26.setText("Петля");
         lab26.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab26.setMaximumSize(new java.awt.Dimension(80, 18));
@@ -2505,7 +2549,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
 
         tabb2.addTab("Фурнитура", pan23);
 
-        lab47.setFont(frames.UGui.getFont(0,1));
+        lab47.setFont(frames.UGui.getFont(0,0));
         lab47.setText("Моск. сетка");
         lab47.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab47.setMaximumSize(new java.awt.Dimension(80, 18));
@@ -2589,7 +2633,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
             }
         });
 
-        jLabel1.setFont(frames.UGui.getFont(0,1));
+        jLabel1.setFont(frames.UGui.getFont(0,0));
         jLabel1.setText("Замок");
         jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jLabel1.setMaximumSize(new java.awt.Dimension(80, 18));
@@ -3423,40 +3467,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_stateChanged
 
     private void colorToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToKorobka
-        try {
-            if (winNode != null) {
-                double selectID = winNode.com5t().id;
-                int systreeID = qPrjprod.getAs(UGui.getIndexRec(tab2), ePrjprod.systree_id);
-                Record systreeRec = eSystree.find(systreeID);
-                eSystree field = (evt.getSource() == btn9) ? eSystree.col1 : (evt.getSource() == btn13) ? eSystree.col2 : eSystree.col3;
-                HashSet<Record> colorSet = DicColor.filterTxt(eColor.data(), systreeRec.getStr(field));
-                Integer[] arr2 = UCom.parserInt(systreeRec.getStr(field));
-
-                ListenerRecord listenerColor = (colorRec) -> {
-
-                    if (colorRec.get(1) != null) {
-                        GsonElem jsonElem = UCom.gson(wincalc().listAll, selectID);
-                        if (jsonElem != null) {
-                            if (evt.getSource() == btn9) {
-                                wincalc().gson.color1 = colorRec.getInt(eColor.id);
-                            } else if (evt.getSource() == btn13) {
-                                wincalc().gson.color2 = colorRec.getInt(eColor.id);
-                            } else {
-                                wincalc().gson.color3 = colorRec.getInt(eColor.id);
-                            }
-                            changeAndRedraw();
-                        }
-                    }
-                };
-                if (arr2.length == 0) {
-                    new DicColor(this, listenerColor, false, false);
-                } else {
-                    new DicColor(this, listenerColor, colorSet, false, false);
-                }
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка°: " + e);
-        }
+        colorToElement(evt, btn9, btn13);
     }//GEN-LAST:event_colorToKorobka
 
     private void sysprofToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysprofToFrame
@@ -3534,74 +3545,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_sysprofToFrame
 
     private void colorToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToFrame
-        try {
-            double selectID = winNode.com5t().id;
-            int systreeID = qPrjprod.getAs(UGui.getIndexRec(tab2), ePrjprod.systree_id);
-            Record systreeRec = eSystree.find(systreeID);
-            eSystree col = (evt.getSource() == btn18) ? eSystree.col1 : (evt.getSource() == btn19) ? eSystree.col2 : eSystree.col3;
-            Field field = (evt.getSource() == btn18) ? eArtdet.mark_c1 : (evt.getSource() == btn19) ? eArtdet.mark_c2 : eArtdet.mark_c3;
-            Query artdetList = new Query(eArtdet.values()).sql(eArtdet.data(), eArtdet.artikl_id, winNode.com5t().artiklRec.getInt(eArtikl.id));
-
-            HashSet<Record> colorSrc = DicColor.filterTxt(eColor.data(), systreeRec.getStr(col));
-            HashSet<Record> colorSet = DicColor.filterDet(colorSrc, artdetList, field);
-
-            DicColor frame = new DicColor(this, (colorRec) -> {
-
-                String colorID = (evt.getSource() == btn18) ? PKjson.colorID1 : (evt.getSource() == btn19) ? PKjson.colorID2 : PKjson.colorID3;
-                double parentId = winNode.com5t().owner.id;
-                GsonElem parentArea = UCom.gson(wincalc().listAll, parentId);
-
-                if (winNode.com5t().type == enums.Type.STV_SIDE) {
-                    JsonObject paramObj = parentArea.param;
-                    String stvKey = null;
-                    if (winNode.com5t().layout() == Layout.BOT) {
-                        stvKey = PKjson.stvorkaBot;
-                    } else if (winNode.com5t().layout() == Layout.RIG) {
-                        stvKey = PKjson.stvorkaRig;
-                    } else if (winNode.com5t().layout() == Layout.TOP) {
-                        stvKey = PKjson.stvorkaTop;
-                    } else if (winNode.com5t().layout() == Layout.LEF) {
-                        stvKey = PKjson.stvorkaLef;
-                    }
-
-                    JsonObject jso = UGui.getAsJsonObject(paramObj, stvKey);
-                    if (colorRec.get(1) == null) {
-                        jso.remove(colorID);
-                    } else {
-                        jso.addProperty(colorID, colorRec.getStr(eColor.id));
-                    }
-                    changeAndRedraw();
-
-                } else if (winNode.com5t().type == enums.Type.BOX_SIDE) {
-                    for (GsonElem elem : parentArea.childs) {
-                        if (elem.id == ((DefMutableTreeNode) winNode).com5t().id) {
-                            if (colorRec.get(1) == null) {
-                                elem.param.remove(colorID);
-                            } else {
-                                elem.param.addProperty(colorID, colorRec.getStr(eColor.id));
-                            }
-                            changeAndRedraw();
-                        }
-                    }
-                } else if (winNode.com5t().type == enums.Type.IMPOST
-                        || winNode.com5t().type == enums.Type.STOIKA
-                        || winNode.com5t().type == enums.Type.SHTULP) {
-                    for (GsonElem elem : parentArea.childs) {
-                        if (elem.id == ((DefMutableTreeNode) winNode).com5t().id) {
-                            if (colorRec.get(1) == null) {
-                                elem.param.remove(colorID);
-                            } else {
-                                elem.param.addProperty(colorID, colorRec.getStr(eColor.id));
-                            }
-                            changeAndRedraw();
-                        }
-                    }
-                }
-
-            }, colorSet, true, false);
-        } catch (Exception e) {
-            System.err.println("Ошибка: " + e);
-        }
+        colorToElement(evt, btn18, btn19);
     }//GEN-LAST:event_colorToFrame
 
     private void sysfurnToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysfurnToStvorka
@@ -4117,45 +4061,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_sysprofToStvorka
 
     private void colorToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToStvorka
-        try {
-            Wincalc winc = wincalc();
-            double selectID = winNode.com5t().id;
-            String colorTxt = (evt.getSource() == btn38) ? txt10.getText() : (evt.getSource() == btn39) ? txt15.getText() : txt23.getText();
-            Integer[] colorArr = UCom.parserInt(colorTxt);
-            HashSet<Record> colorSet = DicColor.filterTxt(eColor.data(), colorTxt);
-
-            ListenerRecord listenerColor = (colorRec) -> {
-
-                AreaSimple elemStv = winc.listArea.stream().filter(el -> el.id == selectID).findAny().orElse(null);
-                if (elemStv != null) {
-                    if (colorRec.get(1) == null) {
-                        if (evt.getSource() == btn38) {
-                            elemStv.gson.param.remove(PKjson.colorID1);
-                        } else if (evt.getSource() == btn39) {
-                            elemStv.gson.param.remove(PKjson.colorID2);
-                        } else {
-                            elemStv.gson.param.remove(PKjson.colorID3);
-                        }
-                    } else {
-                        if (evt.getSource() == btn38) {
-                            elemStv.gson.param.addProperty(PKjson.colorID1, colorRec.getStr(eColor.id));
-                        } else if (evt.getSource() == btn39) {
-                            elemStv.gson.param.addProperty(PKjson.colorID2, colorRec.getStr(eColor.id));
-                        } else {
-                            elemStv.gson.param.addProperty(PKjson.colorID3, colorRec.getStr(eColor.id));
-                        }
-                    }
-                    changeAndRedraw();
-                }
-            };
-            if (colorArr.length == 0) {
-                new DicColor(this, listenerColor, false, false);
-            } else {
-                new DicColor(this, listenerColor, colorSet, true, false);
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.colorToStvorka() " + e);
-        }
+        colorToElement(evt, btn38, btn39);
     }//GEN-LAST:event_colorToStvorka
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 

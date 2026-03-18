@@ -1,7 +1,6 @@
 package frames.dialog;
 
 import common.UCom;
-import common.eProp;
 import common.listener.ListenerFrame;
 import frames.UGui;
 import dataset.Query;

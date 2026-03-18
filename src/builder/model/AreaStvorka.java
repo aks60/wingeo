@@ -3,7 +3,9 @@ package builder.model;
 import builder.Wincalc;
 import builder.making.TFurniture;
 import builder.making.TRecord;
+import builder.making.UColor;
 import static builder.model.Com5t.gf;
+import static builder.model.Com5t.isFinite;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import common.UCom;
@@ -24,6 +26,7 @@ import enums.TypeJoin;
 import enums.TypeOpen1;
 import enums.TypeOpen2;
 import enums.UseSide;
+import enums.UseType;
 import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +63,6 @@ public class AreaStvorka extends AreaSimple {
 
     public AreaStvorka(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);
-        this.initArtikle();
     }
 
     public void initStvorka() {
@@ -105,8 +107,8 @@ public class AreaStvorka extends AreaSimple {
      */
     public void initArtikle() {
         try {
-             super.initArtikle();
-             
+            super.initArtikle();
+
             //Поиск по параметру или первая запись из списка...
             //Фурнитура
             if (isFinite(gson.param, PKjson.sysfurnID)) {

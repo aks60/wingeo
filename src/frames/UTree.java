@@ -12,7 +12,11 @@ import enums.Type;
 import enums.TypeArt;
 import frames.swing.comp.DefMutableTreeNode;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 
 public class UTree {
 
@@ -23,7 +27,7 @@ public class UTree {
     //Загрузка tree конструкции
     public static DefMutableTreeNode loadWinTree(Wincalc winc) {
         try {
-            root = new DefMutableTreeNode(winc.root);
+            root = new DefMutableTreeNode(new Com5t());
             root.add(new DefMutableTreeNode(new Com5t(Type.PARAM)));
             //Рама
             frm = root.add(new DefMutableTreeNode(winc.root));
@@ -162,5 +166,41 @@ public class UTree {
             }
         }
         return null;
+    }
+    
+    public static void selectionPathWin(double id, JTree tree) {
+        if (id != -1) {
+            DefaultMutableTreeNode curNode = (DefaultMutableTreeNode) tree.getModel().getRoot();
+            //curNode.getNextNode();
+            do {
+                if (id == ((DefMutableTreeNode) curNode).com5t().id) {
+                    TreePath path = new TreePath(curNode.getPath());
+                    tree.setSelectionPath(path);
+                    tree.scrollPathToVisible(path);
+                    return;
+                }
+                curNode = curNode.getNextNode();
+            } while (curNode != null);
+        }
+    }
+  
+    public static void expandTree(JTree tree, TreePath path, boolean expand) {
+        TreeNode node = (TreeNode) path.getLastPathComponent();
+
+        if (node.getChildCount() >= 0) {
+            Enumeration enumeration = node.children();
+            while (enumeration.hasMoreElements()) {
+                TreeNode n = (TreeNode) enumeration.nextElement();
+                TreePath p = path.pathByAddingChild(n);
+
+                expandTree(tree, p, expand);
+            }
+        }
+
+        if (expand) {
+            tree.expandPath(path);
+        } else {
+            tree.collapsePath(path);
+        }
     }
 }

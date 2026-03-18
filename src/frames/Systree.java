@@ -448,7 +448,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     }
                 }
                 //Коробка
-                if (List.of(enums.Type.RECTANGL, enums.Type.TRAPEZE, 
+                if (List.of(enums.Type.RECTANGL, enums.Type.TRAPEZE,
                         enums.Type.ARCH, enums.Type.DOOR).contains(winNode.com5t().type)) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card18");
                     ((TitledBorder) pan12.getBorder()).setTitle(winc.root.type.name);
@@ -531,7 +531,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     setIcon(btn37, Com5t.isFinite(stv.gson.param, PKjson.sysprofID));
                     setText(txt69, stv.artiklRec.get(eArtikl.name));
                     setText(txt70, eArtikl.find2(winNode.com5t().artiklRec.getInt(eArtikl.analog_id)).getStr(eArtikl.code));
-                    
+
                     setText(txt10, eColor.find(stv.colorID1).getStr(eColor.name));
                     setIcon(btn38, Com5t.isFinite(stv.gson.param, PKjson.colorID1));
                     setText(txt15, eColor.find(stv.colorID2).getStr(eColor.name));
@@ -851,8 +851,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             Wincalc winc = wincalc();
             winc.build(script);
             winc.imageIcon = Canvas.createIcon(winc, 68);
-            //sysprodRec.setNo(eSysprod.values().length, winc);
-            //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(winc.gson.toJson())));
 
             //Запомним курсор
             DefMutableTreeNode selectNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
@@ -862,7 +860,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             loadingTree2(winc);
 
             //Установим курсор
-            UGui.selectionPathWin(id, winTree);
+            UTree.selectionPathWin(id, winTree);
 
             //Перерисуем конструкцию
             canvas.init(winc);
@@ -898,7 +896,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 loadingTree2(winc);
 
                 //Установим курсор
-                UGui.selectionPathWin(id, winTree);
+                UTree.selectionPathWin(id, winTree);
 
                 //Перерисуем конструкцию
                 canvas.init(winc);
@@ -941,6 +939,50 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         } else {
             btn.setText("...");
             btn.setIcon(null);
+        }
+    }
+
+    private void colorToElement(java.awt.event.ActionEvent evt, JButton btn1, JButton btn2) {
+        try {
+            Wincalc winc = wincalc();
+            Com5t com5t = winNode.com5t();
+            Record systreeRec = eSystree.find(winc.nuni);
+            Field colorFilterMark = (evt.getSource() == btn1) ? eArtdet.mark_c1 : (evt.getSource() == btn2) ? eArtdet.mark_c2 : eArtdet.mark_c3;
+            String colorFilterTxt = (evt.getSource() == btn1) ? systreeRec.getStr(eSystree.col1) : (evt.getSource() == btn2)
+                    ? systreeRec.getStr(eSystree.col2) : systreeRec.getStr(eSystree.col3);
+            Query artdetList = new Query(eArtdet.values()).sql(eArtdet.data(), eArtdet.artikl_id, winNode.com5t().artiklRec.getInt(eArtikl.id));
+
+            HashSet<Record> colorFilterSet = DicColor.filterTxt(eColor.data(), colorFilterTxt);
+            HashSet<Record> colorSet = DicColor.filterDet(colorFilterSet, artdetList, colorFilterMark);
+
+            ListenerRecord listenerColor = (colorRec) -> {
+
+                if (colorRec.get(1) == null) {
+                    if (evt.getSource() == btn1) {
+                        com5t.gson.param.remove(PKjson.colorID1);
+                    } else if (evt.getSource() == btn2) {
+                        com5t.gson.param.remove(PKjson.colorID2);
+                    } else {
+                        com5t.gson.param.remove(PKjson.colorID3);
+                    }
+                } else {
+                    if (evt.getSource() == btn1) {
+                        com5t.gson.param.addProperty(PKjson.colorID1, colorRec.getStr(eColor.id));
+                    } else if (evt.getSource() == btn2) {
+                        com5t.gson.param.addProperty(PKjson.colorID2, colorRec.getStr(eColor.id));
+                    } else {
+                        com5t.gson.param.addProperty(PKjson.colorID3, colorRec.getStr(eColor.id));
+                    }
+                }
+                changeAndRedraw();
+            };
+            if (colorFilterTxt.isEmpty()) {
+                new DicColor(this, listenerColor, false, false);
+            } else {
+                new DicColor(this, listenerColor, colorSet, true, false);
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка:Systree.colorToElement() " + e);
         }
     }
 
@@ -1596,7 +1638,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         );
         pan12Layout.setVerticalGroup(
             pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 315, Short.MAX_VALUE)
+            .addGap(0, 379, Short.MAX_VALUE)
         );
 
         pan7.add(pan12, "card12");
@@ -1731,12 +1773,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             .addGroup(pan22Layout.createSequentialGroup()
                 .addGap(9, 9, 9)
                 .addGroup(pan22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pan22Layout.createSequentialGroup()
-                        .addComponent(btn19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pan22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt29, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pan22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btn20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt29, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pan22Layout.createSequentialGroup()
                         .addGroup(pan22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lab51, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1745,7 +1784,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pan22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lab52, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt28, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lab53, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1802,7 +1842,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     .addComponent(txt52, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pan22, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 132, Short.MAX_VALUE))
+                .addGap(0, 196, Short.MAX_VALUE))
         );
 
         pan7.add(pan13, "card13");
@@ -2222,7 +2262,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     .addComponent(btn35, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lab4, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 32, Short.MAX_VALUE))
         );
 
         txt19.getAccessibleContext().setAccessibleName("");
@@ -2482,7 +2522,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     .addComponent(lab82, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pan24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
 
         tabb2.addTab("Створка", pan20);
@@ -2531,7 +2571,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         lab45.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab45.setPreferredSize(new java.awt.Dimension(80, 18));
 
-        lab25.setFont(frames.UGui.getFont(0,1));
+        lab25.setFont(frames.UGui.getFont(0,0));
         lab25.setText("Ручка");
         lab25.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab25.setMaximumSize(new java.awt.Dimension(80, 18));
@@ -2618,7 +2658,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
         });
 
-        lab26.setFont(frames.UGui.getFont(0,1));
+        lab26.setFont(frames.UGui.getFont(0,0));
         lab26.setText("Петля");
         lab26.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab26.setMaximumSize(new java.awt.Dimension(80, 18));
@@ -2786,12 +2826,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     .addComponent(txt47, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lab44, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 56, Short.MAX_VALUE))
+                .addGap(0, 120, Short.MAX_VALUE))
         );
 
         tabb2.addTab("Фурнитура", pan19);
 
-        lab71.setFont(frames.UGui.getFont(0,1));
+        lab71.setFont(frames.UGui.getFont(0,0));
         lab71.setText("Замок");
         lab71.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab71.setMaximumSize(new java.awt.Dimension(80, 18));
@@ -2851,7 +2891,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         lab3.setMinimumSize(new java.awt.Dimension(80, 18));
         lab3.setPreferredSize(new java.awt.Dimension(80, 18));
 
-        lab28.setFont(frames.UGui.getFont(0,1));
+        lab28.setFont(frames.UGui.getFont(0,0));
         lab28.setText("Моск. сетка");
         lab28.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         lab28.setMaximumSize(new java.awt.Dimension(80, 18));
@@ -3262,7 +3302,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 .addGroup(pan17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lab57, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt41, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 102, Short.MAX_VALUE))
+                .addGap(0, 166, Short.MAX_VALUE))
         );
 
         pan7.add(pan17, "card17");
@@ -3511,7 +3551,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     .addComponent(lab79, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pan21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addContainerGap(153, Short.MAX_VALUE))
         );
 
         pan7.add(pan18, "card18");
@@ -3761,7 +3801,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         .addGroup(pan6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lab14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         tabb1.addTab("   Основные   ", pan6);
@@ -4256,114 +4296,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_sysprofToFrame
 
     private void colorToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToFrame
-        try {
-            double selectID = winNode.com5t().id;
-            Field field = (evt.getSource() == btn18) ? eArtdet.mark_c1 : (evt.getSource() == btn19) ? eArtdet.mark_c2 : eArtdet.mark_c3;
-            String colorTxt = (evt.getSource() == btn18) ? txt3.getText() : (evt.getSource() == btn19) ? txt4.getText() : txt5.getText();
-            Query artdetList = new Query(eArtdet.values()).sql(eArtdet.data(), eArtdet.artikl_id, winNode.com5t().artiklRec.getInt(eArtikl.id));
-
-            HashSet<Record> colorSrc = DicColor.filterTxt(eColor.data(), colorTxt);
-            HashSet<Record> colorSet = DicColor.filterDet(colorSrc, artdetList, field);
-
-            DicColor frame = new DicColor(this, (colorRec) -> {
-
-                String colorKey = (evt.getSource() == btn18) ? PKjson.colorID1 : (evt.getSource() == btn19) ? PKjson.colorID2 : PKjson.colorID3;
-                double parentId = winNode.com5t().owner.id;
-                GsonElem parentArea = UCom.gson(wincalc().listAll, parentId);
-
-                if (winNode.com5t().type == enums.Type.STV_SIDE) {
-                    JsonObject paramObj = parentArea.param;
-                    String stvKey = null;
-                    if (winNode.com5t().layout() == Layout.BOT) {
-                        stvKey = PKjson.stvorkaBot;
-                    } else if (winNode.com5t().layout() == Layout.RIG) {
-                        stvKey = PKjson.stvorkaRig;
-                    } else if (winNode.com5t().layout() == Layout.TOP) {
-                        stvKey = PKjson.stvorkaTop;
-                    } else if (winNode.com5t().layout() == Layout.LEF) {
-                        stvKey = PKjson.stvorkaLef;
-                    }
-
-                    JsonObject jso = UGui.getAsJsonObject(paramObj, stvKey);
-                    if (colorRec.get(1) == null) {
-                        jso.remove(colorKey);
-                    } else {
-                        jso.addProperty(colorKey, colorRec.getStr(eColor.id));
-                    }
-                    changeAndRedraw();
-
-                } else if (winNode.com5t().type == enums.Type.BOX_SIDE) {
-                    for (GsonElem elem : parentArea.childs) {
-                        if (elem.id == ((DefMutableTreeNode) winNode).com5t().id) {
-                            if (colorRec.get(1) == null) {
-                                elem.param.remove(colorKey);
-                            } else {
-                                elem.param.addProperty(colorKey, colorRec.getStr(eColor.id));
-                            }
-                            changeAndRedraw();
-                        }
-                    }
-                } else if (winNode.com5t().type == enums.Type.IMPOST
-                        || winNode.com5t().type == enums.Type.STOIKA
-                        || winNode.com5t().type == enums.Type.SHTULP) {
-                    for (GsonElem elem : parentArea.childs) {
-                        if (elem.id == ((DefMutableTreeNode) winNode).com5t().id) {
-                            if (colorRec.get(1) == null) {
-                                elem.param.remove(colorKey);
-                            } else {
-                                elem.param.addProperty(colorKey, colorRec.getStr(eColor.id));
-                            }
-                            changeAndRedraw();
-                        }
-                    }
-                }
-            }, colorSet, true, false);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.colorToFrame() " + e);
-        }
+        colorToElement(evt, btn18, btn19);
     }//GEN-LAST:event_colorToFrame
 
     private void colorToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToKorobka
-        try {
-            Wincalc winc = wincalc();
-            double selectID = winNode.com5t().id;
-            String colorTxt = (evt.getSource() == btn9) ? txt3.getText() : (evt.getSource() == btn13) ? txt4.getText() : txt5.getText();
-            Integer[] colorArr = UCom.parserInt(colorTxt);
-            HashSet<Record> colorSet = DicColor.filterTxt(eColor.data(), colorTxt);
-
-            ListenerRecord listenerColor = (colorRec) -> {
-
-                builder.script.GsonElem rootArea = UCom.gson(winc.listAll, selectID);
-                if (rootArea != null) {
-                    if (colorRec.get(1) == null) {
-                        if (evt.getSource() == btn9) {
-                            winc.gson.param.remove(PKjson.colorID1);
-                        } else if (evt.getSource() == btn13) {
-                            winc.gson.param.remove(PKjson.colorID2);
-                        } else {
-                            winc.gson.param.remove(PKjson.colorID3);
-                        }
-                    } else {
-                        if (evt.getSource() == btn9) {
-                            winc.gson.param.addProperty(PKjson.colorID1, colorRec.getStr(eColor.id));
-                        } else if (evt.getSource() == btn13) {
-                            winc.gson.param.addProperty(PKjson.colorID2, colorRec.getStr(eColor.id));
-                        } else {
-                            winc.gson.param.addProperty(PKjson.colorID3, colorRec.getStr(eColor.id));
-                        }
-                    }
-                    changeAndRedraw();
-                }
-            };
-            if (colorArr.length == 0) {
-                new DicColor(this, listenerColor, false, false);
-            } else {
-                new DicColor(this, listenerColor, colorSet, true, false);
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.colorToKorobka() " + e);
-        }
+        colorToElement(evt, btn9, btn13);
     }//GEN-LAST:event_colorToKorobka
 
     private void artiklToGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToGlass
@@ -5200,45 +5137,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_sysprofToStvorka
 
     private void colorToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToStvorka
-        try {
-            Wincalc winc = wincalc();
-            double selectID = winNode.com5t().id;
-            String colorTxt = (evt.getSource() == btn38) ? txt3.getText() : (evt.getSource() == btn39) ? txt4.getText() : txt5.getText();
-            Integer[] colorArr = UCom.parserInt(colorTxt);
-            HashSet<Record> colorSet = DicColor.filterTxt(eColor.data(), colorTxt);
-
-            ListenerRecord listenerColor = (colorRec) -> {
-
-                AreaSimple elemStv = winc.listArea.stream().filter(el -> el.id == selectID).findAny().orElse(null);
-                if (elemStv != null) {
-                    if (colorRec.get(1) == null) {
-                        if (evt.getSource() == btn38) {
-                            elemStv.gson.param.remove(PKjson.colorID1);
-                        } else if (evt.getSource() == btn39) {
-                            elemStv.gson.param.remove(PKjson.colorID2);
-                        } else {
-                            elemStv.gson.param.remove(PKjson.colorID3);
-                        }
-                    } else {
-                        if (evt.getSource() == btn38) {
-                            elemStv.gson.param.addProperty(PKjson.colorID1, colorRec.getStr(eColor.id));
-                        } else if (evt.getSource() == btn39) {
-                            elemStv.gson.param.addProperty(PKjson.colorID2, colorRec.getStr(eColor.id));
-                        } else {
-                            elemStv.gson.param.addProperty(PKjson.colorID3, colorRec.getStr(eColor.id));
-                        }
-                    }
-                    changeAndRedraw();
-                }
-            };
-            if (colorArr.length == 0) {
-                new DicColor(this, listenerColor, false, false);
-            } else {
-                new DicColor(this, listenerColor, colorSet, true, false);
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.colorToStvorka() " + e);
-        }
+        colorToElement(evt, btn38, btn39);
     }//GEN-LAST:event_colorToStvorka
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
