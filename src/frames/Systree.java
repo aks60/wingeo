@@ -76,6 +76,7 @@ import builder.model.ElemJoining;
 import builder.model.ElemMosquit;
 import builder.model.ElemSimple;
 import builder.model.UGeo;
+import builder.model.UPar;
 import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
@@ -453,15 +454,15 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     ((CardLayout) pan7.getLayout()).show(pan7, "card18");
                     ((TitledBorder) pan12.getBorder()).setTitle(winc.root.type.name);
                     setText(txt9, eColor.find(winc.root.colorID1).getStr(eColor.name));
-                    setIcon(btn9, Com5t.isFinite(winc.root.gson.param, PKjson.colorID1));
+                    setIcon(btn9, UPar.isFinite(winc.root.gson.param, PKjson.colorID1));
                     setText(txt13, eColor.find(winc.root.colorID2).getStr(eColor.name));
-                    setIcon(btn13, Com5t.isFinite(winc.root.gson.param, PKjson.colorID2));
+                    setIcon(btn13, UPar.isFinite(winc.root.gson.param, PKjson.colorID2));
                     setText(txt14, eColor.find(winc.root.colorID3).getStr(eColor.name));
-                    setIcon(btn2, Com5t.isFinite(winc.root.gson.param, PKjson.colorID3));
+                    setIcon(btn2, UPar.isFinite(winc.root.gson.param, PKjson.colorID3));
                     setText(txt17, UCom.format(winc.width(), 1));
                     setText(txt22, UCom.format(winc.height(), 1));
                     setText(txt53, winc.root.artiklRec.getStr(eArtikl.code));
-                    setIcon(btn36, Com5t.isFinite(winc.root.gson.param, PKjson.sysprofID));
+                    setIcon(btn36, UPar.isFinite(winc.root.gson.param, PKjson.sysprofID));
                     setText(txt66, winc.root.artiklRec.get(eArtikl.name));
                     setText(txt67, eArtikl.find2(winNode.com5t().artiklRec.getInt(eArtikl.analog_id)).getStr(eArtikl.code));
 
@@ -480,16 +481,16 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     ((CardLayout) pan7.getLayout()).show(pan7, "card13");
                     ((TitledBorder) pan13.getBorder()).setTitle(winNode.toString());
                     setText(txt32, winNode.com5t().artiklRec.getStr(eArtikl.code));
-                    setIcon(btn22, Com5t.isFinite(winNode.com5t().gson.param, PKjson.sysprofID));
+                    setIcon(btn22, UPar.isFinite(winNode.com5t().gson.param, PKjson.sysprofID));
                     setText(txt33, winNode.com5t().artiklRec.getStr(eArtikl.name));
                     setText(txt52, eArtikl.find2(winNode.com5t().artiklRec.getInt(eArtikl.analog_id)).getStr(eArtikl.code));
 
                     setText(txt27, eColor.find(winNode.com5t().colorID1).getStr(eColor.name));
-                    setIcon(btn18, Com5t.isFinite(winNode.com5t().gson.param, PKjson.colorID1));
+                    setIcon(btn18, UPar.isFinite(winNode.com5t().gson.param, PKjson.colorID1));
                     setText(txt28, eColor.find(winNode.com5t().colorID2).getStr(eColor.name));
-                    setIcon(btn19, Com5t.isFinite(winNode.com5t().gson.param, PKjson.colorID2));
+                    setIcon(btn19, UPar.isFinite(winNode.com5t().gson.param, PKjson.colorID2));
                     setText(txt29, eColor.find(winNode.com5t().colorID3).getStr(eColor.name));
-                    setIcon(btn20, Com5t.isFinite(winNode.com5t().gson.param, PKjson.colorID3));
+                    setIcon(btn20, UPar.isFinite(winNode.com5t().gson.param, PKjson.colorID3));
 
                     //Стеклопакет
                 } else if (winNode.com5t().type == enums.Type.GLASS) {
@@ -528,40 +529,40 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     Envelope env = stv.area.getGeometryN(0).getEnvelopeInternal();
                     int sysfurnID = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
                     setText(txt68, stv.artiklRec.get(eArtikl.code));
-                    setIcon(btn37, Com5t.isFinite(stv.gson.param, PKjson.sysprofID));
+                    setIcon(btn37, UPar.isFinite(stv.gson.param, PKjson.sysprofID));
                     setText(txt69, stv.artiklRec.get(eArtikl.name));
                     setText(txt70, eArtikl.find2(winNode.com5t().artiklRec.getInt(eArtikl.analog_id)).getStr(eArtikl.code));
 
                     setText(txt10, eColor.find(stv.colorID1).getStr(eColor.name));
-                    setIcon(btn38, Com5t.isFinite(stv.gson.param, PKjson.colorID1));
+                    setIcon(btn38, UPar.isFinite(stv.gson.param, PKjson.colorID1));
                     setText(txt15, eColor.find(stv.colorID2).getStr(eColor.name));
-                    setIcon(btn39, Com5t.isFinite(stv.gson.param, PKjson.colorID2));
+                    setIcon(btn39, UPar.isFinite(stv.gson.param, PKjson.colorID2));
                     setText(txt23, eColor.find(stv.colorID3).getStr(eColor.name));
-                    setIcon(btn8, Com5t.isFinite(stv.gson.param, PKjson.colorID3));
+                    setIcon(btn8, UPar.isFinite(stv.gson.param, PKjson.colorID3));
 
                     setText(txt24, UCom.format(env.getWidth(), 1));
                     setText(txt26, UCom.format(env.getHeight(), 1));
                     setText(txt20, eFurniture.find(sysfurnID).getStr(eFurniture.name));
-                    setIcon(btn10, Com5t.isFinite(stv.gson.param, PKjson.sysfurnID));
+                    setIcon(btn10, UPar.isFinite(stv.gson.param, PKjson.sysfurnID));
                     setText(txt30, stv.typeOpen.name2);
-                    setIcon(btn12, Com5t.isFinite(stv.gson.param, PKjson.artiklHand));
+                    setIcon(btn12, UPar.isFinite(stv.gson.param, PKjson.artiklHand));
                     setText(txt16, stv.handLayout.name);
                     setText(txt31, (stv.handLayout == LayoutHand.VAR) ? UCom.format(stv.handHeight, 1) : "");
                     setText(txt21, stv.handRec[0].getStr(eArtikl.code));
                     setText(txt59, stv.handRec[0].getStr(eArtikl.name));
-                    setIcon(btn21, Com5t.isFinite(stv.gson.param, PKjson.typeOpen));
+                    setIcon(btn21, UPar.isFinite(stv.gson.param, PKjson.typeOpen));
                     setText(txt25, eColor.find(stv.handColor[0]).getStr(eColor.name));
-                    setIcon(btn14, Com5t.isFinite(stv.gson.param, PKjson.colorHand));
+                    setIcon(btn14, UPar.isFinite(stv.gson.param, PKjson.colorHand));
                     setText(txt45, stv.loopRec[0].getStr(eArtikl.code));
                     setText(txt57, stv.loopRec[0].getStr(eArtikl.name));
-                    setIcon(btn15, Com5t.isFinite(stv.gson.param, PKjson.artiklLoop));
+                    setIcon(btn15, UPar.isFinite(stv.gson.param, PKjson.artiklLoop));
                     setText(txt47, eColor.find(stv.loopColor[0]).getStr(eColor.name));
-                    setIcon(btn17, Com5t.isFinite(stv.gson.param, PKjson.colorLoop));
+                    setIcon(btn17, UPar.isFinite(stv.gson.param, PKjson.colorLoop));
                     setText(txt46, stv.lockRec[0].getStr(eArtikl.code));
                     setText(txt58, stv.lockRec[0].getStr(eArtikl.name));
-                    setIcon(btn23, Com5t.isFinite(stv.gson.param, PKjson.artiklLock));
+                    setIcon(btn23, UPar.isFinite(stv.gson.param, PKjson.artiklLock));
                     setText(txt48, eColor.find(stv.lockColor[0]).getStr(eColor.name));
-                    setIcon(btn24, Com5t.isFinite(stv.gson.param, PKjson.colorLock));
+                    setIcon(btn24, UPar.isFinite(stv.gson.param, PKjson.colorLock));
                     List.of(txt54, txt55, txt60, txt56).forEach(e -> e.setText(null)); //москитка
                     Com5t mosquit = stv.childs.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
                     if (mosquit != null) {
@@ -944,8 +945,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     private void colorToElement(java.awt.event.ActionEvent evt, JButton btn1, JButton btn2) {
         try {
+            List<String> keys = new ArrayList();
             Wincalc winc = wincalc();
             Com5t com5t = winNode.com5t();
+            final JsonObject jso = winNode.com5t().gson.param;
             Record systreeRec = eSystree.find(winc.nuni);
             Field colorFilterMark = (evt.getSource() == btn1) ? eArtdet.mark_c1 : (evt.getSource() == btn2) ? eArtdet.mark_c2 : eArtdet.mark_c3;
             String colorFilterTxt = (evt.getSource() == btn1) ? systreeRec.getStr(eSystree.col1) : (evt.getSource() == btn2)
@@ -954,25 +957,32 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
             HashSet<Record> colorFilterSet = DicColor.filterTxt(eColor.data(), colorFilterTxt);
             HashSet<Record> colorSet = DicColor.filterDet(colorFilterSet, artdetList, colorFilterMark);
+            if (winNode.com5t().type == enums.Type.STV_SIDE) {
+                if (winNode.com5t().layout() == Layout.BOT) {
+                    keys.add(PKjson.stvorkaBot);
+                } else if (winNode.com5t().layout() == Layout.RIG) {
+                    keys.add(PKjson.stvorkaRig);
+                } else if (winNode.com5t().layout() == Layout.TOP) {
+                    keys.add(PKjson.stvorkaTop);
+                } else if (winNode.com5t().layout() == Layout.LEF) {
+                    keys.add(PKjson.stvorkaLef);
+                }
+            }
+            if (evt.getSource() == btn1) {
+                keys.add(PKjson.colorID1);
+            } else if (evt.getSource() == btn2) {
+                keys.add(PKjson.colorID2);
+            } else {
+                keys.add(PKjson.colorID3);
+            }
 
             ListenerRecord listenerColor = (colorRec) -> {
 
                 if (colorRec.get(1) == null) {
-                    if (evt.getSource() == btn1) {
-                        com5t.gson.param.remove(PKjson.colorID1);
-                    } else if (evt.getSource() == btn2) {
-                        com5t.gson.param.remove(PKjson.colorID2);
-                    } else {
-                        com5t.gson.param.remove(PKjson.colorID3);
-                    }
+                    UPar.remove(jso, keys);
+
                 } else {
-                    if (evt.getSource() == btn1) {
-                        com5t.gson.param.addProperty(PKjson.colorID1, colorRec.getStr(eColor.id));
-                    } else if (evt.getSource() == btn2) {
-                        com5t.gson.param.addProperty(PKjson.colorID2, colorRec.getStr(eColor.id));
-                    } else {
-                        com5t.gson.param.addProperty(PKjson.colorID3, colorRec.getStr(eColor.id));
-                    }
+                    UPar.addProperty(jso, keys, colorRec.getInt(eColor.id));
                 }
                 changeAndRedraw();
             };

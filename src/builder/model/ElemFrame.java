@@ -10,22 +10,14 @@ import domain.eSysprof;
 import domain.eSyssize;
 import enums.Layout;
 import enums.PKjson;
-import enums.Type;
 import enums.TypeArt;
 import enums.UseSide;
 import java.awt.Shape;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
-import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
-import startup.Test;
 
 public class ElemFrame extends ElemSimple {
 
@@ -50,11 +42,11 @@ public class ElemFrame extends ElemSimple {
     @Override
     public void initArtikle() {
         try {
-            colorID1 = (isFinite(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : owner.colorID1;
-            colorID2 = (isFinite(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : owner.colorID2;
-            colorID3 = (isFinite(gson.param, PKjson.colorID3)) ? gson.param.get(PKjson.colorID3).getAsInt() : owner.colorID3;
+            colorID1 = (UPar.isFinite(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : owner.colorID1;
+            colorID2 = (UPar.isFinite(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : owner.colorID2;
+            colorID3 = (UPar.isFinite(gson.param, PKjson.colorID3)) ? gson.param.get(PKjson.colorID3).getAsInt() : owner.colorID3;
 
-            if (isFinite(gson.param, PKjson.sysprofID)) { //профили через параметр
+            if (UPar.isFinite(gson.param, PKjson.sysprofID)) { //профили через параметр
                 sysprofRec = eSysprof.find3(gson.param.get(PKjson.sysprofID).getAsInt());
 
             } else if (owner.sysprofRec != null) { //профили через параметр рамы, створки

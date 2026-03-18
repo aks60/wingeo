@@ -3,6 +3,7 @@ package builder.model;
 import builder.making.TRecord;
 import domain.eArtikl;
 import builder.param.ParamList;
+import com.google.gson.JsonObject;
 import enums.UseUnit;
 import common.UCom;
 import domain.eSetting;
@@ -313,4 +314,42 @@ public class UPar {
         }
         return String.valueOf(def);
     }
+    
+    public static boolean isFinite(JsonObject jso, String key) {
+        if (key == null) {
+            if (jso == null || "".equals(jso)) {
+                return false;
+            }
+            return !jso.isJsonNull();
+
+        } else if (jso == null) {
+            return false;
+
+        } else if (jso.isJsonNull()) {
+            return false;
+
+        } else if (jso.get(key) == null) {
+            return false;
+        }
+        return true;
+    }
+
+    public static void addProperty(JsonObject json, List<String> keys, int value) {
+        for (int i = 0; i < keys.size(); ++i) {
+            if (i == keys.size() - 1) {
+                json.addProperty(keys.get(i), value);
+            } else {
+                if (json.has(keys.get(i))) {
+                    json.add(keys.get(i), new JsonObject());
+                }
+            }
+        }
+    }
+
+    public static void remove(JsonObject json, List<String> keys) {
+        if (json.has(keys.get(0))) {
+            json.add(keys.get(0), new JsonObject());
+        }
+        json.getAsJsonObject(keys.get(0)).remove(keys.get(1));
+    }    
 }

@@ -10,10 +10,8 @@ import domain.eArtikl;
 import domain.eColor;
 import domain.eElement;
 import enums.PKjson;
-import enums.TypeArt;
 import enums.UseUnit;
 import java.awt.BasicStroke;
-import java.awt.Color;
 import org.locationtech.jts.geom.Envelope;
 
 public class ElemMosquit extends ElemSimple {
@@ -27,7 +25,7 @@ public class ElemMosquit extends ElemSimple {
     @Override
     public void initArtikle() {
         //Артикл
-        if (isFinite(gson.param, PKjson.artiklID)) {
+        if (UPar.isFinite(gson.param, PKjson.artiklID)) {
             this.artiklRec = eArtikl.find(gson.param.get(PKjson.artiklID).getAsInt(), false);
         } else {
             this.artiklRec = eArtikl.virtualRec();
@@ -35,14 +33,14 @@ public class ElemMosquit extends ElemSimple {
         this.artiklRecAn = artiklRec;
 
         //Цвет
-        if (isFinite(gson.param, PKjson.colorID1)) {
+        if (UPar.isFinite(gson.param, PKjson.colorID1)) {
             this.colorID1 = gson.param.get(PKjson.colorID1).getAsInt();
         } else {
             this.colorID1 = -3;
         }
 
         //Состав москитки. ВНИМАЕИЕ! elementID подменён на sysprofRec
-        if (isFinite(gson.param, PKjson.elementID)) {
+        if (UPar.isFinite(gson.param, PKjson.elementID)) {
             this.sysprofRec = eElement.find(gson.param.get(PKjson.elementID).getAsInt());
         } else {
             this.sysprofRec = eElement.up.newRecord(Query.SEL);

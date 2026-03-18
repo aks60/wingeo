@@ -8,24 +8,16 @@ import domain.eArtikl;
 import domain.eColor;
 import enums.Layout;
 import enums.Type;
-import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
-import static java.util.stream.Collectors.toList;
 import javax.swing.Timer;
-import org.locationtech.jts.awt.ShapeWriter;
-import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineSegment;
-import org.locationtech.jts.geom.LineString;
-import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.PrecisionModel;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import org.locationtech.jts.util.GeometricShapeFactory;
-import startup.Test;
 
 public class Com5t {
 
@@ -101,40 +93,10 @@ public class Com5t {
     public java.awt.Color color() {
         return (timer.isRunning() == true) ? new java.awt.Color(255, 120, 0) : new java.awt.Color(eColor.find(this.colorID2).getInt(eColor.rgb));
     }
-    
-    public static boolean isFinite(JsonObject jso, String key) {
-        if (key == null) {
-            if (jso == null || "".equals(jso)) {
-                return false;
-            }
-            return !jso.isJsonNull();
-
-        } else if (jso == null) {
-            return false;
-
-        } else if (jso.isJsonNull()) {
-            return false;
-
-        } else if (jso.get(key) == null) {
-            return false;
-        }
-        return true;
-    }
 
     public boolean equals(Object obj) {
         return (this.id == ((Com5t) obj).id);
     }
-
-//public void setJsonParam(Object obj, List path, Object value) {
-//    path.stream().reduce((acc, key, index) => {
-//        if (index === path.length - 1) {
-//            acc[key] = value;
-//        } else {
-//            acc[key] = acc[key] || {};
-//        }
-//        return acc[key];
-//    }, obj);
-//};
 
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
     public Double x1() {

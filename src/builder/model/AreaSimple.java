@@ -41,7 +41,7 @@ public class AreaSimple extends Com5t {
 
     public void initArtikle() {
         try {
-            if (isFinite(gson.param, PKjson.sysprofID)) {//профили через параметр
+            if (UPar.isFinite(gson.param, PKjson.sysprofID)) {//профили через параметр
                 sysprofRec = eSysprof.find3(gson.param.get(PKjson.sysprofID).getAsInt());
                 artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //первый артикул из сист. профилей
                 artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true); //аналог
@@ -52,20 +52,20 @@ public class AreaSimple extends Com5t {
                 artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true); //аналог                
             }
             if ((this instanceof AreaStvorka)) {
-                colorID1 = (isFinite(gson.param, PKjson.colorID1))
+                colorID1 = (UPar.isFinite(gson.param, PKjson.colorID1))
                         ? gson.param.get(PKjson.colorID1).getAsInt() : owner.colorID1;
-                colorID2 = (isFinite(gson.param, PKjson.colorID2))
+                colorID2 = (UPar.isFinite(gson.param, PKjson.colorID2))
                         ? gson.param.get(PKjson.colorID2).getAsInt() : owner.colorID2;
-                colorID3 = (isFinite(gson.param, PKjson.colorID3))
+                colorID3 = (UPar.isFinite(gson.param, PKjson.colorID3))
                         ? gson.param.get(PKjson.colorID3).getAsInt() : owner.colorID3;
             } else {
-                colorID1 = (isFinite(gson.param, PKjson.colorID1))
+                colorID1 = (UPar.isFinite(gson.param, PKjson.colorID1))
                         ? gson.param.get(PKjson.colorID1).getAsInt()
                         : UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id));
-                colorID2 = (isFinite(gson.param, PKjson.colorID2))
+                colorID2 = (UPar.isFinite(gson.param, PKjson.colorID2))
                         ? gson.param.get(PKjson.colorID2).getAsInt()
                         : UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id));
-                colorID3 = (isFinite(gson.param, PKjson.colorID3))
+                colorID3 = (UPar.isFinite(gson.param, PKjson.colorID3))
                         ? gson.param.get(PKjson.colorID3).getAsInt()
                         : UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id));
             }

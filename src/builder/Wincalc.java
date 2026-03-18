@@ -17,6 +17,7 @@ import builder.model.AreaTrapeze;
 import builder.model.ElemBlinds;
 import builder.model.ElemJoining;
 import builder.model.ElemMosquit;
+import builder.model.UPar;
 import builder.script.GsonElem;
 import builder.script.GsonRoot;
 import com.google.gson.GsonBuilder;
@@ -158,7 +159,7 @@ public class Wincalc {
             eSyspar1.filter(nuni).forEach(syspar1Rec
                     -> mapPardef.put(syspar1Rec.getInt(eSyspar1.groups_id), (Record) syspar1Rec.clone()));
 
-            if (root.isFinite(paramWinc, null)) {
+            if (UPar.isFinite(paramWinc, null)) {
                 //Добавим к параметрам системы конструкции параметры конкретной конструкции
                 JsonArray ioknaParamArr = paramWinc.getAsJsonArray(PKjson.ioknaParam);
                 if (ioknaParamArr != null && !ioknaParamArr.isJsonNull() && ioknaParamArr.isJsonArray()) {

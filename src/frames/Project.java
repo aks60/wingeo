@@ -4,7 +4,6 @@ import builder.Kitcalc;
 import frames.swing.comp.ProgressBar;
 import builder.model.Com5t;
 import builder.Wincalc;
-import builder.making.TFurniture;
 import builder.making.TJoining;
 import builder.making.TRecord;
 import builder.making.UColor;
@@ -13,6 +12,7 @@ import builder.model.AreaStvorka;
 import builder.model.ElemJoining;
 import builder.model.ElemMosquit;
 import builder.model.ElemSimple;
+import builder.model.UPar;
 import builder.script.GsonElem;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -400,7 +400,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                     setText(txt17, UCom.format(winc.width(), 1));
                     setText(txt22, UCom.format(winc.height(), 1));
                     setText(txt53, winc.root.artiklRec.getStr(eArtikl.code));
-                    setIcon(btn36, Com5t.isFinite(winc.root.gson.param, PKjson.sysprofID));   
+                    setIcon(btn36, UPar.isFinite(winc.root.gson.param, PKjson.sysprofID));   
                     setText(txt66, winc.root.artiklRec.getStr(eArtikl.name));
                     Record record = qPrjprod.get(UGui.getIndexRec(tab2));
                     Integer systreeID = record.getInt(ePrjprod.systree_id);
@@ -444,19 +444,19 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                     int id = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
                     
                     setText(txt10, eColor.find(stv.colorID1).getStr(eColor.name));
-                    setIcon(btn38, Com5t.isFinite(stv.gson.param, PKjson.colorID1));
+                    setIcon(btn38, UPar.isFinite(stv.gson.param, PKjson.colorID1));
                     setText(txt15, eColor.find(stv.colorID2).getStr(eColor.name));
-                    setIcon(btn39, Com5t.isFinite(stv.gson.param, PKjson.colorID2));
+                    setIcon(btn39, UPar.isFinite(stv.gson.param, PKjson.colorID2));
                     setText(txt23, eColor.find(stv.colorID3).getStr(eColor.name));
-                    setIcon(btn8, Com5t.isFinite(stv.gson.param, PKjson.colorID3));
+                    setIcon(btn8, UPar.isFinite(stv.gson.param, PKjson.colorID3));
                     
                     setText(txt68, stv.artiklRec.get(eArtikl.code));
-                    setIcon(btn37, Com5t.isFinite(stv.gson.param, PKjson.sysprofID));                    
+                    setIcon(btn37, UPar.isFinite(stv.gson.param, PKjson.sysprofID));                    
                     setText(txt24, UCom.format(UCom.layout(sta.frames, Layout.BOT).width(), 1));
                     double h = (UCom.layout(sta.frames, Layout.RIG).height() > UCom.layout(sta.frames, Layout.LEF).height()) ? UCom.layout(sta.frames, Layout.RIG).height() : UCom.layout(sta.frames, Layout.LEF).height();
                     setText(txt26, UCom.format(h, 1));
                     setText(txt20, eFurniture.find(id).getStr(eFurniture.name));
-                    setIcon(btn10, stv.isFinite(stv.gson.param, PKjson.sysfurnID));
+                    setIcon(btn10, UPar.isFinite(stv.gson.param, PKjson.sysfurnID));
                     setText(txt30, stv.typeOpen.name2);
                     setText(txt16, stv.handLayout.name);
                     if (stv.handLayout == LayoutHand.VAR) {
@@ -468,19 +468,19 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                     }
                     setText(txt21, stv.handRec[0].getStr(eArtikl.code));
                     setText(txt59, stv.handRec[0].getStr(eArtikl.name));
-                    setIcon(btn12, stv.isFinite(stv.gson.param, PKjson.artiklHand));
+                    setIcon(btn12, UPar.isFinite(stv.gson.param, PKjson.artiklHand));
                     setText(txt25, eColor.find(stv.handColor[0]).getStr(eColor.name));
-                    setIcon(btn14, stv.isFinite(stv.gson.param, PKjson.colorHand));
+                    setIcon(btn14, UPar.isFinite(stv.gson.param, PKjson.colorHand));
                     setText(txt45, stv.loopRec[0].getStr(eArtikl.code));
                     setText(txt58, stv.loopRec[0].getStr(eArtikl.name));
-                    setIcon(btn15, stv.isFinite(stv.gson.param, PKjson.artiklLoop));
+                    setIcon(btn15, UPar.isFinite(stv.gson.param, PKjson.artiklLoop));
                     setText(txt47, eColor.find(stv.loopColor[0]).getStr(eColor.name));
-                    setIcon(btn17, stv.isFinite(stv.gson.param, PKjson.colorLoop));
+                    setIcon(btn17, UPar.isFinite(stv.gson.param, PKjson.colorLoop));
                     setText(txt46, stv.lockRec[0].getStr(eArtikl.code));
                     setText(txt57, stv.lockRec[0].getStr(eArtikl.name));
-                    setIcon(btn23, stv.isFinite(stv.gson.param, PKjson.artiklLock));
+                    setIcon(btn23, UPar.isFinite(stv.gson.param, PKjson.artiklLock));
                     setText(txt48, eColor.find(stv.lockColor[0]).getStr(eColor.name));
-                    setIcon(btn24, stv.isFinite(stv.gson.param, PKjson.colorLock));
+                    setIcon(btn24, UPar.isFinite(stv.gson.param, PKjson.colorLock));
                     //Москитка
                     ArrayList<Com5t> mosqList = UCom.filter(((AreaSimple) stv).childs, enums.Type.MOSQUIT);
                     if (mosqList.isEmpty() == false) {

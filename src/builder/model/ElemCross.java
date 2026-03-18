@@ -19,9 +19,7 @@ import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
-import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
-import startup.Test;
 
 public class ElemCross extends ElemSimple {
 
@@ -33,11 +31,11 @@ public class ElemCross extends ElemSimple {
     @Override
     public void initArtikle() {
 
-        colorID1 = (isFinite(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : owner.colorID1;
-        colorID2 = (isFinite(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : owner.colorID2;
-        colorID3 = (isFinite(gson.param, PKjson.colorID3)) ? gson.param.get(PKjson.colorID3).getAsInt() : owner.colorID3;
+        colorID1 = (UPar.isFinite(gson.param, PKjson.colorID1)) ? gson.param.get(PKjson.colorID1).getAsInt() : owner.colorID1;
+        colorID2 = (UPar.isFinite(gson.param, PKjson.colorID2)) ? gson.param.get(PKjson.colorID2).getAsInt() : owner.colorID2;
+        colorID3 = (UPar.isFinite(gson.param, PKjson.colorID3)) ? gson.param.get(PKjson.colorID3).getAsInt() : owner.colorID3;
 
-        if (isFinite(gson.param, PKjson.sysprofID)) { //профили через параметр
+        if (UPar.isFinite(gson.param, PKjson.sysprofID)) { //профили через параметр
             sysprofRec = eSysprof.find3(gson.param.get(PKjson.sysprofID).getAsInt());
         } else {
             sysprofRec = eSysprof.find4(winc.nuni, type.id2, UseSide.ANY);

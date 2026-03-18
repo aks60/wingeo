@@ -1,13 +1,9 @@
 package builder.model;
 
 import builder.Wincalc;
-import builder.making.TFurniture;
 import builder.making.TRecord;
-import builder.making.UColor;
 import static builder.model.Com5t.gf;
-import static builder.model.Com5t.isFinite;
 import builder.script.GsonElem;
-import com.google.gson.JsonObject;
 import common.UCom;
 import dataset.Query;
 import dataset.Record;
@@ -26,7 +22,6 @@ import enums.TypeJoin;
 import enums.TypeOpen1;
 import enums.TypeOpen2;
 import enums.UseSide;
-import enums.UseType;
 import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,7 +79,7 @@ public class AreaStvorka extends AreaSimple {
                 coo[i].z = sideStv.id;
             } else {
                 GsonElem gson = new GsonElem(Type.STV_SIDE, coo[i].x, coo[i].y);
-                if (isFinite(this.gson.param, PKjson.stvorkaSide[i])) { //впихнул параметры в gson
+                if (UPar.isFinite(this.gson.param, PKjson.stvorkaSide[i])) { //впихнул параметры в gson
                     gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
                 }
                 ElemFrame newStv = new ElemFrame(this.winc, ID, gson, this);
@@ -111,19 +106,19 @@ public class AreaStvorka extends AreaSimple {
 
             //Поиск по параметру или первая запись из списка...
             //Фурнитура
-            if (isFinite(gson.param, PKjson.sysfurnID)) {
+            if (UPar.isFinite(gson.param, PKjson.sysfurnID)) {
                 sysfurnRec = eSysfurn.find2(gson.param.get(PKjson.sysfurnID).getAsInt());
             } else { //по умолчанию
                 sysfurnRec = eSysfurn.find3(winc.nuni); //ищем первую в системе
             }
             //Ручка
-            if (isFinite(gson.param, PKjson.artiklHand)) {
+            if (UPar.isFinite(gson.param, PKjson.artiklHand)) {
                 handRec[0] = eArtikl.find(gson.param.get(PKjson.artiklHand).getAsInt(), false);
             } else { //по умолчанию
                 handRec[0] = eArtikl.find(sysfurnRec.getInt(eSysfurn.artikl_id1), false);
             }
             //Текстура ручки
-            if (isFinite(gson.param, PKjson.colorHand)) {
+            if (UPar.isFinite(gson.param, PKjson.colorHand)) {
                 handColor[0] = gson.param.get(PKjson.colorHand).getAsInt();
             } else if (handColor[0] == -3) { //по умолчанию (первая в списке)
                 handColor[0] = eArtdet.find(handRec[0].getInt(eArtikl.id)).getInt(eArtdet.color_fk);
@@ -135,36 +130,36 @@ public class AreaStvorka extends AreaSimple {
                 }
             }
             //Подвес (петли)
-            if (isFinite(gson.param, PKjson.artiklLoop)) {
+            if (UPar.isFinite(gson.param, PKjson.artiklLoop)) {
                 loopRec[0] = eArtikl.find(gson.param.get(PKjson.artiklLoop).getAsInt(), false);
             }
             //Текстура подвеса
-            if (isFinite(this.gson.param, PKjson.colorLoop)) {
+            if (UPar.isFinite(this.gson.param, PKjson.colorLoop)) {
                 loopColor[0] = gson.param.get(PKjson.colorLoop).getAsInt();
             }
             //Замок
-            if (isFinite(this.gson.param, PKjson.artiklLock)) {
+            if (UPar.isFinite(this.gson.param, PKjson.artiklLock)) {
                 lockRec[0] = eArtikl.find(this.gson.param.get(PKjson.artiklLock).getAsInt(), false);
             }
             //Текстура замка
-            if (isFinite(gson.param, PKjson.colorLock)) {
+            if (UPar.isFinite(gson.param, PKjson.colorLock)) {
                 lockColor[0] = gson.param.get(PKjson.colorLock).getAsInt();
             }
             //Сторона открывания
-            if (isFinite(gson.param, PKjson.typeOpen)) {
+            if (UPar.isFinite(gson.param, PKjson.typeOpen)) {
                 typeOpen = TypeOpen1.get(gson.param.get(PKjson.typeOpen).getAsInt());
             } else {
                 int index = sysfurnRec.getInt(eSysfurn.side_open);
                 typeOpen = (index == TypeOpen2.REQ.id) ? typeOpen : (index == TypeOpen2.LEF.id) ? TypeOpen1.RIGH : TypeOpen1.LEFT;
             }
             //Положение ручки на створке, ручка задана параметром
-            if (isFinite(gson.param, PKjson.positionHand)) {
+            if (UPar.isFinite(gson.param, PKjson.positionHand)) {
                 int position = gson.param.get(PKjson.positionHand).getAsInt();
                 if (position == LayoutHand.VAR.id) { //вариационная
                     handLayout = LayoutHand.VAR;
-                    if (isFinite(gson.param, PKjson.heightHand)) {
+                    if (UPar.isFinite(gson.param, PKjson.heightHand)) {
                         handHeight = gson.param.get(PKjson.heightHand).getAsInt();
-                        if (isFinite(gson.param, PKjson.heightHand)) {
+                        if (UPar.isFinite(gson.param, PKjson.heightHand)) {
                             handHeight = gson.param.get(PKjson.heightHand).getAsInt();
                         }
                     }
@@ -204,7 +199,7 @@ public class AreaStvorka extends AreaSimple {
 
             //Высота ручки, линии открывания
             if (this.typeOpen != TypeOpen1.EMPTY) {
-                if (isFinite(gson.param, PKjson.positionHand) == false) {
+                if (UPar.isFinite(gson.param, PKjson.positionHand) == false) {
 
                     if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutHand.MIDL.id) { //по середине
                         handLayout = LayoutHand.MIDL;
