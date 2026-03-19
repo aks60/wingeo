@@ -944,10 +944,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private void colorToElement(java.awt.event.ActionEvent evt, JButton btn1, JButton btn2) {
         try {
             List<String> keys = new ArrayList();
-            Wincalc winc = wincalc();
-            Com5t com5t = winNode.com5t();
-            //final JsonObject json = com5t.gson.param;
-            Record systreeRec = eSystree.find(winc.nuni);
+            Com5t comElem = winNode.com5t();
+            Record systreeRec = eSystree.find(comElem.winc.nuni);
             Field colorFilterMark = (evt.getSource() == btn1) ? eArtdet.mark_c1 : (evt.getSource() == btn2) ? eArtdet.mark_c2 : eArtdet.mark_c3;
             String colorFilterTxt = (evt.getSource() == btn1) ? systreeRec.getStr(eSystree.col1) : (evt.getSource() == btn2)
                     ? systreeRec.getStr(eSystree.col2) : systreeRec.getStr(eSystree.col3);
@@ -955,14 +953,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
             HashSet<Record> colorFilterSet = DicColor.filterTxt(eColor.data(), colorFilterTxt);
             HashSet<Record> colorSet = DicColor.filterDet(colorFilterSet, artdetList, colorFilterMark);
-            if (winNode.com5t().type == enums.Type.STV_SIDE) {
-                if (winNode.com5t().layout() == Layout.BOT) {
+            if (comElem.type == enums.Type.STV_SIDE) {
+                if (comElem.layout() == Layout.BOT) {
                     keys.add(PKjson.stvorkaBot);
-                } else if (winNode.com5t().layout() == Layout.RIG) {
+                } else if (comElem.layout() == Layout.RIG) {
                     keys.add(PKjson.stvorkaRig);
-                } else if (winNode.com5t().layout() == Layout.TOP) {
+                } else if (comElem.layout() == Layout.TOP) {
                     keys.add(PKjson.stvorkaTop);
-                } else if (winNode.com5t().layout() == Layout.LEF) {
+                } else if (comElem.layout() == Layout.LEF) {
                     keys.add(PKjson.stvorkaLef);
                 }
             }
@@ -975,14 +973,15 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
 
             ListenerRecord listenerColor = (colorRec) -> {
-
+                final Com5t com5t = (comElem.type == enums.Type.STV_SIDE) ? comElem.owner : comElem;
+                
                 if (colorRec.get(1) == null) {
                     UPar.remove(com5t.gson.param, keys);
-
                 } else {
                     UPar.addProperty(com5t.gson.param, keys, colorRec.getInt(eColor.id));
                 }
-                changeAndRedraw();
+                
+                changeAndRedraw(); //обновим конструкцию
             };
             if (colorFilterTxt.isEmpty()) {
                 new DicColor(this, listenerColor, false, false);

@@ -314,7 +314,7 @@ public class UPar {
         }
         return String.valueOf(def);
     }
-    
+
     public static boolean isFinite(JsonObject jso, String key) {
         if (key == null) {
             if (jso == null || "".equals(jso)) {
@@ -335,22 +335,28 @@ public class UPar {
     }
 
     public static void addProperty(JsonObject json, List<String> keys, int value) {
-
-        for (int i = 0; i < keys.size(); ++i) {
-            if (i == keys.size() - 1) {
-                json.addProperty(keys.get(i), value);
-            } else {
-                if (json.has(keys.get(i)) == false) {
-                    json.add(keys.get(i), new JsonObject());
-                }
+        if (keys.size() > 1) {
+            if (json.has(keys.get(0)) == false) {
+                json.add(keys.get(0), new JsonObject());
             }
+            json.getAsJsonObject(keys.get(0)).addProperty(keys.get(1), value);
+        } else {
+            json.addProperty(keys.get(0), value);
         }
     }
 
     public static void remove(JsonObject json, List<String> keys) {
-        if (json.has(keys.get(0))) {
-            json.add(keys.get(0), new JsonObject());
+        if (keys.size() > 1) {
+            if (json.has(keys.get(0)) == false) {
+                json.add(keys.get(0), new JsonObject());
+            }
+            json.getAsJsonObject(keys.get(0)).remove(keys.get(1));
+            
+            if (json.getAsJsonObject(keys.get(0)).isEmpty()) {
+                json.remove(keys.get(0));
+            }
+        } else {
+            json.remove(keys.get(0));
         }
-        json.getAsJsonObject(keys.get(0)).remove(keys.get(1));
-    }    
+    }
 }
