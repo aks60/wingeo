@@ -100,9 +100,9 @@ public class Wincalc {
     public void build(String script) {
         try {
             //System.out.println(new GsonBuilder().create().toJson(JsonParser.parseString(script))); //для тестирования
-            System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(script)));
+            //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(script)));
 
-            //TODO удалить инит.
+            //TODO надо удалить 'Инит свойств'.
             //Инит свойств
             nppID = 0;
             mapPardef.clear();

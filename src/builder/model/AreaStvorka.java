@@ -78,7 +78,7 @@ public class AreaStvorka extends AreaSimple {
                 sideStv.y1(coo[i].y);
                 coo[i].z = sideStv.id;
             } else {
-                GsonElem gson = new GsonElem(Type.STV_SIDE, coo[i].x, coo[i].y);
+                GsonElem gson = new GsonElem(Type.STV_SIDE, coo[i].x, coo[i].y, "{}");
                 if (UPar.isFinite(this.gson.param, PKjson.stvorkaSide[i])) { //впихнул параметры в gson
                     gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
                 }

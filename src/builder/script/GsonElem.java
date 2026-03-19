@@ -37,7 +37,10 @@ public class GsonElem {
 
     //Use class Bimax, GsonScript, Test
     public GsonElem(Type type, Double x1, Double y1) {
-        this(type, x1, y1, null, null, null, null);
+        this.id = ++gsonId;
+        this.type = type;
+        this.x1 = x1;
+        this.y1 = y1;
     }
 
     //Use class Bimax, GsonScript, Test

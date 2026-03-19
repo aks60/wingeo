@@ -335,11 +335,12 @@ public class UPar {
     }
 
     public static void addProperty(JsonObject json, List<String> keys, int value) {
+
         for (int i = 0; i < keys.size(); ++i) {
             if (i == keys.size() - 1) {
                 json.addProperty(keys.get(i), value);
             } else {
-                if (json.has(keys.get(i))) {
+                if (json.has(keys.get(i)) == false) {
                     json.add(keys.get(i), new JsonObject());
                 }
             }

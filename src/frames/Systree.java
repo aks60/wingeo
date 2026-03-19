@@ -40,7 +40,6 @@ import frames.swing.comp.DefCellRendererBool;
 import frames.swing.comp.TableFieldFormat;
 import frames.swing.comp.DefTableModel;
 import builder.Wincalc;
-import builder.making.TFurniture;
 import builder.script.GsonElem;
 import common.UCom;
 import domain.eArtdet;
@@ -70,18 +69,17 @@ import builder.making.TJoining;
 import builder.making.UColor;
 import builder.model.AreaSimple;
 import builder.model.AreaStvorka;
-import builder.model.ElemFrame;
 import builder.model.ElemGlass;
 import builder.model.ElemJoining;
 import builder.model.ElemMosquit;
 import builder.model.ElemSimple;
-import builder.model.UGeo;
 import builder.model.UPar;
 import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import common.eProp;
 import common.listener.ListenerAction;
 import domain.eJoinvar;
@@ -946,10 +944,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private void colorToElement(java.awt.event.ActionEvent evt, JButton btn1, JButton btn2) {
         try {
             List<String> keys = new ArrayList();
-            keys.add("param");
             Wincalc winc = wincalc();
             Com5t com5t = winNode.com5t();
-            final JsonObject json = com5t.gson.param;
+            //final JsonObject json = com5t.gson.param;
             Record systreeRec = eSystree.find(winc.nuni);
             Field colorFilterMark = (evt.getSource() == btn1) ? eArtdet.mark_c1 : (evt.getSource() == btn2) ? eArtdet.mark_c2 : eArtdet.mark_c3;
             String colorFilterTxt = (evt.getSource() == btn1) ? systreeRec.getStr(eSystree.col1) : (evt.getSource() == btn2)
@@ -980,10 +977,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             ListenerRecord listenerColor = (colorRec) -> {
 
                 if (colorRec.get(1) == null) {
-                    UPar.remove(json, keys);
+                    UPar.remove(com5t.gson.param, keys);
 
                 } else {
-                    UPar.addProperty(json, keys, colorRec.getInt(eColor.id));
+                    UPar.addProperty(com5t.gson.param, keys, colorRec.getInt(eColor.id));
                 }
                 changeAndRedraw();
             };
@@ -4585,14 +4582,15 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_colorFromLock
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-        Wincalc winc = wincalc();
-        ElemFrame frm = (ElemFrame) winc.root.frames.get(0);
-        double x = frm.x1() + 8;
-        UGeo.movePoint(frm, x, 0);
-        winc.canvas.requestFocusInWindow();
-        winc.canvas.repaint();
+//        Wincalc winc = wincalc();
+//        ElemFrame frm = (ElemFrame) winc.root.frames.get(0);
+//        double x = frm.x1() + 8;
+//        UGeo.movePoint(frm, x, 0);
+//        winc.canvas.requestFocusInWindow();
+//        winc.canvas.repaint();
+//Object o1 = new Gson().fromJson("{}", JsonObject.class);
 
-        //System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(wincalc().gson.toJson())));
+        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(wincalc().gson.toJson())));
     }//GEN-LAST:event_btnTestActionPerformed
 
     private void colorFromGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromGlass
