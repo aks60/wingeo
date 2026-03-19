@@ -941,7 +941,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }
 
-    private void colorToElement(java.awt.event.ActionEvent evt, JButton btn1, JButton btn2) {
+    private void colorToProfile(java.awt.event.ActionEvent evt, JButton btn1, JButton btn2) {
         try {
             List<String> keys = new ArrayList();
             Com5t comElem = winNode.com5t();
@@ -949,7 +949,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             Field colorFilterMark = (evt.getSource() == btn1) ? eArtdet.mark_c1 : (evt.getSource() == btn2) ? eArtdet.mark_c2 : eArtdet.mark_c3;
             String colorFilterTxt = (evt.getSource() == btn1) ? systreeRec.getStr(eSystree.col1) : (evt.getSource() == btn2)
                     ? systreeRec.getStr(eSystree.col2) : systreeRec.getStr(eSystree.col3);
-            Query artdetList = new Query(eArtdet.values()).sql(eArtdet.data(), eArtdet.artikl_id, winNode.com5t().artiklRec.getInt(eArtikl.id));
+            Query artdetList = new Query(eArtdet.values()).sql(eArtdet.data(), eArtdet.artikl_id, comElem.artiklRec.getInt(eArtikl.id));
 
             HashSet<Record> colorFilterSet = DicColor.filterTxt(eColor.data(), colorFilterTxt);
             HashSet<Record> colorSet = DicColor.filterDet(colorFilterSet, artdetList, colorFilterMark);
@@ -972,22 +972,38 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 keys.add(PKjson.colorID3);
             }
 
-            ListenerRecord listenerColor = (colorRec) -> {
+            new DicColor(this, (colorRec) -> {
                 final Com5t com5t = (comElem.type == enums.Type.STV_SIDE) ? comElem.owner : comElem;
-                
+
                 if (colorRec.get(1) == null) {
                     UPar.remove(com5t.gson.param, keys);
                 } else {
                     UPar.addProperty(com5t.gson.param, keys, colorRec.getInt(eColor.id));
                 }
-                
                 changeAndRedraw(); //обновим конструкцию
-            };
-            if (colorFilterTxt.isEmpty()) {
-                new DicColor(this, listenerColor, false, false);
-            } else {
-                new DicColor(this, listenerColor, colorSet, true, false);
-            }
+            }, colorSet, true, false);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:Systree.colorToProfile() " + e);
+        }
+    }
+
+    private void colorToElement(String PKjsonColor, Record artiklFurn) {
+        try {
+            double elemID = winNode.com5t().id;
+            HashSet<Record> colorSet = UGui.artiklToColorSet(artiklFurn.getInt(eArtikl.id));
+            DicColor frame = new DicColor(this, (colorRec) -> {
+
+                GsonElem gsonElem = UCom.gson(wincalc().listAll, elemID);
+                if (colorRec.get(1) == null) {
+                    gsonElem.param.remove(PKjsonColor);
+                } else {
+                    gsonElem.param.addProperty(PKjsonColor, colorRec.getStr(eColor.id));
+                }
+                changeAndRedraw();
+
+            }, colorSet, true, false);
+
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.colorToElement() " + e);
         }
@@ -2721,7 +2737,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         btn17.setPreferredSize(new java.awt.Dimension(21, 20));
         btn17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                colorFromLoop(evt);
+                colorToLoop(evt);
             }
         });
 
@@ -2853,7 +2869,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         btn24.setPreferredSize(new java.awt.Dimension(21, 20));
         btn24.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                colorFromLock(evt);
+                colorToLock(evt);
             }
         });
 
@@ -2954,7 +2970,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         btn32.setPreferredSize(new java.awt.Dimension(21, 20));
         btn32.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mosqToColor(evt);
+                colorToMosk(evt);
             }
         });
 
@@ -4303,11 +4319,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_sysprofToFrame
 
     private void colorToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToFrame
-        colorToElement(evt, btn18, btn19);
+        colorToProfile(evt, btn18, btn19);
     }//GEN-LAST:event_colorToFrame
 
     private void colorToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToKorobka
-        colorToElement(evt, btn9, btn13);
+        colorToProfile(evt, btn9, btn13);
     }//GEN-LAST:event_colorToKorobka
 
     private void artiklToGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToGlass
@@ -4449,25 +4465,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_heightHandlToStvorka
 
     private void colorToHandl(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToHandl
-        try {
-            double selectID = winNode.com5t().id;
-            AreaStvorka stv = (AreaStvorka) winNode.com5t();
-            HashSet<Record> colorSet = UGui.artiklToColorSet(stv.handRec[0].getInt(eArtikl.id));
-            DicColor frame = new DicColor(this, (colorRec) -> {
-
-                GsonElem stvArea = UCom.gson(wincalc().listAll, selectID);
-                if (colorRec.get(1) == null) {
-                    stvArea.param.remove(PKjson.colorHand);
-                } else {
-                    stvArea.param.addProperty(PKjson.colorHand, colorRec.getStr(eColor.id));
-                }
-                changeAndRedraw();
-
-            }, colorSet, true, false);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.colorToHandl() " + e);
-        }
+        AreaStvorka stv = (AreaStvorka) winNode.com5t();
+        colorToElement(PKjson.colorHand, stv.handRec[0]);
     }//GEN-LAST:event_colorToHandl
 
     private void joinToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinToFrame
@@ -4536,49 +4535,15 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }//GEN-LAST:event_lockToStvorka
 
-    private void colorFromLoop(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromLoop
-        try {
-            double selectID = winNode.com5t().id;
-            AreaStvorka stv = (AreaStvorka) winNode.com5t();
-            HashSet<Record> colorSet = UGui.artiklToColorSet(stv.loopRec[0].getInt(eArtikl.id));
-            DicColor frame = new DicColor(this, (colorRec) -> {
+    private void colorToLoop(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToLoop
+        AreaStvorka stv = (AreaStvorka) winNode.com5t();
+        colorToElement(PKjson.colorLoop, stv.loopRec[0]);
+    }//GEN-LAST:event_colorToLoop
 
-                GsonElem stvArea = UCom.gson(wincalc().listAll, selectID);
-                if (colorRec.get(1) == null) {
-                    stvArea.param.remove(PKjson.colorLoop);
-                } else {
-                    stvArea.param.addProperty(PKjson.colorLoop, colorRec.getStr(eColor.id));
-                }
-                changeAndRedraw();
-
-            }, colorSet, true, false);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.colorToHandl() " + e);
-        }
-    }//GEN-LAST:event_colorFromLoop
-
-    private void colorFromLock(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromLock
-        try {
-            double selectID = winNode.com5t().id;
-            AreaStvorka stv = (AreaStvorka) winNode.com5t();
-            HashSet<Record> colorSet = UGui.artiklToColorSet(stv.lockRec[0].getInt(eArtikl.id));
-            DicColor frame = new DicColor(this, (colorRec) -> {
-
-                GsonElem stvArea = UCom.gson(wincalc().listAll, selectID);
-                if (colorRec.get(1) == null) {
-                    stvArea.param.remove(PKjson.colorLock);
-                } else {
-                    stvArea.param.addProperty(PKjson.colorLock, colorRec.getStr(eColor.id));
-                }
-                changeAndRedraw();
-
-            }, colorSet, true, false);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.colorToHandl() " + e);
-        }
-    }//GEN-LAST:event_colorFromLock
+    private void colorToLock(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToLock
+        AreaStvorka stv = (AreaStvorka) winNode.com5t();
+        colorToElement(PKjson.colorLock, stv.lockRec[0]);
+    }//GEN-LAST:event_colorToLock
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
 //        Wincalc winc = wincalc();
@@ -4593,25 +4558,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_btnTestActionPerformed
 
     private void colorFromGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromGlass
-        try {
-            double selectID = winNode.com5t().id;
-            ElemSimple glas = (ElemSimple) winNode.com5t();
-            HashSet<Record> colorSet = UGui.artiklToColorSet(glas.artiklRec.getInt(eArtikl.id));
-            DicColor frame = new DicColor(this, (colorRec) -> {
-
-                GsonElem stvArea = UCom.gson(wincalc().listAll, selectID);
-                if (colorRec.get(1) == null) {
-                    stvArea.param.remove(PKjson.colorGlass);
-                } else {
-                    stvArea.param.addProperty(PKjson.colorGlass, colorRec.getStr(eColor.id));
-                }
-                changeAndRedraw();
-
-            }, colorSet, false, false);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.colorFromGlass() " + e);
-        }
+        ElemSimple glas = (ElemSimple) winNode.com5t();
+        colorToElement(PKjson.colorGlass, glas.artiklRec);
     }//GEN-LAST:event_colorFromGlass
 
     private void btnMove(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMove
@@ -4795,25 +4743,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_rascladkaToGlass
 
     private void colorToRascladka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToRascladka
-        try {
-            double selectID = winNode.com5t().id;
-            ElemSimple glas = (ElemSimple) winNode.com5t();
-            HashSet<Record> colorSet = UGui.artiklToColorSet(((ElemGlass) glas).rascRec.getInt(eArtikl.id));
-            DicColor frame = new DicColor(this, (colorRec) -> {
-
-                GsonElem glassElem = UCom.gson(wincalc().listAll, selectID);
-                if (colorRec.get(1) == null) {
-                    glassElem.param.remove(PKjson.colorRasc);
-                } else {
-                    glassElem.param.addProperty(PKjson.colorRasc, colorRec.getStr(eColor.id));
-                }
-                changeAndRedraw();
-
-            }, colorSet, false, false);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.colorToRascladka() " + e);
-        }
+        ElemSimple glas = (ElemSimple) winNode.com5t();
+        colorToElement(PKjson.colorRasc, ((ElemGlass) glas).rascRec);
     }//GEN-LAST:event_colorToRascladka
 
     private void spinHorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinHorStateChanged
@@ -4830,7 +4761,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         changeAndRedraw();
     }//GEN-LAST:event_spinVertStateChanged
 
-    private void mosqToColor(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mosqToColor
+    private void colorToMosk(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToMosk
         try {
             double selectID = winNode.com5t().id;
             AreaStvorka areaStv = (AreaStvorka) winNode.com5t();
@@ -4852,7 +4783,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.colorToHandl() " + e);
         }
-    }//GEN-LAST:event_mosqToColor
+    }//GEN-LAST:event_colorToMosk
 
     private void ppmActionItems(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppmActionItems
         if (evt.getSource() == mInsert) {
@@ -5145,7 +5076,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_sysprofToStvorka
 
     private void colorToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToStvorka
-        colorToElement(evt, btn38, btn39);
+        colorToProfile(evt, btn38, btn39);
     }//GEN-LAST:event_colorToStvorka
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 

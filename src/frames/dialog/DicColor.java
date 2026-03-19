@@ -444,7 +444,7 @@ public class DicColor extends javax.swing.JDialog {
     }
 
     public static HashSet<Record> filterTxt(List<Record> colorList, String colorTxt) {
-        HashSet<Record> colorRet = new HashSet<Record>();
+        HashSet<Record> colorSet = new HashSet<Record>();
         try {
             Integer[] colorArr = UCom.parserInt(colorTxt);
 
@@ -452,15 +452,17 @@ public class DicColor extends javax.swing.JDialog {
                 for (Record rec : colorList) {
                     for (int i = 0; i < colorArr.length; i = i + 2) { //тестуры
                         if (rec.getInt(eColor.code) >= colorArr[i] && rec.getInt(eColor.code) <= colorArr[i + 1]) {
-                            colorRet.add(rec);
+                            colorSet.add(rec);
                         }
                     }
                 }
+            } else {
+               colorList.forEach(rec -> colorSet.add(rec));
             }
         } catch (Exception e) {
             System.err.println("Ошибка: DicColor.filterTxt() " + e);
         }
-        return colorRet;
+        return colorSet;
     }
 
     public static HashSet<Record> filterDet(HashSet<Record> colorSrc, List<Record> artdetList, Field field) {
