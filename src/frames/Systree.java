@@ -40,6 +40,7 @@ import frames.swing.comp.DefCellRendererBool;
 import frames.swing.comp.TableFieldFormat;
 import frames.swing.comp.DefTableModel;
 import builder.Wincalc;
+import builder.making.TFurniture;
 import builder.script.GsonElem;
 import common.UCom;
 import domain.eArtdet;
@@ -435,20 +436,21 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             Object selNode = winTree.getLastSelectedPathComponent();
             if (selNode instanceof DefMutableTreeNode) {
                 winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
+                Com5t com5t = winNode.com5t();
                 Wincalc winc = wincalc();
 
-                UGui.changePpmTree(winTree, ppmTree, winNode.com5t());
+                UGui.changePpmTree(winTree, ppmTree, com5t);
 
                 //Таймер цвета
-                if (enums.Type.contains(winNode.com5t(), enums.Type.PARAM, enums.Type.FRAME, enums.Type.JOINING) == false) {
+                if (enums.Type.contains(com5t, enums.Type.PARAM, enums.Type.FRAME, enums.Type.JOINING) == false) {
                     if (winc.canvas != null) {
-                        winNode.com5t().timer.start();
+                        com5t.timer.start();
                         winc.canvas.repaint();
                     }
                 }
                 //Коробка
                 if (List.of(enums.Type.RECTANGL, enums.Type.TRAPEZE,
-                        enums.Type.ARCH, enums.Type.DOOR).contains(winNode.com5t().type)) {
+                        enums.Type.ARCH, enums.Type.DOOR).contains(com5t.type)) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card18");
                     ((TitledBorder) pan12.getBorder()).setTitle(winc.root.type.name);
                     setText(txt9, eColor.find(winc.root.colorID1).getStr(eColor.name));
@@ -462,10 +464,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     setText(txt53, winc.root.artiklRec.getStr(eArtikl.code));
                     setIcon(btn36, UPar.isFinite(winc.root.gson.param, PKjson.sysprofID));
                     setText(txt66, winc.root.artiklRec.get(eArtikl.name));
-                    setText(txt67, eArtikl.find2(winNode.com5t().artiklRec.getInt(eArtikl.analog_id)).getStr(eArtikl.code));
+                    setText(txt67, eArtikl.find2(com5t.artiklRec.getInt(eArtikl.analog_id)).getStr(eArtikl.code));
 
                     //Параметры
-                } else if (winNode.com5t().type == enums.Type.PARAM) {
+                } else if (com5t.type == enums.Type.PARAM) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card11");
                     qSyspar1b.clear();
                     winc.mapPardef.forEach((pk, syspar1Rec) -> qSyspar1b.add(syspar1Rec));
@@ -475,37 +477,39 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
                     //Рама, импост...
                 } else if (List.of(enums.Type.BOX_SIDE, enums.Type.STV_SIDE, enums.Type.IMPOST,
-                        enums.Type.STOIKA, enums.Type.SHTULP).contains(winNode.com5t().type)) {
+                        enums.Type.STOIKA, enums.Type.SHTULP).contains(com5t.type)) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card13");
                     ((TitledBorder) pan13.getBorder()).setTitle(winNode.toString());
-                    setText(txt32, winNode.com5t().artiklRec.getStr(eArtikl.code));
-                    setIcon(btn22, UPar.isFinite(winNode.com5t().gson.param, PKjson.sysprofID));
-                    setText(txt33, winNode.com5t().artiklRec.getStr(eArtikl.name));
-                    setText(txt52, eArtikl.find2(winNode.com5t().artiklRec.getInt(eArtikl.analog_id)).getStr(eArtikl.code));
+                    setText(txt32, com5t.artiklRec.getStr(eArtikl.code));
+                    setIcon(btn22, UPar.isFinite(com5t.gson.param, PKjson.sysprofID));
+                    setText(txt33, com5t.artiklRec.getStr(eArtikl.name));
+                    setText(txt52, eArtikl.find2(com5t.artiklRec.getInt(eArtikl.analog_id)).getStr(eArtikl.code));
 
-                    setText(txt27, eColor.find(winNode.com5t().colorID1).getStr(eColor.name));
-                    setIcon(btn18, UPar.isFinite(winNode.com5t().gson.param, PKjson.colorID1));
-                    setText(txt28, eColor.find(winNode.com5t().colorID2).getStr(eColor.name));
-                    setIcon(btn19, UPar.isFinite(winNode.com5t().gson.param, PKjson.colorID2));
-                    setText(txt29, eColor.find(winNode.com5t().colorID3).getStr(eColor.name));
-                    setIcon(btn20, UPar.isFinite(winNode.com5t().gson.param, PKjson.colorID3));
+                    setText(txt27, eColor.find(com5t.colorID1).getStr(eColor.name));
+                    setIcon(btn18, UPar.isFinite(com5t.gson.param, PKjson.colorID1));
+                    setText(txt28, eColor.find(com5t.colorID2).getStr(eColor.name));
+                    setIcon(btn19, UPar.isFinite(com5t.gson.param, PKjson.colorID2));
+                    setText(txt29, eColor.find(com5t.colorID3).getStr(eColor.name));
+                    setIcon(btn20, UPar.isFinite(com5t.gson.param, PKjson.colorID3));
 
                     //Стеклопакет
-                } else if (winNode.com5t().type == enums.Type.GLASS) {
-                    ElemGlass elem = (ElemGlass) winNode.com5t();
+                } else if (com5t.type == enums.Type.GLASS) {
+                    ElemGlass elem = (ElemGlass) com5t;
                     ((CardLayout) pan7.getLayout()).show(pan7, "card15");
-                    Record artiklRec = winNode.com5t().artiklRec;
+                    Record artiklRec = com5t.artiklRec;
                     setText(txt19, artiklRec.getStr(eArtikl.code));
+                    setIcon(btn3, UPar.isFinite(com5t.gson.param, PKjson.artglasID));
                     setText(txt18, artiklRec.getStr(eArtikl.name));
-                    Record colorRec = eColor.find(winNode.com5t().colorID1);
+                    Record colorRec = eColor.find(com5t.colorID1);
                     setText(txt34, colorRec.getStr(eColor.name));
-                    Record rasclRec = ((ElemGlass) winNode.com5t()).rascRec;
+                    setIcon(btn25, UPar.isFinite(com5t.gson.param, PKjson.colorGlass));
+                    Record rasclRec = ((ElemGlass) com5t).rascRec;
                     setText(txt49, rasclRec.getStr(eArtikl.code));
                     setText(txt50, rasclRec.getStr(eArtikl.name));
-                    Record colorRascl = eColor.find(((ElemGlass) winNode.com5t()).rascColor);
+                    Record colorRascl = eColor.find(((ElemGlass) com5t).rascColor);
                     setText(txt51, colorRascl.getStr(eColor.name));
-                    spinHor.setValue(((ElemGlass) winNode.com5t()).rascNumber[0]);
-                    spinVert.setValue(((ElemGlass) winNode.com5t()).rascNumber[1]);
+                    spinHor.setValue(((ElemGlass) com5t).rascNumber[0]);
+                    spinVert.setValue(((ElemGlass) com5t).rascNumber[1]);
                     //Помощь менеджеру для коррекция импоста
 //                    if (elem.deltaDY != null) {  
 //                        ElemSimple el = winc.listElem.stream().filter(e -> e.type == enums.Type.IMPOST).findFirst().orElse(null);
@@ -520,16 +524,19 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 //                    }
 
                     //Створка
-                } else if (winNode.com5t().type == enums.Type.STVORKA) {
+                } else if (com5t.type == enums.Type.STVORKA) {
+                    //Пересчёт фурнитуры с учётом настроек 
+                    //конструктива ручки, петли, замка см. форму "Фурнитура"                    
+                    new TFurniture(wincalc(), true).furn();
                     //через сокр. тарификацию
                     ((CardLayout) pan7.getLayout()).show(pan7, "card16");
-                    AreaStvorka stv = (AreaStvorka) winNode.com5t();
+                    AreaStvorka stv = (AreaStvorka) com5t;
                     Envelope env = stv.area.getGeometryN(0).getEnvelopeInternal();
                     int sysfurnID = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
                     setText(txt68, stv.artiklRec.get(eArtikl.code));
                     setIcon(btn37, UPar.isFinite(stv.gson.param, PKjson.sysprofID));
                     setText(txt69, stv.artiklRec.get(eArtikl.name));
-                    setText(txt70, eArtikl.find2(winNode.com5t().artiklRec.getInt(eArtikl.analog_id)).getStr(eArtikl.code));
+                    setText(txt70, eArtikl.find2(com5t.artiklRec.getInt(eArtikl.analog_id)).getStr(eArtikl.code));
 
                     setText(txt10, eColor.find(stv.colorID1).getStr(eColor.name));
                     setIcon(btn38, UPar.isFinite(stv.gson.param, PKjson.colorID1));
@@ -572,7 +579,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     }
 
                     //Соединения
-                } else if (winNode.com5t().type == enums.Type.JOINING) {
+                } else if (com5t.type == enums.Type.JOINING) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card17");
                     DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
                     ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
@@ -603,7 +610,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 } else {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card12");
                 }
-                lab2.setText("Элемент ID = " + UCom.format(winNode.com5t().id, 2));
+                lab2.setText("Элемент ID = " + UCom.format(com5t.id, 2));
                 List.of(pan12, pan13, pan15, pan16).forEach(it -> it.repaint());
             }
         } catch (Exception e) {
@@ -1922,7 +1929,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         btn25.setPreferredSize(new java.awt.Dimension(21, 20));
         btn25.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                colorFromGlass(evt);
+                colorToGlass(evt);
             }
         });
 
@@ -1964,7 +1971,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         btn5.setPreferredSize(new java.awt.Dimension(21, 20));
         btn5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rascladkaToGlass(evt);
+                artiklToRascladka(evt);
             }
         });
 
@@ -2077,7 +2084,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         btn33.setPreferredSize(new java.awt.Dimension(21, 20));
         btn33.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn33mosqToColor(evt);
+                colorToBlinds(evt);
             }
         });
 
@@ -2125,7 +2132,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         btn35.setPreferredSize(new java.awt.Dimension(21, 20));
         btn35.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                blindsToElement(evt);
+                artiklToBlinds(evt);
             }
         });
 
@@ -2614,7 +2621,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         btn12.setPreferredSize(new java.awt.Dimension(21, 20));
         btn12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                handlToStvorka(evt);
+                artiklToHand(evt);
             }
         });
 
@@ -2701,7 +2708,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         btn15.setPreferredSize(new java.awt.Dimension(21, 20));
         btn15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loopToStvorka(evt);
+                artiklToLoop(evt);
             }
         });
 
@@ -2886,7 +2893,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         btn23.setPreferredSize(new java.awt.Dimension(21, 20));
         btn23.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lockToStvorka(evt);
+                artiklToLock(evt);
             }
         });
 
@@ -2934,7 +2941,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         btn16.setPreferredSize(new java.awt.Dimension(21, 20));
         btn16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mosquitToStvorka(evt);
+                artiklToMosq(evt);
             }
         });
 
@@ -4406,7 +4413,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }//GEN-LAST:event_typeOpenToStvorka
 
-    private void handlToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_handlToStvorka
+    private void artiklToHand(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToHand
         try {
             double stvorkaID = winNode.com5t().id;
             int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
@@ -4428,7 +4435,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.handlToStvorka() " + e);
         }
-    }//GEN-LAST:event_handlToStvorka
+    }//GEN-LAST:event_artiklToHand
 
     private void heightHandlToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_heightHandlToStvorka
 
@@ -4485,7 +4492,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }//GEN-LAST:event_joinToFrame
 
-    private void loopToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loopToStvorka
+    private void artiklToLoop(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToLoop
         try {
             double selectID = winNode.com5t().id;
             int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
@@ -4508,9 +4515,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.loopToStvorka() " + e);
         }
-    }//GEN-LAST:event_loopToStvorka
+    }//GEN-LAST:event_artiklToLoop
 
-    private void lockToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lockToStvorka
+    private void artiklToLock(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToLock
         try {
             double selectID = winNode.com5t().id;
             int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
@@ -4533,7 +4540,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         } catch (Exception e) {
             System.err.println("Ошибка:frames.lockToStvorka " + e);
         }
-    }//GEN-LAST:event_lockToStvorka
+    }//GEN-LAST:event_artiklToLock
 
     private void colorToLoop(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToLoop
         AreaStvorka stv = (AreaStvorka) winNode.com5t();
@@ -4557,10 +4564,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(wincalc().gson.toJson())));
     }//GEN-LAST:event_btnTestActionPerformed
 
-    private void colorFromGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorFromGlass
+    private void colorToGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToGlass
         ElemSimple glas = (ElemSimple) winNode.com5t();
         colorToElement(PKjson.colorGlass, glas.artiklRec);
-    }//GEN-LAST:event_colorFromGlass
+    }//GEN-LAST:event_colorToGlass
 
     private void btnMove(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMove
         JButton btn = (JButton) evt.getSource();
@@ -4631,7 +4638,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }//GEN-LAST:event_btnMove
 
-    private void mosquitToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mosquitToStvorka
+    private void artiklToMosq(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToMosq
         try {
             AreaStvorka areaStv = (AreaStvorka) winNode.com5t();
             double selectID = winNode.com5t().id;
@@ -4668,7 +4675,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.mosquitToStvorka() " + e);
         }
-    }//GEN-LAST:event_mosquitToStvorka
+    }//GEN-LAST:event_artiklToMosq
 
     private void mosqToElements(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mosqToElements
         try {
@@ -4717,7 +4724,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }//GEN-LAST:event_btnFind2
 
-    private void rascladkaToGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rascladkaToGlass
+    private void artiklToRascladka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToRascladka
         try {
             ElemGlass classElem = (ElemGlass) winNode.com5t();
             double selectID = winNode.com5t().id;
@@ -4740,7 +4747,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.rascladkaToGlass() " + e);
         }
-    }//GEN-LAST:event_rascladkaToGlass
+    }//GEN-LAST:event_artiklToRascladka
 
     private void colorToRascladka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToRascladka
         ElemSimple glas = (ElemSimple) winNode.com5t();
@@ -4961,15 +4968,15 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }//GEN-LAST:event_btn30BlindsToStvorka
 
-    private void btn33mosqToColor(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn33mosqToColor
+    private void colorToBlinds(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToBlinds
         // 
-    }//GEN-LAST:event_btn33mosqToColor
+    }//GEN-LAST:event_colorToBlinds
 
     private void btn34mosqToElements(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn34mosqToElements
         // 
     }//GEN-LAST:event_btn34mosqToElements
 
-    private void blindsToElement(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blindsToElement
+    private void artiklToBlinds(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToBlinds
         try {
             double glassID = winNode.com5t().id;
             int artiklID = ((ElemGlass) winNode.com5t()).artiklRec.getInt(eArtikl.id);
@@ -4991,7 +4998,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.handlToStvorka() " + e);
         }
-    }//GEN-LAST:event_blindsToElement
+    }//GEN-LAST:event_artiklToBlinds
 
     private void elementsView(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elementsView
         ProgressBar.create(Systree.this, new ListenerFrame() {

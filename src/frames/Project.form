@@ -1723,7 +1723,7 @@
                                 </Property>
                               </Properties>
                               <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="colorFromGlass"/>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="colorToGlass"/>
                               </Events>
                             </Component>
                           </SubComponents>
@@ -2452,7 +2452,7 @@
                                         </Property>
                                       </Properties>
                                       <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loopToStvorka"/>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="artiklToLoop"/>
                                       </Events>
                                     </Component>
                                     <Component class="javax.swing.JLabel" name="lab48">
@@ -2516,7 +2516,7 @@
                                         </Property>
                                       </Properties>
                                       <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="colorFromLoop"/>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="colorToLoop"/>
                                       </Events>
                                     </Component>
                                     <Component class="javax.swing.JLabel" name="lab52">
@@ -2728,7 +2728,7 @@
                                         </Property>
                                       </Properties>
                                       <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="handkToStvorka"/>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="artiklToHand"/>
                                       </Events>
                                     </Component>
                                     <Component class="javax.swing.JLabel" name="lab64">
@@ -2824,7 +2824,7 @@
                                         </Property>
                                       </Properties>
                                       <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="colorToHandl"/>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="colorToHand"/>
                                       </Events>
                                     </Component>
                                     <Component class="javax.swing.JLabel" name="lab46">
@@ -3089,7 +3089,7 @@
                                         </Property>
                                       </Properties>
                                       <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mosquitToStvorka"/>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="artiklToMosq"/>
                                       </Events>
                                     </Component>
                                     <Component class="javax.swing.JLabel" name="lab53">
@@ -3188,7 +3188,7 @@
                                         </Property>
                                       </Properties>
                                       <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mosqToColor"/>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="colorToMosk"/>
                                       </Events>
                                     </Component>
                                     <Component class="javax.swing.JLabel" name="lab62">
@@ -3313,7 +3313,7 @@
                                         </Property>
                                       </Properties>
                                       <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lockToStvorka"/>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="artiklToLock"/>
                                       </Events>
                                     </Component>
                                     <Component class="javax.swing.JTextField" name="txt57">
@@ -3415,7 +3415,7 @@
                                         </Property>
                                       </Properties>
                                       <Events>
-                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="colorFromLock"/>
+                                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="colorToLock"/>
                                       </Events>
                                     </Component>
                                   </SubComponents>

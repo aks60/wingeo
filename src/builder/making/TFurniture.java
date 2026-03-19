@@ -76,9 +76,9 @@ public class TFurniture extends Cal5e {
                             || furnitureRec.getDbl(eFurniture.max_width) < stv_width) {
                         if (max_size_message == true) {
                             JOptionPane.showMessageDialog(App.active, "Размер створки превышает максимальный размер фурнитуры.", "ВНИМАНИЕ!", 1);
+                            max_size_message = false;
                             return;
                         }
-                        max_size_message = false;
                     }
                     variant(areaStv, furnitureRec, 1); //основная фурнитура
                 }

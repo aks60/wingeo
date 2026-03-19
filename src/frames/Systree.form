@@ -1555,7 +1555,7 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="colorFromGlass"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="colorToGlass"/>
                           </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="lab62">
@@ -1674,7 +1674,7 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rascladkaToGlass"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="artiklToRascladka"/>
                           </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="btn29">
@@ -1957,7 +1957,7 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn33mosqToColor"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="colorToBlinds"/>
                           </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="lab74">
@@ -2079,7 +2079,7 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="blindsToElement"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="artiklToBlinds"/>
                           </Events>
                         </Component>
                       </SubComponents>
@@ -2972,7 +2972,7 @@
                                     </Property>
                                   </Properties>
                                   <Events>
-                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="handlToStvorka"/>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="artiklToHand"/>
                                   </Events>
                                 </Component>
                                 <Component class="javax.swing.JLabel" name="lab70">
@@ -3203,7 +3203,7 @@
                                     </Property>
                                   </Properties>
                                   <Events>
-                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="loopToStvorka"/>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="artiklToLoop"/>
                                   </Events>
                                 </Component>
                                 <Component class="javax.swing.JLabel" name="lab48">
@@ -3506,7 +3506,7 @@
                                     </Property>
                                   </Properties>
                                   <Events>
-                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="lockToStvorka"/>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="artiklToLock"/>
                                   </Events>
                                 </Component>
                                 <Component class="javax.swing.JLabel" name="lab63">
@@ -3643,7 +3643,7 @@
                                     </Property>
                                   </Properties>
                                   <Events>
-                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mosquitToStvorka"/>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="artiklToMosq"/>
                                   </Events>
                                 </Component>
                                 <Component class="javax.swing.JLabel" name="lab37">
