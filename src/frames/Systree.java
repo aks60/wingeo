@@ -440,7 +440,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             new TFurniture(wincalc(), true).furn();
             //Выделенный элемент
             Object selNode = winTree.getLastSelectedPathComponent();
-            
+
             if (selNode instanceof DefMutableTreeNode) {
                 winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
                 Com5t com5t = winNode.com5t();
@@ -573,12 +573,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     setText(txt48, eColor.find(stv.lockColor[0]).getStr(eColor.name));
                     setIcon(btn24, UPar.isFinite(stv.gson.param, PKjson.colorLock));
                     List.of(txt54, txt55, txt60, txt56).forEach(e -> e.setText(null)); //москитка
-                    Com5t mosquit = stv.childs.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
-                    if (mosquit != null) {
-                        ElemMosquit mosq = (ElemMosquit) mosquit;
+                    Com5t mosq = stv.childs.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
+                    if (mosq != null) {
                         setText(txt54, mosq.artiklRec.getStr(eArtikl.code));
+                        setIcon(btn16, UPar.isFinite(mosq.gson.param, PKjson.colorMosq));
                         setText(txt55, mosq.artiklRec.getStr(eArtikl.name));
                         setText(txt60, eColor.find(mosq.colorID1).getStr(eColor.name));
+                        setIcon(btn32, UPar.isFinite(mosq.gson.param, PKjson.colorMosq));
                         setText(txt56, mosq.sysprofRec.getStr(eElement.name));
                     }
 
@@ -973,9 +974,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.artiklToFurniture() " + e);
-        }        
+        }
     }
-    
+
     private void colorToProfile(java.awt.event.ActionEvent evt, JButton btn1, JButton btn2) {
         try {
             List<String> keys = new ArrayList();
@@ -1030,6 +1031,26 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             DicColor frame = new DicColor(this, (colorRec) -> {
 
                 GsonElem gsonElem = UCom.gson(wincalc().listAll, elemID);
+                if (colorRec.get(1) == null) {
+                    gsonElem.param.remove(PKjsonColor);
+                } else {
+                    gsonElem.param.addProperty(PKjsonColor, colorRec.getStr(eColor.id));
+                }
+                changeAndRedraw();
+
+            }, colorSet, true, false);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:Systree.colorToElement() " + e);
+        }
+    }
+
+    private void colorToElement(GsonElem gsonElem, String PKjsonColor, Record artiklElem) {
+        try {
+            double elemID = winNode.com5t().id;
+            HashSet<Record> colorSet = UGui.artiklToColorSet(artiklElem.getInt(eArtikl.id));
+            DicColor frame = new DicColor(this, (colorRec) -> {
+
                 if (colorRec.get(1) == null) {
                     gsonElem.param.remove(PKjsonColor);
                 } else {
@@ -4450,27 +4471,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     private void artiklToHand(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToHand
         artiklToFurniture(PKjson.artiklHand, 11);
-//        try {
-//            double stvorkaID = winNode.com5t().id;
-//            int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
-//            Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, 11);
-//            Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
-//            new DicArtikl(this, (artiklRec) -> {
-//
-//                GsonElem stvArea = UCom.gson(wincalc().listAll, stvorkaID);
-//                stvArea.param.remove(PKjson.colorHand);
-//                if (artiklRec.get(1) == null) {
-//                    stvArea.param.remove(PKjson.artiklHand);
-//                } else {
-//                    stvArea.param.addProperty(PKjson.artiklHand, artiklRec.getStr(eArtikl.id));
-//                }
-//                changeAndRedraw();
-//
-//            }, qResult);
-//
-//        } catch (Exception e) {
-//            System.err.println("Ошибка:Systree.handlToStvorka() " + e);
-//        }
     }//GEN-LAST:event_artiklToHand
 
     private void heightHandlToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_heightHandlToStvorka
@@ -4530,54 +4530,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     private void artiklToLoop(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToLoop
         artiklToFurniture(PKjson.artiklLoop, 12);
-//        try {
-//            double selectID = winNode.com5t().id;
-//            int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
-//            Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, 12);
-//            Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
-//            new DicArtikl(this, (artiklRec) -> {
-//
-//                GsonElem stvArea = UCom.gson(wincalc().listAll, selectID);
-//                stvArea.param.remove(PKjson.colorLoop);
-//                if (artiklRec.get(1) == null) {
-//                    stvArea.param.remove(PKjson.artiklLoop);
-//                    //stvArea.param.remove(PKjson.colorLoop);
-//                } else {
-//                    stvArea.param.addProperty(PKjson.artiklLoop, artiklRec.getStr(eArtikl.id));
-//                }
-//                changeAndRedraw();
-//
-//            }, qResult);
-//
-//        } catch (Exception e) {
-//            System.err.println("Ошибка:Systree.loopToStvorka() " + e);
-//        }
     }//GEN-LAST:event_artiklToLoop
 
     private void artiklToLock(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToLock
         artiklToFurniture(PKjson.artiklLock, 9);
-//        try {
-//            double selectID = winNode.com5t().id;
-//            int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
-//            Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, 9);
-//            Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
-//            new DicArtikl(this, (artiklRec) -> {
-//
-//                GsonElem stvArea = UCom.gson(wincalc().listAll, selectID);
-//                stvArea.param.remove(PKjson.colorLock);
-//                if (artiklRec.get(1) == null) {
-//                    stvArea.param.remove(PKjson.artiklLock);
-//                    //stvArea.param.remove(PKjson.colorLock);
-//                } else {
-//                    stvArea.param.addProperty(PKjson.artiklLock, artiklRec.getStr(eArtikl.id));
-//                }
-//                changeAndRedraw();
-//
-//            }, qResult);
-//
-//        } catch (Exception e) {
-//            System.err.println("Ошибка:frames.lockToStvorka " + e);
-//        }
     }//GEN-LAST:event_artiklToLock
 
     private void colorToLoop(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToLoop
@@ -4807,27 +4763,32 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_spinVertStateChanged
 
     private void colorToMosk(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToMosk
-        try {
-            double selectID = winNode.com5t().id;
-            AreaStvorka areaStv = (AreaStvorka) winNode.com5t();
-            Com5t mosq = areaStv.childs.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
-            if (mosq != null) {
-                ElemMosquit elemMosq = (ElemMosquit) mosq;
-                HashSet<Record> colorSet = UGui.artiklToColorSet(elemMosq.artiklRec.getInt(eArtikl.id));
-                DicColor frame = new DicColor(this, (colorRec) -> {
-
-                    if (colorRec.get(1) == null) {
-                        elemMosq.gson.param.remove(PKjson.colorID1);
-                    } else {
-                        elemMosq.gson.param.addProperty(PKjson.colorID1, colorRec.getStr(eColor.id));
-                    }
-                    changeAndRedraw();
-
-                }, colorSet, true, false);
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.colorToHandl() " + e);
+        Com5t mosq = wincalc().listAll.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
+        if (mosq != null) {
+            colorToElement(mosq.gson, PKjson.colorMosq, mosq.artiklRec);
         }
+
+//        try {
+//            double selectID = winNode.com5t().id;
+//            AreaStvorka areaStv = (AreaStvorka) winNode.com5t();
+//            Com5t mosq = areaStv.childs.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
+//            if (mosq != null) {
+//                //ElemMosquit elemMosq = (ElemMosquit) mosq;
+//                HashSet<Record> colorSet = UGui.artiklToColorSet(mosq.artiklRec.getInt(eArtikl.id));
+//                DicColor frame = new DicColor(this, (colorRec) -> {
+//
+//                    if (colorRec.get(1) == null) {
+//                        mosq.gson.param.remove(PKjson.colorID1);
+//                    } else {
+//                        mosq.gson.param.addProperty(PKjson.colorID1, colorRec.getStr(eColor.id));
+//                    }
+//                    changeAndRedraw();
+//
+//                }, colorSet, true, false);
+//            }
+//        } catch (Exception e) {
+//            System.err.println("Ошибка:Systree.colorToHandl() " + e);
+//        }
     }//GEN-LAST:event_colorToMosk
 
     private void ppmActionItems(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppmActionItems
