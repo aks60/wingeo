@@ -807,6 +807,7 @@
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="lab33" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="txt32" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -824,7 +825,7 @@
                                   </Group>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="pan22" min="-2" pref="103" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="60" max="32767" attributes="0"/>
+                                  <EmptySpace pref="190" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -1325,6 +1326,7 @@
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="lab29" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="txt19" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1370,7 +1372,7 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="txt61" alignment="0" min="-2" max="-2" attributes="0"/>
                                               <Component id="lab40" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -1383,7 +1385,7 @@
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="btn33" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="3" attributes="0">
+                                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                                   <Component id="lab73" alignment="3" min="-2" max="-2" attributes="0"/>
                                                   <Component id="txt63" alignment="3" min="-2" max="-2" attributes="0"/>
                                               </Group>
@@ -1407,7 +1409,7 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="lab4" min="-2" pref="19" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="26" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -2746,6 +2748,7 @@
                                 <DimensionLayout dim="1">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="3" attributes="0">
                                               <Component id="btn10" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="txt20" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -2798,7 +2801,7 @@
                                               <Component id="btn17" alignment="3" min="-2" max="-2" attributes="0"/>
                                               <Component id="lab44" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                          <EmptySpace pref="114" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                 </DimensionLayout>
@@ -3896,6 +3899,7 @@
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="lab49" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="txt36" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -3943,7 +3947,7 @@
                                       <Component id="lab57" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="txt41" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="0" pref="30" max="32767" attributes="0"/>
+                                  <EmptySpace pref="160" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -4404,6 +4408,7 @@
                         <DimensionLayout dim="1">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="lab35" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="txt17" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -4431,7 +4436,7 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="pan21" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="17" max="32767" attributes="0"/>
+                                  <EmptySpace pref="147" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>

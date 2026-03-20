@@ -354,7 +354,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }
 
-    //Выбор другой конструкции
+    //При выборе другой конструкции
     public void selectionTab2() {
         Arrays.asList(tab1, tab2, tab3, tab4).forEach(tab -> ((DefTableModel) tab.getModel()).getQuery().execsql());
         int index = UGui.getIndexRec(tab2);
@@ -383,9 +383,15 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }
 
+    //При выборе элемента конструкции
     public void selectionTree() {
         try {
-            Object selNode = winTree.getLastSelectedPathComponent();
+            //Пересчёт фурнитуры с учётом настроек 
+            //конструктива ручки, петли, замка см. форму "Фурнитура"                    
+            new TFurniture(wincalc(), true).furn();
+            //Выделенный элемент
+            Object selNode = winTree.getLastSelectedPathComponent();            
+
             if (selNode instanceof DefMutableTreeNode) {
                 winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
                 Com5t com5t = winNode.com5t();
@@ -429,9 +435,6 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
 
                     //Стеклопакет
                 } else if (com5t.type == enums.Type.GLASS) {
-                    //Пересчёт фурнитуры с учётом настроек 
-                    //конструктива ручки, петли, замка см. форму "Фурнитура"                    
-                    new TFurniture(wincalc(), true).furn();
                     ((CardLayout) pan8.getLayout()).show(pan8, "card15");
                     txt19.setText(com5t.artiklRec.getStr(eArtikl.code));
                     setIcon(btn3, UPar.isFinite(com5t.gson.param, PKjson.artglasID));
