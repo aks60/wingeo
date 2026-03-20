@@ -19,6 +19,7 @@ import builder.script.GsonElem;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import common.UCom;
 import dataset.Field;
 import dataset.Query;
@@ -972,6 +973,26 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }
 
+    private void colorToElement(GsonElem gsonElem, String PKjsonColor, Record artiklElem) {
+        try {
+            double elemID = winNode.com5t().id;
+            HashSet<Record> colorSet = UGui.artiklToColorSet(artiklElem.getInt(eArtikl.id));
+            DicColor frame = new DicColor(this, (colorRec) -> {
+
+                if (colorRec.get(1) == null) {
+                    gsonElem.param.remove(PKjsonColor);
+                } else {
+                    gsonElem.param.addProperty(PKjsonColor, colorRec.getStr(eColor.id));
+                }
+                changeAndRedraw();
+
+            }, colorSet, true, false);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:Systree.colorToElement() " + e);
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -3517,7 +3538,6 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         lab69.setMinimumSize(new java.awt.Dimension(80, 36));
         lab69.setPreferredSize(new java.awt.Dimension(80, 36));
 
-        txt12.setEditable(false);
         txt12.setFont(frames.UGui.getFont(0,0));
         txt12.setLineWrap(true);
         txt12.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
@@ -4071,7 +4091,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_btnFilter
 
     private void btnTest(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTest
-        System.out.println(eProp.orderID.getProp());
+        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(wincalc().gson.toJson())));
     }//GEN-LAST:event_btnTest
 
     private void artiklToLoop(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToLoop

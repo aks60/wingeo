@@ -1762,6 +1762,7 @@
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="null"/>
                             </Property>
+                            <Property name="enabled" type="boolean" value="false"/>
                             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[64, 19]"/>
                             </Property>
@@ -1784,6 +1785,7 @@
                             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                               <Border info="null"/>
                             </Property>
+                            <Property name="enabled" type="boolean" value="false"/>
                             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[64, 19]"/>
                             </Property>
@@ -1854,6 +1856,7 @@
                                 <EtchetBorder bevelType="0"/>
                               </Border>
                             </Property>
+                            <Property name="enabled" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[21, 20]"/>
                             </Property>
@@ -1866,7 +1869,7 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn30BlindsToStvorka"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="blindsToStvorka"/>
                           </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="lab72">
@@ -1953,6 +1956,7 @@
                                 <EtchetBorder bevelType="0"/>
                               </Border>
                             </Property>
+                            <Property name="enabled" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[21, 20]"/>
                             </Property>
@@ -2014,6 +2018,7 @@
                                 <EtchetBorder bevelType="0"/>
                               </Border>
                             </Property>
+                            <Property name="enabled" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[21, 20]"/>
                             </Property>
@@ -2026,7 +2031,7 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn34mosqToElements"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="elemsToBlinds"/>
                           </Events>
                         </Component>
                         <Component class="javax.swing.JLabel" name="lab75">
@@ -2075,6 +2080,7 @@
                                 <EtchetBorder bevelType="0"/>
                               </Border>
                             </Property>
+                            <Property name="enabled" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[21, 20]"/>
                             </Property>
@@ -3812,7 +3818,7 @@
                                     </Property>
                                   </Properties>
                                   <Events>
-                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mosqToElements"/>
+                                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="elemsToMosq"/>
                                   </Events>
                                 </Component>
                               </SubComponents>

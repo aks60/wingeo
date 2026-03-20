@@ -2060,6 +2060,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         spinHor.setAlignmentX(0.0F);
         spinHor.setAlignmentY(0.0F);
         spinHor.setBorder(null);
+        spinHor.setEnabled(false);
         spinHor.setMinimumSize(new java.awt.Dimension(64, 19));
         spinHor.setPreferredSize(new java.awt.Dimension(40, 19));
         spinHor.setValue(2);
@@ -2071,6 +2072,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         spinVert.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         spinVert.setBorder(null);
+        spinVert.setEnabled(false);
         spinVert.setMinimumSize(new java.awt.Dimension(64, 19));
         spinVert.setPreferredSize(new java.awt.Dimension(40, 19));
         spinVert.setValue(2);
@@ -2097,13 +2099,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         btn30.setText("...");
         btn30.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btn30.setEnabled(false);
         btn30.setMaximumSize(new java.awt.Dimension(21, 20));
         btn30.setMinimumSize(new java.awt.Dimension(21, 20));
         btn30.setName("btnField17"); // NOI18N
         btn30.setPreferredSize(new java.awt.Dimension(21, 20));
         btn30.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn30BlindsToStvorka(evt);
+                blindsToStvorka(evt);
             }
         });
 
@@ -2133,6 +2136,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         btn33.setText("...");
         btn33.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btn33.setEnabled(false);
         btn33.setMaximumSize(new java.awt.Dimension(21, 20));
         btn33.setMinimumSize(new java.awt.Dimension(21, 20));
         btn33.setName("btnField17"); // NOI18N
@@ -2157,13 +2161,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         btn34.setText("...");
         btn34.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btn34.setEnabled(false);
         btn34.setMaximumSize(new java.awt.Dimension(21, 20));
         btn34.setMinimumSize(new java.awt.Dimension(21, 20));
         btn34.setName("btnField17"); // NOI18N
         btn34.setPreferredSize(new java.awt.Dimension(21, 20));
         btn34.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn34mosqToElements(evt);
+                elemsToBlinds(evt);
             }
         });
 
@@ -2181,6 +2186,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         btn35.setText("...");
         btn35.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btn35.setEnabled(false);
         btn35.setMaximumSize(new java.awt.Dimension(21, 20));
         btn35.setMinimumSize(new java.awt.Dimension(21, 20));
         btn35.setName("btnField17"); // NOI18N
@@ -3058,7 +3064,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         btn31.setPreferredSize(new java.awt.Dimension(21, 20));
         btn31.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mosqToElements(evt);
+                elemsToMosq(evt);
             }
         });
 
@@ -4674,7 +4680,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }//GEN-LAST:event_artiklToMosq
 
-    private void mosqToElements(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mosqToElements
+    private void elemsToMosq(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elemsToMosq
         try {
             double selectID = winNode.com5t().id;
             AreaStvorka areaStv = (AreaStvorka) winNode.com5t();
@@ -4699,7 +4705,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.mosqToElements() " + e);
         }
-    }//GEN-LAST:event_mosqToElements
+    }//GEN-LAST:event_elemsToMosq
 
     private void btnFind2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFind2
         if (tab2.getBorder() != null) {
@@ -4770,28 +4776,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         if (mosq != null) {
             colorToElement(mosq.gson, PKjson.colorID1, mosq.artiklRec);
         }
-
-//        try {
-//            double selectID = winNode.com5t().id;
-//            AreaStvorka areaStv = (AreaStvorka) winNode.com5t();
-//            Com5t mosq = areaStv.childs.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
-//            if (mosq != null) {
-//                //ElemMosquit elemMosq = (ElemMosquit) mosq;
-//                HashSet<Record> colorSet = UGui.artiklToColorSet(mosq.artiklRec.getInt(eArtikl.id));
-//                DicColor frame = new DicColor(this, (colorRec) -> {
-//
-//                    if (colorRec.get(1) == null) {
-//                        mosq.gson.param.remove(PKjson.colorID1);
-//                    } else {
-//                        mosq.gson.param.addProperty(PKjson.colorID1, colorRec.getStr(eColor.id));
-//                    }
-//                    changeAndRedraw();
-//
-//                }, colorSet, true, false);
-//            }
-//        } catch (Exception e) {
-//            System.err.println("Ошибка:Systree.colorToHandl() " + e);
-//        }
     }//GEN-LAST:event_colorToMosk
 
     private void ppmActionItems(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppmActionItems
@@ -4945,7 +4929,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         changeAndRedraw();
     }//GEN-LAST:event_removeMosquitAction
 
-    private void btn30BlindsToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn30BlindsToStvorka
+    private void blindsToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blindsToStvorka
         try {
             double stvorkaID = winNode.com5t().id;
             int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
@@ -4968,15 +4952,15 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.handlToStvorka() " + e);
         }
-    }//GEN-LAST:event_btn30BlindsToStvorka
+    }//GEN-LAST:event_blindsToStvorka
 
     private void colorToBlinds(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToBlinds
         // 
     }//GEN-LAST:event_colorToBlinds
 
-    private void btn34mosqToElements(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn34mosqToElements
+    private void elemsToBlinds(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elemsToBlinds
         // 
-    }//GEN-LAST:event_btn34mosqToElements
+    }//GEN-LAST:event_elemsToBlinds
 
     private void artiklToBlinds(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToBlinds
         try {
