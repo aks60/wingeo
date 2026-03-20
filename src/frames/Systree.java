@@ -571,15 +571,18 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     setText(txt58, stv.lockRec[0].getStr(eArtikl.name));
                     setIcon(btn23, UPar.isFinite(stv.gson.param, PKjson.artiklLock));
                     setText(txt48, eColor.find(stv.lockColor[0]).getStr(eColor.name));
-                    setIcon(btn24, UPar.isFinite(stv.gson.param, PKjson.colorLock));
-                    List.of(txt54, txt55, txt60, txt56).forEach(e -> e.setText(null)); //москитка
+                    setIcon(btn24, UPar.isFinite(stv.gson.param, PKjson.colorLock));                    
+                    //Москитка
                     Com5t mosq = stv.childs.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
+                    List.of(txt54, txt55, txt60, txt56).forEach(e -> e.setText(null));
+                    List.of(btn16, btn32).forEach(btn -> setIcon(btn, false));                     
                     if (mosq != null) {
+                        
                         setText(txt54, mosq.artiklRec.getStr(eArtikl.code));
-                        setIcon(btn16, UPar.isFinite(mosq.gson.param, PKjson.colorMosq));
+                        setIcon(btn16, UPar.isFinite(mosq.gson.param, PKjson.artiklID));
                         setText(txt55, mosq.artiklRec.getStr(eArtikl.name));
                         setText(txt60, eColor.find(mosq.colorID1).getStr(eColor.name));
-                        setIcon(btn32, UPar.isFinite(mosq.gson.param, PKjson.colorMosq));
+                        setIcon(btn32, UPar.isFinite(mosq.gson.param, PKjson.colorID1));
                         setText(txt56, mosq.sysprofRec.getStr(eElement.name));
                     }
 
@@ -4637,7 +4640,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             AreaStvorka areaStv = (AreaStvorka) winNode.com5t();
             double selectID = winNode.com5t().id;
             Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2, 20);
-            Com5t mosq = areaStv.childs.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
+            Com5t mosq = wincalc().listAll.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
             int recordID = (mosq != null && mosq.artiklRec != null) ? mosq.artiklRec.getInt(eArtikl.id) : -1;
             new DicArtikl(this, recordID, (artiklRec) -> {
 
@@ -4765,7 +4768,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private void colorToMosk(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToMosk
         Com5t mosq = wincalc().listAll.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
         if (mosq != null) {
-            colorToElement(mosq.gson, PKjson.colorMosq, mosq.artiklRec);
+            colorToElement(mosq.gson, PKjson.colorID1, mosq.artiklRec);
         }
 
 //        try {
