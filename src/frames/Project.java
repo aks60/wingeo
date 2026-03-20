@@ -1982,6 +1982,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         pan8.add(pan13, "card13");
 
         pan15.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Стеклопакет", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
+        pan15.setEnabled(false);
 
         lab29.setFont(frames.UGui.getFont(0,0));
         lab29.setText("Артикул");
@@ -2152,6 +2153,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
 
         btn35.setText("...");
         btn35.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btn35.setEnabled(false);
         btn35.setMaximumSize(new java.awt.Dimension(21, 20));
         btn35.setMinimumSize(new java.awt.Dimension(21, 20));
         btn35.setName("btnField17"); // NOI18N
@@ -2193,6 +2195,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
 
         btn34.setText("...");
         btn34.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btn34.setEnabled(false);
         btn34.setMaximumSize(new java.awt.Dimension(21, 20));
         btn34.setMinimumSize(new java.awt.Dimension(21, 20));
         btn34.setName("btnField17"); // NOI18N
@@ -2229,6 +2232,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
 
         btn30.setText("...");
         btn30.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btn30.setEnabled(false);
         btn30.setMaximumSize(new java.awt.Dimension(21, 20));
         btn30.setMinimumSize(new java.awt.Dimension(21, 20));
         btn30.setName("btnField17"); // NOI18N

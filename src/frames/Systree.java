@@ -2060,7 +2060,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         spinHor.setAlignmentX(0.0F);
         spinHor.setAlignmentY(0.0F);
         spinHor.setBorder(null);
-        spinHor.setEnabled(false);
         spinHor.setMinimumSize(new java.awt.Dimension(64, 19));
         spinHor.setPreferredSize(new java.awt.Dimension(40, 19));
         spinHor.setValue(2);
@@ -2072,7 +2071,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         spinVert.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         spinVert.setBorder(null);
-        spinVert.setEnabled(false);
         spinVert.setMinimumSize(new java.awt.Dimension(64, 19));
         spinVert.setPreferredSize(new java.awt.Dimension(40, 19));
         spinVert.setValue(2);
@@ -4963,27 +4961,27 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_elemsToBlinds
 
     private void artiklToBlinds(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToBlinds
-        try {
-            double glassID = winNode.com5t().id;
-            int artiklID = ((ElemGlass) winNode.com5t()).artiklRec.getInt(eArtikl.id);
-            Query qBlinds = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2, 50);
-            //Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
-            new DicArtikl(this, (artiklRec) -> {
-
-                GsonElem glass = UCom.gson(wincalc().listAll, glassID);
-                //stvArea.param.remove(PKjson.colorHand);
-                if (artiklRec.get(1) == null) {
-                    //stvArea.param.remove(PKjson.artiklB);
-                } else {
-                    glass.param.addProperty(PKjson.artiklHand, artiklRec.getStr(eArtikl.id));
-                }
-                //updateScript(stvorkaID);
-
-            }, qBlinds);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.handlToStvorka() " + e);
-        }
+//        try {
+//            double glassID = winNode.com5t().id;
+//            int artiklID = ((ElemGlass) winNode.com5t()).artiklRec.getInt(eArtikl.id);
+//            Query qBlinds = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2, 50);
+//            //Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
+//            new DicArtikl(this, (artiklRec) -> {
+//
+//                GsonElem glass = UCom.gson(wincalc().listAll, glassID);
+//                //stvArea.param.remove(PKjson.colorHand);
+//                if (artiklRec.get(1) == null) {
+//                    //stvArea.param.remove(PKjson.artiklB);
+//                } else {
+//                    glass.param.addProperty(PKjson.artiklHand, artiklRec.getStr(eArtikl.id));
+//                }
+//                //updateScript(stvorkaID);
+//
+//            }, qBlinds);
+//
+//        } catch (Exception e) {
+//            System.err.println("Ошибка:Systree.handlToStvorka() " + e);
+//        }
     }//GEN-LAST:event_artiklToBlinds
 
     private void elementsView(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elementsView
