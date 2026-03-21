@@ -960,9 +960,9 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
 
                 GsonElem gsonElem = UCom.gson(wincalc().listAll, elemID);
                 if (colorRec.get(1) == null) {
-                    gsonElem.param.remove(PKjsonColor);
+                    UPar.remove(gsonElem.param, List.of(PKjsonColor));
                 } else {
-                    gsonElem.param.addProperty(PKjsonColor, colorRec.getStr(eColor.id));
+                    UPar.addProperty(gsonElem.param, List.of(PKjsonColor), colorRec.getInt(eColor.id));
                 }
                 changeAndRedraw();
 
@@ -980,9 +980,9 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
             DicColor frame = new DicColor(this, (colorRec) -> {
 
                 if (colorRec.get(1) == null) {
-                    gsonElem.param.remove(PKjsonColor);
+                    UPar.remove(gsonElem.param, List.of(PKjsonColor));
                 } else {
-                    gsonElem.param.addProperty(PKjsonColor, colorRec.getStr(eColor.id));
+                    UPar.addProperty(gsonElem.param, List.of(PKjsonColor), colorRec.getInt(eColor.id));
                 }
                 changeAndRedraw();
 
