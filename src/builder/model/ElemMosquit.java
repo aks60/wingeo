@@ -6,6 +6,7 @@ import builder.script.GsonElem;
 import common.UCom;
 import dataset.Query;
 import dataset.Record;
+import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
 import domain.eElement;
@@ -36,7 +37,9 @@ public class ElemMosquit extends ElemSimple {
         if (UPar.isFinite(gson.param, PKjson.colorID1)) {
             this.colorID1 = gson.param.get(PKjson.colorID1).getAsInt();
         } else {
-            this.colorID1 = -3;
+            Record artdetRec = eArtdet.find(artiklRec.getInt(eArtikl.id));
+            Record colorRec = eColor.find3(artdetRec.getInt(eArtdet.color_fk));
+            colorID1 = colorRec.getInt(eColor.id);            
         }
 
         //Состав москитки. ВНИМАЕИЕ! elementID подменён на sysprofRec
