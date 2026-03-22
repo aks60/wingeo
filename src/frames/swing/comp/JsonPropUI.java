@@ -57,8 +57,9 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import common.listener.ListenerGet;
 import common.listener.ListenerSet;
+import javax.swing.JPanel;
 
-public class JsonProperty extends javax.swing.JPanel {
+public class JsonPropUI extends javax.swing.JPanel {
 
     private ListenerGet<Wincalc> listenerGet = null;
     private ListenerSet<String> listenerSet = null;
@@ -73,11 +74,7 @@ public class JsonProperty extends javax.swing.JPanel {
     javax.swing.JTree winTree = new javax.swing.JTree();
     javax.swing.JPopupMenu ppmTree = new javax.swing.JPopupMenu();
 
-    public JsonProperty() {
-        initComponents();
-    }
-
-    public JsonProperty(ListenerSet listenerSet, ListenerGet listenerGet, JTree sysTree, JTree winTree, JPopupMenu ppmTree) {
+    public JsonPropUI(ListenerSet listenerSet, ListenerGet listenerGet, JTree sysTree, JTree winTree, JPopupMenu ppmTree) {
         initComponents();
         this.listenerSet = listenerSet;
         this.listenerGet = listenerGet;
@@ -86,6 +83,9 @@ public class JsonProperty extends javax.swing.JPanel {
         this.ppmTree = ppmTree;
     }
 
+    public JPanel getPan7() {
+        return pan7;
+    }
     //При выборе элемента конструкции
     public void selectionTree2() {
         try {
@@ -114,6 +114,7 @@ public class JsonProperty extends javax.swing.JPanel {
                         enums.Type.ARCH, enums.Type.DOOR).contains(com5t.type)) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card18");
                     ((TitledBorder) pan12.getBorder()).setTitle(winc.root.type.name);
+                    System.out.println("===========================================");
                     setText(txt9, eColor.find(winc.root.colorID1).getStr(eColor.name));
                     setIcon(btn9, UPar.isFinite(winc.root.gson.param, PKjson.colorID1));
                     setText(txt13, eColor.find(winc.root.colorID2).getStr(eColor.name));

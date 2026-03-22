@@ -107,7 +107,7 @@ import javax.swing.JTree;
 import org.locationtech.jts.geom.Envelope;
 import common.listener.ListenerGet;
 import common.listener.ListenerSet;
-import frames.swing.comp.JsonProperty;
+import frames.swing.comp.JsonPropUI;
 
 public class Systree extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
@@ -130,6 +130,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private boolean writeNuni = true;
     private Canvas canvas = new Canvas();
     private Scene scene = null;
+    private JsonPropUI jsonPropUI;
     private TableFieldFormat rsvSystree;
     private java.awt.Frame models = null;
     private DefMutableTreeNode sysNode = null;
@@ -144,7 +145,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         loadingModel();
         listenerAdd();
         listenerSet();
-        JsonProperty jsonProperty = new JsonProperty(listenerSet, listenerGet, sysTree, winTree, ppmTree);
         tabb1.setSelectedIndex(4);
     }
 
@@ -159,8 +159,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         loadingData();
         loadingModel();
         listenerAdd();
-        listenerSet();
-        JsonProperty jsonProperty = new JsonProperty(listenerSet, listenerGet, sysTree, winTree, ppmTree);
+        listenerSet();        
         tabb1.setSelectedIndex(mode);
     }
 
@@ -188,7 +187,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }
 
     public final void loadingModel() {
-
+        
+//            jsonPropUI = new JsonPropUI(listenerSet, listenerGet, sysTree, winTree, ppmTree);
+//            winTree.getSelectionModel().addTreeSelectionListener(tse -> jsonPropUI.selectionTree2());
+//            pan2.remove(1);
+//            pan2.add(jsonPropUI);
+//            pan2.revalidate();
+//            pan2.repaint();
+            
         ((DefaultTreeCellEditor) sysTree.getCellEditor()).addCellEditorListener(new CellEditorListener() {
 
             public void editingStopped(ChangeEvent e) {
@@ -826,7 +832,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 String script2 = UGui.ioknaParamUpdate(script, record.getInt(0));
                 sysprodRec.set(eSysprod.script, script2);
                 wincalc().build(script2);
-                selectionTree2();
+                jsonPropUI.selectionTree2();
                 UGui.setSelectedIndex(tab7, index2);
             }
         };
@@ -902,7 +908,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             canvas.draw();
 
             //Обновим поля форм
-            selectionTree2();
+            jsonPropUI.selectionTree2();
 
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.updateScript() " + e);
@@ -938,7 +944,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 canvas.draw();
 
                 //Обновим поля форм
-                selectionTree2();
+                jsonPropUI.selectionTree2();
 
             }
         } catch (Exception e) {
@@ -4325,8 +4331,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_findFromArtikl
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-        ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
-        UGui.setSelectedIndex(tab4, 5);
+//        ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
+//        UGui.setSelectedIndex(tab4, 5);
+            jsonPropUI = new JsonPropUI(listenerSet, listenerGet, sysTree, winTree, ppmTree);
+            winTree.getSelectionModel().addTreeSelectionListener(tse -> jsonPropUI.selectionTree2());
+            pan2.remove(1);
+            pan2.add(jsonPropUI);
+            pan2.revalidate();
+            pan2.repaint();
     }//GEN-LAST:event_btnReport
 
     private void btnClose(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClose
@@ -5365,7 +5377,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         rnd2.setClosedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b006.gif")));
         sysTree.setBorder(null);
         sysTree.getSelectionModel().addTreeSelectionListener(tse -> selectionTree1());
-        winTree.getSelectionModel().addTreeSelectionListener(tse -> selectionTree2());
+        ////////winTree.getSelectionModel().addTreeSelectionListener(tse -> jsonPropUI.selectionTree2());
         tab4.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
                 if (event.getValueIsAdjusting() == false) {
