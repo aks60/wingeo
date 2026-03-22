@@ -131,7 +131,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private boolean writeNuni = true;
     private Canvas canvas = new Canvas();
     private Scene scene = null;
-    private JsonPropUI jsonPropUI;
+    private JsonPropUI jsonPropUI = null;
     private TableFieldFormat rsvSystree;
     private java.awt.Frame models = null;
     private DefMutableTreeNode sysNode = null;
@@ -445,10 +445,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     //При выборе элемента конструкции public   
     void selectionTree2() {
-        jsonPropUI.selectionTree2();
+        if (jsonPropUI != null) {
+            jsonPropUI.selectionTree2();
+        }
     }
-     
-    
+
     //Выбор другой конструкции
     public void selectionTab5() {
         int index = UGui.getIndexRec(tab5);
@@ -664,7 +665,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
             return null;
         };
-        
+
         listenerAction = () -> {
             changeAndRedraw();
         };

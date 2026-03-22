@@ -12,6 +12,8 @@ import builder.model.ElemJoining;
 import builder.model.ElemSimple;
 import builder.model.UPar;
 import builder.script.GsonElem;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import common.UCom;
 import common.listener.ListenerAction;
 import dataset.Field;
@@ -57,20 +59,23 @@ import startup.App;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import common.listener.ListenerGet;
+import common.listener.ListenerRecord;
 import common.listener.ListenerSet;
+import dataset.Connect;
 import domain.eSysprod;
-import frames.UTree;
+import frames.dialog.ParDefVal;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 public class JsonPropUI extends javax.swing.JPanel {
 
-    private ListenerGet<Wincalc> listenerGet = null;
-    private ListenerSet<String> listenerSet = null;
-    private ListenerAction listenerAct = null;
+    private ListenerGet<Wincalc> listenerGet;
+    private ListenerSet<String> listenerSet;
+    private ListenerAction listenerAct;
+    private ListenerRecord listenerParam2;    
     private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
-    private Query qGroups = new Query(eGroups.values());
-    private Query qSysprof = new Query(eSysprof.values(), eArtikl.values());
-    private Query qSyspar1b = new Query(eSyspar1.values());
+    private Query qGroups, qSysprof, qSyspar1b;
 
     //private DefMutableTreeNode sysNode = null;
     javax.swing.JFrame thiz = null;
@@ -98,7 +103,6 @@ public class JsonPropUI extends javax.swing.JPanel {
     
     //При выборе элемента конструкции
     public void selectionTree2() {
-        System.out.println("===========================================");
         try {
             //Пересчёт фурнитуры с учётом настроек 
             //конструктива ручки, петли, замка см. форму "Фурнитура"                    
@@ -296,6 +300,37 @@ public class JsonPropUI extends javax.swing.JPanel {
         return (Wincalc) listenerGet.get();
     }
 
+    /*public void listenerAdd() {
+
+        UGui.buttonCellEditor(tab7, 1).addActionListener(event -> {
+            Record syspar1Rec = qSyspar1b.get(UGui.getIndexRec(tab7));
+            if (syspar1Rec.getInt(eSyspar1.fixed) != 1) {
+                int groupsID = syspar1Rec.getInt(eSyspar1.groups_id);
+                new ParDefVal(this, listenerParam2, groupsID);
+            } else {
+                JOptionPane.showMessageDialog(thiz, "Неизменяемый параметр в системе", "ВНИМАНИЕ!", 1);
+            }
+        });
+    }
+
+    public void listenerSet() {
+
+        listenerParam2 = (record) -> {
+            UGui.stopCellEditing(tab2, tab3, tab4, tab5, tab7);
+            int index = UGui.getIndexRec(tab5);
+            int index2 = UGui.getIndexRec(tab7);
+            if (index != -1) {
+                Record sysprodRec = qSysprod.get(index);
+                String script = sysprodRec.getStr(eSysprod.script);
+                String script2 = UGui.ioknaParamUpdate(script, record.getInt(0));
+                sysprodRec.set(eSysprod.script, script2);
+                wincalc().build(script2);
+                selectionTree2();
+                UGui.setSelectedIndex(tab7, index2);
+            }
+        };
+    }*/
+    
     private void setText(JTextField comp, Object txt) {
         if (txt == null) {
             comp.setText("");
