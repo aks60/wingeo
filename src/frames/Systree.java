@@ -115,6 +115,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             listenerParam1, listenerParam2, listenerArt211, listenerArt212, ListenerCom5t;
     private ListenerSet<String> listenerSet = null;
     private ListenerGet<Wincalc> listenerGet = null;
+    private ListenerAction listenerAction = null;
     private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
     private Query qGroups = new Query(eGroups.values());
     private Query qParams = new Query(eParams.values());
@@ -159,7 +160,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         loadingData();
         loadingModel();
         listenerAdd();
-        listenerSet();        
+        listenerSet();
         tabb1.setSelectedIndex(mode);
     }
 
@@ -187,14 +188,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }
 
     public final void loadingModel() {
-        
+
 //            jsonPropUI = new JsonPropUI(listenerSet, listenerGet, sysTree, winTree, ppmTree);
 //            winTree.getSelectionModel().addTreeSelectionListener(tse -> jsonPropUI.selectionTree2());
 //            pan2.remove(1);
 //            pan2.add(jsonPropUI);
 //            pan2.revalidate();
 //            pan2.repaint();
-            
         ((DefaultTreeCellEditor) sysTree.getCellEditor()).addCellEditorListener(new CellEditorListener() {
 
             public void editingStopped(ChangeEvent e) {
@@ -443,200 +443,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }
 
-    //При выборе элемента конструкции
-    public void selectionTree2() {
-        try {
-            //Пересчёт фурнитуры с учётом настроек 
-            //конструктива ручки, петли, замка см. форму "Фурнитура"                    
-            new TFurniture(wincalc(), true).furn();
-            //Выделенный элемент
-            Object selNode = winTree.getLastSelectedPathComponent();
-
-            if (selNode instanceof DefMutableTreeNode) {
-                winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
-                Com5t com5t = winNode.com5t();
-                Wincalc winc = wincalc();
-
-                UGui.changePpmTree(winTree, ppmTree, com5t);
-
-                //Таймер цвета
-                if (enums.Type.contains(com5t, enums.Type.PARAM, enums.Type.FRAME, enums.Type.JOINING) == false) {
-                    if (winc.canvas != null) {
-                        com5t.timer.start();
-                        winc.canvas.repaint();
-                    }
-                }
-                //Коробка
-                if (List.of(enums.Type.RECTANGL, enums.Type.TRAPEZE,
-                        enums.Type.ARCH, enums.Type.DOOR).contains(com5t.type)) {
-                    ((CardLayout) pan7.getLayout()).show(pan7, "card18");
-                    ((TitledBorder) pan12.getBorder()).setTitle(winc.root.type.name);
-                    setText(txt9, eColor.find(winc.root.colorID1).getStr(eColor.name));
-                    setIcon(btn9, UPar.isFinite(winc.root.gson.param, PKjson.colorID1));
-                    setText(txt13, eColor.find(winc.root.colorID2).getStr(eColor.name));
-                    setIcon(btn13, UPar.isFinite(winc.root.gson.param, PKjson.colorID2));
-                    setText(txt14, eColor.find(winc.root.colorID3).getStr(eColor.name));
-                    setIcon(btn2, UPar.isFinite(winc.root.gson.param, PKjson.colorID3));
-                    setText(txt17, UCom.format(winc.width(), 1));
-                    setText(txt22, UCom.format(winc.height(), 1));
-                    setText(txt53, winc.root.artiklRec.getStr(eArtikl.code));
-                    setIcon(btn36, UPar.isFinite(winc.root.gson.param, PKjson.sysprofID));
-                    setText(txt66, winc.root.artiklRec.get(eArtikl.name));
-                    setText(txt67, eArtikl.find2(com5t.artiklRec.getInt(eArtikl.analog_id)).getStr(eArtikl.code));
-
-                    //Параметры
-                } else if (com5t.type == enums.Type.PARAM) {
-                    ((CardLayout) pan7.getLayout()).show(pan7, "card11");
-                    qSyspar1b.clear();
-                    winc.mapPardef.forEach((pk, syspar1Rec) -> qSyspar1b.add(syspar1Rec));
-                    Collections.sort(qSyspar1b, (o1, o2) -> qGroups.find(eGroups.data(), eGroups.id, o1.getInt(eSyspar1.groups_id)).getStr(eGroups.name)
-                            .compareTo(qGroups.find(eGroups.data(), eGroups.id, o2.getInt(eSyspar1.groups_id)).getStr(eGroups.name)));
-                    ((DefTableModel) tab7.getModel()).fireTableDataChanged();
-
-                    //Рама, импост...
-                } else if (List.of(enums.Type.BOX_SIDE, enums.Type.STV_SIDE, enums.Type.IMPOST,
-                        enums.Type.STOIKA, enums.Type.SHTULP).contains(com5t.type)) {
-                    ((CardLayout) pan7.getLayout()).show(pan7, "card13");
-                    ((TitledBorder) pan13.getBorder()).setTitle(winNode.toString());
-                    setText(txt32, com5t.artiklRec.getStr(eArtikl.code));
-                    setIcon(btn22, UPar.isFinite(com5t.gson.param, PKjson.sysprofID));
-                    setText(txt33, com5t.artiklRec.getStr(eArtikl.name));
-                    setText(txt52, eArtikl.find2(com5t.artiklRec.getInt(eArtikl.analog_id)).getStr(eArtikl.code));
-
-                    setText(txt27, eColor.find(com5t.colorID1).getStr(eColor.name));
-                    setIcon(btn18, UPar.isFinite(com5t.gson.param, PKjson.colorID1));
-                    setText(txt28, eColor.find(com5t.colorID2).getStr(eColor.name));
-                    setIcon(btn19, UPar.isFinite(com5t.gson.param, PKjson.colorID2));
-                    setText(txt29, eColor.find(com5t.colorID3).getStr(eColor.name));
-                    setIcon(btn20, UPar.isFinite(com5t.gson.param, PKjson.colorID3));
-
-                    //Стеклопакет
-                } else if (com5t.type == enums.Type.GLASS) {
-                    ElemGlass elem = (ElemGlass) com5t;
-                    ((CardLayout) pan7.getLayout()).show(pan7, "card15");
-                    Record artiklRec = com5t.artiklRec;
-                    setText(txt19, artiklRec.getStr(eArtikl.code));
-                    setIcon(btn3, UPar.isFinite(com5t.gson.param, PKjson.artglasID));
-                    setText(txt18, artiklRec.getStr(eArtikl.name));
-                    Record colorRec = eColor.find(com5t.colorID1);
-                    setText(txt34, colorRec.getStr(eColor.name));
-                    setIcon(btn25, UPar.isFinite(com5t.gson.param, PKjson.colorGlass));
-                    Record rasclRec = ((ElemGlass) com5t).rascRec;
-                    setText(txt49, rasclRec.getStr(eArtikl.code));
-                    setText(txt50, rasclRec.getStr(eArtikl.name));
-                    Record colorRascl = eColor.find(((ElemGlass) com5t).rascColor);
-                    setText(txt51, colorRascl.getStr(eColor.name));
-                    spinHor.setValue(((ElemGlass) com5t).rascNumber[0]);
-                    spinVert.setValue(((ElemGlass) com5t).rascNumber[1]);
-                    //Помощь менеджеру для коррекция импоста
-//                    if (elem.deltaDY != null) {  
-//                        ElemSimple el = winc.listElem.stream().filter(e -> e.type == enums.Type.IMPOST).findFirst().orElse(null);
-//                        double s1 = el.artiklRec.getDbl(eArtikl.height), 
-//                                s2 = el.artiklRec.getDbl(eArtikl.size_centr), 
-//                                s3 = el.artiklRec.getDbl(eArtikl.size_falz);                       
-//                        //имп.шир - имп.серед - имп.фальц + смещю.стор.точк.перес.арк.и.коробки
-//                        lab4.setText("DY: " + s1 + " - " + s2 + " - " + s3 + " + "
-//                                + UCom.format(elem.deltaDY, 2) + " = " 
-//                                + UCom.format(s1 - s2 - s3 + elem.deltaDY, 2) + " мм.");
-//                        System.out.println("frames.Systree.selectionTree2()");
-//                    }
-
-                    //Створка
-                } else if (com5t.type == enums.Type.STVORKA) {
-                    //через сокр. тарификацию
-                    ((CardLayout) pan7.getLayout()).show(pan7, "card16");
-                    AreaStvorka stv = (AreaStvorka) com5t;
-                    Envelope env = stv.area.getGeometryN(0).getEnvelopeInternal();
-                    int sysfurnID = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
-                    setText(txt68, stv.artiklRec.get(eArtikl.code));
-                    setIcon(btn37, UPar.isFinite(stv.gson.param, PKjson.sysprofID));
-                    setText(txt69, stv.artiklRec.get(eArtikl.name));
-                    setText(txt70, eArtikl.find2(com5t.artiklRec.getInt(eArtikl.analog_id)).getStr(eArtikl.code));
-
-                    setText(txt10, eColor.find(stv.colorID1).getStr(eColor.name));
-                    setIcon(btn38, UPar.isFinite(stv.gson.param, PKjson.colorID1));
-                    setText(txt15, eColor.find(stv.colorID2).getStr(eColor.name));
-                    setIcon(btn39, UPar.isFinite(stv.gson.param, PKjson.colorID2));
-                    setText(txt23, eColor.find(stv.colorID3).getStr(eColor.name));
-                    setIcon(btn8, UPar.isFinite(stv.gson.param, PKjson.colorID3));
-
-                    setText(txt24, UCom.format(env.getWidth(), 1));
-                    setText(txt26, UCom.format(env.getHeight(), 1));
-                    setText(txt20, eFurniture.find(sysfurnID).getStr(eFurniture.name));
-                    setIcon(btn10, UPar.isFinite(stv.gson.param, PKjson.sysfurnID));
-                    setText(txt30, stv.typeOpen.name2);
-                    setIcon(btn12, UPar.isFinite(stv.gson.param, PKjson.artiklHand));
-                    setText(txt16, stv.handLayout.name);
-                    setText(txt31, (stv.handLayout == LayoutHand.VAR) ? UCom.format(stv.handHeight, 1) : "");
-                    setText(txt21, stv.handRec[0].getStr(eArtikl.code));
-                    setText(txt59, stv.handRec[0].getStr(eArtikl.name));
-                    setIcon(btn21, UPar.isFinite(stv.gson.param, PKjson.typeOpen));
-                    setText(txt25, eColor.find(stv.handColor[0]).getStr(eColor.name));
-                    setIcon(btn14, UPar.isFinite(stv.gson.param, PKjson.colorHand));
-                    setText(txt45, stv.loopRec[0].getStr(eArtikl.code));
-                    setText(txt57, stv.loopRec[0].getStr(eArtikl.name));
-                    setIcon(btn15, UPar.isFinite(stv.gson.param, PKjson.artiklLoop));
-                    setText(txt47, eColor.find(stv.loopColor[0]).getStr(eColor.name));
-                    setIcon(btn17, UPar.isFinite(stv.gson.param, PKjson.colorLoop));
-                    setText(txt46, stv.lockRec[0].getStr(eArtikl.code));
-                    setText(txt58, stv.lockRec[0].getStr(eArtikl.name));
-                    setIcon(btn23, UPar.isFinite(stv.gson.param, PKjson.artiklLock));
-                    setText(txt48, eColor.find(stv.lockColor[0]).getStr(eColor.name));
-                    setIcon(btn24, UPar.isFinite(stv.gson.param, PKjson.colorLock));
-                    //Москитка
-                    Com5t mosq = stv.childs.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
-                    List.of(txt54, txt55, txt60, txt56).forEach(e -> e.setText(null));
-                    List.of(btn16, btn32).forEach(btn -> setIcon(btn, false));
-                    if (mosq != null) {
-
-                        setText(txt54, mosq.artiklRec.getStr(eArtikl.code));
-                        setIcon(btn16, UPar.isFinite(mosq.gson.param, PKjson.artiklID));
-                        setText(txt55, mosq.artiklRec.getStr(eArtikl.name));
-                        setText(txt60, eColor.find(mosq.colorID1).getStr(eColor.name));
-                        setIcon(btn32, UPar.isFinite(mosq.gson.param, PKjson.colorID1));
-                        setText(txt56, mosq.sysprofRec.getStr(eElement.name));
-                    }
-
-                    //Соединения
-                } else if (com5t.type == enums.Type.JOINING) {
-                    ((CardLayout) pan7.getLayout()).show(pan7, "card17");
-                    DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
-                    ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
-                    new TJoining(winc, true).join();//заполним соединения из конструктива                                        
-                    ElemJoining ej1 = UCom.join(winc.listJoin, elem5e, 0);
-                    ElemJoining ej2 = UCom.join(winc.listJoin, elem5e, 1);
-                    ElemJoining ej3 = UCom.join(winc.listJoin, elem5e, 2);
-                    List.of(lab55, lab56, lab57).forEach(it -> it.setIcon(null));
-                    List.of(txt36, txt37, txt38, txt39, txt40, txt41, txt42, txt43, txt44).forEach(it -> it.setText(""));
-                    if (ej1 != null) {
-                        setText(txt36, ej1.joiningRec.getStr(eJoining.name));
-                        setText(txt42, ej1.name());
-                        setText(txt38, ej1.joinvarRec.getStr(eJoinvar.name));
-                        lab55.setIcon(UColor.iconFromTypeJoin2(ej1.type().id));
-                    }
-                    if (ej2 != null) {
-                        setText(txt37, ej2.joiningRec.getStr(eJoining.name));
-                        setText(txt43, ej2.name());
-                        setText(txt39, ej2.joinvarRec.getStr(eJoinvar.name));
-                        lab56.setIcon(UColor.iconFromTypeJoin2(ej2.type().id));
-                    }
-                    if (ej3 != null && ej3.type() == TypeJoin.FLAT) {
-                        setText(txt40, ej3.joiningRec.getStr(eJoining.name));
-                        setText(txt44, ej3.name());
-                        setText(txt41, ej3.joinvarRec.getStr(eJoinvar.name));
-                        lab57.setIcon(UColor.iconFromTypeJoin2(ej3.type().id));
-                    }
-                } else {
-                    ((CardLayout) pan7.getLayout()).show(pan7, "card12");
-                }
-                lab2.setText("Элемент ID = " + UCom.format(com5t.id, 2));
-                List.of(pan12, pan13, pan15, pan16).forEach(it -> it.repaint());
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.selectionTree2() " + e);
-        }
+    //При выборе элемента конструкции public   
+    void selectionTree2() {
+        jsonPropUI.selectionTree2();
     }
-
+     
+    
     //Выбор другой конструкции
     public void selectionTab5() {
         int index = UGui.getIndexRec(tab5);
@@ -832,15 +644,15 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 String script2 = UGui.ioknaParamUpdate(script, record.getInt(0));
                 sysprodRec.set(eSysprod.script, script2);
                 wincalc().build(script2);
-                jsonPropUI.selectionTree2();
+                selectionTree2();
                 UGui.setSelectedIndex(tab7, index2);
             }
         };
-        
+
         listenerSet = (str) -> {
             lab2.setText(str);
         };
-        
+
         listenerGet = () -> {
             int index = UGui.getIndexRec(tab5);
             if (index != -1) {
@@ -851,6 +663,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 }
             }
             return null;
+        };
+        
+        listenerAction = () -> {
+            changeAndRedraw();
         };
     }
 
@@ -908,7 +724,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             canvas.draw();
 
             //Обновим поля форм
-            jsonPropUI.selectionTree2();
+            selectionTree2();
 
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.updateScript() " + e);
@@ -944,7 +760,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 canvas.draw();
 
                 //Обновим поля форм
-                jsonPropUI.selectionTree2();
+                selectionTree2();
 
             }
         } catch (Exception e) {
@@ -4333,12 +4149,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
 //        ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
 //        UGui.setSelectedIndex(tab4, 5);
-            jsonPropUI = new JsonPropUI(listenerSet, listenerGet, sysTree, winTree, ppmTree);
-            winTree.getSelectionModel().addTreeSelectionListener(tse -> jsonPropUI.selectionTree2());
-            pan2.remove(1);
-            pan2.add(jsonPropUI);
-            pan2.revalidate();
-            pan2.repaint();
+        jsonPropUI = new JsonPropUI(listenerSet, listenerGet, listenerAction, sysTree,
+                winTree, ppmTree, qGroups, qSysprof, qSyspar1b);
+        winTree.getSelectionModel().addTreeSelectionListener(tse -> jsonPropUI.selectionTree2());
+        pan2.remove(1);
+        pan2.add(jsonPropUI);
+        pan2.revalidate();
+        pan2.repaint();
     }//GEN-LAST:event_btnReport
 
     private void btnClose(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClose
@@ -5377,7 +5194,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         rnd2.setClosedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b006.gif")));
         sysTree.setBorder(null);
         sysTree.getSelectionModel().addTreeSelectionListener(tse -> selectionTree1());
-        ////////winTree.getSelectionModel().addTreeSelectionListener(tse -> jsonPropUI.selectionTree2());
+        winTree.getSelectionModel().addTreeSelectionListener(tse -> selectionTree2());
         tab4.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
                 if (event.getValueIsAdjusting() == false) {

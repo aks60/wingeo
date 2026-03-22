@@ -3712,7 +3712,7 @@
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder justification="2" title="&#x41a;&#x43e;&#x440;&#x43e;&#x431;&#x43a;&#x430;">
+                <TitledBorder justification="2" title="&#x41a;&#x43e;&#x440;&#x43e;&#x431;&#x43a;&#x430;**">
                   <Border PropertyName="innerBorder" info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                     <EmptyBorder/>
                   </Border>

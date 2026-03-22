@@ -13,6 +13,7 @@ import builder.model.ElemSimple;
 import builder.model.UPar;
 import builder.script.GsonElem;
 import common.UCom;
+import common.listener.ListenerAction;
 import dataset.Field;
 import dataset.Query;
 import domain.eArtdet;
@@ -57,12 +58,15 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import common.listener.ListenerGet;
 import common.listener.ListenerSet;
+import domain.eSysprod;
+import frames.UTree;
 import javax.swing.JPanel;
 
 public class JsonPropUI extends javax.swing.JPanel {
 
     private ListenerGet<Wincalc> listenerGet = null;
     private ListenerSet<String> listenerSet = null;
+    private ListenerAction listenerAct = null;
     private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
     private Query qGroups = new Query(eGroups.values());
     private Query qSysprof = new Query(eSysprof.values(), eArtikl.values());
@@ -74,20 +78,27 @@ public class JsonPropUI extends javax.swing.JPanel {
     javax.swing.JTree winTree = new javax.swing.JTree();
     javax.swing.JPopupMenu ppmTree = new javax.swing.JPopupMenu();
 
-    public JsonPropUI(ListenerSet listenerSet, ListenerGet listenerGet, JTree sysTree, JTree winTree, JPopupMenu ppmTree) {
+    public JsonPropUI(ListenerSet listenerSet, ListenerGet listenerGet, ListenerAction listenerAct, JTree sysTree, JTree winTree, 
+            JPopupMenu ppmTree, Query qGroups, Query qSysprof, Query qSyspar1b) {
         initComponents();
         this.listenerSet = listenerSet;
         this.listenerGet = listenerGet;
+        this.listenerAct = listenerAct;
         this.sysTree = sysTree;
         this.winTree = winTree;
         this.ppmTree = ppmTree;
+        this.qGroups = qGroups;
+        this.qSysprof = qSysprof;
+        this.qSyspar1b = qSyspar1b;
     }
 
     public JPanel getPan7() {
         return pan7;
     }
+    
     //При выборе элемента конструкции
     public void selectionTree2() {
+        System.out.println("===========================================");
         try {
             //Пересчёт фурнитуры с учётом настроек 
             //конструктива ручки, петли, замка см. форму "Фурнитура"                    
@@ -113,8 +124,7 @@ public class JsonPropUI extends javax.swing.JPanel {
                 if (List.of(enums.Type.RECTANGL, enums.Type.TRAPEZE,
                         enums.Type.ARCH, enums.Type.DOOR).contains(com5t.type)) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card18");
-                    ((TitledBorder) pan12.getBorder()).setTitle(winc.root.type.name);
-                    System.out.println("===========================================");
+                    ((TitledBorder) pan12.getBorder()).setTitle(winc.root.type.name);                    
                     setText(txt9, eColor.find(winc.root.colorID1).getStr(eColor.name));
                     setIcon(btn9, UPar.isFinite(winc.root.gson.param, PKjson.colorID1));
                     setText(txt13, eColor.find(winc.root.colorID2).getStr(eColor.name));
@@ -306,38 +316,7 @@ public class JsonPropUI extends javax.swing.JPanel {
 
     //Изменить скрипт в базе и перерисовать
     public void changeAndRedraw() {
-        /*    try {
-            //Сохраним скрипт в базе
-            String script = wincalc().gson.toJson();
-            dataset.Record sysprodRec = qSysprod.get(UGui.getIndexRec(tab5));
-            sysprodRec.set(eSysprod.script, script);
-            //qSysprod.update(sysprodRec);
-
-            //Экземпляр нового скрипта
-            Wincalc winc = wincalc();
-            winc.build(script);
-            winc.imageIcon = Canvas.createIcon(winc, 68);
-
-            //Запомним курсор
-            DefMutableTreeNode selectNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
-            double id = (selectNode != null) ? selectNode.com5t().id : -1;
-
-            //Перегрузим winTree
-            loadingTree2(winc);
-
-            //Установим курсор
-            UTree.selectionPathWin(id, winTree);
-
-            //Перерисуем конструкцию
-            canvas.init(winc);
-            canvas.draw();
-
-            //Обновим поля форм
-            selectionTree2();
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.updateScript() " + e);
-        }*/
+        listenerAct.action();
     }
 
     private void dicArtiklToFurniture(String PKjsonColor, int level2) {
@@ -2369,7 +2348,7 @@ public class JsonPropUI extends javax.swing.JPanel {
 
         pan7.add(pan17, "card17");
 
-        pan18.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Коробка", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
+        pan18.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Коробка**", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
 
         lab35.setFont(frames.UGui.getFont(0,0));
         lab35.setText("Ширина");
