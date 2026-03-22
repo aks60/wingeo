@@ -23,10 +23,8 @@ import domain.eFurniture;
 import domain.eGroups;
 import domain.eJoining;
 import domain.eJoinvar;
-import domain.eParams;
 import domain.eSysfurn;
 import domain.eSyspar1;
-import domain.eSysprod;
 import domain.eSysprof;
 import domain.eSystree;
 import dataset.Record;
@@ -36,7 +34,6 @@ import enums.PKjson;
 import enums.TypeJoin;
 import enums.TypeOpen1;
 import enums.UseSide;
-import frames.Systree;
 import frames.UGui;
 import frames.dialog.DicArtikl;
 import frames.dialog.DicColor;
@@ -56,39 +53,38 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import org.locationtech.jts.geom.Envelope;
 import startup.App;
-import static startup.App.Systree;
+import common.listener.ListenerCom5t;
+import common.listener.ListenerObject;
+import javax.swing.JPopupMenu;
+import javax.swing.JTree;
 
 public class PanelFields extends javax.swing.JPanel {
 
+    private ListenerCom5t listenerCom5t = null;
+    private ListenerObject<String> listenerObj = null;
     private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
     private Query qGroups = new Query(eGroups.values());
-    private Query qParams = new Query(eParams.values());
-    private Query qArtikl = new Query(eArtikl.id, eArtikl.code, eArtikl.name);
-    private Query qSystree = new Query(eSystree.values());
-    private Query qSysprod = new Query(eSysprod.values());
     private Query qSysprof = new Query(eSysprof.values(), eArtikl.values());
-    private Query qSysfurn = new Query(eSysfurn.values(), eFurniture.values());
     private Query qSyspar1b = new Query(eSyspar1.values());
-    private Query qSyspar1a = new Query(eSyspar1.values());
-    
-    private DefMutableTreeNode sysNode = null;
-    private DefMutableTreeNode winNode = null;
-    
-    javax.swing.JTable tab1 = new javax.swing.JTable();
-    javax.swing.JTable tab2 = new javax.swing.JTable();
-    javax.swing.JTable tab3 = new javax.swing.JTable();
-    javax.swing.JTable tab4 = new javax.swing.JTable();
-    javax.swing.JTable tab5 = new javax.swing.JTable();
-    javax.swing.JLabel lab2 = new javax.swing.JLabel();
+
+    //private DefMutableTreeNode sysNode = null;
     javax.swing.JFrame thiz = null;
+    javax.swing.JTree sysTree = new javax.swing.JTree();
     javax.swing.JTree winTree = new javax.swing.JTree();
     javax.swing.JPopupMenu ppmTree = new javax.swing.JPopupMenu();
-    Systree systreeThis = null;
-    
+
     public PanelFields() {
         initComponents();
     }
-    
+
+    public PanelFields(ListenerCom5t com5t, JTree sysTree, JTree winTree, JPopupMenu ppmTree) {
+        initComponents();
+        this.listenerCom5t = com5t;
+        this.sysTree = sysTree;
+        this.winTree = winTree;
+        this.ppmTree = ppmTree;
+    }
+
     //При выборе элемента конструкции
     public void selectionTree2() {
         try {
@@ -99,7 +95,7 @@ public class PanelFields extends javax.swing.JPanel {
             Object selNode = winTree.getLastSelectedPathComponent();
 
             if (selNode instanceof DefMutableTreeNode) {
-                winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
+                DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
                 Com5t com5t = winNode.com5t();
                 Wincalc winc = wincalc();
 
@@ -275,25 +271,17 @@ public class PanelFields extends javax.swing.JPanel {
                 } else {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card12");
                 }
-                lab2.setText("Элемент ID = " + UCom.format(com5t.id, 2));
+                listenerCom5t.set("Элемент ID = " + UCom.format(com5t.id, 2));
                 List.of(pan12, pan13, pan15, pan16).forEach(it -> it.repaint());
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.selectionTree2() " + e);
         }
     }
-    
+
     //Получить текущий Wincalc
     private Wincalc wincalc() {
-        int index = UGui.getIndexRec(tab5);
-        if (index != -1) {
-            dataset.Record sysprodRec = qSysprod.get(index);
-            Object winc = sysprodRec.get(eSysprod.values().length);
-            if (winc instanceof Wincalc) {
-                return (Wincalc) winc;
-            }
-        }
-        return null;
+        return (Wincalc) listenerCom5t.get();
     }
 
     private void setText(JTextField comp, Object txt) {
@@ -313,10 +301,10 @@ public class PanelFields extends javax.swing.JPanel {
             btn.setIcon(null);
         }
     }
-    
+
     //Изменить скрипт в базе и перерисовать
     public void changeAndRedraw() {
-    /*    try {
+        /*    try {
             //Сохраним скрипт в базе
             String script = wincalc().gson.toJson();
             dataset.Record sysprodRec = qSysprod.get(UGui.getIndexRec(tab5));
@@ -352,6 +340,7 @@ public class PanelFields extends javax.swing.JPanel {
 
     private void dicArtiklToFurniture(String PKjsonColor, int level2) {
         try {
+            DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             double stvorkaID = winNode.com5t().id;
             int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
             Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, level2);
@@ -375,6 +364,7 @@ public class PanelFields extends javax.swing.JPanel {
 
     private void dicColorToProfile(java.awt.event.ActionEvent evt, JButton btn1, JButton btn2) {
         try {
+            DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             List<String> keys = new ArrayList();
             Com5t comElem = winNode.com5t();
             dataset.Record systreeRec = eSystree.find(comElem.winc.nuni);
@@ -407,7 +397,7 @@ public class PanelFields extends javax.swing.JPanel {
             new DicColor(thiz, (colorRec) -> {
                 final Com5t com5t = (comElem.type == enums.Type.STV_SIDE) ? comElem.owner : comElem;
 
-                if (colorRec.get(1) == null) {                  
+                if (colorRec.get(1) == null) {
                     UPar.remove(com5t.gson.param, keys);
                 } else {
                     UPar.addProperty(com5t.gson.param, keys, colorRec.getInt(eColor.id));
@@ -422,6 +412,7 @@ public class PanelFields extends javax.swing.JPanel {
 
     private void dicColorToElement(String PKjsonColor, dataset.Record artiklElem) {
         try {
+            DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             double elemID = winNode.com5t().id;
             HashSet<dataset.Record> colorSet = UGui.artiklToColorSet(artiklElem.getInt(eArtikl.id));
             new DicColor(thiz, (colorRec) -> {
@@ -2671,6 +2662,7 @@ public class PanelFields extends javax.swing.JPanel {
 
     private void btn22sysprofToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn22sysprofToFrame
         try {
+            DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             if (winNode != null) {
                 Layout layout = winNode.com5t().layout();
                 double selectID = winNode.com5t().id; //id элемента который уже есть в конструкции, это либо виртуал. либо найденный по приоритету при построении модели
@@ -2683,9 +2675,9 @@ public class PanelFields extends javax.swing.JPanel {
                     if (winNode.com5t().type.id2 == sysprofRec.getInt(eSysprof.use_type)) {
                         int useSideId = sysprofRec.getInt(eSysprof.use_side);
                         if (useSideId == layout.id
-                            || ((layout == Layout.BOT || layout == Layout.TOP) && useSideId == UseSide.HORIZ.id)
-                            || ((layout == Layout.RIG || layout == Layout.LEF) && useSideId == UseSide.VERT.id)
-                            || useSideId == UseSide.ANY.id || useSideId == UseSide.MANUAL.id) {
+                                || ((layout == Layout.BOT || layout == Layout.TOP) && useSideId == UseSide.HORIZ.id)
+                                || ((layout == Layout.RIG || layout == Layout.LEF) && useSideId == UseSide.VERT.id)
+                                || useSideId == UseSide.ANY.id || useSideId == UseSide.MANUAL.id) {
 
                             qSysprofFilter.add(sysprofRec);
                             qSysprofFilter.table(eArtikl.up).add(qSysprof.table(eArtikl.up).get(index));
@@ -2759,6 +2751,8 @@ public class PanelFields extends javax.swing.JPanel {
 
     private void btn3artiklToGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3artiklToGlass
         try {
+            DefMutableTreeNode sysNode = (DefMutableTreeNode) sysTree.getLastSelectedPathComponent();
+            DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             double selectID = winNode.com5t().id;
             //Список доступных толщин в ветке системы например 4;5;8
             String depth = sysNode.rec().getStr(eSystree.depth);
@@ -2772,7 +2766,7 @@ public class PanelFields extends javax.swing.JPanel {
             //Список стеклопакетов
             Query qData = new Query(eArtikl.values()), qArtikl = new Query(eArtikl.values());
             List<Double> listID = (depth != null && depth.isEmpty() == false)
-            ? List.of(depth.split(",")).stream().map(m -> Double.valueOf(m)).collect(Collectors.toList()) : new ArrayList();
+                    ? List.of(depth.split(",")).stream().map(m -> Double.valueOf(m)).collect(Collectors.toList()) : new ArrayList();
             qData.sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2, 1, 2, 3).sort(eArtikl.name);
             qArtikl.addAll(qData.stream().filter(rec -> listID.contains(rec.getDbl(eArtikl.depth))).collect(Collectors.toList()));
             int artiklID = (winNode.com5t().artiklRec != null) ? winNode.com5t().artiklRec.getInt(eArtikl.id) : -3;
@@ -2795,12 +2789,14 @@ public class PanelFields extends javax.swing.JPanel {
     }//GEN-LAST:event_btn3artiklToGlass
 
     private void btn25colorToGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn25colorToGlass
+        DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
         ElemSimple glas = (ElemSimple) winNode.com5t();
         dicColorToElement(PKjson.colorGlass, glas.artiklRec);
     }//GEN-LAST:event_btn25colorToGlass
 
     private void btn5artiklToRascladka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5artiklToRascladka
         try {
+            DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             ElemGlass classElem = (ElemGlass) winNode.com5t();
             double selectID = winNode.com5t().id;
             Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 1, eArtikl.level2, 12);
@@ -2826,11 +2822,13 @@ public class PanelFields extends javax.swing.JPanel {
     }//GEN-LAST:event_btn5artiklToRascladka
 
     private void btn29colorToRascladka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn29colorToRascladka
+        DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
         ElemSimple glas = (ElemSimple) winNode.com5t();
         dicColorToElement(PKjson.colorRasc, ((ElemGlass) glas).rascRec);
     }//GEN-LAST:event_btn29colorToRascladka
 
     private void spinHorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinHorStateChanged
+        DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
         double selectID = winNode.com5t().id;
         GsonElem glassElem = UCom.gson(wincalc().listAll, selectID);
         glassElem.param.addProperty(PKjson.horRasc, spinHor.getValue().toString());
@@ -2838,6 +2836,7 @@ public class PanelFields extends javax.swing.JPanel {
     }//GEN-LAST:event_spinHorStateChanged
 
     private void spinVertStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinVertStateChanged
+        DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
         double selectID = winNode.com5t().id;
         GsonElem glassElem = UCom.gson(wincalc().listAll, selectID);
         glassElem.param.addProperty(PKjson.verRasc, spinVert.getValue().toString());
@@ -2846,6 +2845,7 @@ public class PanelFields extends javax.swing.JPanel {
 
     private void btn30blindsToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn30blindsToStvorka
         try {
+            DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             double stvorkaID = winNode.com5t().id;
             int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
             Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, 11);
@@ -2879,22 +2879,22 @@ public class PanelFields extends javax.swing.JPanel {
 
     private void btn35artiklToBlinds(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn35artiklToBlinds
         //        try {
-            //            double glassID = winNode.com5t().id;
-            //            int artiklID = ((ElemGlass) winNode.com5t()).artiklRec.getInt(eArtikl.id);
-            //            Query qBlinds = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2, 50);
-            //            //Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
-            //            new DicArtikl(this, (artiklRec) -> {
-                //
-                //                GsonElem glass = UCom.gson(wincalc().listAll, glassID);
-                //                //stvArea.param.remove(PKjson.colorHand);
-                //                if (artiklRec.get(1) == null) {
-                    //                    //stvArea.param.remove(PKjson.artiklB);
-                    //                } else {
-                    //                    glass.param.addProperty(PKjson.artiklHand, artiklRec.getStr(eArtikl.id));
-                    //                }
-                //                //updateScript(stvorkaID);
-                //
-                //            }, qBlinds);
+        //            double glassID = winNode.com5t().id;
+        //            int artiklID = ((ElemGlass) winNode.com5t()).artiklRec.getInt(eArtikl.id);
+        //            Query qBlinds = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2, 50);
+        //            //Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
+        //            new DicArtikl(this, (artiklRec) -> {
+        //
+        //                GsonElem glass = UCom.gson(wincalc().listAll, glassID);
+        //                //stvArea.param.remove(PKjson.colorHand);
+        //                if (artiklRec.get(1) == null) {
+        //                    //stvArea.param.remove(PKjson.artiklB);
+        //                } else {
+        //                    glass.param.addProperty(PKjson.artiklHand, artiklRec.getStr(eArtikl.id));
+        //                }
+        //                //updateScript(stvorkaID);
+        //
+        //            }, qBlinds);
         //
         //        } catch (Exception e) {
         //            System.err.println("Ошибка:Systree.handlToStvorka() " + e);
@@ -2903,6 +2903,7 @@ public class PanelFields extends javax.swing.JPanel {
 
     private void btn37sysprofToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn37sysprofToStvorka
         try {
+            DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             if (winNode != null) {
                 Layout layout = winNode.com5t().layout();
                 //double selectID = winNode.com5t().id; //id элемента который уже есть в конструкции, это либо виртуал. либо найденный по приоритету при построении модели
@@ -2951,6 +2952,8 @@ public class PanelFields extends javax.swing.JPanel {
 
     private void btn10sysfurnToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn10sysfurnToStvorka
         try {
+            DefMutableTreeNode sysNode = (DefMutableTreeNode) sysTree.getLastSelectedPathComponent();
+            DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             double windowsID = winNode.com5t().id;
             int systreeID = sysNode.rec().getInt(eSystree.id);
             Query qSysfurn = new Query(eSysfurn.values(), eFurniture.values()).sql(eSysfurn.data(), eSysfurn.systree_id, systreeID);
@@ -2974,6 +2977,7 @@ public class PanelFields extends javax.swing.JPanel {
 
     private void btn21typeOpenToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn21typeOpenToStvorka
         try {
+            DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             new DicEnums(thiz, (typeopenRec) -> {
 
                 double elemID = winNode.com5t().id;
@@ -2986,7 +2990,7 @@ public class PanelFields extends javax.swing.JPanel {
                 changeAndRedraw();
 
             }, TypeOpen1.REQUEST, TypeOpen1.LEFT, TypeOpen1.LEFTUP, TypeOpen1.LEFMOV,
-            TypeOpen1.RIGH, TypeOpen1.RIGHUP, TypeOpen1.RIGMOV, TypeOpen1.UPPER, TypeOpen1.EMPTY);
+                    TypeOpen1.RIGH, TypeOpen1.RIGHUP, TypeOpen1.RIGMOV, TypeOpen1.UPPER, TypeOpen1.EMPTY);
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.typeOpenToStvorka() " + e);
         }
@@ -2997,12 +3001,13 @@ public class PanelFields extends javax.swing.JPanel {
     }//GEN-LAST:event_btn12artiklToHand
 
     private void btn14colorToHandl(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn14colorToHandl
+        DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
         AreaStvorka stv = (AreaStvorka) winNode.com5t();
         dicColorToElement(PKjson.colorHand, stv.handRec[0]);
     }//GEN-LAST:event_btn14colorToHandl
 
     private void btn6heightHandlToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6heightHandlToStvorka
-
+        DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
         AreaSimple areaStv = (AreaSimple) winNode.com5t();
         int indexLayoutHandl = 0;
         if (LayoutHand.CONST.name.equals(txt16.getText())) {
@@ -3040,11 +3045,13 @@ public class PanelFields extends javax.swing.JPanel {
     }//GEN-LAST:event_btn15artiklToLoop
 
     private void btn17colorToLoop(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn17colorToLoop
+        DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
         AreaStvorka stv = (AreaStvorka) winNode.com5t();
         dicColorToElement(PKjson.colorLoop, stv.loopRec[0]);
     }//GEN-LAST:event_btn17colorToLoop
 
     private void btn24colorToLock(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn24colorToLock
+        DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
         AreaStvorka stv = (AreaStvorka) winNode.com5t();
         dicColorToElement(PKjson.colorLock, stv.lockRec[0]);
     }//GEN-LAST:event_btn24colorToLock
@@ -3055,6 +3062,7 @@ public class PanelFields extends javax.swing.JPanel {
 
     private void btn16artiklToMosq(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn16artiklToMosq
         try {
+            DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             AreaStvorka areaStv = (AreaStvorka) winNode.com5t();
             Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2, 20);
             Com5t com5tMosq = wincalc().listAll.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
@@ -3095,6 +3103,7 @@ public class PanelFields extends javax.swing.JPanel {
 
     private void btn31elemsToMosq(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn31elemsToMosq
         try {
+            DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             AreaStvorka areaStv = (AreaStvorka) winNode.com5t();
             Com5t mosq = areaStv.childs.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
             if (mosq != null) {
@@ -3120,13 +3129,14 @@ public class PanelFields extends javax.swing.JPanel {
     private void btn26joinToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn26joinToFrame
         try {
             Wincalc winc = wincalc();
+            DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             if (winNode != null) {
                 DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
                 ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
                 JButton btn = (JButton) evt.getSource();
                 int point = (btn.getName().equals("btn26")) ? 0 : (btn.getName().equals("btn27")) ? 1 : 2;
                 ElemJoining elemJoin = UCom.join(winc.listJoin, elem5e, point);
-                App.Joining.createFrame(systreeThis, elemJoin);
+                App.Joining.createFrame(thiz, elemJoin);
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.joinToFrame() " + e);
@@ -3136,13 +3146,14 @@ public class PanelFields extends javax.swing.JPanel {
     private void btn27joinToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn27joinToFrame
         try {
             Wincalc winc = wincalc();
+            DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             if (winNode != null) {
                 DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
                 ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
                 JButton btn = (JButton) evt.getSource();
                 int point = (btn.getName().equals("btn26")) ? 0 : (btn.getName().equals("btn27")) ? 1 : 2;
                 ElemJoining elemJoin = UCom.join(winc.listJoin, elem5e, point);
-                App.Joining.createFrame(systreeThis, elemJoin);
+                App.Joining.createFrame(thiz, elemJoin);
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.joinToFrame() " + e);
@@ -3152,13 +3163,14 @@ public class PanelFields extends javax.swing.JPanel {
     private void btn28joinToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn28joinToFrame
         try {
             Wincalc winc = wincalc();
+            DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             if (winNode != null) {
                 DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
                 ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
                 JButton btn = (JButton) evt.getSource();
                 int point = (btn.getName().equals("btn26")) ? 0 : (btn.getName().equals("btn27")) ? 1 : 2;
                 ElemJoining elemJoin = UCom.join(winc.listJoin, elem5e, point);
-                App.Joining.createFrame(systreeThis, elemJoin);
+                App.Joining.createFrame(thiz, elemJoin);
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.joinToFrame() " + e);
@@ -3167,6 +3179,7 @@ public class PanelFields extends javax.swing.JPanel {
 
     private void btn36sysprofToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn36sysprofToKorobka
         try {
+            DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             if (winNode != null) {
                 Layout layout = winNode.com5t().layout();
                 //double selectID = winNode.com5t().id; //id элемента который уже есть в конструкции, это либо виртуал. либо найденный по приоритету при построении модели

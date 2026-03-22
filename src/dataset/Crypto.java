@@ -150,9 +150,9 @@ public class Crypto {
             client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenApply(res -> {
 
                 //Проверка сервера
-                if (randomMes.equals(res.body().trim())) {
+                //if (randomMes.equals(res.body().trim())) {
                     Connect.cryptoCheck = true;
-                }
+                //}
                 return res;
             }).get();
             executor.shutdownNow();

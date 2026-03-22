@@ -84,6 +84,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import common.eProp;
 import common.listener.ListenerAction;
+import common.listener.ListenerCom5t;
+import common.listener.ListenerObject;
 import domain.eJoinvar;
 import enums.TypeJoin;
 import domain.eElement;
@@ -111,8 +113,8 @@ import org.locationtech.jts.geom.Envelope;
 public class Systree extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
     private ListenerRecord listenerArtikl, listenerModel, listenerFurn, listenerElemvar,
-            listenerParam1, listenerParam2, listenerArt211, listenerArt212;
-
+            listenerParam1, listenerParam2, listenerArt211, listenerArt212, ListenerCom5t;
+    private ListenerObject<String> listenerObj = null;
     private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
     private Query qGroups = new Query(eGroups.values());
     private Query qParams = new Query(eParams.values());
@@ -826,6 +828,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 UGui.setSelectedIndex(tab7, index2);
             }
         };
+        listenerObj = (str) -> {
+             lab2.setText(str);
+             return true;
+        };        
     }
 
     public ArrayList<DefMutableTreeNode> addChild(ArrayList<DefMutableTreeNode> nodeList1) {
@@ -1014,7 +1020,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             new DicColor(this, (colorRec) -> {
                 final Com5t com5t = (comElem.type == enums.Type.STV_SIDE) ? comElem.owner : comElem;
 
-                if (colorRec.get(1) == null) {                  
+                if (colorRec.get(1) == null) {
                     UPar.remove(com5t.gson.param, keys);
                 } else {
                     UPar.addProperty(com5t.gson.param, keys, colorRec.getInt(eColor.id));

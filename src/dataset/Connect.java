@@ -102,7 +102,7 @@ public class Connect {
             if (typuse.equals("99")) {
                 new Crypto().httpAsync("sa-okna.ru"); //сервер всегда смотрит на sa-okna.ru
             } else {
-                new Crypto().httpAsync(server); //сервер должен смотреть на sa-okna.ru инвче швах
+                new Crypto().httpAsync(server); //сервер должен смотреть на sa-okna.ru иначе швах
             }
             if (Class.forName(driver) == null) {
                 JOptionPane.showMessageDialog(null, eExcep.loadDrive.mes,
