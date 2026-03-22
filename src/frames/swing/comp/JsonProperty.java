@@ -53,15 +53,15 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import org.locationtech.jts.geom.Envelope;
 import startup.App;
-import common.listener.ListenerCom5t;
-import common.listener.ListenerObject;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
+import common.listener.ListenerGet;
+import common.listener.ListenerSet;
 
-public class PanelFields extends javax.swing.JPanel {
+public class JsonProperty extends javax.swing.JPanel {
 
-    private ListenerCom5t listenerCom5t = null;
-    private ListenerObject<String> listenerObj = null;
+    private ListenerGet<Wincalc> listenerGet = null;
+    private ListenerSet<String> listenerSet = null;
     private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
     private Query qGroups = new Query(eGroups.values());
     private Query qSysprof = new Query(eSysprof.values(), eArtikl.values());
@@ -73,13 +73,14 @@ public class PanelFields extends javax.swing.JPanel {
     javax.swing.JTree winTree = new javax.swing.JTree();
     javax.swing.JPopupMenu ppmTree = new javax.swing.JPopupMenu();
 
-    public PanelFields() {
+    public JsonProperty() {
         initComponents();
     }
 
-    public PanelFields(ListenerCom5t com5t, JTree sysTree, JTree winTree, JPopupMenu ppmTree) {
+    public JsonProperty(ListenerSet listenerSet, ListenerGet listenerGet, JTree sysTree, JTree winTree, JPopupMenu ppmTree) {
         initComponents();
-        this.listenerCom5t = com5t;
+        this.listenerSet = listenerSet;
+        this.listenerGet = listenerGet;
         this.sysTree = sysTree;
         this.winTree = winTree;
         this.ppmTree = ppmTree;
@@ -271,7 +272,7 @@ public class PanelFields extends javax.swing.JPanel {
                 } else {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card12");
                 }
-                listenerCom5t.set("Ёлемент ID = " + UCom.format(com5t.id, 2));
+                listenerSet.set("Ёлемент ID = " + UCom.format(com5t.id, 2));
                 List.of(pan12, pan13, pan15, pan16).forEach(it -> it.repaint());
             }
         } catch (Exception e) {
@@ -281,7 +282,7 @@ public class PanelFields extends javax.swing.JPanel {
 
     //ѕолучить текущий Wincalc
     private Wincalc wincalc() {
-        return (Wincalc) listenerCom5t.get();
+        return (Wincalc) listenerGet.get();
     }
 
     private void setText(JTextField comp, Object txt) {
