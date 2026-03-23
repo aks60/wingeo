@@ -110,19 +110,7 @@ public class JsonPropUI extends javax.swing.JPanel {
         this.qSysprof = qSysprof;
         this.qSyspar1b = qSyspar1b;
     }
-
-    public final void loadingModel() {
-
-        new DefTableModel(tab7, qSyspar1b, eSyspar1.groups_id, eSyspar1.text) {
-            public Object getValueAt(int col, int row, Object val) {
-                Field field = columns[col];
-                if (val != null && field == eSyspar1.groups_id) {
-                    return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).getDev(eGroups.name, val);
-                }
-                return val;
-            }
-        };
-    }    
+   
     //При выборе элемента конструкции
     public void selectionTree2() {
         try {
@@ -164,14 +152,14 @@ public class JsonPropUI extends javax.swing.JPanel {
                     setText(txt66, winc.root.artiklRec.get(eArtikl.name));
                     setText(txt67, eArtikl.find2(com5t.artiklRec.getInt(eArtikl.analog_id)).getStr(eArtikl.code));
 
-                    //Параметры
-                } else if (com5t.type == enums.Type.PARAM) {
-                    ((CardLayout) pan7.getLayout()).show(pan7, "card11");
-                    qSyspar1b.clear();
-                    winc.mapPardef.forEach((pk, syspar1Rec) -> qSyspar1b.add(syspar1Rec));
-                    Collections.sort(qSyspar1b, (o1, o2) -> qGroups.find(eGroups.data(), eGroups.id, o1.getInt(eSyspar1.groups_id)).getStr(eGroups.name)
-                            .compareTo(qGroups.find(eGroups.data(), eGroups.id, o2.getInt(eSyspar1.groups_id)).getStr(eGroups.name)));
-                    ((DefTableModel) tab7.getModel()).fireTableDataChanged();
+//                    //Параметры
+//                } else if (com5t.type == enums.Type.PARAM) {
+//                    ((CardLayout) pan7.getLayout()).show(pan7, "card11");
+//                    qSyspar1b.clear();
+//                    winc.mapPardef.forEach((pk, syspar1Rec) -> qSyspar1b.add(syspar1Rec));
+//                    Collections.sort(qSyspar1b, (o1, o2) -> qGroups.find(eGroups.data(), eGroups.id, o1.getInt(eSyspar1.groups_id)).getStr(eGroups.name)
+//                            .compareTo(qGroups.find(eGroups.data(), eGroups.id, o2.getInt(eSyspar1.groups_id)).getStr(eGroups.name)));
+//                    ((DefTableModel) tab7.getModel()).fireTableDataChanged();
 
                     //Рама, импост...
                 } else if (List.of(enums.Type.BOX_SIDE, enums.Type.STV_SIDE, enums.Type.IMPOST,
@@ -313,13 +301,13 @@ public class JsonPropUI extends javax.swing.JPanel {
                 List.of(pan12, pan13, pan15, pan16).forEach(it -> it.repaint());
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.selectionTree2() " + e);
+            System.err.println("Ошибка:Systree.selectionTree2-2() " + e);
         }
     }
 
     //Получить текущий Wincalc
     private Wincalc wincalc() {
-        return (Wincalc) listenerGet.get();
+        return listenerGet.get();
     }
 
     /* public void listenerAdd() {
@@ -495,9 +483,6 @@ public class JsonPropUI extends javax.swing.JPanel {
     private void initComponents() {
 
         pan7 = new javax.swing.JPanel();
-        pan11 = new javax.swing.JPanel();
-        scr7 = new javax.swing.JScrollPane();
-        tab7 = new javax.swing.JTable();
         pan12 = new javax.swing.JPanel();
         pan13 = new javax.swing.JPanel();
         lab33 = new javax.swing.JLabel();
@@ -668,55 +653,15 @@ public class JsonPropUI extends javax.swing.JPanel {
         txt14 = new javax.swing.JTextField();
         lab79 = new javax.swing.JLabel();
         txt67 = new javax.swing.JTextField();
+        panT = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(450, 524));
         setLayout(new java.awt.CardLayout());
 
         pan7.setPreferredSize(new java.awt.Dimension(450, 524));
         pan7.setLayout(new java.awt.CardLayout());
-
-        pan11.setLayout(new java.awt.BorderLayout());
-
-        scr7.setBorder(null);
-        scr7.setPreferredSize(new java.awt.Dimension(450, 300));
-
-        tab7.setFont(frames.UGui.getFont(0,0));
-        tab7.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Параметр конструкции", "Значение по умолчанию", "ID"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, true, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tab7.setFillsViewportHeight(true);
-        tab7.setName("tab7"); // NOI18N
-        tab7.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tab7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tab7tabMouseClicked(evt);
-            }
-        });
-        scr7.setViewportView(tab7);
-
-        pan11.add(scr7, java.awt.BorderLayout.CENTER);
-
-        pan7.add(pan11, "card11");
 
         pan12.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Основные", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
         pan12.setToolTipText("");
@@ -734,7 +679,7 @@ public class JsonPropUI extends javax.swing.JPanel {
 
         pan7.add(pan12, "card12");
 
-        pan13.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Рама, импост..", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
+        pan13.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Рама, импост..***", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
 
         lab33.setFont(frames.UGui.getFont(0,0));
         lab33.setText("Артикул");
@@ -2405,7 +2350,7 @@ public class JsonPropUI extends javax.swing.JPanel {
 
         pan7.add(pan17, "card17");
 
-        pan18.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Коробка**", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
+        pan18.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Коробка==", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
 
         lab35.setFont(frames.UGui.getFont(0,0));
         lab35.setText("Ширина");
@@ -2655,48 +2600,37 @@ public class JsonPropUI extends javax.swing.JPanel {
 
         pan7.add(pan18, "card18");
 
+        panT.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TESTOV PANEL-original", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+
+        jLabel1.setText("AKSENO");
+
+        jLabel2.setText("SERGEY");
+
+        javax.swing.GroupLayout panTLayout = new javax.swing.GroupLayout(panT);
+        panT.setLayout(panTLayout);
+        panTLayout.setHorizontalGroup(
+            panTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panTLayout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addGroup(panTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addContainerGap(363, Short.MAX_VALUE))
+        );
+        panTLayout.setVerticalGroup(
+            panTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panTLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2)
+                .addContainerGap(322, Short.MAX_VALUE))
+        );
+
+        pan7.add(panT, "card8");
+
         add(pan7, "card2");
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tab7tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tab7tabMouseClicked
-//        if (evt.getSource() instanceof JTable) {
-//            JTable table = (JTable) evt.getSource();
-//            UGui.updateBorderAndSql(table, List.of(tab2, tab3, tab4, tab5, tab7));
-//            List.of(btnFind1, btnFind2, btnMoveU, btnMoveD).forEach(btn -> btn.setEnabled(false));
-//            List.of(sysTree, sysTree).forEach(tree -> tree.setBorder(null));
-//            if (sysTree.isEditing()) {
-//                sysTree.getCellEditor().stopCellEditing();
-//            }
-//            if (winTree.isEditing()) {
-//                winTree.getCellEditor().stopCellEditing();
-//            }
-//            if (evt.getButton() == MouseEvent.BUTTON3) {
-//                ppmCrud.show(table, evt.getX(), evt.getY());
-//            }
-//            if ("tab2".equals(table.getName())) {
-//                List.of(btnMoveU, btnMoveD).forEach(btn -> btn.setEnabled(true));
-//                btnFind1.setEnabled(true);
-//
-//            } else if ("tab3".equals(table.getName())) {
-//                List.of(btnFind2, btnMoveU, btnMoveD).forEach(btn -> btn.setEnabled(true));
-//
-//            } else if ("tab4".equals(table.getName())) {
-//                //
-//
-//            } else if ("tab5".equals(table.getName())) {
-//                List.of(btnMoveU, btnMoveD).forEach(btn -> btn.setEnabled(true));
-//            }
-//        } else if (evt.getSource() instanceof JTree) {
-//            JTree tree = (JTree) evt.getSource();
-//            UGui.stopCellEditing(tab2, tab3, tab4, tab5, tab7);
-//            List.of(tab2, tab3, tab4, tab5, tab7).forEach(tab -> tab.setBorder(null));
-//            if ("sysTree".equals(tree.getName())) {
-//                sysTree.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
-//            } else if ("winTree".equals(tree.getName())) {
-//                winTree.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
-//            }
-//        }
-    }//GEN-LAST:event_tab7tabMouseClicked
 
     private void btn22sysprofToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn22sysprofToFrame
         try {
@@ -3264,9 +3198,41 @@ public class JsonPropUI extends javax.swing.JPanel {
         dicColorToProfile(evt, btn9, btn13);
     }//GEN-LAST:event_btn2colorToKorobka
 
-    public JPanel getPan7() {
+    public JPanel pan7() {
         return pan7;
     }
+    
+    public JPanel pan13() {
+        return pan13;
+    }
+
+    public JPanel pan15() {
+        return pan15;
+    }
+
+    public JPanel pan16() {
+        return pan16;
+    }
+
+    public JPanel pan17() {
+        return pan17;
+    }    
+
+    public JPanel pan18() {
+        return pan18;
+    } 
+    
+    public JPanel panT() {
+        return panT;
+    }     
+    
+    
+    public void repain() {
+        pan7.revalidate();
+        pan7.repaint();
+        panT.revalidate();
+        panT.repaint();        
+    }     
     
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -3305,6 +3271,8 @@ public class JsonPropUI extends javax.swing.JPanel {
     private javax.swing.JButton btn6;
     private javax.swing.JButton btn8;
     private javax.swing.JButton btn9;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lab25;
     private javax.swing.JLabel lab26;
     private javax.swing.JLabel lab27;
@@ -3366,7 +3334,6 @@ public class JsonPropUI extends javax.swing.JPanel {
     private javax.swing.JLabel lab83;
     private javax.swing.JLabel lab84;
     private javax.swing.JLabel lab85;
-    private javax.swing.JPanel pan11;
     private javax.swing.JPanel pan12;
     private javax.swing.JPanel pan13;
     private javax.swing.JPanel pan15;
@@ -3380,10 +3347,9 @@ public class JsonPropUI extends javax.swing.JPanel {
     private javax.swing.JPanel pan23;
     private javax.swing.JPanel pan24;
     private javax.swing.JPanel pan7;
-    private javax.swing.JScrollPane scr7;
+    private javax.swing.JPanel panT;
     private javax.swing.JSpinner spinHor;
     private javax.swing.JSpinner spinVert;
-    private javax.swing.JTable tab7;
     private javax.swing.JTabbedPane tabb2;
     private javax.swing.JTextField txt10;
     private javax.swing.JTextField txt13;
