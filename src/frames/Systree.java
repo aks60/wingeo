@@ -442,7 +442,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 ((DefTableModel) tab7.getModel()).fireTableDataChanged();
 
             } else if (jsonPropUI != null) {
-                //jsonPropUI.selectionTree2();
+                jsonPropUI.selectionTree2();
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.selectionTree2-1() " + e);
@@ -690,9 +690,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             winc.imageIcon = Canvas.createIcon(winc, 68);
 
             //Запомним курсор
-            //DefMutableTreeNode selectNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
-            //double id = (selectNode != null) ? selectNode.com5t().id : -1;
-            double id = winNode.com5t().id;
+            DefMutableTreeNode selectNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
+            double id = (selectNode != null) ? selectNode.com5t().id : -1;
 
             //Перегрузим winTree
             loadingTree2(winc);
@@ -705,7 +704,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             canvas.draw();
 
             //Обновим поля форм
-            //selectionTree2();
+            selectionTree2();
 
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.updateScript() " + e);
