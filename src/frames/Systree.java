@@ -40,6 +40,7 @@ import frames.swing.comp.DefCellRendererBool;
 import frames.swing.comp.TableFieldFormat;
 import frames.swing.comp.DefTableModel;
 import builder.Wincalc;
+import builder.making.TFurniture;
 import builder.script.GsonElem;
 import common.UCom;
 import domain.eArtdet;
@@ -92,10 +93,7 @@ import javax.swing.JTree;
 import org.locationtech.jts.geom.Envelope;
 import common.listener.ListenerGet;
 import common.listener.ListenerSet;
-import frames.dialog.DicSysprof;
 import frames.swing.comp.JsonPropUI;
-import javax.swing.GroupLayout;
-import javax.swing.JPanel;
 
 public class Systree extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
@@ -134,7 +132,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         loadingData();
         loadingModel();
         listenerAdd();
-        listenerSet();        
+        listenerSet();
         tabb1.setSelectedIndex(4);
 
     }
@@ -427,25 +425,40 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }
 
-    //При выборе элемента конструкции public   
+    //При выборе элемента конструкции public  
     public void selectionTree2() {
         try {
-            winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
-            Com5t com5t = winNode.com5t();            
-            if (com5t.type == enums.Type.PARAM) {
+            //Выделенный элемент
+            Object selNode = winTree.getLastSelectedPathComponent();
+            if (selNode instanceof DefMutableTreeNode) {
+                winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
+                Com5t com5t = winNode.com5t();
                 Wincalc winc = wincalc();
-                ((CardLayout) pan7.getLayout()).show(pan7, "card11");
-                qSyspar1b.clear();
-                winc.mapPardef.forEach((pk, syspar1Rec) -> qSyspar1b.add(syspar1Rec));
-                Collections.sort(qSyspar1b, (o1, o2) -> qGroups.find(eGroups.data(), eGroups.id, o1.getInt(eSyspar1.groups_id)).getStr(eGroups.name)
-                        .compareTo(qGroups.find(eGroups.data(), eGroups.id, o2.getInt(eSyspar1.groups_id)).getStr(eGroups.name)));
-                ((DefTableModel) tab7.getModel()).fireTableDataChanged();
 
-            } else if (jsonPropUI != null) {
-                jsonPropUI.selectionTree2();
+                UGui.changePpmTree(winTree, ppmTree, com5t);
+
+                //Таймер цвета
+                if (enums.Type.contains(com5t, enums.Type.PARAM, enums.Type.FRAME, enums.Type.JOINING) == false) {
+                    if (winc.canvas != null) {
+                        com5t.timer.start();
+                        winc.canvas.repaint();
+                    }
+                }
+                if (com5t.type == enums.Type.PARAM) {
+                    ((CardLayout) pan7.getLayout()).show(pan7, "card11");
+                    qSyspar1b.clear();
+                    winc.mapPardef.forEach((pk, syspar1Rec) -> qSyspar1b.add(syspar1Rec));
+                    Collections.sort(qSyspar1b, (o1, o2) -> qGroups.find(eGroups.data(), eGroups.id, o1.getInt(eSyspar1.groups_id)).getStr(eGroups.name)
+                            .compareTo(qGroups.find(eGroups.data(), eGroups.id, o2.getInt(eSyspar1.groups_id)).getStr(eGroups.name)));
+                    ((DefTableModel) tab7.getModel()).fireTableDataChanged();
+
+                } else if (jsonPropUI != null) {
+                    jsonPropUI.selectionTree2();
+                }
+                lab2.setText("Элемент ID = " + UCom.format(com5t.id, 2));
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.selectionTree2-1() " + e);
+            System.err.println("Ошибка:Systree.selectionTree2() " + e);
         }
     }
 
@@ -692,21 +705,19 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             //Запомним курсор
             DefMutableTreeNode selectNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             double id = (selectNode != null) ? selectNode.com5t().id : -1;
-            System.out.println(id);
 
             //Перегрузим winTree
-            //loadingTree2(winc);
+            loadingTree2(winc);
 
             //Установим курсор
-            //UTree.selectionPathWin(id, winTree);
-            winTree.setSelectionRow(1);
-//
-//            //Перерисуем конструкцию
-//            canvas.init(winc);
-//            canvas.draw();
+            UTree.selectionPathWin(id, winTree);
+
+            //Перерисуем конструкцию
+            canvas.init(winc);
+            canvas.draw();
 
             //Обновим поля форм
-            //selectionTree2();
+            selectionTree2();
 
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.updateScript() " + e);
@@ -780,118 +791,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             btn.setIcon(null);
         }
     }
-
-    private void dicArtiklToFurniture(String PKjsonColor, int level2) {
-        try {
-            double stvorkaID = winNode.com5t().id;
-            int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
-            Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, level2);
-            Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
-            new DicArtikl(this, (artiklRec) -> {
-
-                GsonElem stvArea = UCom.gson(wincalc().listAll, stvorkaID);
-                if (artiklRec.get(1) == null) {
-                    UPar.remove(stvArea.param, List.of(PKjsonColor));
-                } else {
-                    UPar.addProperty(stvArea.param, List.of(PKjsonColor), artiklRec.getInt(eArtikl.id));
-                }
-                changeAndRedraw();
-
-            }, qResult);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.artiklToFurniture() " + e);
-        }
-    }
-
-    private void dicColorToProfile(java.awt.event.ActionEvent evt, JButton btn1, JButton btn2) {
-        try {
-            List<String> keys = new ArrayList();
-            Com5t comElem = winNode.com5t();
-            Record systreeRec = eSystree.find(comElem.winc.nuni);
-            Field colorFilterMark = (evt.getSource() == btn1) ? eArtdet.mark_c1 : (evt.getSource() == btn2) ? eArtdet.mark_c2 : eArtdet.mark_c3;
-            String colorFilterTxt = (evt.getSource() == btn1) ? systreeRec.getStr(eSystree.col1) : (evt.getSource() == btn2)
-                    ? systreeRec.getStr(eSystree.col2) : systreeRec.getStr(eSystree.col3);
-            Query artdetList = new Query(eArtdet.values()).sql(eArtdet.data(), eArtdet.artikl_id, comElem.artiklRec.getInt(eArtikl.id));
-
-            HashSet<Record> colorFilterSet = DicColor.filterTxt(eColor.data(), colorFilterTxt);
-            HashSet<Record> colorSet = DicColor.filterDet(colorFilterSet, artdetList, colorFilterMark);
-            if (comElem.type == enums.Type.STV_SIDE) {
-                if (comElem.layout() == Layout.BOT) {
-                    keys.add(PKjson.stvorkaBot);
-                } else if (comElem.layout() == Layout.RIG) {
-                    keys.add(PKjson.stvorkaRig);
-                } else if (comElem.layout() == Layout.TOP) {
-                    keys.add(PKjson.stvorkaTop);
-                } else if (comElem.layout() == Layout.LEF) {
-                    keys.add(PKjson.stvorkaLef);
-                }
-            }
-            if (evt.getSource() == btn1) {
-                keys.add(PKjson.colorID1);
-            } else if (evt.getSource() == btn2) {
-                keys.add(PKjson.colorID2);
-            } else {
-                keys.add(PKjson.colorID3);
-            }
-
-            new DicColor(this, (colorRec) -> {
-                final Com5t com5t = (comElem.type == enums.Type.STV_SIDE) ? comElem.owner : comElem;
-
-                if (colorRec.get(1) == null) {
-                    UPar.remove(com5t.gson.param, keys);
-                } else {
-                    UPar.addProperty(com5t.gson.param, keys, colorRec.getInt(eColor.id));
-                }
-                changeAndRedraw(); //обновим конструкцию
-            }, colorSet, true, false);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.colorToProfile() " + e);
-        }
-    }
-
-    private void dicColorToElement(String PKjsonColor, Record artiklElem) {
-        try {
-            double elemID = winNode.com5t().id;
-            HashSet<Record> colorSet = UGui.artiklToColorSet(artiklElem.getInt(eArtikl.id));
-            DicColor frame = new DicColor(this, (colorRec) -> {
-
-                GsonElem gsonElem = UCom.gson(wincalc().listAll, elemID);
-                if (colorRec.get(1) == null) {
-                    UPar.remove(gsonElem.param, List.of(PKjsonColor));
-                } else {
-                    UPar.addProperty(gsonElem.param, List.of(PKjsonColor), colorRec.getInt(eColor.id));
-                }
-                changeAndRedraw();
-
-            }, colorSet, true, false);
-
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.colorToElement() " + e);
-        }
-    }
-
-    private void dicColorToElement(GsonElem gsonElem, String PKjsonColor, Record artiklElem) {
-        try {
-            if (gsonElem != null) {
-                HashSet<Record> colorSet = UGui.artiklToColorSet(artiklElem.getInt(eArtikl.id));
-                DicColor frame = new DicColor(this, (colorRec) -> {
-
-                    if (colorRec.get(1) == null) {
-                        UPar.remove(gsonElem.param, List.of(PKjsonColor));
-                    } else {
-                        UPar.addProperty(gsonElem.param, List.of(PKjsonColor), colorRec.getInt(eColor.id));
-                    }
-                    changeAndRedraw();
-
-                }, colorSet, true, false);
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.colorToElement() " + e);
-        }
-    }
-
+    
     @Override
     public Query reload(boolean b) {
         changeAndRedraw();
@@ -2476,7 +2376,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         TableFieldFilter filterTable = new TableFieldFilter(0, tab2, tab5, tab3, tab4, tab5, tab7);
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();
-        
 
         listenerSet = (str) -> {
             lab2.setText(str);
@@ -2493,10 +2392,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
             return null;
         };
-        
+
         listenerAction = () -> {
             changeAndRedraw();
-        };        
+        };
     }
 
     //Грузим тестовые скрипты

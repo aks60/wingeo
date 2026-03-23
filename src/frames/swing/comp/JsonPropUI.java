@@ -63,7 +63,6 @@ public class JsonPropUI extends javax.swing.JPanel {
     private ListenerGet<Wincalc> listenerGet;
     private ListenerSet<String> listenerSet;
     private ListenerAction listenerAct;
-    private ListenerRecord listenerParam2;
     private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
     private Query qGroups, qSysprof, qSyspar1b;
     private JPanel panCont;
@@ -132,14 +131,6 @@ public class JsonPropUI extends javax.swing.JPanel {
                     setText(txt66, winc.root.artiklRec.get(eArtikl.name));
                     setText(txt67, eArtikl.find2(com5t.artiklRec.getInt(eArtikl.analog_id)).getStr(eArtikl.code));
 
-//                    //Параметры
-//                } else if (com5t.type == enums.Type.PARAM) {
-//                    ((CardLayout) panContainer.getLayout()).show(panContainer, "card11");
-//                    qSyspar1b.clear();
-//                    winc.mapPardef.forEach((pk, syspar1Rec) -> qSyspar1b.add(syspar1Rec));
-//                    Collections.sort(qSyspar1b, (o1, o2) -> qGroups.find(eGroups.data(), eGroups.id, o1.getInt(eSyspar1.groups_id)).getStr(eGroups.name)
-//                            .compareTo(qGroups.find(eGroups.data(), eGroups.id, o2.getInt(eSyspar1.groups_id)).getStr(eGroups.name)));
-//                    ((DefTableModel) tab7.getModel()).fireTableDataChanged();
                     //Рама, импост...
                 } else if (List.of(enums.Type.BOX_SIDE, enums.Type.STV_SIDE, enums.Type.IMPOST,
                         enums.Type.STOIKA, enums.Type.SHTULP).contains(com5t.type)) {
@@ -314,7 +305,6 @@ public class JsonPropUI extends javax.swing.JPanel {
 
     private void dicArtiklToFurniture(String PKjsonColor, int level2) {
         try {
-            //winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             double stvorkaID = winNode.com5t().id;
             int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
             Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, level2);
@@ -338,7 +328,6 @@ public class JsonPropUI extends javax.swing.JPanel {
 
     private void dicColorToProfile(java.awt.event.ActionEvent evt, JButton btn1, JButton btn2) {
         try {
-            //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             List<String> keys = new ArrayList();
             Com5t comElem = winNode.com5t();
             dataset.Record systreeRec = eSystree.find(comElem.winc.nuni);
@@ -386,7 +375,6 @@ public class JsonPropUI extends javax.swing.JPanel {
 
     private void dicColorToElement(String PKjsonColor, dataset.Record artiklElem) {
         try {
-            //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             double elemID = winNode.com5t().id;
             HashSet<dataset.Record> colorSet = UGui.artiklToColorSet(artiklElem.getInt(eArtikl.id));
             new DicColor(thiz, (colorRec) -> {
@@ -2550,7 +2538,6 @@ public class JsonPropUI extends javax.swing.JPanel {
 
     private void btn22sysprofToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn22sysprofToFrame
         try {
-            //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             if (winNode != null) {
                 Layout layout = winNode.com5t().layout();
                 double selectID = winNode.com5t().id; //id элемента который уже есть в конструкции, это либо виртуал. либо найденный по приоритету при построении модели
@@ -2640,7 +2627,6 @@ public class JsonPropUI extends javax.swing.JPanel {
     private void btn3artiklToGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3artiklToGlass
         try {
             DefMutableTreeNode sysNode = (DefMutableTreeNode) sysTree.getLastSelectedPathComponent();
-            //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             double selectID = winNode.com5t().id;
             //Список доступных толщин в ветке системы например 4;5;8
             String depth = sysNode.rec().getStr(eSystree.depth);
@@ -2677,14 +2663,12 @@ public class JsonPropUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btn3artiklToGlass
 
     private void btn25colorToGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn25colorToGlass
-        //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
         ElemSimple glas = (ElemSimple) winNode.com5t();
         dicColorToElement(PKjson.colorGlass, glas.artiklRec);
     }//GEN-LAST:event_btn25colorToGlass
 
     private void btn5artiklToRascladka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5artiklToRascladka
         try {
-            //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             ElemGlass classElem = (ElemGlass) winNode.com5t();
             double selectID = winNode.com5t().id;
             Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 1, eArtikl.level2, 12);
@@ -2710,13 +2694,11 @@ public class JsonPropUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btn5artiklToRascladka
 
     private void btn29colorToRascladka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn29colorToRascladka
-        //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
         ElemSimple glas = (ElemSimple) winNode.com5t();
         dicColorToElement(PKjson.colorRasc, ((ElemGlass) glas).rascRec);
     }//GEN-LAST:event_btn29colorToRascladka
 
     private void spinHorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinHorStateChanged
-        //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
         double selectID = winNode.com5t().id;
         GsonElem glassElem = UCom.gson(wincalc().listAll, selectID);
         glassElem.param.addProperty(PKjson.horRasc, spinHor.getValue().toString());
@@ -2724,7 +2706,6 @@ public class JsonPropUI extends javax.swing.JPanel {
     }//GEN-LAST:event_spinHorStateChanged
 
     private void spinVertStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinVertStateChanged
-        //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
         double selectID = winNode.com5t().id;
         GsonElem glassElem = UCom.gson(wincalc().listAll, selectID);
         glassElem.param.addProperty(PKjson.verRasc, spinVert.getValue().toString());
@@ -2733,7 +2714,6 @@ public class JsonPropUI extends javax.swing.JPanel {
 
     private void btn30blindsToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn30blindsToStvorka
         try {
-            //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             double stvorkaID = winNode.com5t().id;
             int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
             Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, 11);
@@ -2791,7 +2771,6 @@ public class JsonPropUI extends javax.swing.JPanel {
 
     private void btn37sysprofToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn37sysprofToStvorka
         try {
-            //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             if (winNode != null) {
                 Layout layout = winNode.com5t().layout();
                 //double selectID = winNode.com5t().id; //id элемента который уже есть в конструкции, это либо виртуал. либо найденный по приоритету при построении модели
@@ -2841,7 +2820,6 @@ public class JsonPropUI extends javax.swing.JPanel {
     private void btn10sysfurnToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn10sysfurnToStvorka
         try {
             DefMutableTreeNode sysNode = (DefMutableTreeNode) sysTree.getLastSelectedPathComponent();
-            //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             double windowsID = winNode.com5t().id;
             int systreeID = sysNode.rec().getInt(eSystree.id);
             Query qSysfurn = new Query(eSysfurn.values(), eFurniture.values()).sql(eSysfurn.data(), eSysfurn.systree_id, systreeID);
@@ -2865,7 +2843,6 @@ public class JsonPropUI extends javax.swing.JPanel {
 
     private void btn21typeOpenToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn21typeOpenToStvorka
         try {
-            //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             new DicEnums(thiz, (typeopenRec) -> {
 
                 double elemID = winNode.com5t().id;
@@ -2889,13 +2866,11 @@ public class JsonPropUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btn12artiklToHand
 
     private void btn14colorToHandl(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn14colorToHandl
-        //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
         AreaStvorka stv = (AreaStvorka) winNode.com5t();
         dicColorToElement(PKjson.colorHand, stv.handRec[0]);
     }//GEN-LAST:event_btn14colorToHandl
 
     private void btn6heightHandlToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6heightHandlToStvorka
-        //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
         AreaSimple areaStv = (AreaSimple) winNode.com5t();
         int indexLayoutHandl = 0;
         if (LayoutHand.CONST.name.equals(txt16.getText())) {
@@ -2933,13 +2908,11 @@ public class JsonPropUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btn15artiklToLoop
 
     private void btn17colorToLoop(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn17colorToLoop
-        //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
         AreaStvorka stv = (AreaStvorka) winNode.com5t();
         dicColorToElement(PKjson.colorLoop, stv.loopRec[0]);
     }//GEN-LAST:event_btn17colorToLoop
 
     private void btn24colorToLock(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn24colorToLock
-        //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
         AreaStvorka stv = (AreaStvorka) winNode.com5t();
         dicColorToElement(PKjson.colorLock, stv.lockRec[0]);
     }//GEN-LAST:event_btn24colorToLock
@@ -2950,7 +2923,6 @@ public class JsonPropUI extends javax.swing.JPanel {
 
     private void btn16artiklToMosq(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn16artiklToMosq
         try {
-            //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             AreaStvorka areaStv = (AreaStvorka) winNode.com5t();
             Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2, 20);
             Com5t com5tMosq = wincalc().listAll.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
@@ -2991,7 +2963,6 @@ public class JsonPropUI extends javax.swing.JPanel {
 
     private void btn31elemsToMosq(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn31elemsToMosq
         try {
-            //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             AreaStvorka areaStv = (AreaStvorka) winNode.com5t();
             Com5t mosq = areaStv.childs.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
             if (mosq != null) {
@@ -3017,7 +2988,6 @@ public class JsonPropUI extends javax.swing.JPanel {
     private void btn26joinToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn26joinToFrame
         try {
             Wincalc winc = wincalc();
-            //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             if (winNode != null) {
                 DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
                 ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
@@ -3034,7 +3004,6 @@ public class JsonPropUI extends javax.swing.JPanel {
     private void btn27joinToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn27joinToFrame
         try {
             Wincalc winc = wincalc();
-            //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             if (winNode != null) {
                 DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
                 ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
@@ -3051,7 +3020,6 @@ public class JsonPropUI extends javax.swing.JPanel {
     private void btn28joinToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn28joinToFrame
         try {
             Wincalc winc = wincalc();
-            //DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             if (winNode != null) {
                 DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
                 ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
@@ -3067,7 +3035,6 @@ public class JsonPropUI extends javax.swing.JPanel {
 
     private void btn36sysprofToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn36sysprofToKorobka
         try {
-            winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             if (winNode != null) {
                 Layout layout = winNode.com5t().layout();
                 //double selectID = winNode.com5t().id; //id элемента который уже есть в конструкции, это либо виртуал. либо найденный по приоритету при построении модели
