@@ -63,10 +63,24 @@ import common.listener.ListenerRecord;
 import common.listener.ListenerSet;
 import dataset.Connect;
 import domain.eSysprod;
+import enums.LayoutProd;
+import enums.TypeOpen2;
+import enums.TypeUse;
+import enums.UseType;
 import frames.dialog.ParDefVal;
+import java.awt.Component;
+import java.util.Set;
+import java.util.stream.Stream;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.tree.DefaultTreeCellEditor;
+import javax.swing.tree.TreePath;
 
 public class JsonPropUI extends javax.swing.JPanel {
 
@@ -97,10 +111,18 @@ public class JsonPropUI extends javax.swing.JPanel {
         this.qSyspar1b = qSyspar1b;
     }
 
-    public JPanel getPan7() {
-        return pan7;
-    }
-    
+    public final void loadingModel() {
+
+        new DefTableModel(tab7, qSyspar1b, eSyspar1.groups_id, eSyspar1.text) {
+            public Object getValueAt(int col, int row, Object val) {
+                Field field = columns[col];
+                if (val != null && field == eSyspar1.groups_id) {
+                    return qGroups.find(eGroups.data(), eGroups.id, Integer.valueOf(String.valueOf(val))).getDev(eGroups.name, val);
+                }
+                return val;
+            }
+        };
+    }    
     //При выборе элемента конструкции
     public void selectionTree2() {
         try {
@@ -300,20 +322,20 @@ public class JsonPropUI extends javax.swing.JPanel {
         return (Wincalc) listenerGet.get();
     }
 
-    /*public void listenerAdd() {
+    /* public void listenerAdd() {
 
         UGui.buttonCellEditor(tab7, 1).addActionListener(event -> {
             Record syspar1Rec = qSyspar1b.get(UGui.getIndexRec(tab7));
             if (syspar1Rec.getInt(eSyspar1.fixed) != 1) {
                 int groupsID = syspar1Rec.getInt(eSyspar1.groups_id);
-                new ParDefVal(this, listenerParam2, groupsID);
+                new ParDefVal(thiz, listenerParam2, groupsID);
             } else {
                 JOptionPane.showMessageDialog(thiz, "Неизменяемый параметр в системе", "ВНИМАНИЕ!", 1);
             }
         });
     }
 
-    public void listenerSet() {
+   public void listenerSet() {
 
         listenerParam2 = (record) -> {
             UGui.stopCellEditing(tab2, tab3, tab4, tab5, tab7);
@@ -3242,7 +3264,11 @@ public class JsonPropUI extends javax.swing.JPanel {
         dicColorToProfile(evt, btn9, btn13);
     }//GEN-LAST:event_btn2colorToKorobka
 
-
+    public JPanel getPan7() {
+        return pan7;
+    }
+    
+// <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn10;
     private javax.swing.JButton btn12;
@@ -3419,4 +3445,10 @@ public class JsonPropUI extends javax.swing.JPanel {
     private javax.swing.JTextField txt70;
     private javax.swing.JTextField txt9;
     // End of variables declaration//GEN-END:variables
+// </editor-fold> 
+    
+    
+public final void initElements() {
+    
+}    
 }

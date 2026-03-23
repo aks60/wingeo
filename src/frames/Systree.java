@@ -146,13 +146,14 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         loadingModel();
         listenerAdd();
         listenerSet();
+        init();
         tabb1.setSelectedIndex(4);
     }
 
     //Конструктор с поиском из конструктива 
     //(составов и фурнитуры) см. btnFind2
     public Systree(int nuni, int mode) {
-        initComponents();
+        initComponents();        
         scene = new Scene(canvas, this);
         this.systreeID = nuni;
         this.writeNuni = false;
@@ -160,8 +161,18 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         loadingData();
         loadingModel();
         listenerAdd();
-        listenerSet();
+        listenerSet();        
         tabb1.setSelectedIndex(mode);
+    }
+
+    public void init() {
+        jsonPropUI = new JsonPropUI(listenerSet, listenerGet, listenerAction, sysTree,
+                winTree, ppmTree, qGroups, qSysprof, qSyspar1b);
+        winTree.getSelectionModel().addTreeSelectionListener(tse -> jsonPropUI.selectionTree2());
+        pan2.remove(1);
+        pan2.add(jsonPropUI);
+        pan2.revalidate();
+        pan2.repaint();
     }
 
     public final void loadingData() {
@@ -1014,6 +1025,28 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         lab75 = new javax.swing.JLabel();
         txt65 = new javax.swing.JTextField();
         btn35 = new javax.swing.JButton();
+        pan17 = new javax.swing.JPanel();
+        lab49 = new javax.swing.JLabel();
+        lab50 = new javax.swing.JLabel();
+        txt36 = new javax.swing.JTextField();
+        lab58 = new javax.swing.JLabel();
+        txt37 = new javax.swing.JTextField();
+        lab55 = new javax.swing.JLabel();
+        txt38 = new javax.swing.JTextField();
+        btn26 = new javax.swing.JButton();
+        btn27 = new javax.swing.JButton();
+        lab56 = new javax.swing.JLabel();
+        txt39 = new javax.swing.JTextField();
+        lab54 = new javax.swing.JLabel();
+        txt40 = new javax.swing.JTextField();
+        lab57 = new javax.swing.JLabel();
+        txt41 = new javax.swing.JTextField();
+        btn28 = new javax.swing.JButton();
+        txt42 = new javax.swing.JTextField();
+        lab59 = new javax.swing.JLabel();
+        txt43 = new javax.swing.JTextField();
+        lab60 = new javax.swing.JLabel();
+        txt44 = new javax.swing.JTextField();
         pan16 = new javax.swing.JPanel();
         tabb2 = new javax.swing.JTabbedPane();
         pan20 = new javax.swing.JPanel();
@@ -1085,28 +1118,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         lab43 = new javax.swing.JLabel();
         txt56 = new javax.swing.JTextField();
         btn31 = new javax.swing.JButton();
-        pan17 = new javax.swing.JPanel();
-        lab49 = new javax.swing.JLabel();
-        lab50 = new javax.swing.JLabel();
-        txt36 = new javax.swing.JTextField();
-        lab58 = new javax.swing.JLabel();
-        txt37 = new javax.swing.JTextField();
-        lab55 = new javax.swing.JLabel();
-        txt38 = new javax.swing.JTextField();
-        btn26 = new javax.swing.JButton();
-        btn27 = new javax.swing.JButton();
-        lab56 = new javax.swing.JLabel();
-        txt39 = new javax.swing.JTextField();
-        lab54 = new javax.swing.JLabel();
-        txt40 = new javax.swing.JTextField();
-        lab57 = new javax.swing.JLabel();
-        txt41 = new javax.swing.JTextField();
-        btn28 = new javax.swing.JButton();
-        txt42 = new javax.swing.JTextField();
-        lab59 = new javax.swing.JLabel();
-        txt43 = new javax.swing.JTextField();
-        lab60 = new javax.swing.JLabel();
-        txt44 = new javax.swing.JTextField();
         pan18 = new javax.swing.JPanel();
         lab35 = new javax.swing.JLabel();
         txt17 = new javax.swing.JTextField();
@@ -2202,6 +2213,147 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         pan7.add(pan15, "card15");
 
+        pan17.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Соединения", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
+
+        lab49.setFont(frames.UGui.getFont(0,0));
+        lab49.setText("1  соединение");
+        lab49.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        lab49.setIconTextGap(1);
+        lab49.setPreferredSize(new java.awt.Dimension(80, 18));
+
+        lab50.setFont(frames.UGui.getFont(0,0));
+        lab50.setText("2  соединение");
+        lab50.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        lab50.setPreferredSize(new java.awt.Dimension(80, 18));
+
+        txt36.setEditable(false);
+        txt36.setFont(frames.UGui.getFont(0,0));
+        txt36.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        txt36.setPreferredSize(new java.awt.Dimension(180, 18));
+
+        lab58.setFont(frames.UGui.getFont(0,0));
+        lab58.setText("Артикул 1,2");
+        lab58.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        lab58.setIconTextGap(1);
+        lab58.setPreferredSize(new java.awt.Dimension(80, 18));
+
+        txt37.setEditable(false);
+        txt37.setFont(frames.UGui.getFont(0,0));
+        txt37.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        txt37.setPreferredSize(new java.awt.Dimension(180, 18));
+
+        lab55.setFont(frames.UGui.getFont(0,0));
+        lab55.setText("Вариант");
+        lab55.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        lab55.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        lab55.setIconTextGap(6);
+        lab55.setPreferredSize(new java.awt.Dimension(80, 19));
+
+        txt38.setEditable(false);
+        txt38.setFont(frames.UGui.getFont(0,0));
+        txt38.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        txt38.setPreferredSize(new java.awt.Dimension(180, 18));
+
+        btn26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b018.gif"))); // NOI18N
+        btn26.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
+        btn26.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btn26.setMaximumSize(new java.awt.Dimension(18, 18));
+        btn26.setMinimumSize(new java.awt.Dimension(18, 18));
+        btn26.setName("btn26"); // NOI18N
+        btn26.setPreferredSize(new java.awt.Dimension(18, 18));
+        btn26.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                joinToFrame(evt);
+            }
+        });
+
+        btn27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b018.gif"))); // NOI18N
+        btn27.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
+        btn27.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btn27.setMaximumSize(new java.awt.Dimension(18, 18));
+        btn27.setMinimumSize(new java.awt.Dimension(18, 18));
+        btn27.setName("btn27"); // NOI18N
+        btn27.setPreferredSize(new java.awt.Dimension(18, 18));
+        btn27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                joinToFrame(evt);
+            }
+        });
+
+        lab56.setFont(frames.UGui.getFont(0,0));
+        lab56.setText("Вариант");
+        lab56.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        lab56.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        lab56.setIconTextGap(6);
+        lab56.setPreferredSize(new java.awt.Dimension(80, 19));
+
+        txt39.setEditable(false);
+        txt39.setFont(frames.UGui.getFont(0,0));
+        txt39.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        txt39.setPreferredSize(new java.awt.Dimension(180, 18));
+
+        lab54.setFont(frames.UGui.getFont(0,0));
+        lab54.setText("3  прилегающее");
+        lab54.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        lab54.setPreferredSize(new java.awt.Dimension(80, 18));
+
+        txt40.setEditable(false);
+        txt40.setFont(frames.UGui.getFont(0,0));
+        txt40.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        txt40.setPreferredSize(new java.awt.Dimension(180, 18));
+
+        lab57.setFont(frames.UGui.getFont(0,0));
+        lab57.setText("Вариант");
+        lab57.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        lab57.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        lab57.setIconTextGap(6);
+        lab57.setPreferredSize(new java.awt.Dimension(80, 19));
+
+        txt41.setEditable(false);
+        txt41.setFont(frames.UGui.getFont(0,0));
+        txt41.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        txt41.setPreferredSize(new java.awt.Dimension(180, 18));
+
+        btn28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b018.gif"))); // NOI18N
+        btn28.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
+        btn28.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btn28.setMaximumSize(new java.awt.Dimension(18, 18));
+        btn28.setMinimumSize(new java.awt.Dimension(18, 18));
+        btn28.setName("btn28"); // NOI18N
+        btn28.setPreferredSize(new java.awt.Dimension(18, 18));
+        btn28.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                joinToFrame(evt);
+            }
+        });
+
+        txt42.setEditable(false);
+        txt42.setFont(frames.UGui.getFont(0,0));
+        txt42.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        txt42.setPreferredSize(new java.awt.Dimension(180, 18));
+
+        lab59.setFont(frames.UGui.getFont(0,0));
+        lab59.setText("Артикул 1,2");
+        lab59.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        lab59.setIconTextGap(1);
+        lab59.setPreferredSize(new java.awt.Dimension(80, 18));
+
+        txt43.setEditable(false);
+        txt43.setFont(frames.UGui.getFont(0,0));
+        txt43.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        txt43.setPreferredSize(new java.awt.Dimension(180, 18));
+
+        lab60.setFont(frames.UGui.getFont(0,0));
+        lab60.setText("Артикул 1,2");
+        lab60.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        lab60.setIconTextGap(1);
+        lab60.setPreferredSize(new java.awt.Dimension(80, 18));
+
+        txt44.setEditable(false);
+        txt44.setFont(frames.UGui.getFont(0,0));
+        txt44.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        txt44.setPreferredSize(new java.awt.Dimension(180, 18));
+
         pan16.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Створка", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
         pan16.setName(""); // NOI18N
         pan16.setLayout(new java.awt.BorderLayout());
@@ -3001,149 +3153,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         pan16.add(tabb2, java.awt.BorderLayout.CENTER);
 
-        pan7.add(pan16, "card16");
-
-        pan17.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Соединения", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
-
-        lab49.setFont(frames.UGui.getFont(0,0));
-        lab49.setText("1  соединение");
-        lab49.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        lab49.setIconTextGap(1);
-        lab49.setPreferredSize(new java.awt.Dimension(80, 18));
-
-        lab50.setFont(frames.UGui.getFont(0,0));
-        lab50.setText("2  соединение");
-        lab50.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        lab50.setPreferredSize(new java.awt.Dimension(80, 18));
-
-        txt36.setEditable(false);
-        txt36.setFont(frames.UGui.getFont(0,0));
-        txt36.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt36.setPreferredSize(new java.awt.Dimension(180, 18));
-
-        lab58.setFont(frames.UGui.getFont(0,0));
-        lab58.setText("Артикул 1,2");
-        lab58.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        lab58.setIconTextGap(1);
-        lab58.setPreferredSize(new java.awt.Dimension(80, 18));
-
-        txt37.setEditable(false);
-        txt37.setFont(frames.UGui.getFont(0,0));
-        txt37.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt37.setPreferredSize(new java.awt.Dimension(180, 18));
-
-        lab55.setFont(frames.UGui.getFont(0,0));
-        lab55.setText("Вариант");
-        lab55.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        lab55.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        lab55.setIconTextGap(6);
-        lab55.setPreferredSize(new java.awt.Dimension(80, 19));
-
-        txt38.setEditable(false);
-        txt38.setFont(frames.UGui.getFont(0,0));
-        txt38.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt38.setPreferredSize(new java.awt.Dimension(180, 18));
-
-        btn26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b018.gif"))); // NOI18N
-        btn26.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
-        btn26.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        btn26.setMaximumSize(new java.awt.Dimension(18, 18));
-        btn26.setMinimumSize(new java.awt.Dimension(18, 18));
-        btn26.setName("btn26"); // NOI18N
-        btn26.setPreferredSize(new java.awt.Dimension(18, 18));
-        btn26.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                joinToFrame(evt);
-            }
-        });
-
-        btn27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b018.gif"))); // NOI18N
-        btn27.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
-        btn27.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        btn27.setMaximumSize(new java.awt.Dimension(18, 18));
-        btn27.setMinimumSize(new java.awt.Dimension(18, 18));
-        btn27.setName("btn27"); // NOI18N
-        btn27.setPreferredSize(new java.awt.Dimension(18, 18));
-        btn27.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                joinToFrame(evt);
-            }
-        });
-
-        lab56.setFont(frames.UGui.getFont(0,0));
-        lab56.setText("Вариант");
-        lab56.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        lab56.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        lab56.setIconTextGap(6);
-        lab56.setPreferredSize(new java.awt.Dimension(80, 19));
-
-        txt39.setEditable(false);
-        txt39.setFont(frames.UGui.getFont(0,0));
-        txt39.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt39.setPreferredSize(new java.awt.Dimension(180, 18));
-
-        lab54.setFont(frames.UGui.getFont(0,0));
-        lab54.setText("3  прилегающее");
-        lab54.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        lab54.setPreferredSize(new java.awt.Dimension(80, 18));
-
-        txt40.setEditable(false);
-        txt40.setFont(frames.UGui.getFont(0,0));
-        txt40.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt40.setPreferredSize(new java.awt.Dimension(180, 18));
-
-        lab57.setFont(frames.UGui.getFont(0,0));
-        lab57.setText("Вариант");
-        lab57.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        lab57.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-        lab57.setIconTextGap(6);
-        lab57.setPreferredSize(new java.awt.Dimension(80, 19));
-
-        txt41.setEditable(false);
-        txt41.setFont(frames.UGui.getFont(0,0));
-        txt41.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt41.setPreferredSize(new java.awt.Dimension(180, 18));
-
-        btn28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b018.gif"))); // NOI18N
-        btn28.setToolTipText(bundle.getString("Поиск записи")); // NOI18N
-        btn28.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        btn28.setMaximumSize(new java.awt.Dimension(18, 18));
-        btn28.setMinimumSize(new java.awt.Dimension(18, 18));
-        btn28.setName("btn28"); // NOI18N
-        btn28.setPreferredSize(new java.awt.Dimension(18, 18));
-        btn28.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                joinToFrame(evt);
-            }
-        });
-
-        txt42.setEditable(false);
-        txt42.setFont(frames.UGui.getFont(0,0));
-        txt42.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt42.setPreferredSize(new java.awt.Dimension(180, 18));
-
-        lab59.setFont(frames.UGui.getFont(0,0));
-        lab59.setText("Артикул 1,2");
-        lab59.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        lab59.setIconTextGap(1);
-        lab59.setPreferredSize(new java.awt.Dimension(80, 18));
-
-        txt43.setEditable(false);
-        txt43.setFont(frames.UGui.getFont(0,0));
-        txt43.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt43.setPreferredSize(new java.awt.Dimension(180, 18));
-
-        lab60.setFont(frames.UGui.getFont(0,0));
-        lab60.setText("Артикул 1,2");
-        lab60.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        lab60.setIconTextGap(1);
-        lab60.setPreferredSize(new java.awt.Dimension(80, 18));
-
-        txt44.setEditable(false);
-        txt44.setFont(frames.UGui.getFont(0,0));
-        txt44.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt44.setPreferredSize(new java.awt.Dimension(180, 18));
-
         javax.swing.GroupLayout pan17Layout = new javax.swing.GroupLayout(pan17);
         pan17.setLayout(pan17Layout);
         pan17Layout.setHorizontalGroup(
@@ -3194,6 +3203,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt44, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(pan17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pan17Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(pan16, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         pan17Layout.setVerticalGroup(
             pan17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3237,7 +3251,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 .addGroup(pan17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lab57, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt41, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(266, Short.MAX_VALUE))
+                .addContainerGap(181, Short.MAX_VALUE))
+            .addGroup(pan17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pan17Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(pan16, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pan7.add(pan17, "card17");
