@@ -692,19 +692,21 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             //Запомним курсор
             DefMutableTreeNode selectNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             double id = (selectNode != null) ? selectNode.com5t().id : -1;
+            System.out.println(id);
 
             //Перегрузим winTree
-            loadingTree2(winc);
+            //loadingTree2(winc);
 
             //Установим курсор
-            UTree.selectionPathWin(id, winTree);
-
-            //Перерисуем конструкцию
-            canvas.init(winc);
-            canvas.draw();
+            //UTree.selectionPathWin(id, winTree);
+            winTree.setSelectionRow(1);
+//
+//            //Перерисуем конструкцию
+//            canvas.init(winc);
+//            canvas.draw();
 
             //Обновим поля форм
-            selectionTree2();
+            //selectionTree2();
 
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.updateScript() " + e);
@@ -2067,6 +2069,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
         changeAndRedraw();
+//            Object o1 = winTree.getLastSelectedPathComponent();
+//            System.out.println(o1);        
     }//GEN-LAST:event_btnReport
 
     private void btnClose(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClose
