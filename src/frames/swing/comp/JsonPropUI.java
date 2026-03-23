@@ -12,8 +12,6 @@ import builder.model.ElemJoining;
 import builder.model.ElemSimple;
 import builder.model.UPar;
 import builder.script.GsonElem;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import common.UCom;
 import common.listener.ListenerAction;
 import dataset.Field;
@@ -23,11 +21,9 @@ import domain.eArtikl;
 import domain.eColor;
 import domain.eElement;
 import domain.eFurniture;
-import domain.eGroups;
 import domain.eJoining;
 import domain.eJoinvar;
 import domain.eSysfurn;
-import domain.eSyspar1;
 import domain.eSysprof;
 import domain.eSystree;
 import dataset.Record;
@@ -46,7 +42,6 @@ import frames.dialog.DicName;
 import frames.dialog.DicSysprof;
 import java.awt.CardLayout;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,35 +56,17 @@ import javax.swing.JTree;
 import common.listener.ListenerGet;
 import common.listener.ListenerRecord;
 import common.listener.ListenerSet;
-import dataset.Connect;
-import domain.eSysprod;
-import enums.LayoutProd;
-import enums.TypeOpen2;
-import enums.TypeUse;
-import enums.UseType;
-import frames.dialog.ParDefVal;
-import java.awt.Component;
-import java.util.Set;
-import java.util.stream.Stream;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.tree.DefaultTreeCellEditor;
-import javax.swing.tree.TreePath;
 
 public class JsonPropUI extends javax.swing.JPanel {
 
     private ListenerGet<Wincalc> listenerGet;
     private ListenerSet<String> listenerSet;
     private ListenerAction listenerAct;
-    private ListenerRecord listenerParam2;    
+    private ListenerRecord listenerParam2;
     private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
     private Query qGroups, qSysprof, qSyspar1b;
+    private JPanel panCont;
 
     //private DefMutableTreeNode sysNode = null;
     javax.swing.JFrame thiz = null;
@@ -97,9 +74,11 @@ public class JsonPropUI extends javax.swing.JPanel {
     javax.swing.JTree winTree = new javax.swing.JTree();
     javax.swing.JPopupMenu ppmTree = new javax.swing.JPopupMenu();
 
-    public JsonPropUI(ListenerSet listenerSet, ListenerGet listenerGet, ListenerAction listenerAct, JTree sysTree, JTree winTree, 
-            JPopupMenu ppmTree, Query qGroups, Query qSysprof, Query qSyspar1b) {
+    public JsonPropUI(ListenerSet listenerSet, ListenerGet listenerGet, ListenerAction listenerAct, JTree sysTree, JTree winTree,
+            JPopupMenu ppmTree, Query qGroups, Query qSysprof, Query qSyspar1b, JPanel panCont) {
         initComponents();
+        this.panCont = panCont;
+        initElements();
         this.listenerSet = listenerSet;
         this.listenerGet = listenerGet;
         this.listenerAct = listenerAct;
@@ -108,9 +87,9 @@ public class JsonPropUI extends javax.swing.JPanel {
         this.ppmTree = ppmTree;
         this.qGroups = qGroups;
         this.qSysprof = qSysprof;
-        this.qSyspar1b = qSyspar1b;
+        this.qSyspar1b = qSyspar1b;        
     }
-   
+
     //При выборе элемента конструкции
     public void selectionTree2() {
         try {
@@ -137,8 +116,8 @@ public class JsonPropUI extends javax.swing.JPanel {
                 //Коробка
                 if (List.of(enums.Type.RECTANGL, enums.Type.TRAPEZE,
                         enums.Type.ARCH, enums.Type.DOOR).contains(com5t.type)) {
-                    ((CardLayout) pan7.getLayout()).show(pan7, "card18");
-                    ((TitledBorder) pan12.getBorder()).setTitle(winc.root.type.name);                    
+                    ((CardLayout) panCont.getLayout()).show(panCont, "card18");
+                    ((TitledBorder) pan12.getBorder()).setTitle(winc.root.type.name);
                     setText(txt9, eColor.find(winc.root.colorID1).getStr(eColor.name));
                     setIcon(btn9, UPar.isFinite(winc.root.gson.param, PKjson.colorID1));
                     setText(txt13, eColor.find(winc.root.colorID2).getStr(eColor.name));
@@ -154,17 +133,16 @@ public class JsonPropUI extends javax.swing.JPanel {
 
 //                    //Параметры
 //                } else if (com5t.type == enums.Type.PARAM) {
-//                    ((CardLayout) pan7.getLayout()).show(pan7, "card11");
+//                    ((CardLayout) panContainer.getLayout()).show(panContainer, "card11");
 //                    qSyspar1b.clear();
 //                    winc.mapPardef.forEach((pk, syspar1Rec) -> qSyspar1b.add(syspar1Rec));
 //                    Collections.sort(qSyspar1b, (o1, o2) -> qGroups.find(eGroups.data(), eGroups.id, o1.getInt(eSyspar1.groups_id)).getStr(eGroups.name)
 //                            .compareTo(qGroups.find(eGroups.data(), eGroups.id, o2.getInt(eSyspar1.groups_id)).getStr(eGroups.name)));
 //                    ((DefTableModel) tab7.getModel()).fireTableDataChanged();
-
                     //Рама, импост...
                 } else if (List.of(enums.Type.BOX_SIDE, enums.Type.STV_SIDE, enums.Type.IMPOST,
                         enums.Type.STOIKA, enums.Type.SHTULP).contains(com5t.type)) {
-                    ((CardLayout) pan7.getLayout()).show(pan7, "card13");
+                    ((CardLayout) panCont.getLayout()).show(panCont, "card13");
                     ((TitledBorder) pan13.getBorder()).setTitle(winNode.toString());
                     setText(txt32, com5t.artiklRec.getStr(eArtikl.code));
                     setIcon(btn22, UPar.isFinite(com5t.gson.param, PKjson.sysprofID));
@@ -181,7 +159,7 @@ public class JsonPropUI extends javax.swing.JPanel {
                     //Стеклопакет
                 } else if (com5t.type == enums.Type.GLASS) {
                     ElemGlass elem = (ElemGlass) com5t;
-                    ((CardLayout) pan7.getLayout()).show(pan7, "card15");
+                    ((CardLayout) panCont.getLayout()).show(panCont, "card15");
                     dataset.Record artiklRec = com5t.artiklRec;
                     setText(txt19, artiklRec.getStr(eArtikl.code));
                     setIcon(btn3, UPar.isFinite(com5t.gson.param, PKjson.artglasID));
@@ -212,7 +190,7 @@ public class JsonPropUI extends javax.swing.JPanel {
                     //Створка
                 } else if (com5t.type == enums.Type.STVORKA) {
                     //через сокр. тарификацию
-                    ((CardLayout) pan7.getLayout()).show(pan7, "card16");
+                    ((CardLayout) panCont.getLayout()).show(panCont, "card16");
                     AreaStvorka stv = (AreaStvorka) com5t;
                     Envelope env = stv.area.getGeometryN(0).getEnvelopeInternal();
                     int sysfurnID = stv.sysfurnRec.getInt(eSysfurn.furniture_id);
@@ -267,7 +245,7 @@ public class JsonPropUI extends javax.swing.JPanel {
 
                     //Соединения
                 } else if (com5t.type == enums.Type.JOINING) {
-                    ((CardLayout) pan7.getLayout()).show(pan7, "card17");
+                    ((CardLayout) panCont.getLayout()).show(panCont, "card17");
                     DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
                     ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
                     new TJoining(winc, true).join();//заполним соединения из конструктива                                        
@@ -295,7 +273,7 @@ public class JsonPropUI extends javax.swing.JPanel {
                         lab57.setIcon(UColor.iconFromTypeJoin2(ej3.type().id));
                     }
                 } else {
-                    ((CardLayout) pan7.getLayout()).show(pan7, "card12");
+                    ((CardLayout) panCont.getLayout()).show(panCont, "card12");
                 }
                 listenerSet.set("Элемент ID = " + UCom.format(com5t.id, 2));
                 List.of(pan12, pan13, pan15, pan16).forEach(it -> it.repaint());
@@ -310,37 +288,6 @@ public class JsonPropUI extends javax.swing.JPanel {
         return listenerGet.get();
     }
 
-    /* public void listenerAdd() {
-
-        UGui.buttonCellEditor(tab7, 1).addActionListener(event -> {
-            Record syspar1Rec = qSyspar1b.get(UGui.getIndexRec(tab7));
-            if (syspar1Rec.getInt(eSyspar1.fixed) != 1) {
-                int groupsID = syspar1Rec.getInt(eSyspar1.groups_id);
-                new ParDefVal(thiz, listenerParam2, groupsID);
-            } else {
-                JOptionPane.showMessageDialog(thiz, "Неизменяемый параметр в системе", "ВНИМАНИЕ!", 1);
-            }
-        });
-    }
-
-   public void listenerSet() {
-
-        listenerParam2 = (record) -> {
-            UGui.stopCellEditing(tab2, tab3, tab4, tab5, tab7);
-            int index = UGui.getIndexRec(tab5);
-            int index2 = UGui.getIndexRec(tab7);
-            if (index != -1) {
-                Record sysprodRec = qSysprod.get(index);
-                String script = sysprodRec.getStr(eSysprod.script);
-                String script2 = UGui.ioknaParamUpdate(script, record.getInt(0));
-                sysprodRec.set(eSysprod.script, script2);
-                wincalc().build(script2);
-                selectionTree2();
-                UGui.setSelectedIndex(tab7, index2);
-            }
-        };
-    }*/
-    
     private void setText(JTextField comp, Object txt) {
         if (txt == null) {
             comp.setText("");
@@ -482,7 +429,7 @@ public class JsonPropUI extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pan7 = new javax.swing.JPanel();
+        panContainer = new javax.swing.JPanel();
         pan12 = new javax.swing.JPanel();
         pan13 = new javax.swing.JPanel();
         lab33 = new javax.swing.JLabel();
@@ -653,15 +600,12 @@ public class JsonPropUI extends javax.swing.JPanel {
         txt14 = new javax.swing.JTextField();
         lab79 = new javax.swing.JLabel();
         txt67 = new javax.swing.JTextField();
-        panT = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(450, 524));
         setLayout(new java.awt.CardLayout());
 
-        pan7.setPreferredSize(new java.awt.Dimension(450, 524));
-        pan7.setLayout(new java.awt.CardLayout());
+        panContainer.setPreferredSize(new java.awt.Dimension(450, 524));
+        panContainer.setLayout(new java.awt.CardLayout());
 
         pan12.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Основные", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
         pan12.setToolTipText("");
@@ -677,9 +621,9 @@ public class JsonPropUI extends javax.swing.JPanel {
             .addGap(0, 398, Short.MAX_VALUE)
         );
 
-        pan7.add(pan12, "card12");
+        panContainer.add(pan12, "card12");
 
-        pan13.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Рама, импост..***", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
+        pan13.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Рама, импост...", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
 
         lab33.setFont(frames.UGui.getFont(0,0));
         lab33.setText("Артикул");
@@ -882,7 +826,7 @@ public class JsonPropUI extends javax.swing.JPanel {
                 .addContainerGap(209, Short.MAX_VALUE))
         );
 
-        pan7.add(pan13, "card13");
+        panContainer.add(pan13, "card13");
 
         pan15.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Стеклопакет", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
 
@@ -1307,7 +1251,7 @@ public class JsonPropUI extends javax.swing.JPanel {
                 .addGap(0, 45, Short.MAX_VALUE))
         );
 
-        pan7.add(pan15, "card15");
+        panContainer.add(pan15, "card15");
 
         pan16.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Створка", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
         pan16.setName(""); // NOI18N
@@ -2108,7 +2052,7 @@ public class JsonPropUI extends javax.swing.JPanel {
 
         pan16.add(tabb2, java.awt.BorderLayout.CENTER);
 
-        pan7.add(pan16, "card16");
+        panContainer.add(pan16, "card16");
 
         pan17.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Соединения", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
 
@@ -2348,9 +2292,9 @@ public class JsonPropUI extends javax.swing.JPanel {
                 .addContainerGap(179, Short.MAX_VALUE))
         );
 
-        pan7.add(pan17, "card17");
+        panContainer.add(pan17, "card17");
 
-        pan18.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Коробка==", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
+        pan18.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), "Коробка", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0, 1)));
 
         lab35.setFont(frames.UGui.getFont(0,0));
         lab35.setText("Ширина");
@@ -2598,38 +2542,9 @@ public class JsonPropUI extends javax.swing.JPanel {
                 .addContainerGap(166, Short.MAX_VALUE))
         );
 
-        pan7.add(pan18, "card18");
+        panContainer.add(pan18, "card18");
 
-        panT.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TESTOV PANEL-original", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
-
-        jLabel1.setText("AKSENO");
-
-        jLabel2.setText("SERGEY");
-
-        javax.swing.GroupLayout panTLayout = new javax.swing.GroupLayout(panT);
-        panT.setLayout(panTLayout);
-        panTLayout.setHorizontalGroup(
-            panTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panTLayout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addGroup(panTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addContainerGap(363, Short.MAX_VALUE))
-        );
-        panTLayout.setVerticalGroup(
-            panTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panTLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2)
-                .addContainerGap(322, Short.MAX_VALUE))
-        );
-
-        pan7.add(panT, "card8");
-
-        add(pan7, "card2");
+        add(panContainer, "card2");
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn22sysprofToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn22sysprofToFrame
@@ -3150,40 +3065,41 @@ public class JsonPropUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btn28joinToFrame
 
     private void btn36sysprofToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn36sysprofToKorobka
-        try {
-            DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
-            if (winNode != null) {
-                Layout layout = winNode.com5t().layout();
-                //double selectID = winNode.com5t().id; //id элемента который уже есть в конструкции, это либо виртуал. либо найденный по приоритету при построении модели
-                Query qSysprofFilter = new Query(eSysprof.values(), eArtikl.values()); //тут будет список допустимых профилей из ветки системы
-                //Цикл по профилям ветки
-                for (int index = 0; index < qSysprof.size(); ++index) {
-                    Record sysprofRec = qSysprof.get(index);
-
-                    //Отфильтруем подходящие по параметрам
-                    if (winNode.com5t().type.id2 == sysprofRec.getInt(eSysprof.use_type)) {
-                        qSysprofFilter.add(sysprofRec);
-                        qSysprofFilter.table(eArtikl.up).add(qSysprof.table(eArtikl.up).get(index));
-                    }
-                }
-                int paramID = winNode.com5t().artiklRec.getInt(eArtikl.id);
-                Record paramRec = qSysprofFilter.stream().filter(rec -> rec.getInt(eSysprof.artikl_id) == paramID).findFirst().orElse(eSysprof.virtualRec(0));
-
-                new DicSysprof(thiz, paramRec.getInt(eSysprof.id), (sysprofRec) -> {
-                    Wincalc winc = wincalc();
-                    double elemId = winNode.com5t().id;
-                    GsonElem gsonRama = UCom.gson(winc.listAll, elemId);
-                    if (sysprofRec.get(1) == null) {
-                        UPar.remove(gsonRama.param, List.of(PKjson.sysprofID));
-                    } else {
-                        UPar.addProperty(gsonRama.param, List.of(PKjson.sysprofID), sysprofRec.getInt(eSysprof.id));
-                    }
-                    changeAndRedraw();
-                }, qSysprofFilter);
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.sysprofToKorobka() " + e);
-        }
+        listenerAct.action();
+//        try {
+//            DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
+//            if (winNode != null) {
+//                Layout layout = winNode.com5t().layout();
+//                //double selectID = winNode.com5t().id; //id элемента который уже есть в конструкции, это либо виртуал. либо найденный по приоритету при построении модели
+//                Query qSysprofFilter = new Query(eSysprof.values(), eArtikl.values()); //тут будет список допустимых профилей из ветки системы
+//                //Цикл по профилям ветки
+//                for (int index = 0; index < qSysprof.size(); ++index) {
+//                    Record sysprofRec = qSysprof.get(index);
+//
+//                    //Отфильтруем подходящие по параметрам
+//                    if (winNode.com5t().type.id2 == sysprofRec.getInt(eSysprof.use_type)) {
+//                        qSysprofFilter.add(sysprofRec);
+//                        qSysprofFilter.table(eArtikl.up).add(qSysprof.table(eArtikl.up).get(index));
+//                    }
+//                }
+//                int paramID = winNode.com5t().artiklRec.getInt(eArtikl.id);
+//                Record paramRec = qSysprofFilter.stream().filter(rec -> rec.getInt(eSysprof.artikl_id) == paramID).findFirst().orElse(eSysprof.virtualRec(0));
+//
+//                new DicSysprof(thiz, paramRec.getInt(eSysprof.id), (sysprofRec) -> {
+//                    Wincalc winc = wincalc();
+//                    double elemId = winNode.com5t().id;
+//                    GsonElem gsonRama = UCom.gson(winc.listAll, elemId);
+//                    if (sysprofRec.get(1) == null) {
+//                        UPar.remove(gsonRama.param, List.of(PKjson.sysprofID));
+//                    } else {
+//                        UPar.addProperty(gsonRama.param, List.of(PKjson.sysprofID), sysprofRec.getInt(eSysprof.id));
+//                    }
+//                    changeAndRedraw();
+//                }, qSysprofFilter);
+//            }
+//        } catch (Exception e) {
+//            System.err.println("Ошибка:Systree.sysprofToKorobka() " + e);
+//        }
     }//GEN-LAST:event_btn36sysprofToKorobka
 
     private void btn9colorToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9colorToKorobka
@@ -3197,43 +3113,6 @@ public class JsonPropUI extends javax.swing.JPanel {
     private void btn2colorToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2colorToKorobka
         dicColorToProfile(evt, btn9, btn13);
     }//GEN-LAST:event_btn2colorToKorobka
-
-    public JPanel pan7() {
-        return pan7;
-    }
-    
-    public JPanel pan13() {
-        return pan13;
-    }
-
-    public JPanel pan15() {
-        return pan15;
-    }
-
-    public JPanel pan16() {
-        return pan16;
-    }
-
-    public JPanel pan17() {
-        return pan17;
-    }    
-
-    public JPanel pan18() {
-        return pan18;
-    } 
-    
-    public JPanel panT() {
-        return panT;
-    }     
-    
-    
-    public void repain() {
-        pan7.revalidate();
-        pan7.repaint();
-        panT.revalidate();
-        panT.repaint();        
-    }     
-    
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn10;
@@ -3271,8 +3150,6 @@ public class JsonPropUI extends javax.swing.JPanel {
     private javax.swing.JButton btn6;
     private javax.swing.JButton btn8;
     private javax.swing.JButton btn9;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lab25;
     private javax.swing.JLabel lab26;
     private javax.swing.JLabel lab27;
@@ -3346,8 +3223,7 @@ public class JsonPropUI extends javax.swing.JPanel {
     private javax.swing.JPanel pan22;
     private javax.swing.JPanel pan23;
     private javax.swing.JPanel pan24;
-    private javax.swing.JPanel pan7;
-    private javax.swing.JPanel panT;
+    private javax.swing.JPanel panContainer;
     private javax.swing.JSpinner spinHor;
     private javax.swing.JSpinner spinVert;
     private javax.swing.JTabbedPane tabb2;
@@ -3412,9 +3288,14 @@ public class JsonPropUI extends javax.swing.JPanel {
     private javax.swing.JTextField txt9;
     // End of variables declaration//GEN-END:variables
 // </editor-fold> 
-    
-    
-public final void initElements() {
-    
-}    
+
+    public final void initElements() {
+        panCont.add(pan13, "card13");
+        panCont.add(pan15, "card15");
+        panCont.add(pan16, "card16");
+        panCont.add(pan17, "card17");
+        panCont.add(pan18, "card18");
+        ((CardLayout) panCont.getLayout()).show(panCont, "card18");
+        UGui.setDocumentFilter(3, txt17, txt22, txt24, txt26);
+    }
 }

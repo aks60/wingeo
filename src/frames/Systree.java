@@ -127,16 +127,16 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private TreeNode[] selectedPath = null;
 
     public Systree() {
-        initComponents(); 
-        init();
+        initComponents();
         scene = new Scene(canvas, this, this);
         initElements();
+        jsonPropUI = new JsonPropUI(listenerSet, listenerGet, listenerAction, sysTree, winTree, ppmTree, qGroups, qSysprof, qSyspar1b, pan7);
         loadingData();
         loadingModel();
         listenerAdd();
-        listenerSet();
+        listenerSet();        
         tabb1.setSelectedIndex(4);
-        
+
     }
 
     //Конструктор с поиском из конструктива 
@@ -147,30 +147,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         this.systreeID = nuni;
         this.writeNuni = false;
         initElements();
+        jsonPropUI = new JsonPropUI(listenerSet, listenerGet, listenerAction, sysTree, winTree, ppmTree, qGroups, qSysprof, qSyspar1b, pan7);
         loadingData();
         loadingModel();
         listenerAdd();
         listenerSet();
         tabb1.setSelectedIndex(mode);
-    }
-
-    public void init() {
-        listenerSet = (str) -> {
-            lab2.setText(str);
-        };
-        jsonPropUI = new JsonPropUI(listenerSet, () -> {
-            return wincalc();
-        }, listenerAction, sysTree,
-                winTree, ppmTree, qGroups, qSysprof, qSyspar1b);
-        winTree.getSelectionModel().addTreeSelectionListener(tse -> selectionTree2());
-        
-        pan7.add(jsonPropUI.pan13(), "card13");       
-        pan7.add(jsonPropUI.pan15(), "card15");       
-        pan7.add(jsonPropUI.pan16(), "card16");       
-        pan7.add(jsonPropUI.pan17(), "card17");       
-        pan7.add(jsonPropUI.pan18(), "card18"); 
-        
-        ((CardLayout) pan7.getLayout()).show(pan7, "card13");     
     }
 
     public final void loadingData() {
@@ -449,9 +431,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     void selectionTree2() {
         try {
             DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
-            Com5t com5t = winNode.com5t();
-            Wincalc winc = wincalc();
+            Com5t com5t = winNode.com5t();            
             if (com5t.type == enums.Type.PARAM) {
+                Wincalc winc = wincalc();
                 ((CardLayout) pan7.getLayout()).show(pan7, "card11");
                 qSyspar1b.clear();
                 winc.mapPardef.forEach((pk, syspar1Rec) -> qSyspar1b.add(syspar1Rec));
@@ -665,25 +647,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 selectionTree2();
                 UGui.setSelectedIndex(tab7, index2);
             }
-        };
-
-//        listenerSet = (str) -> {
-//            lab2.setText(str);
-//        };
-//
-//        listenerGet = () -> {
-//            int index = UGui.getIndexRec(tab5);
-//            if (index != -1) {
-//                Record sysprodRec = qSysprod.get(index);
-//                Object winc = sysprodRec.get(eSysprod.values().length);
-//                if (winc instanceof Wincalc) {
-//                    return (Wincalc) winc;
-//                }
-//            }
-//            return null;
-//        };
-        listenerAction = () -> {
-            changeAndRedraw();
         };
     }
 
@@ -2103,23 +2066,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_findFromArtikl
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-//        ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
-//        UGui.setSelectedIndex(tab4, 5);
-        listenerSet = (str) -> {
-            lab2.setText(str);
-        };
-        jsonPropUI = new JsonPropUI(listenerSet, () -> {
-            return wincalc();
-        }, listenerAction, sysTree,
-                winTree, ppmTree, qGroups, qSysprof, qSyspar1b);
-        
-        JPanel panT = jsonPropUI.panT();
-        pan7.add(panT, "cardT");       
-        //panT.revalidate();
-        //panT.repaint();
-        //pan7.revalidate();
-        //pan7.repaint();
-        ((CardLayout) pan7.getLayout()).show(pan7, "cardT"); 
     }//GEN-LAST:event_btnReport
 
     private void btnClose(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClose
@@ -2127,14 +2073,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_btnClose
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-//        Wincalc winc = wincalc();
-//        ElemFrame frm = (ElemFrame) winc.root.frames.get(0);
-//        double x = frm.x1() + 8;
-//        UGeo.movePoint(frm, x, 0);
-//        winc.canvas.requestFocusInWindow();
-//        winc.canvas.repaint();
-//Object o1 = new Gson().fromJson("{}", JsonObject.class);
-
         System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(wincalc().gson.toJson())));
     }//GEN-LAST:event_btnTestActionPerformed
 
@@ -2504,7 +2442,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         rnd2.setClosedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b006.gif")));
         sysTree.setBorder(null);
         sysTree.getSelectionModel().addTreeSelectionListener(tse -> selectionTree1());
-        //winTree.getSelectionModel().addTreeSelectionListener(tse -> selectionTree2());
+        winTree.getSelectionModel().addTreeSelectionListener(tse -> selectionTree2());
         tab4.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
                 if (event.getValueIsAdjusting() == false) {
@@ -2533,6 +2471,27 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         TableFieldFilter filterTable = new TableFieldFilter(0, tab2, tab5, tab3, tab4, tab5, tab7);
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();
+        
+
+        listenerSet = (str) -> {
+            lab2.setText(str);
+        };
+
+        listenerGet = () -> {
+            int index = UGui.getIndexRec(tab5);
+            if (index != -1) {
+                Record sysprodRec = qSysprod.get(index);
+                Object winc = sysprodRec.get(eSysprod.values().length);
+                if (winc instanceof Wincalc) {
+                    return (Wincalc) winc;
+                }
+            }
+            return null;
+        };
+        
+        listenerAction = () -> {
+            changeAndRedraw();
+        };        
     }
 
     //Грузим тестовые скрипты
