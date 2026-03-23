@@ -3065,7 +3065,7 @@ public class JsonPropUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btn28joinToFrame
 
     private void btn36sysprofToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn36sysprofToKorobka
-        listenerAct.action();
+        changeAndRedraw();
 //        try {
 //            DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
 //            if (winNode != null) {

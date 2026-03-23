@@ -428,7 +428,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }
 
     //При выборе элемента конструкции public   
-    void selectionTree2() {
+    public void selectionTree2() {
         try {
             DefMutableTreeNode winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
             Com5t com5t = winNode.com5t();            
@@ -677,6 +677,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     //Изменить скрипт в базе и перерисовать
     public void changeAndRedraw() {
+        Object o1 = winNode;
         try {
             //Сохраним скрипт в базе
             String script = wincalc().gson.toJson();
@@ -2066,6 +2067,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_findFromArtikl
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
+        changeAndRedraw();
     }//GEN-LAST:event_btnReport
 
     private void btnClose(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClose
