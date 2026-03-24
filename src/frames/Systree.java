@@ -99,9 +99,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
     private ListenerRecord listenerArtikl, listenerModel, listenerFurn, listenerElemvar,
             listenerParam1, listenerParam2, listenerArt211, listenerArt212, ListenerCom5t;
-    private ListenerSet<String> listenerSet = null;
-    private ListenerGet<Wincalc> listenerGet = null;
-    private ListenerAction listenerAction = null;
+    private ListenerGet<Wincalc> listenerWincalc = null;
+    private ListenerAction listenerCangeAndRedraw = null;
     private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
     private Query qGroups = new Query(eGroups.values());
     private Query qParams = new Query(eParams.values());
@@ -128,7 +127,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         initComponents();
         scene = new Scene(canvas, this, this);
         initElements();
-        cardPanel = new CardPanel(listenerSet, listenerGet, listenerAction, sysTree, winTree, ppmTree, qGroups, qSysprof, qSyspar1b, pan7);
+        cardPanel = new CardPanel(listenerWincalc, listenerCangeAndRedraw, sysTree, winTree, ppmTree, qGroups, qSysprof, qSyspar1b, pan7);
         loadingData();
         loadingModel();
         listenerAdd();
@@ -145,7 +144,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         this.systreeID = nuni;
         this.writeNuni = false;
         initElements();
-        cardPanel = new CardPanel(listenerSet, listenerGet, listenerAction, sysTree, winTree, ppmTree, qGroups, qSysprof, qSyspar1b, pan7);
+        cardPanel = new CardPanel(listenerWincalc, listenerCangeAndRedraw, sysTree, winTree, ppmTree, qGroups, qSysprof, qSyspar1b, pan7);
         loadingData();
         loadingModel();
         listenerAdd();
@@ -2351,11 +2350,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();
 
-        listenerSet = (str) -> {
-            lab2.setText(str);
-        };
-
-        listenerGet = () -> {
+        listenerWincalc = () -> {
             int index = UGui.getIndexRec(tab5);
             if (index != -1) {
                 Record sysprodRec = qSysprod.get(index);
@@ -2367,7 +2362,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             return null;
         };
 
-        listenerAction = () -> {
+        listenerCangeAndRedraw = () -> {
             changeAndRedraw();
         };
     }

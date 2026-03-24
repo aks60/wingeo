@@ -60,9 +60,8 @@ import javax.swing.JPanel;
 
 public class CardPanel extends javax.swing.JPanel {
 
-    private ListenerGet<Wincalc> listenerGet;
-    private ListenerSet<String> listenerSet;
-    private ListenerAction listenerAct;
+    private ListenerGet<Wincalc> listenerWincalc;
+    private ListenerAction listenerChangeAndRedraw;
     private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
     private Query qGroups, qSysprof, qSyspar1b;
     private JPanel panCont;
@@ -74,17 +73,29 @@ public class CardPanel extends javax.swing.JPanel {
     javax.swing.JPopupMenu ppmTree = new javax.swing.JPopupMenu();
     private DefMutableTreeNode winNode = null;
 
-    public CardPanel(ListenerSet listenerSet, ListenerGet listenerGet, ListenerAction listenerAct, JTree sysTree, JTree winTree,
+    public CardPanel(ListenerGet listenerWincalc, ListenerAction listenerChangeAndRedraw, JTree sysTree, JTree winTree,
             JPopupMenu ppmTree, Query qGroups, Query qSysprof, Query qSyspar1b, JPanel panCont) {
         initComponents();
         this.panCont = panCont;
         initElements();
-        this.listenerSet = listenerSet;
-        this.listenerGet = listenerGet;
-        this.listenerAct = listenerAct;
+        this.listenerWincalc = listenerWincalc;
+        this.listenerChangeAndRedraw = listenerChangeAndRedraw;
         this.sysTree = sysTree;
         this.winTree = winTree;
         this.ppmTree = ppmTree;
+        this.qGroups = qGroups;
+        this.qSysprof = qSysprof;
+        this.qSyspar1b = qSyspar1b;        
+    }
+
+    public CardPanel(ListenerGet listenerWincalc, ListenerAction listenerChangeAndRedraw, JTree winTree,
+            Query qGroups, Query qSysprof, Query qSyspar1b, JPanel panCont) {
+        initComponents();
+        this.panCont = panCont;
+        initElements();
+        this.listenerWincalc = listenerWincalc;
+        this.listenerChangeAndRedraw = listenerChangeAndRedraw;
+        this.winTree = winTree;
         this.qGroups = qGroups;
         this.qSysprof = qSysprof;
         this.qSyspar1b = qSyspar1b;        
@@ -267,7 +278,6 @@ public class CardPanel extends javax.swing.JPanel {
                 } else {
                     ((CardLayout) panCont.getLayout()).show(panCont, "card12");
                 }
-                listenerSet.set("Элемент ID = " + UCom.format(com5t.id, 2));
                 List.of(pan12, pan13, pan15, pan16).forEach(it -> it.repaint());
             }
         } catch (Exception e) {
@@ -277,7 +287,7 @@ public class CardPanel extends javax.swing.JPanel {
 
     //Получить текущий Wincalc
     private Wincalc wincalc() {
-        return listenerGet.get();
+        return listenerWincalc.get();
     }
 
     public void setText(JTextField comp, Object txt) {
@@ -300,7 +310,7 @@ public class CardPanel extends javax.swing.JPanel {
 
     //Изменить скрипт в базе и перерисовать
     public void changeAndRedraw() {
-        listenerAct.action();
+        listenerChangeAndRedraw.action();
     }
 
     private void dicArtiklToFurniture(String PKjsonColor, int level2) {
