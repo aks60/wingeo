@@ -58,7 +58,7 @@ import common.listener.ListenerRecord;
 import common.listener.ListenerSet;
 import javax.swing.JPanel;
 
-public class JsonPropUI extends javax.swing.JPanel {
+public class CardPanel extends javax.swing.JPanel {
 
     private ListenerGet<Wincalc> listenerGet;
     private ListenerSet<String> listenerSet;
@@ -74,7 +74,7 @@ public class JsonPropUI extends javax.swing.JPanel {
     javax.swing.JPopupMenu ppmTree = new javax.swing.JPopupMenu();
     private DefMutableTreeNode winNode = null;
 
-    public JsonPropUI(ListenerSet listenerSet, ListenerGet listenerGet, ListenerAction listenerAct, JTree sysTree, JTree winTree,
+    public CardPanel(ListenerSet listenerSet, ListenerGet listenerGet, ListenerAction listenerAct, JTree sysTree, JTree winTree,
             JPopupMenu ppmTree, Query qGroups, Query qSysprof, Query qSyspar1b, JPanel panCont) {
         initComponents();
         this.panCont = panCont;
@@ -280,7 +280,7 @@ public class JsonPropUI extends javax.swing.JPanel {
         return listenerGet.get();
     }
 
-    private void setText(JTextField comp, Object txt) {
+    public void setText(JTextField comp, Object txt) {
         if (txt == null) {
             comp.setText("");
         }
@@ -288,7 +288,7 @@ public class JsonPropUI extends javax.swing.JPanel {
         comp.setCaretPosition(0);
     }
 
-    private void setIcon(JButton btn, boolean b) {
+    public void setIcon(JButton btn, boolean b) {
         if (b == true) {
             btn.setText("");
             btn.setIcon(icon);

@@ -93,7 +93,7 @@ import javax.swing.JTree;
 import org.locationtech.jts.geom.Envelope;
 import common.listener.ListenerGet;
 import common.listener.ListenerSet;
-import frames.swing.comp.JsonPropUI;
+import frames.swing.comp.CardPanel;
 
 public class Systree extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
@@ -117,7 +117,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private boolean writeNuni = true;
     private Canvas canvas = new Canvas();
     private Scene scene = null;
-    private JsonPropUI jsonPropUI = null;
+    private CardPanel jsonPropUI = null;
     private TableFieldFormat rsvSystree;
     private java.awt.Frame models = null;
     private DefMutableTreeNode sysNode = null;
@@ -128,7 +128,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         initComponents();
         scene = new Scene(canvas, this, this);
         initElements();
-        jsonPropUI = new JsonPropUI(listenerSet, listenerGet, listenerAction, sysTree, winTree, ppmTree, qGroups, qSysprof, qSyspar1b, pan7);
+        jsonPropUI = new CardPanel(listenerSet, listenerGet, listenerAction, sysTree, winTree, ppmTree, qGroups, qSysprof, qSyspar1b, pan7);
         loadingData();
         loadingModel();
         listenerAdd();
@@ -145,7 +145,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         this.systreeID = nuni;
         this.writeNuni = false;
         initElements();
-        jsonPropUI = new JsonPropUI(listenerSet, listenerGet, listenerAction, sysTree, winTree, ppmTree, qGroups, qSysprof, qSyspar1b, pan7);
+        jsonPropUI = new CardPanel(listenerSet, listenerGet, listenerAction, sysTree, winTree, ppmTree, qGroups, qSysprof, qSyspar1b, pan7);
         loadingData();
         loadingModel();
         listenerAdd();
@@ -773,25 +773,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
         return null;
     }
-
-    private void setText(JTextField comp, Object txt) {
-        if (txt == null) {
-            comp.setText("");
-        }
-        comp.setText(txt.toString());
-        comp.setCaretPosition(0);
-    }
-
-    private void setIcon(JButton btn, boolean b) {
-        if (b == true) {
-            btn.setText("");
-            btn.setIcon(icon);
-        } else {
-            btn.setText("...");
-            btn.setIcon(null);
-        }
-    }
-    
+   
     @Override
     public Query reload(boolean b) {
         changeAndRedraw();
