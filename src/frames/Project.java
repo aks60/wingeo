@@ -394,7 +394,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                     ((DefTableModel) tab3.getModel()).fireTableDataChanged();
 
                 } else {
-                    cardPanel.selectionTree2();
+                    cardPanel.selectionTree();
                 }
                 //List.of(pan12, pan13, pan15, pan16).forEach(it -> it.repaint());
             }

@@ -452,7 +452,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                     ((DefTableModel) tab7.getModel()).fireTableDataChanged();
 
                 } else if (cardPanel != null) {
-                    cardPanel.selectionTree2();
+                    cardPanel.selectionTree();
                 }
                 lab2.setText("Ёлемент ID = " + UCom.format(com5t.id, 2));
             }

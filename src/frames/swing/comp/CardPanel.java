@@ -102,7 +102,7 @@ public class CardPanel extends javax.swing.JPanel {
     }
 
     //При выборе элемента конструкции
-    public void selectionTree2() {
+    public void selectionTree() {
         try {
             //Пересчёт фурнитуры с учётом настроек 
             //конструктива ручки, петли, замка см. форму "Фурнитура"                    
@@ -187,7 +187,7 @@ public class CardPanel extends javax.swing.JPanel {
 //                        lab4.setText("DY: " + s1 + " - " + s2 + " - " + s3 + " + "
 //                                + UCom.format(elem.deltaDY, 2) + " = " 
 //                                + UCom.format(s1 - s2 - s3 + elem.deltaDY, 2) + " мм.");
-//                        System.out.println("frames.Systree.selectionTree2()");
+//                        System.out.println("frames.Systree.selectionTree()");
 //                    }
 
                     //Створка
