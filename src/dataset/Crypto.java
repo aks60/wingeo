@@ -124,12 +124,12 @@ public class Crypto {
             //Загрузим файл
             InputStream in = getClass().getResourceAsStream("/resource/securety/crypto.pub");
             byte[] bytes = in.readAllBytes();
-            
+
             //Получим ключ
             X509EncodedKeySpec ks = new X509EncodedKeySpec(bytes);
             KeyFactory kf = KeyFactory.getInstance("RSA");
             PublicKey publicKey = kf.generatePublic(ks);
-            
+
             //Cлучайное сообщение
             SecureRandom random = new SecureRandom();
             String randomMes = new BigInteger(130, random).toString(32);
@@ -150,9 +150,9 @@ public class Crypto {
             client.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenApply(res -> {
 
                 //Проверка сервера
-                //if (randomMes.equals(res.body().trim())) {
+                if (randomMes.equals(res.body().trim())) {
                     Connect.cryptoCheck = true;
-                //}
+                }
                 return res;
             }).get();
             executor.shutdownNow();
