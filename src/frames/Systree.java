@@ -2298,14 +2298,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     // End of variables declaration//GEN-END:variables
 // </editor-fold> 
 
-    private ListenerAction actionEvent = () -> {
-//        Wincalc w = wincalc();
-//        if (w != null) {
-//            txt17.setText(UCom.format(w.width(), 1));
-//            txt22.setText(UCom.format(w.height(), 1));
-//        }
-    };
-
     public final void initElements() {
 
         btnTest.setVisible(eProp.typuse.equals("99"));
