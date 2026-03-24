@@ -4,12 +4,12 @@ import builder.Kitcalc;
 import frames.swing.comp.ProgressBar;
 import builder.model.Com5t;
 import builder.Wincalc;
-import builder.making.TFurniture;
 import builder.making.TRecord;
 import builder.making.UColor;
 import builder.model.AreaStvorka;
 import builder.model.UPar;
 import builder.script.GsonElem;
+import builder.script.GsonRoot;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
@@ -80,6 +80,8 @@ import static dataset.Query.INS;
 import frames.swing.comp.CardPanel;
 import frames.swing.comp.MainMenu;
 import java.util.ArrayList;
+import static java.util.stream.Collectors.toList;
+import org.locationtech.jts.geom.Envelope;
 
 public class Project extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
@@ -117,7 +119,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         scene = new Scene(canvas, this, this);
         //btnReport.setVisible(menureport);
         initElements();
-        cardPanel = new CardPanel(listenerWincalc, listenerCangeAndRedraw, winTree, qGroups, null, qSyspar1, pan8);
+        cardPanel = new CardPanel(listenerWincalc, listenerCangeAndRedraw, winTree, ppmTree, qGroups, null, qSyspar1, pan7);
         loadingData();
         loadingModel();
         listenerAdd();
@@ -133,6 +135,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
     }
 
     public void loadingModel() {
+
         new DefTableModel(tab1, qProject, eProject.num_ord, eProject.num_acc, eProject.date4, eProject.date5,
                 eProject.date6, eProject.prjpart_id, eProject.vendor_id, eProject.manager) {
             @Override
@@ -373,17 +376,12 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
     //При выборе элемента конструкции
     public void selectionTree() {
         try {
-            //Пересчёт фурнитуры с учётом настроек 
-            //конструктива ручки, петли, замка см. форму "Фурнитура"                    
-            new TFurniture(wincalc(), true).furn();
             //Выделенный элемент
             Object selNode = winTree.getLastSelectedPathComponent();
-
             if (selNode instanceof DefMutableTreeNode) {
                 winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
                 Com5t com5t = winNode.com5t();
                 Wincalc winc = wincalc();
-
                 //Параметры
                 if (com5t.type == enums.Type.PARAM) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card14");
@@ -396,7 +394,6 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                 } else {
                     cardPanel.selectionTree();
                 }
-                //List.of(pan12, pan13, pan15, pan16).forEach(it -> it.repaint());
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Project.selectionTree() " + e);
@@ -890,6 +887,15 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         ppmCrud = new javax.swing.JPopupMenu();
         mInsert = new javax.swing.JMenuItem();
         mDelit = new javax.swing.JMenuItem();
+        ppmTree = new javax.swing.JPopupMenu();
+        addImpost = new javax.swing.JMenu();
+        addImpostHor = new javax.swing.JMenuItem();
+        addImpostVer = new javax.swing.JMenuItem();
+        removeImpost = new javax.swing.JMenuItem();
+        addStvorka = new javax.swing.JMenuItem();
+        removeStvorka = new javax.swing.JMenuItem();
+        removeMosquit = new javax.swing.JMenuItem();
+        elements = new javax.swing.JMenuItem();
         north = new javax.swing.JPanel();
         btnClose = new javax.swing.JButton();
         btnSet = new javax.swing.JButton();
@@ -954,10 +960,79 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         });
         ppmCrud.add(mDelit);
 
+        addImpost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
+        addImpost.setText("Добавить импост");
+
+        addImpostHor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
+        addImpostHor.setText("горизонтальный");
+        addImpostHor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addImpostHorAction(evt);
+            }
+        });
+        addImpost.add(addImpostHor);
+
+        addImpostVer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
+        addImpostVer.setText("вертикальный");
+        addImpostVer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addImpostVerAction(evt);
+            }
+        });
+        addImpost.add(addImpostVer);
+
+        ppmTree.add(addImpost);
+
+        removeImpost.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
+        removeImpost.setText("Удалить импост");
+        removeImpost.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeImpostAction(evt);
+            }
+        });
+        ppmTree.add(removeImpost);
+
+        addStvorka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
+        addStvorka.setText("Добавить сворку");
+        addStvorka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addStvorkaAction(evt);
+            }
+        });
+        ppmTree.add(addStvorka);
+
+        removeStvorka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
+        removeStvorka.setText("Удалить створку");
+        removeStvorka.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeStvorkaAction(evt);
+            }
+        });
+        ppmTree.add(removeStvorka);
+
+        removeMosquit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b055.gif"))); // NOI18N
+        removeMosquit.setText("Удалить москитку");
+        removeMosquit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeMosquitAction(evt);
+            }
+        });
+        ppmTree.add(removeMosquit);
+
+        elements.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img16/b057.gif"))); // NOI18N
+        elements.setText("Составы элементов");
+        elements.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                elementsView(evt);
+            }
+        });
+        ppmTree.add(elements);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Заказы");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/resource/img32/d033.gif")).getImage()));
         setMinimumSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new java.awt.Dimension(900, 580));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 Project.this.windowClosed(evt);
@@ -1263,7 +1338,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         pan11.setPreferredSize(new java.awt.Dimension(400, 500));
         pan11.setLayout(new java.awt.BorderLayout());
 
-        pan9.setPreferredSize(new java.awt.Dimension(450, 120));
+        pan9.setPreferredSize(new java.awt.Dimension(450, 220));
         pan9.setLayout(new java.awt.BorderLayout());
 
         pan19.setPreferredSize(new java.awt.Dimension(450, 45));
@@ -1451,7 +1526,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         pan5.setPreferredSize(new java.awt.Dimension(400, 450));
         pan5.setLayout(new java.awt.BorderLayout());
 
-        pan7.setPreferredSize(new java.awt.Dimension(10, 380));
+        pan7.setPreferredSize(new java.awt.Dimension(10, 360));
         pan7.setLayout(new java.awt.CardLayout());
 
         pan14.setLayout(new java.awt.BorderLayout());
@@ -1510,7 +1585,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         );
         pan12Layout.setVerticalGroup(
             pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 359, Short.MAX_VALUE)
+            .addGap(0, 339, Short.MAX_VALUE)
         );
 
         pan7.add(pan12, "card12");
@@ -1518,7 +1593,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         pan5.add(pan7, java.awt.BorderLayout.NORTH);
 
         scr6.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        scr6.setPreferredSize(new java.awt.Dimension(4, 260));
+        scr6.setPreferredSize(new java.awt.Dimension(4, 300));
 
         winTree.setFont(frames.UGui.getFont(0,0));
         scr6.setViewportView(winTree);
@@ -1790,8 +1865,116 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         ppReport.show(north, btnReport.getX(), btnReport.getY() + 18);
     }//GEN-LAST:event_btnRepor
 
+    private void addImpostHorAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImpostHorAction
+        Com5t glass = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
+        for (int i = 0; i < glass.owner.gson.childs.size(); ++i) {
+            if (glass.owner.gson.childs.get(i).id == glass.id) {
+                Envelope env = glass.owner.area.getEnvelopeInternal();
+                double x1 = env.getMinX(), x2 = env.getMaxX(), y = env.getMinY() + env.getHeight() / 2;
+                glass.owner.gson.childs.set(i, new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS)));
+                glass.owner.gson.childs.add(i, new GsonElem(enums.Type.IMPOST, x1, y, x2, y));
+                glass.owner.gson.childs.add(i, new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS)));
+            }
+        }
+        changeAndRedraw();
+    }//GEN-LAST:event_addImpostHorAction
+
+    private void addImpostVerAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addImpostVerAction
+        Com5t glass = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
+        for (int i = 0; i < glass.owner.gson.childs.size(); ++i) {
+            if (glass.owner.gson.childs.get(i).id == glass.id) {
+                Envelope env = glass.owner.area.getEnvelopeInternal();
+                double y1 = env.getMinY(), y2 = env.getMaxY(), x = env.getMinX() + env.getWidth() / 2;
+                glass.owner.gson.childs.set(i, new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS)));
+                glass.owner.gson.childs.add(i, new GsonElem(enums.Type.IMPOST, x, y1, x, y2));
+                glass.owner.gson.childs.add(i, new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS)));
+            }
+        }
+        changeAndRedraw();
+    }//GEN-LAST:event_addImpostVerAction
+
+    private void removeImpostAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeImpostAction
+        Com5t owner = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t().owner;
+        owner.gson.childs = owner.gson.childs.stream().filter(e -> e.type == enums.Type.BOX_SIDE).collect(toList());
+        owner.gson.addElem(new GsonElem(enums.Type.GLASS));
+        changeAndRedraw();
+    }//GEN-LAST:event_removeImpostAction
+
+    private void addStvorkaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStvorkaAction
+        try {
+            GsonElem gsonGlass = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t().gson;
+            GsonElem gsonStvorka = new GsonElem(enums.Type.STVORKA);
+            gsonStvorka.addArea(new GsonElem(enums.Type.GLASS));
+            gsonStvorka.owner = gsonGlass.owner;
+
+            if (gsonGlass.owner instanceof GsonRoot) {
+                for (int i = 0; i < gsonGlass.owner.childs.size(); ++i) {
+                    if (gsonGlass.owner.childs.get(i).id == gsonGlass.id) {
+                        gsonGlass.owner.childs.set(i, gsonStvorka);
+                    }
+                }
+            } else {
+                for (int i = 0; i < gsonGlass.owner.owner.childs.size(); ++i) {
+                    if (gsonGlass.owner.owner.childs.get(i).id == gsonGlass.owner.id) {
+                        gsonGlass.owner.owner.childs.set(i, gsonStvorka);
+                    }
+                }
+            }
+            changeAndRedraw();
+
+        } catch (Exception e) {
+            System.err.println("Ошибка: Systree.addStvorkaAction()");
+        }
+    }//GEN-LAST:event_addStvorkaAction
+
+    private void removeStvorkaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeStvorkaAction
+        Com5t stv = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
+        for (int i = 0; i < stv.owner.gson.childs.size(); ++i) {
+            if (stv.owner.gson.childs.get(i).id == stv.id) {
+                if (stv.owner.gson instanceof GsonRoot) { //первый уровень
+
+                    if (wincalc().listElem.stream().anyMatch(e -> e.type == enums.Type.IMPOST)) {
+                        GsonElem glass = new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS));
+                        stv.owner.gson.childs.set(i, glass);
+                    } else {
+                        GsonElem glass = new GsonElem(enums.Type.GLASS);
+                        stv.owner.gson.childs.set(i, glass);
+                    }
+                } else { //второй, третий... уровни
+                    GsonElem glass = new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS));
+                    stv.owner.gson.childs.set(i, glass);
+                }
+            }
+        }
+        changeAndRedraw();
+    }//GEN-LAST:event_removeStvorkaAction
+
+    private void removeMosquitAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeMosquitAction
+        Com5t mosq = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
+        for (int i = 0; i < mosq.owner.gson.childs.size(); ++i) {
+            if (mosq.owner.gson.childs.get(i).id == mosq.id) {
+                mosq.owner.gson.childs.remove(i);
+            }
+        }
+        changeAndRedraw();
+    }//GEN-LAST:event_removeMosquitAction
+
+    private void elementsView(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elementsView
+        ProgressBar.create(Project.this, new ListenerFrame() {
+            public void actionRequest(Object obj) {
+                Com5t com5t = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t();
+                int sysprodID = qPrjprod.getAs(UGui.getIndexRec(tab5), ePrjprod.id);
+                App.Element.createFrame(Project.this, sysprodID, com5t);
+            }
+        });
+    }//GEN-LAST:event_elementsView
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu addImpost;
+    private javax.swing.JMenuItem addImpostHor;
+    private javax.swing.JMenuItem addImpostVer;
+    private javax.swing.JMenuItem addStvorka;
     private javax.swing.JButton btnCalc;
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnDel;
@@ -1805,6 +1988,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
     private javax.swing.JButton btnTest;
     private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JPanel centr;
+    private javax.swing.JMenuItem elements;
     private javax.swing.JLabel lab7;
     private javax.swing.JLabel lab8;
     private javax.swing.JMenuItem mDelit;
@@ -1824,6 +2008,10 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
     private javax.swing.JPanel panDesign;
     private javax.swing.JPopupMenu ppReport;
     private javax.swing.JPopupMenu ppmCrud;
+    private javax.swing.JPopupMenu ppmTree;
+    private javax.swing.JMenuItem removeImpost;
+    private javax.swing.JMenuItem removeMosquit;
+    private javax.swing.JMenuItem removeStvorka;
     private javax.swing.JScrollPane scr1;
     private javax.swing.JScrollPane scr2;
     private javax.swing.JScrollPane scr3;
@@ -1842,12 +2030,6 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
     private javax.swing.JTree winTree;
     // End of variables declaration//GEN-END:variables
 // </editor-fold> 
-
-//    private ListenerAction actionEvent = () -> {
-//        Wincalc w = wincalc();
-//        txt17.setText(UCom.format(w.width(), 1));
-//        txt22.setText(UCom.format(w.height(), 1));
-//    };
 
     private void initElements() {
 
@@ -1902,6 +2084,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                     btnF1.setEnabled(true);
                     btnF2.setEnabled(true);
                     btnF3.setEnabled(true);
+                    filterTable.setVisible(true);
                 }
                 if (tabb1.getSelectedIndex() == 1) {
                     canvas.init(wincalc());  //т.к. при смене вклвдки терятся keyPressed(KeyEvent event)
@@ -1913,6 +2096,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                     btnF1.setEnabled(false);
                     btnF2.setEnabled(false);
                     btnF3.setEnabled(false);
+                    filterTable.setVisible(false);
 
                 } else if (tabb1.getSelectedIndex() == 2) {
                     btnSet.setEnabled(true);
@@ -1923,9 +2107,18 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                     btnF1.setEnabled(true);
                     btnF2.setEnabled(true);
                     btnF3.setEnabled(true);
+                    filterTable.setVisible(true);
 
                 }
             }
         });
+
+        listenerWincalc = () -> {
+            return wincalc();
+        };
+
+        listenerCangeAndRedraw = () -> {
+            changeAndRedraw();
+        };
     }
 }

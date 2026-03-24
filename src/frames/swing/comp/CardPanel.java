@@ -60,11 +60,11 @@ import javax.swing.JPanel;
 
 public class CardPanel extends javax.swing.JPanel {
 
+    private JPanel panCont;
     private ListenerGet<Wincalc> listenerWincalc;
     private ListenerAction listenerChangeAndRedraw;
     private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
-    private Query qGroups, qSysprof, qSyspar1b;
-    private JPanel panCont;
+    private Query qGroups, qSysprof, qSyspar1;
 
     //private DefMutableTreeNode sysNode = null;
     javax.swing.JFrame thiz = null;
@@ -73,8 +73,8 @@ public class CardPanel extends javax.swing.JPanel {
     javax.swing.JPopupMenu ppmTree = new javax.swing.JPopupMenu();
     private DefMutableTreeNode winNode = null;
 
-    public CardPanel(ListenerGet listenerWincalc, ListenerAction listenerChangeAndRedraw, JTree sysTree, JTree winTree,
-            JPopupMenu ppmTree, Query qGroups, Query qSysprof, Query qSyspar1b, JPanel panCont) {
+    public CardPanel(ListenerGet listenerWincalc, ListenerAction listenerChangeAndRedraw, JTree sysTree,
+            JTree winTree, JPopupMenu ppmTree, Query qGroups, Query qSysprof, Query qSyspar1b, JPanel panCont) {
         initComponents();
         this.panCont = panCont;
         initElements();
@@ -85,20 +85,21 @@ public class CardPanel extends javax.swing.JPanel {
         this.ppmTree = ppmTree;
         this.qGroups = qGroups;
         this.qSysprof = qSysprof;
-        this.qSyspar1b = qSyspar1b;        
+        this.qSyspar1 = qSyspar1b;
     }
 
-    public CardPanel(ListenerGet listenerWincalc, ListenerAction listenerChangeAndRedraw, JTree winTree,
-            Query qGroups, Query qSysprof, Query qSyspar1b, JPanel panCont) {
+    public CardPanel(ListenerGet listenerWincalc, ListenerAction listenerChangeAndRedraw,
+            JTree winTree, JPopupMenu ppmTree, Query qGroups, Query qSysprof, Query qSyspar1, JPanel panCont) {
         initComponents();
         this.panCont = panCont;
         initElements();
         this.listenerWincalc = listenerWincalc;
         this.listenerChangeAndRedraw = listenerChangeAndRedraw;
         this.winTree = winTree;
+        this.ppmTree = ppmTree;
         this.qGroups = qGroups;
         this.qSysprof = qSysprof;
-        this.qSyspar1b = qSyspar1b;        
+        this.qSyspar1 = qSyspar1;
     }
 
     //При выборе элемента конструкции
@@ -107,7 +108,7 @@ public class CardPanel extends javax.swing.JPanel {
             //Пересчёт фурнитуры с учётом настроек 
             //конструктива ручки, петли, замка см. форму "Фурнитура"                    
             new TFurniture(wincalc(), true).furn();
-            
+
             //Выделенный элемент
             Object selectNode = winTree.getLastSelectedPathComponent();
             if (selectNode instanceof DefMutableTreeNode) {
@@ -281,7 +282,7 @@ public class CardPanel extends javax.swing.JPanel {
                 List.of(pan12, pan13, pan15, pan16).forEach(it -> it.repaint());
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.selectionTree2-2() " + e);
+            System.err.println("Ошибка:CardPanel.selectionTree " + e);
         }
     }
 
@@ -3265,14 +3266,14 @@ public class CardPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txt9;
     // End of variables declaration//GEN-END:variables
 // </editor-fold> 
-    
+
     public ListenerAction sizeEvent = () -> {
         Wincalc w = wincalc();
         if (w != null) {
             txt17.setText(UCom.format(w.width(), 1));
             txt22.setText(UCom.format(w.height(), 1));
         }
-    };    
+    };
 
     public final void initElements() {
         panCont.add(pan13, "card13");

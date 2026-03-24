@@ -436,13 +436,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
                 UGui.changePpmTree(winTree, ppmTree, com5t);
 
-                //Таймер цвета
-                if (enums.Type.contains(com5t, enums.Type.PARAM, enums.Type.FRAME, enums.Type.JOINING) == false) {
-                    if (winc.canvas != null) {
-                        com5t.timer.start();
-                        winc.canvas.repaint();
-                    }
-                }
                 if (com5t.type == enums.Type.PARAM) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card11");
                     qSyspar1b.clear();
@@ -772,7 +765,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
         return null;
     }
-   
+
     @Override
     public Query reload(boolean b) {
         changeAndRedraw();
@@ -2351,15 +2344,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         filterTable.getTxt().grabFocus();
 
         listenerWincalc = () -> {
-            int index = UGui.getIndexRec(tab5);
-            if (index != -1) {
-                Record sysprodRec = qSysprod.get(index);
-                Object winc = sysprodRec.get(eSysprod.values().length);
-                if (winc instanceof Wincalc) {
-                    return (Wincalc) winc;
-                }
-            }
-            return null;
+            return wincalc();
         };
 
         listenerCangeAndRedraw = () -> {
