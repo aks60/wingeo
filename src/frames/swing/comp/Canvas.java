@@ -103,7 +103,7 @@ public class Canvas extends javax.swing.JPanel {
             winc.scale = scale();
             winc.gc2d.scale(winc.scale, winc.scale);
             winc.location();
-            winc.actionEvent.action();
+            winc.sizeEvent.action();
             winc.draw();
 
         } else {

@@ -3255,6 +3255,14 @@ public class CardPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txt9;
     // End of variables declaration//GEN-END:variables
 // </editor-fold> 
+    
+    public ListenerAction sizeEvent = () -> {
+        Wincalc w = wincalc();
+        if (w != null) {
+            txt17.setText(UCom.format(w.width(), 1));
+            txt22.setText(UCom.format(w.height(), 1));
+        }
+    };    
 
     public final void initElements() {
         panCont.add(pan13, "card13");

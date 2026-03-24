@@ -117,7 +117,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private boolean writeNuni = true;
     private Canvas canvas = new Canvas();
     private Scene scene = null;
-    private CardPanel jsonPropUI = null;
+    private CardPanel cardPanel = null;
     private TableFieldFormat rsvSystree;
     private java.awt.Frame models = null;
     private DefMutableTreeNode sysNode = null;
@@ -128,7 +128,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         initComponents();
         scene = new Scene(canvas, this, this);
         initElements();
-        jsonPropUI = new CardPanel(listenerSet, listenerGet, listenerAction, sysTree, winTree, ppmTree, qGroups, qSysprof, qSyspar1b, pan7);
+        cardPanel = new CardPanel(listenerSet, listenerGet, listenerAction, sysTree, winTree, ppmTree, qGroups, qSysprof, qSyspar1b, pan7);
         loadingData();
         loadingModel();
         listenerAdd();
@@ -145,7 +145,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         this.systreeID = nuni;
         this.writeNuni = false;
         initElements();
-        jsonPropUI = new CardPanel(listenerSet, listenerGet, listenerAction, sysTree, winTree, ppmTree, qGroups, qSysprof, qSyspar1b, pan7);
+        cardPanel = new CardPanel(listenerSet, listenerGet, listenerAction, sysTree, winTree, ppmTree, qGroups, qSysprof, qSyspar1b, pan7);
         loadingData();
         loadingModel();
         listenerAdd();
@@ -452,8 +452,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                             .compareTo(qGroups.find(eGroups.data(), eGroups.id, o2.getInt(eSyspar1.groups_id)).getStr(eGroups.name)));
                     ((DefTableModel) tab7.getModel()).fireTableDataChanged();
 
-                } else if (jsonPropUI != null) {
-                    jsonPropUI.selectionTree2();
+                } else if (cardPanel != null) {
+                    cardPanel.selectionTree2();
                 }
                 lab2.setText("Элемент ID = " + UCom.format(com5t.id, 2));
             }
@@ -476,7 +476,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc winc = (Wincalc) w;
 
-                winc.actionEvent = this.actionEvent;
+                winc.sizeEvent = cardPanel.sizeEvent;
 
                 GsonElem.setMaxID(winc); //установим генератор идентификаторов
 

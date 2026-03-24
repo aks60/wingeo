@@ -368,7 +368,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
             if (w instanceof Wincalc) { //прорисовка окна               
                 Wincalc winc = (Wincalc) w;
 
-                winc.actionEvent = this.actionEvent;
+                winc.sizeEvent = this.actionEvent;
 
                 GsonElem.setMaxID(winc); //установим генератор идентификаторов  
 
