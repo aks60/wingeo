@@ -141,7 +141,7 @@ public class DicArtikl extends javax.swing.JDialog {
         });
 
         btnChoice.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c044.gif"))); // NOI18N
-        btnChoice.setToolTipText(bundle.getString("Закрыть")); // NOI18N
+        btnChoice.setToolTipText(bundle.getString("Выбрать")); // NOI18N
         btnChoice.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnChoice.setFocusable(false);
         btnChoice.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
