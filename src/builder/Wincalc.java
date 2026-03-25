@@ -132,13 +132,12 @@ public class Wincalc {
             root.artiklRecAn = eArtikl.find(root.sysprofRec.getInt(eSysprof.artikl_id), true); //аналог
             this.syssizRec = eSyssize.find(root.artiklRec); //системные константы             
 
-            
             parametr(gson.param); //параметры техн. + менеджера
-           
+
             creator(root, gson); //элементы конструкции
 
             artikle(); //артиклы конструкции
-                        
+
             location(); //координаты конструкции
 
         } catch (JsonSyntaxException e) {
@@ -240,8 +239,13 @@ public class Wincalc {
 
     //Получение артиклов
     public void artikle() {
-        listArea.forEach(e -> e.initArtikle());
-        listElem.forEach(e -> e.initArtikle());
+        try {
+            listArea.forEach(e -> e.initArtikle());
+            listElem.forEach(e -> e.initArtikle());
+            
+        } catch (JsonSyntaxException e) {
+            System.err.println("Ошибка: Wincalc.artikle()");
+        }
     }
 
     //Кальк.коорд. элементов конструкции
