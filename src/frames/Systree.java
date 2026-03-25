@@ -812,12 +812,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         sysTree = new javax.swing.JTree();
         split1 = new javax.swing.JSplitPane();
         pan2 = new javax.swing.JPanel();
-        panDesign = new javax.swing.JPanel();
         pan7 = new javax.swing.JPanel();
         pan11 = new javax.swing.JPanel();
         scr7 = new javax.swing.JScrollPane();
         tab7 = new javax.swing.JTable();
         pan12 = new javax.swing.JPanel();
+        panDesign = new javax.swing.JPanel();
         tabb1 = new javax.swing.JTabbedPane();
         pan6 = new javax.swing.JPanel();
         lab13 = new javax.swing.JLabel();
@@ -1213,12 +1213,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         split1.setName("split1"); // NOI18N
         split1.setPreferredSize(new java.awt.Dimension(900, 550));
 
-        pan2.setLayout(new java.awt.GridLayout(1, 2));
+        pan2.setLayout(new java.awt.BorderLayout());
 
-        panDesign.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        panDesign.setLayout(new java.awt.BorderLayout());
-        pan2.add(panDesign);
-
+        pan7.setPreferredSize(new java.awt.Dimension(360, 506));
         pan7.setLayout(new java.awt.CardLayout());
 
         pan11.setLayout(new java.awt.BorderLayout());
@@ -1277,16 +1274,20 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         pan12.setLayout(pan12Layout);
         pan12Layout.setHorizontalGroup(
             pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 302, Short.MAX_VALUE)
+            .addGap(0, 350, Short.MAX_VALUE)
         );
         pan12Layout.setVerticalGroup(
             pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 485, Short.MAX_VALUE)
+            .addGap(0, 383, Short.MAX_VALUE)
         );
 
         pan7.add(pan12, "card12");
 
-        pan2.add(pan7);
+        pan2.add(pan7, java.awt.BorderLayout.EAST);
+
+        panDesign.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        panDesign.setLayout(new java.awt.BorderLayout());
+        pan2.add(panDesign, java.awt.BorderLayout.CENTER);
 
         split1.setTopComponent(pan2);
 
@@ -1533,7 +1534,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         .addGroup(pan6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lab14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
 
         tabb1.addTab("   Основные   ", pan6);
