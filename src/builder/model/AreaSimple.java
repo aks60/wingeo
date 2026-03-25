@@ -51,7 +51,7 @@ public class AreaSimple extends Com5t {
                 artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //первый артикул из сист. профилей
                 artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true); //аналог                
             }
-            if ((this instanceof AreaStvorka)) {
+            if (this instanceof AreaStvorka) {
                 colorID1 = (UPar.isFinite(gson.param, PKjson.colorID1))
                         ? gson.param.get(PKjson.colorID1).getAsInt() : owner.colorID1;
                 colorID2 = (UPar.isFinite(gson.param, PKjson.colorID2))
