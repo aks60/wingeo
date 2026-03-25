@@ -64,7 +64,7 @@ public class CardPanel extends javax.swing.JPanel {
     private ListenerGet<Wincalc> listenerWincalc;
     private ListenerAction listenerChangeAndRedraw;
     private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
-    private Query qGroups, qSysprof, qSyspar1;
+    private Query qGroups, qSysprof;
 
     //private DefMutableTreeNode sysNode = null;
     javax.swing.JFrame thiz = null;
@@ -74,7 +74,7 @@ public class CardPanel extends javax.swing.JPanel {
     private DefMutableTreeNode winNode = null;
 
     public CardPanel(ListenerGet listenerWincalc, ListenerAction listenerChangeAndRedraw, JTree sysTree,
-            JTree winTree, JPopupMenu ppmTree, Query qGroups, Query qSysprof, Query qSyspar1b, JPanel panCont) {
+            JTree winTree, JPopupMenu ppmTree, Query qGroups, Query qSysprof, JPanel panCont) {
         initComponents();
         this.panCont = panCont;
         initElements();
@@ -85,11 +85,10 @@ public class CardPanel extends javax.swing.JPanel {
         this.ppmTree = ppmTree;
         this.qGroups = qGroups;
         this.qSysprof = qSysprof;
-        this.qSyspar1 = qSyspar1b;
     }
 
     public CardPanel(ListenerGet listenerWincalc, ListenerAction listenerChangeAndRedraw,
-            JTree winTree, JPopupMenu ppmTree, Query qGroups, Query qSysprof, Query qSyspar1, JPanel panCont) {
+            JTree winTree, JPopupMenu ppmTree, Query qGroups, Query qSysprof, JPanel panCont) {
         initComponents();
         this.panCont = panCont;
         initElements();
@@ -99,7 +98,6 @@ public class CardPanel extends javax.swing.JPanel {
         this.ppmTree = ppmTree;
         this.qGroups = qGroups;
         this.qSysprof = qSysprof;
-        this.qSyspar1 = qSyspar1;
     }
 
     //При выборе элемента конструкции

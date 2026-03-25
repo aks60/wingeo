@@ -77,6 +77,7 @@ import javax.swing.tree.DefaultTreeModel;
 import startup.App;
 import common.listener.ListenerReload;
 import static dataset.Query.INS;
+import domain.eSysprof;
 import frames.swing.comp.CardPanel;
 import frames.swing.comp.MainMenu;
 import java.util.ArrayList;
@@ -96,6 +97,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
     private Query qProject = new Query(eProject.values());
     private Query qPrjpart = new Query(ePrjpart.values());
     private Query qPrjprod = new Query(ePrjprod.values());
+    private Query qSysprof = new Query(eSysprof.values(), eArtikl.values());
     private Query qPrjkit = new Query(ePrjkit.values(), eArtikl.values());
     private Query qSyspar1 = new Query(eSyspar1.values());
     private DefMutableTreeNode winNode = null;
@@ -119,7 +121,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         scene = new Scene(canvas, this, this);
         //btnReport.setVisible(menureport);
         initElements();
-        cardPanel = new CardPanel(listenerWincalc, listenerCangeAndRedraw, winTree, ppmTree, qGroups, null, qSyspar1, pan7);
+        cardPanel = new CardPanel(listenerWincalc, listenerCangeAndRedraw, winTree, ppmTree, qGroups, qSysprof, pan7);
         loadingData();
         loadingModel();
         listenerAdd();
@@ -350,6 +352,8 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         int index = UGui.getIndexRec(tab2);
         if (index != -1) {
             Record prjprodRec = qPrjprod.get(index);
+            qSysprof.sql(eSysprof.data(), eSysprof.systree_id, prjprodRec.getInt(ePrjprod.systree_id)).sort(eSysprof.npp);
+            qSysprof.table(eArtikl.up).join(qSysprof, eArtikl.data(), eSysprof.artikl_id, eArtikl.id);
             eProp.prjprodID.putProp(prjprodRec.getStr(ePrjprod.id)); //запишем текущий prjprodID в файл
             //App.Top.frame.setTitle(UGui.designTitle());
             Object w = prjprodRec.get(ePrjprod.values().length);

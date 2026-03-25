@@ -127,7 +127,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         initComponents();
         scene = new Scene(canvas, this, this);
         initElements();
-        cardPanel = new CardPanel(listenerWincalc, listenerCangeAndRedraw, sysTree, winTree, ppmTree, qGroups, qSysprof, qSyspar1b, pan7);
+        cardPanel = new CardPanel(listenerWincalc, listenerCangeAndRedraw, sysTree, winTree, ppmTree, qGroups, qSysprof, pan7);
         loadingData();
         loadingModel();
         listenerAdd();
@@ -144,7 +144,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         this.systreeID = nuni;
         this.writeNuni = false;
         initElements();
-        cardPanel = new CardPanel(listenerWincalc, listenerCangeAndRedraw, sysTree, winTree, ppmTree, qGroups, qSysprof, qSyspar1b, pan7);
+        cardPanel = new CardPanel(listenerWincalc, listenerCangeAndRedraw, sysTree, winTree, ppmTree, qGroups, qSysprof, pan7);
         loadingData();
         loadingModel();
         listenerAdd();
