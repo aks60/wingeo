@@ -636,7 +636,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn22.setPreferredSize(new java.awt.Dimension(21, 20));
         btn22.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn22sysprofToFrame(evt);
+                sysprofToFrame(evt);
             }
         });
 
@@ -671,7 +671,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn18.setPreferredSize(new java.awt.Dimension(21, 20));
         btn18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn18colorToFrame(evt);
+                colorToFrame(evt);
             }
         });
 
@@ -688,7 +688,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn19.setPreferredSize(new java.awt.Dimension(21, 20));
         btn19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn19colorToFrame(evt);
+                colorToFrame(evt);
             }
         });
 
@@ -705,7 +705,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn20.setPreferredSize(new java.awt.Dimension(21, 20));
         btn20.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn20colorToFrame(evt);
+                colorToFrame(evt);
             }
         });
 
@@ -831,7 +831,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn3.setPreferredSize(new java.awt.Dimension(21, 20));
         btn3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn3artiklToGlass(evt);
+                artiklToGlass(evt);
             }
         });
 
@@ -863,7 +863,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn25.setPreferredSize(new java.awt.Dimension(21, 20));
         btn25.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn25colorToGlass(evt);
+                colorToGlass(evt);
             }
         });
 
@@ -905,7 +905,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn5.setPreferredSize(new java.awt.Dimension(21, 20));
         btn5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn5artiklToRascladka(evt);
+                artiklToRascladka(evt);
             }
         });
 
@@ -917,7 +917,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn29.setPreferredSize(new java.awt.Dimension(21, 20));
         btn29.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn29colorToRascladka(evt);
+                colorToRascladka(evt);
             }
         });
 
@@ -983,7 +983,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn30.setPreferredSize(new java.awt.Dimension(21, 20));
         btn30.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn30blindsToStvorka(evt);
+                blindsToStvorka(evt);
             }
         });
 
@@ -1020,7 +1020,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn33.setPreferredSize(new java.awt.Dimension(21, 20));
         btn33.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn33colorToBlinds(evt);
+                colorToBlinds(evt);
             }
         });
 
@@ -1045,7 +1045,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn34.setPreferredSize(new java.awt.Dimension(21, 20));
         btn34.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn34elemsToBlinds(evt);
+                elemsToBlinds(evt);
             }
         });
 
@@ -1070,7 +1070,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn35.setPreferredSize(new java.awt.Dimension(21, 20));
         btn35.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn35artiklToBlinds(evt);
+                artiklToBlinds(evt);
             }
         });
 
@@ -1288,7 +1288,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn37.setPreferredSize(new java.awt.Dimension(21, 20));
         btn37.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn37sysprofToStvorka(evt);
+                sysprofToStvorka(evt);
             }
         });
 
@@ -1338,7 +1338,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn38.setPreferredSize(new java.awt.Dimension(21, 20));
         btn38.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn38colorToStvorka(evt);
+                colorToStvorka(evt);
             }
         });
 
@@ -1350,7 +1350,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn39.setPreferredSize(new java.awt.Dimension(21, 20));
         btn39.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn39colorToStvorka(evt);
+                colorToStvorka(evt);
             }
         });
 
@@ -1362,7 +1362,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn8.setPreferredSize(new java.awt.Dimension(21, 20));
         btn8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn8colorToStvorka(evt);
+                colorToStvorka(evt);
             }
         });
 
@@ -1512,7 +1512,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn10.setPreferredSize(new java.awt.Dimension(21, 20));
         btn10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn10sysfurnToStvorka(evt);
+                sysfurnToStvorka(evt);
             }
         });
 
@@ -1524,7 +1524,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn21.setPreferredSize(new java.awt.Dimension(21, 20));
         btn21.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn21typeOpenToStvorka(evt);
+                typeOpenToStvorka(evt);
             }
         });
 
@@ -1558,7 +1558,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn12.setPreferredSize(new java.awt.Dimension(21, 20));
         btn12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn12artiklToHand(evt);
+                artiklToHand(evt);
             }
         });
 
@@ -1594,7 +1594,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn14.setPreferredSize(new java.awt.Dimension(21, 20));
         btn14.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn14colorToHandl(evt);
+                colorToHandl(evt);
             }
         });
 
@@ -1621,7 +1621,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn6.setPreferredSize(new java.awt.Dimension(21, 20));
         btn6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn6heightHandlToStvorka(evt);
+                heightHandlToStvorka(evt);
             }
         });
 
@@ -1645,7 +1645,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn15.setPreferredSize(new java.awt.Dimension(21, 20));
         btn15.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn15artiklToLoop(evt);
+                artiklToLoop(evt);
             }
         });
 
@@ -1681,7 +1681,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn17.setPreferredSize(new java.awt.Dimension(21, 20));
         btn17.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn17colorToLoop(evt);
+                colorToLoop(evt);
             }
         });
 
@@ -1814,7 +1814,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn24.setPreferredSize(new java.awt.Dimension(21, 20));
         btn24.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn24colorToLock(evt);
+                colorToLock(evt);
             }
         });
 
@@ -1831,7 +1831,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn23.setPreferredSize(new java.awt.Dimension(21, 20));
         btn23.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn23artiklToLock(evt);
+                artiklToLock(evt);
             }
         });
 
@@ -1879,7 +1879,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn16.setPreferredSize(new java.awt.Dimension(21, 20));
         btn16.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn16artiklToMosq(evt);
+                artiklToMosq(evt);
             }
         });
 
@@ -1915,7 +1915,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn32.setPreferredSize(new java.awt.Dimension(21, 20));
         btn32.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn32colorToMosk(evt);
+                colorToMosk(evt);
             }
         });
 
@@ -1939,7 +1939,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn31.setPreferredSize(new java.awt.Dimension(21, 20));
         btn31.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn31elemsToMosq(evt);
+                elemsToMosq(evt);
             }
         });
 
@@ -2319,7 +2319,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn36.setPreferredSize(new java.awt.Dimension(21, 20));
         btn36.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn36sysprofToKorobka(evt);
+                sysprofToKorobka(evt);
             }
         });
 
@@ -2530,7 +2530,7 @@ public class CardPanel extends javax.swing.JPanel {
         add(panContainer, "card2");
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn22sysprofToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn22sysprofToFrame
+    private void sysprofToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysprofToFrame
         try {
             if (winNode != null) {
                 Layout layout = winNode.com5t().layout();
@@ -2604,21 +2604,13 @@ public class CardPanel extends javax.swing.JPanel {
         } catch (Exception e) {
             System.err.println("Œ¯Ë·Í‡:Systree.sysprofToFrame() " + e);
         }
-    }//GEN-LAST:event_btn22sysprofToFrame
+    }//GEN-LAST:event_sysprofToFrame
 
-    private void btn18colorToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn18colorToFrame
+    private void colorToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToFrame
         dicColorToProfile(evt, btn18, btn19);
-    }//GEN-LAST:event_btn18colorToFrame
+    }//GEN-LAST:event_colorToFrame
 
-    private void btn19colorToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn19colorToFrame
-        dicColorToProfile(evt, btn18, btn19);
-    }//GEN-LAST:event_btn19colorToFrame
-
-    private void btn20colorToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn20colorToFrame
-        dicColorToProfile(evt, btn18, btn19);
-    }//GEN-LAST:event_btn20colorToFrame
-
-    private void btn3artiklToGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3artiklToGlass
+    private void artiklToGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToGlass
         try {
             double selectID = winNode.com5t().id;
             Record systreeRec = eSystree.find(wincalc().nuni);
@@ -2655,14 +2647,14 @@ public class CardPanel extends javax.swing.JPanel {
         } catch (Exception e) {
             System.err.println("Œ¯Ë·Í‡:Systree.artiklToGlass() " + e);
         }
-    }//GEN-LAST:event_btn3artiklToGlass
+    }//GEN-LAST:event_artiklToGlass
 
-    private void btn25colorToGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn25colorToGlass
+    private void colorToGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToGlass
         ElemSimple glas = (ElemSimple) winNode.com5t();
         dicColorToElement(PKjson.colorGlass, glas.artiklRec);
-    }//GEN-LAST:event_btn25colorToGlass
+    }//GEN-LAST:event_colorToGlass
 
-    private void btn5artiklToRascladka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5artiklToRascladka
+    private void artiklToRascladka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToRascladka
         try {
             ElemGlass classElem = (ElemGlass) winNode.com5t();
             double selectID = winNode.com5t().id;
@@ -2686,12 +2678,12 @@ public class CardPanel extends javax.swing.JPanel {
         } catch (Exception e) {
             System.err.println("Œ¯Ë·Í‡:Systree.rascladkaToGlass() " + e);
         }
-    }//GEN-LAST:event_btn5artiklToRascladka
+    }//GEN-LAST:event_artiklToRascladka
 
-    private void btn29colorToRascladka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn29colorToRascladka
+    private void colorToRascladka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToRascladka
         ElemSimple glas = (ElemSimple) winNode.com5t();
         dicColorToElement(PKjson.colorRasc, ((ElemGlass) glas).rascRec);
-    }//GEN-LAST:event_btn29colorToRascladka
+    }//GEN-LAST:event_colorToRascladka
 
     private void spinHorStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_spinHorStateChanged
         double selectID = winNode.com5t().id;
@@ -2707,7 +2699,7 @@ public class CardPanel extends javax.swing.JPanel {
         changeAndRedraw();
     }//GEN-LAST:event_spinVertStateChanged
 
-    private void btn30blindsToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn30blindsToStvorka
+    private void blindsToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blindsToStvorka
         try {
             double stvorkaID = winNode.com5t().id;
             int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
@@ -2730,41 +2722,41 @@ public class CardPanel extends javax.swing.JPanel {
         } catch (Exception e) {
             System.err.println("Œ¯Ë·Í‡:Systree.handlToStvorka() " + e);
         }
-    }//GEN-LAST:event_btn30blindsToStvorka
+    }//GEN-LAST:event_blindsToStvorka
 
-    private void btn33colorToBlinds(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn33colorToBlinds
+    private void colorToBlinds(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToBlinds
         //
-    }//GEN-LAST:event_btn33colorToBlinds
+    }//GEN-LAST:event_colorToBlinds
 
-    private void btn34elemsToBlinds(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn34elemsToBlinds
+    private void elemsToBlinds(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elemsToBlinds
         //
-    }//GEN-LAST:event_btn34elemsToBlinds
+    }//GEN-LAST:event_elemsToBlinds
 
-    private void btn35artiklToBlinds(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn35artiklToBlinds
-        //        try {
-        //            double glassID = winNode.com5t().id;
-        //            int artiklID = ((ElemGlass) winNode.com5t()).artiklRec.getInt(eArtikl.id);
-        //            Query qBlinds = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2, 50);
-        //            //Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
-        //            new DicArtikl(this, (artiklRec) -> {
-        //
-        //                GsonElem glass = UCom.gson(wincalc().listAll, glassID);
-        //                //stvArea.param.remove(PKjson.colorHand);
-        //                if (artiklRec.get(1) == null) {
-        //                    //stvArea.param.remove(PKjson.artiklB);
-        //                } else {
-        //                    glass.param.addProperty(PKjson.artiklHand, artiklRec.getStr(eArtikl.id));
-        //                }
-        //                //updateScript(stvorkaID);
-        //
-        //            }, qBlinds);
-        //
-        //        } catch (Exception e) {
-        //            System.err.println("Œ¯Ë·Í‡:Systree.handlToStvorka() " + e);
-        //        }
-    }//GEN-LAST:event_btn35artiklToBlinds
+    private void artiklToBlinds(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToBlinds
+                /*try {
+                    double glassID = winNode.com5t().id;
+                    int artiklID = ((ElemGlass) winNode.com5t()).artiklRec.getInt(eArtikl.id);
+                    Query qBlinds = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2, 50);
+                    //Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
+                    new DicArtikl(this, (artiklRec) -> {
+        
+                        GsonElem glass = UCom.gson(wincalc().listAll, glassID);
+                        //stvArea.param.remove(PKjson.colorHand);
+                        if (artiklRec.get(1) == null) {
+                            //stvArea.param.remove(PKjson.artiklB);
+                        } else {
+                            glass.param.addProperty(PKjson.artiklHand, artiklRec.getStr(eArtikl.id));
+                        }
+                        //updateScript(stvorkaID);
+        
+                    }, qBlinds);
+        
+                } catch (Exception e) {
+                    System.err.println("Œ¯Ë·Í‡:Systree.handlToStvorka() " + e);
+                }*/
+    }//GEN-LAST:event_artiklToBlinds
 
-    private void btn37sysprofToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn37sysprofToStvorka
+    private void sysprofToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysprofToStvorka
         try {
             if (winNode != null) {
                 Layout layout = winNode.com5t().layout();
@@ -2798,21 +2790,13 @@ public class CardPanel extends javax.swing.JPanel {
         } catch (Exception e) {
             System.err.println("Œ¯Ë·Í‡:Systree.sysprofToStvorka() " + e);
         }
-    }//GEN-LAST:event_btn37sysprofToStvorka
+    }//GEN-LAST:event_sysprofToStvorka
 
-    private void btn38colorToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn38colorToStvorka
+    private void colorToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToStvorka
         dicColorToProfile(evt, btn38, btn39);
-    }//GEN-LAST:event_btn38colorToStvorka
+    }//GEN-LAST:event_colorToStvorka
 
-    private void btn39colorToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn39colorToStvorka
-        dicColorToProfile(evt, btn38, btn39);
-    }//GEN-LAST:event_btn39colorToStvorka
-
-    private void btn8colorToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8colorToStvorka
-        dicColorToProfile(evt, btn38, btn39);
-    }//GEN-LAST:event_btn8colorToStvorka
-
-    private void btn10sysfurnToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn10sysfurnToStvorka
+    private void sysfurnToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysfurnToStvorka
         try {
             double windowsID = winNode.com5t().id;
             int systreeID = eSystree.find(wincalc().nuni).getInt(eSystree.id);
@@ -2833,9 +2817,9 @@ public class CardPanel extends javax.swing.JPanel {
         } catch (Exception e) {
             System.err.println("Œ¯Ë·Í‡:Systree.sysfurnToStvorka() " + e);
         }
-    }//GEN-LAST:event_btn10sysfurnToStvorka
+    }//GEN-LAST:event_sysfurnToStvorka
 
-    private void btn21typeOpenToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn21typeOpenToStvorka
+    private void typeOpenToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_typeOpenToStvorka
         try {
             new DicEnums(thiz, (typeopenRec) -> {
 
@@ -2853,18 +2837,18 @@ public class CardPanel extends javax.swing.JPanel {
         } catch (Exception e) {
             System.err.println("Œ¯Ë·Í‡:Systree.typeOpenToStvorka() " + e);
         }
-    }//GEN-LAST:event_btn21typeOpenToStvorka
+    }//GEN-LAST:event_typeOpenToStvorka
 
-    private void btn12artiklToHand(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn12artiklToHand
+    private void artiklToHand(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToHand
         dicArtiklToFurniture(PKjson.artiklHand, 11);
-    }//GEN-LAST:event_btn12artiklToHand
+    }//GEN-LAST:event_artiklToHand
 
-    private void btn14colorToHandl(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn14colorToHandl
+    private void colorToHandl(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToHandl
         AreaStvorka stv = (AreaStvorka) winNode.com5t();
         dicColorToElement(PKjson.colorHand, stv.handRec[0]);
-    }//GEN-LAST:event_btn14colorToHandl
+    }//GEN-LAST:event_colorToHandl
 
-    private void btn6heightHandlToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6heightHandlToStvorka
+    private void heightHandlToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_heightHandlToStvorka
         AreaSimple areaStv = (AreaSimple) winNode.com5t();
         int indexLayoutHandl = 0;
         if (LayoutHand.CONST.name.equals(txt16.getText())) {
@@ -2895,27 +2879,27 @@ public class CardPanel extends javax.swing.JPanel {
             }
 
         }, indexLayoutHandl);
-    }//GEN-LAST:event_btn6heightHandlToStvorka
+    }//GEN-LAST:event_heightHandlToStvorka
 
-    private void btn15artiklToLoop(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn15artiklToLoop
+    private void artiklToLoop(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToLoop
         dicArtiklToFurniture(PKjson.artiklLoop, 12);
-    }//GEN-LAST:event_btn15artiklToLoop
+    }//GEN-LAST:event_artiklToLoop
 
-    private void btn17colorToLoop(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn17colorToLoop
+    private void colorToLoop(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToLoop
         AreaStvorka stv = (AreaStvorka) winNode.com5t();
         dicColorToElement(PKjson.colorLoop, stv.loopRec[0]);
-    }//GEN-LAST:event_btn17colorToLoop
+    }//GEN-LAST:event_colorToLoop
 
-    private void btn24colorToLock(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn24colorToLock
+    private void colorToLock(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToLock
         AreaStvorka stv = (AreaStvorka) winNode.com5t();
         dicColorToElement(PKjson.colorLock, stv.lockRec[0]);
-    }//GEN-LAST:event_btn24colorToLock
+    }//GEN-LAST:event_colorToLock
 
-    private void btn23artiklToLock(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn23artiklToLock
+    private void artiklToLock(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToLock
         dicArtiklToFurniture(PKjson.artiklLock, 9);
-    }//GEN-LAST:event_btn23artiklToLock
+    }//GEN-LAST:event_artiklToLock
 
-    private void btn16artiklToMosq(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn16artiklToMosq
+    private void artiklToMosq(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToMosq
         try {
             AreaStvorka areaStv = (AreaStvorka) winNode.com5t();
             Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2, 20);
@@ -2946,16 +2930,16 @@ public class CardPanel extends javax.swing.JPanel {
         } catch (Exception e) {
             System.err.println("Œ¯Ë·Í‡:Systree.artiklToMosq() " + e);
         }
-    }//GEN-LAST:event_btn16artiklToMosq
+    }//GEN-LAST:event_artiklToMosq
 
-    private void btn32colorToMosk(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn32colorToMosk
+    private void colorToMosk(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToMosk
         Com5t mosq = wincalc().listAll.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
         if (mosq != null) {
             dicColorToElement(mosq.gson, PKjson.colorID1, mosq.artiklRec);
         }
-    }//GEN-LAST:event_btn32colorToMosk
+    }//GEN-LAST:event_colorToMosk
 
-    private void btn31elemsToMosq(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn31elemsToMosq
+    private void elemsToMosq(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elemsToMosq
         try {
             AreaStvorka areaStv = (AreaStvorka) winNode.com5t();
             Com5t mosq = areaStv.childs.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
@@ -2977,7 +2961,7 @@ public class CardPanel extends javax.swing.JPanel {
         } catch (Exception e) {
             System.err.println("Œ¯Ë·Í‡:Systree.mosqToElements() " + e);
         }
-    }//GEN-LAST:event_btn31elemsToMosq
+    }//GEN-LAST:event_elemsToMosq
 
     private void btn26joinToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn26joinToFrame
         try {
@@ -3027,7 +3011,7 @@ public class CardPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btn28joinToFrame
 
-    private void btn36sysprofToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn36sysprofToKorobka
+    private void sysprofToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysprofToKorobka
         try {
             if (winNode != null) {
                 Layout layout = winNode.com5t().layout();
@@ -3061,11 +3045,12 @@ public class CardPanel extends javax.swing.JPanel {
         } catch (Exception e) {
             System.err.println("Œ¯Ë·Í‡:Systree.sysprofToKorobka() " + e);
         }
-    }//GEN-LAST:event_btn36sysprofToKorobka
+    }//GEN-LAST:event_sysprofToKorobka
 
     private void colorToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToKorobka
         dicColorToProfile(evt, btn9, btn13);
     }//GEN-LAST:event_colorToKorobka
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn10;
