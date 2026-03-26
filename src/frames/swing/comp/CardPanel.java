@@ -2359,7 +2359,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn9.setPreferredSize(new java.awt.Dimension(21, 20));
         btn9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn9colorToKorobka(evt);
+                colorToKorobka(evt);
             }
         });
 
@@ -2371,7 +2371,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn13.setPreferredSize(new java.awt.Dimension(21, 20));
         btn13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn13colorToKorobka(evt);
+                colorToKorobka(evt);
             }
         });
 
@@ -2383,7 +2383,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn2.setPreferredSize(new java.awt.Dimension(21, 20));
         btn2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn2colorToKorobka(evt);
+                colorToKorobka(evt);
             }
         });
 
@@ -3063,17 +3063,9 @@ public class CardPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btn36sysprofToKorobka
 
-    private void btn9colorToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9colorToKorobka
+    private void colorToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToKorobka
         dicColorToProfile(evt, btn9, btn13);
-    }//GEN-LAST:event_btn9colorToKorobka
-
-    private void btn13colorToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn13colorToKorobka
-        dicColorToProfile(evt, btn9, btn13);
-    }//GEN-LAST:event_btn13colorToKorobka
-
-    private void btn2colorToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2colorToKorobka
-        dicColorToProfile(evt, btn9, btn13);
-    }//GEN-LAST:event_btn2colorToKorobka
+    }//GEN-LAST:event_colorToKorobka
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn10;

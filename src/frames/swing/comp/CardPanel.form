@@ -4056,7 +4056,7 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn9colorToKorobka"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="colorToKorobka"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btn13">
@@ -4079,7 +4079,7 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn13colorToKorobka"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="colorToKorobka"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btn2">
@@ -4102,7 +4102,7 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn2colorToKorobka"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="colorToKorobka"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txt9">
