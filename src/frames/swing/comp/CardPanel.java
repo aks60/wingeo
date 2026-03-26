@@ -65,27 +65,12 @@ public class CardPanel extends javax.swing.JPanel {
     private ListenerAction listenerChangeAndRedraw;
     private ImageIcon icon = new ImageIcon(getClass().getResource("/resource/img16/b031.gif"));
     private Query qGroups, qSysprof;
+    private Record record;
 
-    //private DefMutableTreeNode sysNode = null;
     javax.swing.JFrame thiz = null;
-    javax.swing.JTree sysTree = new javax.swing.JTree();
     javax.swing.JTree winTree = new javax.swing.JTree();
     javax.swing.JPopupMenu ppmTree = new javax.swing.JPopupMenu();
     private DefMutableTreeNode winNode = null;
-
-    public CardPanel(ListenerGet listenerWincalc, ListenerAction listenerChangeAndRedraw, JTree sysTree,
-            JTree winTree, JPopupMenu ppmTree, Query qGroups, Query qSysprof, JPanel panCont) {
-        initComponents();
-        this.panCont = panCont;
-        initElements();
-        this.listenerWincalc = listenerWincalc;
-        this.listenerChangeAndRedraw = listenerChangeAndRedraw;
-        this.sysTree = sysTree;
-        this.winTree = winTree;
-        this.ppmTree = ppmTree;
-        this.qGroups = qGroups;
-        this.qSysprof = qSysprof;
-    }
 
     public CardPanel(ListenerGet listenerWincalc, ListenerAction listenerChangeAndRedraw,
             JTree winTree, JPopupMenu ppmTree, Query qGroups, Query qSysprof, JPanel panCont) {
@@ -2635,10 +2620,11 @@ public class CardPanel extends javax.swing.JPanel {
 
     private void btn3artiklToGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3artiklToGlass
         try {
-            DefMutableTreeNode sysNode = (DefMutableTreeNode) sysTree.getLastSelectedPathComponent();
             double selectID = winNode.com5t().id;
+            Record systreeRec = eSystree.find(wincalc().nuni);
+            
             //Список доступных толщин в ветке системы например 4;5;8
-            String depth = sysNode.rec().getStr(eSystree.depth);
+            String depth = systreeRec.getStr(eSystree.depth);
             if (depth != null && depth.isEmpty() == false) {
                 depth = depth.replace(";;;", ";").replace(";;", ";");
                 depth = depth.replace(";", ",");
@@ -2828,9 +2814,8 @@ public class CardPanel extends javax.swing.JPanel {
 
     private void btn10sysfurnToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn10sysfurnToStvorka
         try {
-            DefMutableTreeNode sysNode = (DefMutableTreeNode) sysTree.getLastSelectedPathComponent();
             double windowsID = winNode.com5t().id;
-            int systreeID = sysNode.rec().getInt(eSystree.id);
+            int systreeID = eSystree.find(wincalc().nuni).getInt(eSystree.id);
             Query qSysfurn = new Query(eSysfurn.values(), eFurniture.values()).sql(eSysfurn.data(), eSysfurn.systree_id, systreeID);
             qSysfurn.table(eFurniture.up).join(qSysfurn, eFurniture.data(), eSysfurn.furniture_id, eFurniture.id);
             new DicName(thiz, (sysfurnRec) -> {

@@ -127,13 +127,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         initComponents();
         scene = new Scene(canvas, this, this);
         initElements();
-        cardPanel = new CardPanel(listenerWincalc, listenerCangeAndRedraw, sysTree, winTree, ppmTree, qGroups, qSysprof, pan7);
+        cardPanel = new CardPanel(listenerWincalc, listenerCangeAndRedraw, winTree, ppmTree, qGroups, qSysprof, pan7);
         loadingData();
         loadingModel();
         listenerAdd();
         listenerSet();
         tabb1.setSelectedIndex(4);
-
     }
 
     // онструктор с поиском из конструктива 
@@ -144,7 +143,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         this.systreeID = nuni;
         this.writeNuni = false;
         initElements();
-        cardPanel = new CardPanel(listenerWincalc, listenerCangeAndRedraw, sysTree, winTree, ppmTree, qGroups, qSysprof, pan7);
+        cardPanel = new CardPanel(listenerWincalc, listenerCangeAndRedraw, winTree, ppmTree, qGroups, qSysprof, pan7);
         loadingData();
         loadingModel();
         listenerAdd();
