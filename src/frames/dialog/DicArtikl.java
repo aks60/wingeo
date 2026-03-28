@@ -156,7 +156,7 @@ public class DicArtikl extends javax.swing.JDialog {
         });
 
         btnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c042.gif"))); // NOI18N
-        btnRemove.setToolTipText(bundle.getString("Очистить")); // NOI18N
+        btnRemove.setToolTipText(bundle.getString("Удалить")); // NOI18N
         btnRemove.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnRemove.setFocusable(false);
         btnRemove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
