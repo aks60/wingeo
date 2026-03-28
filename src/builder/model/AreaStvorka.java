@@ -74,13 +74,16 @@ public class AreaStvorka extends AreaSimple {
             ElemSimple sideStv = this.frames.stream().filter(rec -> rec.id == ID).findFirst().orElse(null);
 
             if (sideStv != null) {
+                if (UPar.isFinite(this.gson.param, PKjson.stvorkaSide[i])) {
+                    sideStv.gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]); //обновил параметры в gson
+                }
                 sideStv.x1(coo[i].x);
                 sideStv.y1(coo[i].y);
                 coo[i].z = sideStv.id;
             } else {
                 GsonElem gson = new GsonElem(Type.STV_SIDE, coo[i].x, coo[i].y, "{}");
-                if (UPar.isFinite(this.gson.param, PKjson.stvorkaSide[i])) { //впихнул параметры в gson
-                    gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]);
+                if (UPar.isFinite(this.gson.param, PKjson.stvorkaSide[i])) {
+                    gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]); //впихнул параметры в gson
                 }
                 ElemFrame newStv = new ElemFrame(this.winc, ID, gson, this);
                 this.frames.add(newStv);
