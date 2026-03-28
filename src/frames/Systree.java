@@ -679,14 +679,13 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }
 
-    //»зменить скрипт в базе и перерисовать
+    //»зменить скрипт в базе, пересчитать и перерисовать
     public void changeAndRedraw() {
         try {
             //—охраним скрипт в базе
             String script = wincalc().gson.toJson();
             Record sysprodRec = qSysprod.get(UGui.getIndexRec(tab5));
             sysprodRec.set(eSysprod.script, script);
-            //qSysprod.update(sysprodRec);
 
             //Ёкземпл€р нового скрипта
             Wincalc winc = wincalc();
