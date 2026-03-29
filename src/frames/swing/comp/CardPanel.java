@@ -3014,7 +3014,7 @@ public class CardPanel extends javax.swing.JPanel {
     private void sysprofToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysprofToKorobka
         try {
             if (winNode != null) {
-                Layout layout = winNode.com5t().layout();
+                //Layout layout = winNode.com5t().layout();
                 //double selectID = winNode.com5t().id; //id элемента который уже есть в конструкции, это либо виртуал. либо найденный по приоритету при построении модели
                 Query qSysprofFilter = new Query(eSysprof.values(), eArtikl.values()); //тут будет список допустимых профилей из ветки системы
                 //Цикл по профилям ветки
