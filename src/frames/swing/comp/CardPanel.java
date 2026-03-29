@@ -149,7 +149,7 @@ public class CardPanel extends javax.swing.JPanel {
                     ((CardLayout) panCont.getLayout()).show(panCont, "card15");
                     dataset.Record artiklRec = com5t.artiklRec;
                     setText(txt19, artiklRec.getStr(eArtikl.code));
-                    setIcon(btn3, UPar.isFinite(com5t.gson.param, PKjson.artglasID));
+                    setIcon(btn3, UPar.isFinite(com5t.gson.param, PKjson.artiklID));
                     setText(txt18, artiklRec.getStr(eArtikl.name));
                     dataset.Record colorRec = eColor.find(com5t.colorID1);
                     setText(txt34, colorRec.getStr(eColor.name));
@@ -2636,9 +2636,9 @@ public class CardPanel extends javax.swing.JPanel {
 
                 GsonElem glassElem = UCom.gson(wincalc().listAll, selectID);
                 if (artiklRec.get(1) == null) {
-                    UPar.remove(glassElem.param, List.of(PKjson.artglasID));
+                    UPar.remove(glassElem.param, List.of(PKjson.artiklID));
                 } else {
-                    UPar.addProperty(glassElem.param, List.of(PKjson.artglasID), artiklRec.getInt(eArtikl.id));
+                    UPar.addProperty(glassElem.param, List.of(PKjson.artiklID), artiklRec.getInt(eArtikl.id));
                 }
                 changeAndRedraw();
 

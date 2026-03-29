@@ -49,8 +49,8 @@ public class ElemGlass extends ElemSimple {
     @Override
     public void initArtikle() {
 
-        if (UPar.isFinite(gson.param, PKjson.artglasID)) {
-            artiklRec = eArtikl.find(gson.param.get(PKjson.artglasID).getAsInt(), false);
+        if (UPar.isFinite(gson.param, PKjson.artiklID)) {
+            artiklRec = eArtikl.find(gson.param.get(PKjson.artiklID).getAsInt(), false);
         } else {
             Record sysreeRec = eSystree.find(winc.nuni); //по умолчанию стеклопакет
             artiklRec = eArtikl.find2(sysreeRec.getStr(eSystree.glas));

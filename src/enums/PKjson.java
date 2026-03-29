@@ -6,7 +6,6 @@ public class PKjson {
     public final static String artiklID = "artiklID"; //ID артикула
     public final static String sysprofID = "sysprofID"; //ID профиля
     public final static String sysfurnID = "sysfurnID"; //ID Фурнитуры
-    public final static String artglasID = "artglasID"; //ID заполнения
     public final static String elementID = "elementID"; //ID составов
     public final static String parentID = "parentID"; //ID родителя
 
