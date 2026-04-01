@@ -3435,7 +3435,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn27joinToFrame"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="joinToFrame"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lab56">
@@ -3563,7 +3563,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn28joinToFrame"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="joinToFrame"/>
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txt42">

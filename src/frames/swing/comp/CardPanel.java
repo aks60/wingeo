@@ -2101,7 +2101,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn27.setPreferredSize(new java.awt.Dimension(18, 18));
         btn27.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn27joinToFrame(evt);
+                joinToFrame(evt);
             }
         });
 
@@ -2148,7 +2148,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn28.setPreferredSize(new java.awt.Dimension(18, 18));
         btn28.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn28joinToFrame(evt);
+                joinToFrame(evt);
             }
         });
 
@@ -2759,8 +2759,6 @@ public class CardPanel extends javax.swing.JPanel {
     private void sysprofToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysprofToStvorka
         try {
             if (winNode != null) {
-                Layout layout = winNode.com5t().layout();
-                //double selectID = winNode.com5t().id; //id элемента который уже есть в конструкции, это либо виртуал. либо найденный по приоритету при построении модели
                 Query qSysprofFilter = new Query(eSysprof.values(), eArtikl.values()); //тут будет список допустимых профилей из ветки системы
                 //Цикл по профилям ветки
                 for (int index = 0; index < qSysprof.size(); ++index) {
@@ -2979,43 +2977,9 @@ public class CardPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_joinToFrame
 
-    private void btn27joinToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn27joinToFrame
-        try {
-            Wincalc winc = wincalc();
-            if (winNode != null) {
-                DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
-                ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
-                JButton btn = (JButton) evt.getSource();
-                int point = (btn.getName().equals("btn26")) ? 0 : (btn.getName().equals("btn27")) ? 1 : 2;
-                ElemJoining elemJoin = UCom.join(winc.listJoin, elem5e, point);
-                App.Joining.createFrame(thiz, elemJoin);
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.joinToFrame() " + e);
-        }
-    }//GEN-LAST:event_btn27joinToFrame
-
-    private void btn28joinToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn28joinToFrame
-        try {
-            Wincalc winc = wincalc();
-            if (winNode != null) {
-                DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
-                ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
-                JButton btn = (JButton) evt.getSource();
-                int point = (btn.getName().equals("btn26")) ? 0 : (btn.getName().equals("btn27")) ? 1 : 2;
-                ElemJoining elemJoin = UCom.join(winc.listJoin, elem5e, point);
-                App.Joining.createFrame(thiz, elemJoin);
-            }
-        } catch (Exception e) {
-            System.err.println("Ошибка:Systree.joinToFrame() " + e);
-        }
-    }//GEN-LAST:event_btn28joinToFrame
-
     private void sysprofToKorobka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysprofToKorobka
         try {
             if (winNode != null) {
-                //Layout layout = winNode.com5t().layout();
-                //double selectID = winNode.com5t().id; //id элемента который уже есть в конструкции, это либо виртуал. либо найденный по приоритету при построении модели
                 Query qSysprofFilter = new Query(eSysprof.values(), eArtikl.values()); //тут будет список допустимых профилей из ветки системы
                 //Цикл по профилям ветки
                 for (int index = 0; index < qSysprof.size(); ++index) {
@@ -3027,10 +2991,10 @@ public class CardPanel extends javax.swing.JPanel {
                         qSysprofFilter.table(eArtikl.up).add(qSysprof.table(eArtikl.up).get(index));
                     }
                 }
-                int paramID = winNode.com5t().artiklRec.getInt(eArtikl.id);
-                Record paramRec = qSysprofFilter.stream().filter(rec -> rec.getInt(eSysprof.artikl_id) == paramID).findFirst().orElse(eSysprof.virtualRec(0));
+                int selectID = winNode.com5t().artiklRec.getInt(eArtikl.id);
+                Record selectRec = qSysprofFilter.stream().filter(rec -> rec.getInt(eSysprof.artikl_id) == selectID).findFirst().orElse(eSysprof.virtualRec(0));
 
-                new DicSysprof(thiz, paramRec.getInt(eSysprof.id), (sysprofRec) -> {
+                new DicSysprof(thiz, selectRec.getInt(eSysprof.id), (sysprofRec) -> {
                     Wincalc winc = wincalc();
                     double elemId = winNode.com5t().id;
                     GsonElem gsonRama = UCom.gson(winc.listAll, elemId);
