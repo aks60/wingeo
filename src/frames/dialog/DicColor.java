@@ -457,7 +457,7 @@ public class DicColor extends javax.swing.JDialog {
                     }
                 }
             } else {
-               colorList.forEach(rec -> colorSet.add(rec));
+                colorList.forEach(rec -> colorSet.add(rec));
             }
         } catch (Exception e) {
             System.err.println("Ошибка: DicColor.filterTxt() " + e);
@@ -468,23 +468,25 @@ public class DicColor extends javax.swing.JDialog {
     public static HashSet<Record> filterDet(HashSet<Record> colorSrc, List<Record> artdetList, Field field) {
         HashSet<Record> colorSet = new HashSet<Record>();
         try {
-            artdetList.forEach(rec -> {
-                if (rec.getInt(field) == 1) {
-
-                    if (rec.getInt(eArtdet.color_fk) < 0) { //все текстуры групы color_fk                        
-                        colorSrc.forEach(rec2 -> {
-                            if (rec2.getInt(eColor.groups_id) == rec.getInt(eArtdet.color_fk)) {
-                                colorSet.add(rec2);
-                            }
-                        });
-                    } else { //текстура color_fk 
-                        colorSet.add(eColor.find(rec.getInt(eArtdet.color_fk)));
+            //Цикл по текстурам артикула
+            for (Record artdetRec : artdetList) {
+                //Цикл по текстового фильтра 
+                for (Record colorRec : colorSrc) {
+                    if (artdetRec.getInt(field) == 1) {
+                        
+                        if (colorRec.getInt(eColor.groups_id) == artdetRec.getInt(eArtdet.color_fk)) {
+                            colorSet.add(colorRec);
+                            
+                        } else if (colorRec.getInt(eColor.id) == artdetRec.getInt(eArtdet.color_fk)) {
+                            colorSet.add(eColor.find(artdetRec.getInt(eArtdet.color_fk)));
+                        }
                     }
                 }
-            });
+            }
         } catch (Exception e) {
             System.err.println("Ошибка: DicColor.filterDet() " + e);
         }
+
         return colorSet;
     }
 }
