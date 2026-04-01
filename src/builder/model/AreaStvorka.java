@@ -105,6 +105,10 @@ public class AreaStvorka extends AreaSimple {
      */
     public void initArtikle() {
         try {
+            handColor[1] = -3;
+            loopColor[1] = -3;
+            lockColor[1] = -3;
+            
             super.initArtikle();
 
             //ѕоиск по параметру или перва€ запись из списка...
