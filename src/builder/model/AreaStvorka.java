@@ -37,18 +37,18 @@ public class AreaStvorka extends AreaSimple {
 
     public TRecord spcRec = null; //спецификация москитки
     public Record sysfurnRec = eSysfurn.up.newRecord(Query.SEL); //фурнитура 
-    public Record handRec[] = {eArtikl.virtualRec(), eArtikl.virtualRec()}; //ручка 0-настр. 1-авторасчёт
-    public Record loopRec[] = {eArtikl.virtualRec(), eArtikl.virtualRec()}; //подвес(петли) 0-настр. 1-авторасчёт
-    public Record lockRec[] = {eArtikl.virtualRec(), eArtikl.virtualRec()}; //замок 0-настр. 1-авторасчёт
+    public Record handRec[] = {eArtikl.virtualRec(), eArtikl.virtualRec()}; //ручка 0-вручную 1-авторасчёт
+    public Record loopRec[] = {eArtikl.virtualRec(), eArtikl.virtualRec()}; //подвес(петли) 0-вручную 1-авторасчёт
+    public Record lockRec[] = {eArtikl.virtualRec(), eArtikl.virtualRec()}; //замок 0-вручную 1-авторасчёт
     public Record mosqRec = eArtikl.virtualRec(); //москитка
     public Record elementRec = eElement.up.newRecord(Query.SEL); //состав москидки 
 
     public LineString lineOpenHor = null; //линии горизонт. открывания
     public LineString lineOpenVer = null; //линии вертик. открывания
     public Polygon handOpen = null; //ручка открывания    
-    public int handColor[] = {-3, -3}; //цвет ручки вирт. 0-настр. 1-авторасчёт
-    public int loopColor[] = {-3, -3}; //цвет подвеса вирт. 0-настр. 1-авторасчёт
-    public int lockColor[] = {-3, -3}; //цвет замка вирт. 0-настр. 1-авторасчёт
+    public int handColor[] = {-3, -3}; //цвет ручки 0-вручную 1-авторасчёт
+    public int loopColor[] = {-3, -3}; //цвет подвеса 0-вручную 1-авторасчёт
+    public int lockColor[] = {-3, -3}; //цвет замка 0-вручную 1-авторасчёт
     public int mosqColor = -3; //цвет москитки вирт.
 
     public double handHeight = 0; //высота ручки
