@@ -17,7 +17,6 @@ public class PKjson {
     public final static String colorHand = "colorHand"; //Цвет ручки створки 
     public final static String colorLoop = "colorLoop"; //Цвет подвеса
     public final static String colorLock = "colorLock"; //Цвет замка
-    public final static String colorGlass = "colorGlass"; //Цвет стекла
     public final static String colorRasc = "colorRasc"; //Цвет раскладки
 
     public final static String colorID1 = "colorID1"; //Текстура

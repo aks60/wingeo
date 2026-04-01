@@ -58,8 +58,8 @@ public class ElemGlass extends ElemSimple {
         artiklRecAn = artiklRec;
 
         //Цвет стекла
-        if (UPar.isFinite(gson.param, PKjson.colorGlass)) {
-            colorID1 = gson.param.get(PKjson.colorGlass).getAsInt();
+        if (UPar.isFinite(gson.param, PKjson.colorID1)) {
+            colorID1 = gson.param.get(PKjson.colorID1).getAsInt();
             colorID2 = colorID1;
             colorID3 = colorID1;
         } else {

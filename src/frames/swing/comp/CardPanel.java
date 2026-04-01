@@ -153,7 +153,7 @@ public class CardPanel extends javax.swing.JPanel {
                     setText(txt18, artiklRec.getStr(eArtikl.name));
                     dataset.Record colorRec = eColor.find(com5t.colorID1);
                     setText(txt34, colorRec.getStr(eColor.name));
-                    setIcon(btn25, UPar.isFinite(com5t.gson.param, PKjson.colorGlass));
+                    setIcon(btn25, UPar.isFinite(com5t.gson.param, PKjson.colorID1));
                     dataset.Record rasclRec = ((ElemGlass) com5t).rascRec;
                     setText(txt49, rasclRec.getStr(eArtikl.code));
                     setText(txt50, rasclRec.getStr(eArtikl.name));
@@ -2651,7 +2651,7 @@ public class CardPanel extends javax.swing.JPanel {
 
     private void colorToGlass(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToGlass
         ElemSimple glas = (ElemSimple) winNode.com5t();
-        dicColorToElement(PKjson.colorGlass, glas.artiklRec);
+        dicColorToElement(PKjson.colorID1, glas.artiklRec);
     }//GEN-LAST:event_colorToGlass
 
     private void artiklToRascladka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToRascladka
