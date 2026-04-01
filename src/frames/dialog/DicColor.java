@@ -465,19 +465,18 @@ public class DicColor extends javax.swing.JDialog {
         return colorSet;
     }
 
-    public static HashSet<Record> filterDet(HashSet<Record> colorSrc, List<Record> artdetList, Field field) {
+    public static HashSet<Record> filterDet(HashSet<Record> colorTxt, List<Record> artdetList, Field field) {
         HashSet<Record> colorSet = new HashSet<Record>();
         try {
-            //Цикл по текстурам артикула
-            for (Record artdetRec : artdetList) {
-                //Цикл по текстового фильтра 
-                for (Record colorRec : colorSrc) {
+            //Цикл по текстовому фильтру 
+            for (Record colorRec : colorTxt) {
+                //Цикл по текстурам артикула
+                for (Record artdetRec : artdetList) {
                     if (artdetRec.getInt(field) == 1) {
                         
-                        if (colorRec.getInt(eColor.groups_id) == artdetRec.getInt(eArtdet.color_fk)) {
+                        if (colorRec.getInt(eColor.groups_id) == artdetRec.getInt(eArtdet.color_fk)) {  //все текстуры групы (-)color_fk
                             colorSet.add(colorRec);
-                            
-                        } else if (colorRec.getInt(eColor.id) == artdetRec.getInt(eArtdet.color_fk)) {
+                        } else if (colorRec.getInt(eColor.id) == artdetRec.getInt(eArtdet.color_fk)) {  //текстура (+)color_fk 
                             colorSet.add(eColor.find(artdetRec.getInt(eArtdet.color_fk)));
                         }
                     }
