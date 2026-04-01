@@ -3407,7 +3407,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn26joinToFrame"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="joinToFrame"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btn27">

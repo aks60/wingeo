@@ -2088,7 +2088,7 @@ public class CardPanel extends javax.swing.JPanel {
         btn26.setPreferredSize(new java.awt.Dimension(18, 18));
         btn26.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn26joinToFrame(evt);
+                joinToFrame(evt);
             }
         });
 
@@ -2963,7 +2963,7 @@ public class CardPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_elemsToMosq
 
-    private void btn26joinToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn26joinToFrame
+    private void joinToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinToFrame
         try {
             Wincalc winc = wincalc();
             if (winNode != null) {
@@ -2977,7 +2977,7 @@ public class CardPanel extends javax.swing.JPanel {
         } catch (Exception e) {
             System.err.println("Ошибка:Systree.joinToFrame() " + e);
         }
-    }//GEN-LAST:event_btn26joinToFrame
+    }//GEN-LAST:event_joinToFrame
 
     private void btn27joinToFrame(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn27joinToFrame
         try {
