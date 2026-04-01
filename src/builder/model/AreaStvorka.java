@@ -128,7 +128,7 @@ public class AreaStvorka extends AreaSimple {
                 if (handColor[0] < 0) { //если все текстуры группы
                     List<Record> recordList = eColor.filter(handColor[0]);
                     if (recordList.isEmpty() == false) {
-                        handColor[0] = eColor.filter(handColor[0]).get(0).getInt(eColor.id);
+                        handColor[0] = eColor.filter(handColor[0]).get(0).getInt(eColor.id); //первая в списке
                     }
                 }
             }
