@@ -319,6 +319,6 @@ public class TFurniture extends Cal5e {
                 return UCom.layout(area5e.frames, Layout.BOT);
             }
         }
-        return area5e.frames.stream().findFirst().get();  //первая попавшаяся        
+        return area5e.frames.getFirst();  //первая попавшаяся        
     }
 }

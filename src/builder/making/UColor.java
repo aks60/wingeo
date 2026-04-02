@@ -49,7 +49,6 @@ public class UColor {
 
     /**
      * Выбор подбора по текстуре элемента или серии элементов
-     *
      * @param spcAdd - спецификацм элемента
      */
     public static boolean findFromArtOrSeri(TRecord spcAdd) {  //см. http://help.profsegment.ru/?id=1107 
@@ -196,32 +195,26 @@ public class UColor {
         return true;
     }
 
-    /**
-     * Авто профиля или заполнения
-     *
-     * @param detailArtiklID - артикул элемента детализации
-     * составаoriginColorID@param profFullColorID - текстура профиля
-     * @param side - сторона элемента детализации состава
-     */
-    private static int scanFromProfile(int detailArtiklID, int originColorID, int side) {
+    //Авто профиля или заполнения
+    private static int scanFromProfile(int artiklID, int colorID, int side) {
 
-        List<Record> artdetList = eArtdet.filter(detailArtiklID);
+        List<Record> artdetList = eArtdet.filter(artiklID);
         Field mark_c = (side == 2) ? eArtdet.mark_c2 : eArtdet.mark_c3;
         //Цикл по ARTDET определённого артикула
         for (Record artdetRec : artdetList) {
 
             if (side == 1) {
-                if (artdetRec.getInt(eArtdet.mark_c1) == 1 && artdetRec.getInt(eArtdet.color_fk) == originColorID) {
-                    return originColorID;
+                if (artdetRec.getInt(eArtdet.mark_c1) == 1 && artdetRec.getInt(eArtdet.color_fk) == colorID) {
+                    return colorID;
                 }
             } else {
                 if (artdetRec.getInt(mark_c) == 1) {
-                    if (artdetRec.getInt(eArtdet.color_fk) == originColorID) {
-                        return originColorID;
+                    if (artdetRec.getInt(eArtdet.color_fk) == colorID) {
+                        return colorID;
                     }
                 } else if (artdetRec.getInt(eArtdet.mark_c1) == 1) {
-                    if (artdetRec.getInt(eArtdet.color_fk) == originColorID) {
-                        return originColorID;
+                    if (artdetRec.getInt(eArtdet.color_fk) == colorID) {
+                        return colorID;
                     }
                 }
             }
