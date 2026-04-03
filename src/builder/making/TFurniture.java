@@ -208,7 +208,7 @@ public class TFurniture extends Cal5e {
                         settingStvAndSpc(areaStv, spcAdd);
 
                     } else { //цвет элемента в spcAdd
-                        UColor.findFromArtOrSeri(spcAdd);
+                        UColor.choiceFromArtOrSeri(spcAdd);
                     }
                     //Добавим спецификацию в элемент
                     if (shortPass == false) {
@@ -250,7 +250,7 @@ public class TFurniture extends Cal5e {
                 //Цвет
                 spcAdd.color(areaStv.handColor[0], -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
                 if (UPar.isFinite(areaStv.gson.param, PKjson.colorHand) == false) { //если нет параметра то подбор
-                    if (UColor.findFromArtOrSeri(spcAdd) == true) { //подбор по цвету
+                    if (UColor.choiceFromArtOrSeri(spcAdd) == true) { //подбор по цвету
                         areaStv.handColor[1] = spcAdd.colorID1; //из детализации подбор
                     }
                 }
@@ -266,7 +266,7 @@ public class TFurniture extends Cal5e {
                 //Цвет
                 spcAdd.color(areaStv.loopColor[0], -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
                 if (UPar.isFinite(areaStv.gson.param, PKjson.colorLoop) == false) { //если нет параметра то подбор
-                    if (UColor.findFromArtOrSeri(spcAdd) == true) { //подбор по цвету
+                    if (UColor.choiceFromArtOrSeri(spcAdd) == true) { //подбор по цвету
                         areaStv.loopColor[0] = spcAdd.colorID1;
                     }
                 }
@@ -282,7 +282,7 @@ public class TFurniture extends Cal5e {
                 //Цвет
                 spcAdd.color(areaStv.lockColor[0], -3, -3);  //перв. запись в текстуре артикулов или выбр. вручную
                 if (UPar.isFinite(areaStv.gson.param, PKjson.colorLock) == false) { //если нет параметра то подбор
-                    if (UColor.findFromArtOrSeri(spcAdd) == true) { //подбор по цвету
+                    if (UColor.choiceFromArtOrSeri(spcAdd) == true) { //подбор по цвету
                         areaStv.lockColor[1] = spcAdd.colorID1; //из детализации подбор
                     }
                 }

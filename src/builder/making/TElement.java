@@ -102,7 +102,7 @@ public class TElement extends Cal5e {
                             TRecord spcAdd = new TRecord("ВСТ", elemdetRec, artiklRec, elem5e, mapParam);
 
                             //Подбор текстуры
-                            if (UColor.findFromArtOrSeri(spcAdd)) {
+                            if (UColor.choiceFromArtOrSeri(spcAdd)) {
 
                                 //Если в списке детализации элем.контейнер, 
                                 //например профиль с префиксом @ в осн. специф.

@@ -51,7 +51,7 @@ public class UColor {
      * Выбор подбора по текстуре элемента или серии элементов
      * @param spcAdd - спецификацм элемента
      */
-    public static boolean findFromArtOrSeri(TRecord spcAdd) {  //см. http://help.profsegment.ru/?id=1107 
+    public static boolean choiceFromArtOrSeri(TRecord spcAdd) {  //см. http://help.profsegment.ru/?id=1107 
 
         TRecord spcClon = new TRecord(spcAdd);
         int typesUS = spcClon.detailRec.getInt(COLOR_US);
@@ -70,9 +70,9 @@ public class UColor {
                     return true;
                 }
             }
-            spcClon.colorID1 = colorFromTextureUse(spcClon, typesUS & 0x0000000f);
-            spcClon.colorID2 = colorFromTextureUse(spcClon, (typesUS & 0x000000f0) >> 4);
-            spcClon.colorID3 = colorFromTextureUse(spcClon, (typesUS & 0x00000f00) >> 8);
+            spcClon.colorID1 = colorFromTexturUse(spcClon, typesUS & 0x0000000f);
+            spcClon.colorID2 = colorFromTexturUse(spcClon, (typesUS & 0x000000f0) >> 4);
+            spcClon.colorID3 = colorFromTexturUse(spcClon, (typesUS & 0x00000f00) >> 8);
 
             //Не серия артикулов
         } else {
@@ -109,7 +109,7 @@ public class UColor {
             int elemArtID = spcAdd.artiklRec.getInt(eArtikl.id);
 
             //Цвет элемента по которому подбираю из варианта подбора
-            int originColorID = colorFromTextureUse(spcAdd, srcColorUS);
+            int originColorID = colorFromTexturUse(spcAdd, srcColorUS);
 
             ////= ВРУЧНУЮ =////
             if (srcColorFk > 0 && srcColorFk != 100000) {
@@ -380,14 +380,13 @@ public class UColor {
     }
 
     //Выдает цвет в соответствии с заданным вариантом подбора текстуры   
-    private static int colorFromTextureUse(TRecord spcAdd, int srcColorUS) {
+    private static int colorFromTexturUse(TRecord spcAdd, int srcColorUS) {
         try {
             switch (srcColorUS) {
                 case 0:
                     return spcAdd.detailRec.getInt(COLOR_FK);  //указана вручную
                 case 11: //По текстуре профиля
-                    ElemSimple firstElem = spcAdd.elem5e.root.frames.get(0);
-                    int artiklID = firstElem.artiklRec.getInt(eArtikl.id);
+                    int artiklID = spcAdd.elem5e.root.artiklRec.getInt(eArtikl.id);
                     return eArtdet.data().stream().filter(rec
                             -> rec.getInt(eArtdet.mark_c1) == 1
                             && rec.getInt(eArtdet.mark_c2) == 1
