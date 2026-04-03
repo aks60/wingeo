@@ -49,6 +49,7 @@ public class UColor {
 
     /**
      * Выбор подбора по текстуре элемента или серии элементов
+     *
      * @param spcAdd - спецификацм элемента
      */
     public static boolean choiceFromArtOrSeri(TRecord spcAdd) {  //см. http://help.profsegment.ru/?id=1107 
@@ -60,7 +61,8 @@ public class UColor {
         if (UseColor.isSeries(typesUS)) {
 
             List<Record> artseriList = eArtikl.filter(spcClon.artiklRec.getInt(eArtikl.groups4_id));
-            for (Record artseriRec : artseriList) {
+            
+            for (Record artseriRec : artseriList) { //цикл по сериям
                 spcClon.artiklRec(artseriRec);
                 if (UColor.colorFromSetting(spcClon, 1, true)
                         && UColor.colorFromSetting(spcClon, 2, true)
@@ -86,7 +88,7 @@ public class UColor {
     }
 
     /**
-     * ВРУЧНУЮ, АВТОПОДБОР, ПАРАМЕТР
+     * Устанавл.цвет ВРУЧНУЮ, АВТОПОДБОР, ПАРАМЕТР
      *
      * @param spcAdd
      * @param side
@@ -387,13 +389,21 @@ public class UColor {
                     return spcAdd.detailRec.getInt(COLOR_FK);  //указана вручную
                 case 11: //По текстуре профиля
                     int artiklID = spcAdd.elem5e.root.artiklRec.getInt(eArtikl.id);
-                    return eArtdet.data().stream().filter(rec
+                    Record record = eArtdet.data().stream().filter(rec
                             -> rec.getInt(eArtdet.mark_c1) == 1
                             && rec.getInt(eArtdet.mark_c2) == 1
                             && rec.getInt(eArtdet.mark_c3) == 1
                             && rec.getInt(eArtdet.artikl_id) == artiklID
                             && rec.getInt(eArtdet.color_fk) > 0)
-                            .findFirst().orElse(eArtdet.record()).getInt(eArtdet.color_fk);
+                            .findFirst().orElse(eArtdet.record());
+                    if (record.getInt(eArtdet.id) == -3) {
+                        record = eArtdet.data().stream().filter(rec
+                                -> rec.getInt(eArtdet.mark_c1) == 1
+                                && rec.getInt(eArtdet.artikl_id) == artiklID
+                                && rec.getInt(eArtdet.color_fk) > 0)
+                                .findFirst().orElse(eArtdet.record());
+                    }
+                    return record.getInt(eArtdet.color_fk);
                 case 15: //По текстуре заполнения
                     if (spcAdd.elem5e.artiklRecAn.getInt(eArtikl.level1) == 5) {
                         return spcAdd.elem5e.colorID1;
