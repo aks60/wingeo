@@ -131,9 +131,7 @@ public class AreaStvorka extends AreaSimple {
                 handColor[0] = eArtdet.find(handRec[0].getInt(eArtikl.id)).getInt(eArtdet.color_fk);
                 if (handColor[0] < 0) { //если все текстуры группы
                     List<Record> recordList = eColor.filter(handColor[0]);
-                    if (recordList.isEmpty() == false) {
-                        handColor[0] = eColor.filter(handColor[0]).get(0).getInt(eColor.id); //первая в списке
-                    }
+                    handColor[0] = recordList.get(0).getInt(eColor.id); //первая в списке группы
                 }
             }
             //Подвес (петли)
