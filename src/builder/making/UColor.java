@@ -70,9 +70,9 @@ public class UColor {
                     return true;
                 }
             }
-            spcClon.colorID1 = getID_colorUS(spcClon, typesUS & 0x0000000f);
-            spcClon.colorID2 = getID_colorUS(spcClon, (typesUS & 0x000000f0) >> 4);
-            spcClon.colorID3 = getID_colorUS(spcClon, (typesUS & 0x00000f00) >> 8);
+            spcClon.colorID1 = colorFromTextureUse(spcClon, typesUS & 0x0000000f);
+            spcClon.colorID2 = colorFromTextureUse(spcClon, (typesUS & 0x000000f0) >> 4);
+            spcClon.colorID3 = colorFromTextureUse(spcClon, (typesUS & 0x00000f00) >> 8);
 
             //Не серия артикулов
         } else {
@@ -109,7 +109,7 @@ public class UColor {
             int elemArtID = spcAdd.artiklRec.getInt(eArtikl.id);
 
             //Цвет элемента по которому подбираю из варианта подбора
-            int originColorID = getID_colorUS(spcAdd, srcColorUS);
+            int originColorID = colorFromTextureUse(spcAdd, srcColorUS);
 
             ////= ВРУЧНУЮ =////
             if (srcColorFk > 0 && srcColorFk != 100000) {
@@ -380,7 +380,7 @@ public class UColor {
     }
 
     //Выдает цвет в соответствии с заданным вариантом подбора текстуры   
-    private static int getID_colorUS(TRecord spcAdd, int srcColorUS) {
+    private static int colorFromTextureUse(TRecord spcAdd, int srcColorUS) {
         try {
             switch (srcColorUS) {
                 case 0:
