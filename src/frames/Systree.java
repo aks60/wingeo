@@ -1184,7 +1184,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         getContentPane().add(tool, java.awt.BorderLayout.PAGE_START);
 
         centr.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        centr.setMinimumSize(new java.awt.Dimension(105, 700));
+        centr.setMinimumSize(new java.awt.Dimension(600, 600));
         centr.setPreferredSize(new java.awt.Dimension(1164, 700));
         centr.setLayout(new java.awt.BorderLayout());
 
@@ -1276,7 +1276,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         );
         pan12Layout.setVerticalGroup(
             pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 383, Short.MAX_VALUE)
+            .addGap(0, 309, Short.MAX_VALUE)
         );
 
         pan7.add(pan12, "card12");
@@ -1532,7 +1532,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         .addGroup(pan6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lab14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
 
         tabb1.addTab("   Основные   ", pan6);
