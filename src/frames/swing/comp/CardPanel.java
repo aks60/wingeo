@@ -162,15 +162,15 @@ public class CardPanel extends javax.swing.JPanel {
                     spinHor.setValue(((ElemGlass) com5t).rascNumber[0]);
                     spinVert.setValue(((ElemGlass) com5t).rascNumber[1]);
                     //Помощь менеджеру для коррекция импоста
-//                    if (elem.deltaDY != null) {  
+//                    if (joiningElem.deltaDY != null) {  
 //                        ElemSimple el = winc.listElem.stream().filter(e -> e.type == enums.Type.IMPOST).findFirst().orElse(null);
 //                        double s1 = el.artiklRec.getDbl(eArtikl.height), 
 //                                s2 = el.artiklRec.getDbl(eArtikl.size_centr), 
 //                                s3 = el.artiklRec.getDbl(eArtikl.size_falz);                       
 //                        //имп.шир - имп.серед - имп.фальц + смещю.стор.точк.перес.арк.и.коробки
 //                        lab4.setText("DY: " + s1 + " - " + s2 + " - " + s3 + " + "
-//                                + UCom.format(elem.deltaDY, 2) + " = " 
-//                                + UCom.format(s1 - s2 - s3 + elem.deltaDY, 2) + " мм.");
+//                                + UCom.format(joiningElem.deltaDY, 2) + " = " 
+//                                + UCom.format(s1 - s2 - s3 + joiningElem.deltaDY, 2) + " мм.");
 //                        System.out.println("frames.Systree.selectionTree()");
 //                    }
 
@@ -236,9 +236,9 @@ public class CardPanel extends javax.swing.JPanel {
                     DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
                     ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
                     new TJoining(winc, true).join();//заполним соединения из конструктива                                        
-                    ElemJoining ej1 = UCom.join(winc.listJoin, elem5e, 0);
-                    ElemJoining ej2 = UCom.join(winc.listJoin, elem5e, 1);
-                    ElemJoining ej3 = UCom.join(winc.listJoin, elem5e, 2);
+                    ElemJoining ej1 = UCom.elemJoining(winc.listJoin, elem5e, 0);
+                    ElemJoining ej2 = UCom.elemJoining(winc.listJoin, elem5e, 1);
+                    ElemJoining ej3 = UCom.elemJoining(winc.listJoin, elem5e, 2);
                     List.of(lab55, lab56, lab57).forEach(it -> it.setIcon(null));
                     List.of(txt36, txt37, txt38, txt39, txt40, txt41, txt42, txt43, txt44).forEach(it -> it.setText(""));
                     if (ej1 != null) {
@@ -2969,7 +2969,7 @@ public class CardPanel extends javax.swing.JPanel {
                 ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
                 JButton btn = (JButton) evt.getSource();
                 int point = (btn.getName().equals("btn26")) ? 0 : (btn.getName().equals("btn27")) ? 1 : 2;
-                ElemJoining elemJoin = UCom.join(winc.listJoin, elem5e, point);
+                ElemJoining elemJoin = UCom.elemJoining(winc.listJoin, elem5e, point);
                 App.Joining.createFrame(thiz, elemJoin);
             }
         } catch (Exception e) {

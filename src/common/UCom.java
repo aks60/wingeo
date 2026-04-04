@@ -524,7 +524,7 @@ public class UCom {
      * 2-прилег.артикл
      * @return - класс описатель соединения
      */
-    public static ElemJoining join(ArrayList<ElemJoining> lst, ElemSimple elem, int side) {
+    public static ElemJoining elemJoining(ArrayList<ElemJoining> lst, ElemSimple elem, int side) {
         boolean imp = Type.isCross(elem.type);
         try {
             for (ElemJoining join : lst) {
@@ -578,7 +578,7 @@ public class UCom {
      * 2-прилег.артикл
      * @return - элемент соединения
      */
-    public static ElemSimple elem(ArrayList<ElemJoining> lst, ElemSimple elem, int side) {
+    public static ElemSimple joiningElem(ArrayList<ElemJoining> lst, ElemSimple elem, int side) {
         boolean imp = Type.isCross(elem.type);
         try {
             for (ElemJoining join : lst) {

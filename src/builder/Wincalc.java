@@ -86,7 +86,7 @@ public class Wincalc {
     public ArrayList<AreaSimple> listArea = new ArrayList<AreaSimple>(); //список ареа.
     public ArrayList<ElemSimple> listElem = new ArrayList<ElemSimple>(); //список элем.
     public ArrayList<ElemJoining> listJoin = new ArrayList<ElemJoining>(); //список соед.
-    public ArrayList<Com5t> listAll = new ArrayList<Com5t>(); //список всех компонентов (area + elem)
+    public ArrayList<Com5t> listAll = new ArrayList<Com5t>(); //список всех компонентов (area + joiningElem)
     public ArrayList<TRecord> listSpec = new ArrayList<TRecord>(); //спецификация
     public ArrayList<TRecord> listKit = new ArrayList<TRecord>(); //комплектация
 
