@@ -105,10 +105,13 @@ public class AreaStvorka extends AreaSimple {
      */
     public void initArtikle() {
         try {
+            handRec[1] = eArtikl.virtualRec();
+            loopRec[1] = eArtikl.virtualRec();
+            lockRec[1] = eArtikl.virtualRec();
             handColor[1] = -3;
             loopColor[1] = -3;
             lockColor[1] = -3;
-            
+
             super.initArtikle();
 
             //ѕоиск по параметру или перва€ запись из списка...
