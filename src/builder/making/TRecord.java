@@ -149,7 +149,7 @@ public class TRecord {
     }
 
     public List httpRecord() {
-        return List.of(id, place, code, name, colorID1, colorID2, colorID3, width, height, weight, anglCut0,
+        return List.of(id, place, artikl, name, colorID1, colorID2, colorID3, width, height, weight, anglCut0,
                 anglCut1, anglHoriz, count, unit, waste, quant1, quant2, costprice, price, cost1, cost2);
     }
     
