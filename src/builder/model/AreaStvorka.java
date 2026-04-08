@@ -61,36 +61,41 @@ public class AreaStvorka extends AreaSimple {
     }
 
     public void initStvorka() {
-        //Если нет полигона створки в гл.окне то 'owner.area', иначе 'this.area', получается при распиле owner.area импостом
-        Geometry frameBox = (UCom.filter(winc.listElem, Type.IMPOST).isEmpty()) || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
+        try {
+            //Если нет полигона створки в гл.окне то 'owner.area', иначе 'this.area', получается при распиле owner.area импостом
+            Geometry frameBox = (UCom.filter(winc.listElem, Type.IMPOST).isEmpty()) || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
 
-        //Полигон створки с учётом нахлёста 
-        double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-        Polygon stvShell = UGeo.bufferGeometry(frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
-        Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
-        for (int i = 0; i < coo.length - 1; i++) {
+            //Полигон створки с учётом нахлёста 
+            double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
+            Polygon stvShell = UGeo.bufferGeometry(frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
+            Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
+            for (int i = 0; i < coo.length - 1; i++) {
 
-            double ID = this.id + (.1 + Double.valueOf(i) / 10);
-            ElemSimple sideStv = this.frames.stream().filter(rec -> rec.id == ID).findFirst().orElse(null);
+                double ID = this.id + (.1 + Double.valueOf(i) / 10);
+                ElemSimple sideStv = this.frames.stream().filter(rec -> rec.id == ID).findFirst().orElse(null);
 
-            if (sideStv != null) {
-                if (UPar.isFinite(this.gson.param, PKjson.stvorkaSide[i])) {
-                    sideStv.gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]); //обновил параметры в gson
+                if (sideStv != null) {
+                    if (UPar.isFinite(this.gson.param, PKjson.stvorkaSide[i])) {
+                        sideStv.gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]); //обновил параметры в gson
+                    }
+                    sideStv.x1(coo[i].x);
+                    sideStv.y1(coo[i].y);
+                    coo[i].z = sideStv.id;
+                } else {
+                    GsonElem gson = new GsonElem(Type.STV_SIDE, coo[i].x, coo[i].y, "{}");
+                    if (UPar.isFinite(this.gson.param, PKjson.stvorkaSide[i])) {
+                        gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]); //впихнул параметры в gson
+                    }
+                    ElemFrame newStv = new ElemFrame(this.winc, ID, gson, this);
+                    this.frames.add(newStv);
+                    coo[i].z = newStv.id;
                 }
-                sideStv.x1(coo[i].x);
-                sideStv.y1(coo[i].y);
-                coo[i].z = sideStv.id;
-            } else {
-                GsonElem gson = new GsonElem(Type.STV_SIDE, coo[i].x, coo[i].y, "{}");
-                if (UPar.isFinite(this.gson.param, PKjson.stvorkaSide[i])) {
-                    gson.param = this.gson.param.getAsJsonObject(PKjson.stvorkaSide[i]); //впихнул параметры в gson
-                }
-                ElemFrame newStv = new ElemFrame(this.winc, ID, gson, this);
-                this.frames.add(newStv);
-                coo[i].z = newStv.id;
             }
+            coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки  
+            
+        } catch (Exception e) {
+            System.err.println("Ошибка:AreaStvorka.initStvorka() " + e);
         }
-        coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки  
     }
 
     /**
@@ -132,7 +137,7 @@ public class AreaStvorka extends AreaSimple {
                 handColor[0] = gson.param.get(PKjson.colorHand).getAsInt();
             } else if (handColor[0] == -3) { //по умолчанию (первая в списке)
                 handColor[0] = eArtdet.find(handRec[0].getInt(eArtikl.id)).getInt(eArtdet.color_fk);
-                if (handColor[0] < 0) { //если все текстуры группы
+                if (handColor[0] != -3 && handColor[0] < 0) { //если все текстуры группы
                     List<Record> recordList = eColor.filter(handColor[0]);
                     handColor[0] = recordList.get(0).getInt(eColor.id); //первая в списке группы
                 }

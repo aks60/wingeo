@@ -153,11 +153,11 @@ public class TTariffic extends Cal5e {
                             if (rulecalcRec.get(eRulecalc.artikl_id) != null) {
                                 for (ElemSimple elem5e : winc.listElem) { //суммирую колич. всех элементов (например штапиков)
                                     if (filterPhantom(elem5e)) {
-                                        if (elem5e.spcRec.artikl.equals(spcRec.artikl)) { //фильтр по артикулу
+                                        if (elem5e.spcRec.code.equals(spcRec.code)) { //фильтр по артикулу
                                             quantity3 += elem5e.spcRec.quant1;
                                         }
                                         for (TRecord specifRec2 : elem5e.spcRec.spcList) {
-                                            if (specifRec2.artikl.equals(spcRec.artikl)) { //фильтр по артикулу
+                                            if (specifRec2.code.equals(spcRec.code)) { //фильтр по артикулу
                                                 quantity3 += specifRec2.quant1;
                                             }
                                         }

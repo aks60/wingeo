@@ -266,7 +266,7 @@ public class PSCompare extends javax.swing.JFrame {
             Map<String, Vector> hmSpc = new HashMap<String, Vector>();
             Set<String> setSpcSa = new HashSet<String>();
             Set<String> setSpcPs = new HashSet<String>();
-            winc.listSpec.forEach(rec -> setSpcSa.add(rec.artikl));
+            winc.listSpec.forEach(rec -> setSpcSa.add(rec.code));
             if (winc.gson.prj != null) {
                 txt21.setText(String.valueOf(winc.gson.prj));
             }
@@ -288,7 +288,7 @@ public class PSCompare extends javax.swing.JFrame {
                 }
             }
             winc.listSpec.forEach(specRec -> {
-                List<Double> val = hmSpc.get(specRec.artikl);
+                List<Double> val = hmSpc.get(specRec.code);
                 val.set(2, val.get(2) + specRec.count); //колич. в SA
                 val.set(4, val.get(4) + specRec.quant1); //погонаж в SA
             });
@@ -314,7 +314,7 @@ public class PSCompare extends javax.swing.JFrame {
                     vectorRec.set(5, hmColor.get(vectorRec.get(5)));  //цвет
                     vectorRec.set(6, hmColor.get(vectorRec.get(6)));  //цвет
                     String artikl = rs.getString("ANUMB"); //артикул
-                    //String artikl = rs.getString("ANUMB") + "- " + rs.getString("ANAME"); //артикул
+                    //String code = rs.getString("ANUMB") + "- " + rs.getString("ANAME"); //артикул
                     double leng = rs.getDouble("ALENG"); //длина
                     double count = rs.getDouble("AQTYP"); //колич
                     double pogonag = rs.getDouble("AQTYA"); //погонаж
@@ -530,7 +530,7 @@ public class PSCompare extends javax.swing.JFrame {
             conn.close();
 
             for (TRecord spc : winc.listSpec) {
-                String key = spc.artikl;
+                String key = spc.code;
                 Double val = hmDbSa.getOrDefault(key, 0.0);
                 hmDbSa.put(key, val + spc.cost1); //стоимость без скидки
             }

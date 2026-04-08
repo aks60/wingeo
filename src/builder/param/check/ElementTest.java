@@ -69,8 +69,8 @@ public class ElementTest {
 
     /**
      * select c.name, d.name, a.text from elempar1 a left join element c on c.id
-     * = a.element_id left join artikl d on c.artikl_id = d.id where a.groups_id
-     * in (31017, 37017)
+= a.element_id left join code d on c.artikl_id = d.id where a.groups_id
+in (31017, 37017)
      */
     public void elementVar() {
         try {
@@ -233,8 +233,8 @@ public class ElementTest {
 
     /**
      * select c.*, a.text from elempar2 a left join elemdet b on b.id =
-     * a.elemdet_id left join element c on c.id = b.element_id left join artikl
-     * d on c.artikl_id = d.id where a.groups_id in (31017, 37017)
+a.elemdet_id left join element c on c.id = b.element_id left join code
+d on c.artikl_id = d.id where a.groups_id in (31017, 37017)
      */
     public void elementDet() {
         HashMap<Integer, String> mapParam = new HashMap<Integer, String>();

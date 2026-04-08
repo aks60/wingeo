@@ -28,8 +28,8 @@ public class TRecord {
 
     public double id = -1; //ID
     public String place = "---";  //Место размешения
+    public String code = "-";  //Артикул
     public String name = "-";  //Наименование
-    public String artikl = "-";  //Артикул
     public int colorID1 = -3;  //Осн.текстура
     public int colorID2 = -3;  //Внутр.текстура
     public int colorID3 = -3;  //Внешн.текстура
@@ -55,7 +55,7 @@ public class TRecord {
     public TRecord(TRecord spec) {
         this.id = spec.id;
         this.place = spec.place;
-        this.artikl = spec.artikl;
+        this.code = spec.code;
         this.artiklRec = spec.artiklRec;
         this.detailRec = spec.detailRec;
         this.name = spec.name;
@@ -106,7 +106,7 @@ public class TRecord {
     }
 
     public void artiklRec(Record artiklRec) {
-        this.artikl = artiklRec.getStr(eArtikl.code);
+        this.code = artiklRec.getStr(eArtikl.code);
         this.name = artiklRec.getStr(eArtikl.name);
         this.waste = artiklRec.getDbl(eArtikl.otx_norm);
         this.unit = artiklRec.getInt(eArtikl.unit);
@@ -122,7 +122,7 @@ public class TRecord {
     public void copy(TRecord spec) {
         this.id = spec.id;
         this.place = spec.place;
-        this.artikl = spec.artikl;
+        this.code = spec.code;
         this.artiklRec = spec.artiklRec;
         this.detailRec = spec.detailRec;
         this.name = spec.name;
@@ -149,7 +149,7 @@ public class TRecord {
     }
 
     public List httpRecord() {
-        return List.of(id, place, artikl, name, colorID1, colorID2, colorID3, width, height, weight, anglCut0,
+        return List.of(id, place, code, name, colorID1, colorID2, colorID3, width, height, weight, anglCut0,
                 anglCut1, anglHoriz, count, unit, waste, quant1, quant2, costprice, price, cost1, cost2);
     }
     
@@ -158,7 +158,7 @@ public class TRecord {
         double height2 = (elem5e != null && elem5e.h() != null && artiklRec != null && artiklRec.getInt(eArtikl.level1) == 1 && artiklRec.getInt(eArtikl.level2) == 1)
                 ? (Math.pow(elem5e.winc.width() / 2, 2) + Math.pow(elem5e.h(), 2)) / (2 * elem5e.h()) : height;
 
-        return new Vector(List.of(npp, id, elemID, place, artikl, name, eColor.find(colorID1).getStr(eColor.name), eColor.find(colorID2).getStr(eColor.name),
+        return new Vector(List.of(npp, id, elemID, place, code, name, eColor.find(colorID1).getStr(eColor.name), eColor.find(colorID2).getStr(eColor.name),
                 eColor.find(colorID3).getStr(eColor.name), width, height2, weight, anglCut0, anglCut1, anglHoriz,
                 count, UseUnit.getName(unit), waste, quant2, costprice, price, cost1, cost2));
     }
@@ -189,6 +189,6 @@ public class TRecord {
     }
 
 //    public String toString() {
-//        return artikl + " - " + name;
+//        return code + " - " + name;
 //    }
 }

@@ -377,7 +377,7 @@ public class UColor {
 
             }
         }
-        JOptionPane.showMessageDialog(null, "Для артикула  " + spc.artikl + " не определена цена.", "ВНИМАНИЕ!", 1);
+        JOptionPane.showMessageDialog(null, "Для артикула  " + spc.code + " не определена цена.", "ВНИМАНИЕ!", 1);
         return 1; //такого случая не должно быть
     }
 
@@ -441,7 +441,7 @@ public class UColor {
         } else if ("КОМП".equals(spc.place)) {
             place = "Комплекты";
         }
-        JOptionPane.showMessageDialog(null, "Проблема с заполнением базы данных.\nДля артикула  '" + spc.artikl + "' не определена текстура. \nСмотри форму 'Составы => " + place + "'.", "ВНИМАНИЕ!", 1);
+        JOptionPane.showMessageDialog(null, "Проблема с заполнением базы данных.\nДля артикула  '" + spc.code + "' не определена текстура. \nСмотри форму 'Составы => " + place + "'.", "ВНИМАНИЕ!", 1);
     }
 
     public static void colorRuleFromParam(ElemSimple slem5e) {  //см. http://help.profsegment.ru/?id=1107        

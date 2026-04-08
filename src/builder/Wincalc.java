@@ -315,11 +315,11 @@ public class Wincalc {
 
             //Заполним список спецификации
             for (ElemSimple elem5e : listElem) {
-                if (elem5e.spcRec.artikl.isEmpty() || elem5e.spcRec.artikl.trim().charAt(0) != '@') {
+                if (elem5e.spcRec.code.isEmpty() || elem5e.spcRec.code.trim().charAt(0) != '@') {
                     this.listSpec.add(elem5e.spcRec);
                 }
                 for (TRecord spc : elem5e.spcRec.spcList) {
-                    if (spc.artikl.isEmpty() || spc.artikl.trim().charAt(0) != '@') {
+                    if (spc.code.isEmpty() || spc.code.trim().charAt(0) != '@') {
                         this.listSpec.add(spc);
                     }
                 }

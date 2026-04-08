@@ -37,7 +37,7 @@ public class RRecord {
     }
 
     public String artikl() {
-        return spc.artikl;
+        return spc.code;
     }
 
     public String name() {
@@ -130,7 +130,7 @@ public class RRecord {
         Map<String, TRecord> map = new HashMap<String, TRecord>();
         for (TRecord newRec : listSpc) {
 
-            String key = newRec.artikl + "." + newRec.colorID1 + "." + newRec.colorID2 + "." + newRec.colorID3;
+            String key = newRec.code + "." + newRec.colorID1 + "." + newRec.colorID2 + "." + newRec.colorID3;
             TRecord oldRec = map.put(key, new TRecord(newRec));
             if (oldRec != null) {
                 newRec.weight += oldRec.weight;
@@ -151,7 +151,7 @@ public class RRecord {
         Map<String, RRecord> map = new HashMap<String, RRecord>();
         for (RRecord newRec : listSpc) {
 
-            String key = newRec.spc.artikl + "." + newRec.spc.colorID1 + "." + newRec.spc.colorID2 + "." + newRec.spc.colorID3;
+            String key = newRec.spc.code + "." + newRec.spc.colorID1 + "." + newRec.spc.colorID2 + "." + newRec.spc.colorID3;
             RRecord oldRec = map.put(key, new RRecord(newRec.spc));
             if (oldRec != null) {
                 newRec.spc.weight += oldRec.spc.weight;
@@ -176,6 +176,6 @@ public class RRecord {
     }
 
     public String toString() {
-        return spc.artikl + " - " + spc.name + " - " + spc.width + " - " + spc.quant2 + " - " + spc.cost1;
+        return spc.code + " - " + spc.name + " - " + spc.width + " - " + spc.quant2 + " - " + spc.cost1;
     }
 }
