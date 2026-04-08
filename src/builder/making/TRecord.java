@@ -22,7 +22,7 @@ public class TRecord {
     public ElemSimple elem5e = null;  //элемент пораждающий спецификацию (контейнер)
     public Record variantRec = null;  //вариант в конструктиве
     public Record detailRec = null;  //детализация в конструктиве
-    
+
     public Record artiklRec = null;  //артикул элемента
     public Record artdetRec[] = {null, null, null};  //текстуры артикула
 
@@ -148,6 +148,11 @@ public class TRecord {
         this.elem5e = spec.elem5e;
     }
 
+    public List httpRecord() {
+        return List.of(id, place, name, artikl, colorID1, colorID2, colorID3, width, height, weight, anglCut0,
+                anglCut1, anglHoriz, count, unit, waste, quant1, quant2, costprice, price, cost1, cost2);
+    }
+    
     public Vector getVector(int npp) {
         double elemID = (elem5e == null) ? 0 : elem5e.id;
         double height2 = (elem5e != null && elem5e.h() != null && artiklRec != null && artiklRec.getInt(eArtikl.level1) == 1 && artiklRec.getInt(eArtikl.level2) == 1)
