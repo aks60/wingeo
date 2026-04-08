@@ -297,7 +297,7 @@ public class Wincalc {
         specific(norm_otx, false);
     }
 
-    public void specific(boolean norm_otx, boolean man) {
+    public void specific(boolean norm_otx, boolean manager) {
         this.weight = 0;
         this.cost1 = 0;
         this.cost2 = 0;
@@ -325,7 +325,7 @@ public class Wincalc {
                 }
             }
             //Если спецификация на продукт менеджера
-            if (man == true) {
+            if (manager == true) {
                 int prjprodID = Integer.valueOf(eProp.prjprodID.getProp());
                 Record prjprodRec = ePrjprod.find(prjprodID);
                 Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
