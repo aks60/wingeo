@@ -309,7 +309,7 @@ public class CardPanel extends javax.swing.JPanel {
                 if (artiklRec.get(1) == null) {
                     UPar.remove(stvArea.param, List.of(PKjsonColor));
                 } else {
-                    UPar.addProperty(stvArea.param, List.of(PKjsonColor), artiklRec.getInt(eArtikl.id));
+                    UPar.addProperty(stvArea, List.of(PKjsonColor), artiklRec.getInt(eArtikl.id));
                 }
                 changeAndRedraw();
 
@@ -357,7 +357,7 @@ public class CardPanel extends javax.swing.JPanel {
                 if (colorRec.get(1) == null) {
                     UPar.remove(com5t.gson.param, keys);
                 } else {
-                    UPar.addProperty(com5t.gson.param, keys, colorRec.getInt(eColor.id));
+                    UPar.addProperty(com5t.gson, keys, colorRec.getInt(eColor.id));
                 }
                 changeAndRedraw(); //обновим конструкцию
             }, colorSet, true, false);
@@ -377,7 +377,7 @@ public class CardPanel extends javax.swing.JPanel {
                 if (colorRec.get(1) == null) {
                     UPar.remove(gsonElem.param, List.of(PKjsonColor));
                 } else {
-                    UPar.addProperty(gsonElem.param, List.of(PKjsonColor), colorRec.getInt(eColor.id));
+                    UPar.addProperty(gsonElem, List.of(PKjsonColor), colorRec.getInt(eColor.id));
                 }
                 changeAndRedraw();
 
@@ -397,7 +397,7 @@ public class CardPanel extends javax.swing.JPanel {
                     if (colorRec.get(1) == null) {
                         UPar.remove(gsonElem.param, List.of(PKjsonColor));
                     } else {
-                        UPar.addProperty(gsonElem.param, List.of(PKjsonColor), colorRec.getInt(eColor.id));
+                        UPar.addProperty(gsonElem, List.of(PKjsonColor), colorRec.getInt(eColor.id));
                     }
                     changeAndRedraw();
 
@@ -2564,7 +2564,7 @@ public class CardPanel extends javax.swing.JPanel {
                         if (sysprofRec.get(1) == null) {
                             UPar.remove(gsonRama.param, List.of(PKjson.sysprofID));
                         } else {
-                            UPar.addProperty(gsonRama.param, List.of(PKjson.sysprofID), sysprofRec.getInt(eSysprof.id));
+                            UPar.addProperty(gsonRama, List.of(PKjson.sysprofID), sysprofRec.getInt(eSysprof.id));
                         }
                         changeAndRedraw();
 
@@ -2585,7 +2585,7 @@ public class CardPanel extends javax.swing.JPanel {
                         if (sysprofRec.get(1) == null) {
                             UPar.remove(com5tStv.gson.param, List.of(stvSide, PKjson.sysprofID));
                         } else {
-                            UPar.addProperty(com5tStv.gson.param, List.of(stvSide, PKjson.sysprofID), sysprofRec.getInt(eSysprof.id));
+                            UPar.addProperty(com5tStv.gson, List.of(stvSide, PKjson.sysprofID), sysprofRec.getInt(eSysprof.id));
                         }
                         changeAndRedraw();
 
@@ -2595,7 +2595,7 @@ public class CardPanel extends javax.swing.JPanel {
                         if (sysprofRec.get(1) == null) {
                             UPar.remove(gsonElem.param, List.of(PKjson.sysprofID));
                         } else {
-                            UPar.addProperty(gsonElem.param, List.of(PKjson.sysprofID), sysprofRec.getInt(eSysprof.id));
+                            UPar.addProperty(gsonElem, List.of(PKjson.sysprofID), sysprofRec.getInt(eSysprof.id));
                         }
                         changeAndRedraw();
                     }
@@ -2638,7 +2638,7 @@ public class CardPanel extends javax.swing.JPanel {
                 if (artiklRec.get(1) == null) {
                     UPar.remove(glassElem.param, List.of(PKjson.artiklID));
                 } else {
-                    UPar.addProperty(glassElem.param, List.of(PKjson.artiklID), artiklRec.getInt(eArtikl.id));
+                    UPar.addProperty(glassElem, List.of(PKjson.artiklID), artiklRec.getInt(eArtikl.id));
                 }
                 changeAndRedraw();
 
@@ -2664,7 +2664,7 @@ public class CardPanel extends javax.swing.JPanel {
 
                 if (artiklRec.get(eArtikl.id) != null) {
                     //classElem.gson.param.addProperty(PKjson.artiklRasc, artiklRec.getStr(eArtikl.id));
-                    UPar.addProperty(classElem.gson.param, List.of(PKjson.artiklRasc), artiklRec.getInt(eArtikl.id));
+                    UPar.addProperty(classElem.gson, List.of(PKjson.artiklRasc), artiklRec.getInt(eArtikl.id));
                 } else {
                     UPar.remove(classElem.gson.param, List.of(PKjson.artiklRasc));
                     UPar.remove(classElem.gson.param, List.of(PKjson.colorRasc));
@@ -2713,7 +2713,7 @@ public class CardPanel extends javax.swing.JPanel {
                     UPar.remove(stvArea.param, List.of(PKjson.artiklHand));
                     UPar.remove(stvArea.param, List.of(PKjson.colorHand));
                 } else {
-                    UPar.addProperty(stvArea.param, List.of(PKjson.artiklHand), artiklRec.getInt(eArtikl.id));
+                    UPar.addProperty(stvArea, List.of(PKjson.artiklHand), artiklRec.getInt(eArtikl.id));
                 }
                 changeAndRedraw();
 
@@ -2780,7 +2780,7 @@ public class CardPanel extends javax.swing.JPanel {
                     if (sysprofRec.get(1) == null) {
                         UPar.remove(gsonStv.param, List.of(PKjson.sysprofID));
                     } else {
-                        UPar.addProperty(gsonStv.param, List.of(PKjson.sysprofID), sysprofRec.getInt(eSysprof.id));
+                        UPar.addProperty(gsonStv, List.of(PKjson.sysprofID), sysprofRec.getInt(eSysprof.id));
                     }
                     changeAndRedraw();
                 }, qSysprofFilter);
@@ -2806,7 +2806,7 @@ public class CardPanel extends javax.swing.JPanel {
                 if (sysfurnRec.get(1) == null) {
                     UPar.remove(stvArea.param, List.of(PKjson.sysfurnID));
                 } else {
-                    UPar.addProperty(stvArea.param, List.of(PKjson.sysfurnID), sysfurnRec.getInt(eSysfurn.id));
+                    UPar.addProperty(stvArea, List.of(PKjson.sysfurnID), sysfurnRec.getInt(eSysfurn.id));
                 }
                 changeAndRedraw();
 
@@ -2826,7 +2826,7 @@ public class CardPanel extends javax.swing.JPanel {
                 if (typeopenRec.get(1) == null) {
                     UPar.remove(stvArea.param, List.of(PKjson.typeOpen));
                 } else {
-                    UPar.addProperty(stvArea.param, List.of(PKjson.typeOpen), typeopenRec.getInt(0));
+                    UPar.addProperty(stvArea, List.of(PKjson.typeOpen), typeopenRec.getInt(0));
                 }
                 changeAndRedraw();
 
@@ -2913,12 +2913,12 @@ public class CardPanel extends javax.swing.JPanel {
                     //Добаление
                 } else {
                     if (com5tMosq != null) { //если уже москитка есть
-                        UPar.addProperty(com5tMosq.gson.param, List.of(PKjson.artiklID), artiklRec.getInt(eArtikl.id));
+                        UPar.addProperty(com5tMosq.gson, List.of(PKjson.artiklID), artiklRec.getInt(eArtikl.id));
 
                     } else {  //если москидки нет
                         GsonElem mosqNew = new GsonElem(enums.Type.MOSQUIT);
                         areaStv.gson.childs.add(mosqNew); //добавим ребёнка родителю
-                        UPar.addProperty(mosqNew.param, List.of(PKjson.artiklID), artiklRec.getInt(eArtikl.id));
+                        UPar.addProperty(mosqNew, List.of(PKjson.artiklID), artiklRec.getInt(eArtikl.id));
                     }
                 }
                 changeAndRedraw();
@@ -2950,7 +2950,7 @@ public class CardPanel extends javax.swing.JPanel {
                     if (elementRec.get(1) == null) {
                         UPar.remove(mosq.gson.param, List.of(PKjson.elementID));
                     } else {
-                        UPar.addProperty(mosq.gson.param, List.of(PKjson.elementID), elementRec.getInt(eColor.id));
+                        UPar.addProperty(mosq.gson, List.of(PKjson.elementID), elementRec.getInt(eColor.id));
                     }
                     changeAndRedraw();
 
@@ -3001,7 +3001,7 @@ public class CardPanel extends javax.swing.JPanel {
                     if (sysprofRec.get(1) == null) {
                         UPar.remove(gsonRama.param, List.of(PKjson.sysprofID));
                     } else {
-                        UPar.addProperty(gsonRama.param, List.of(PKjson.sysprofID), sysprofRec.getInt(eSysprof.id));
+                        UPar.addProperty(gsonRama, List.of(PKjson.sysprofID), sysprofRec.getInt(eSysprof.id));
                     }
                     changeAndRedraw();
                 }, qSysprofFilter);

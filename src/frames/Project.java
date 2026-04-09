@@ -830,7 +830,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                 if (colorRec.get(1) == null) {
                     UPar.remove(com5t.gson.param, keys);
                 } else {
-                    UPar.addProperty(com5t.gson.param, keys, colorRec.getInt(eColor.id));
+                    UPar.addProperty(com5t.gson, keys, colorRec.getInt(eColor.id));
                 }
                 changeAndRedraw(); //обновим конструкцию
             }, colorSet, true, false);
@@ -850,7 +850,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                 if (colorRec.get(1) == null) {
                     UPar.remove(gsonElem.param, List.of(PKjsonColor));
                 } else {
-                    UPar.addProperty(gsonElem.param, List.of(PKjsonColor), colorRec.getInt(eColor.id));
+                    UPar.addProperty(gsonElem, List.of(PKjsonColor), colorRec.getInt(eColor.id));
                 }
                 changeAndRedraw();
 
@@ -871,7 +871,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                     if (colorRec.get(1) == null) {
                         UPar.remove(gsonElem.param, List.of(PKjsonColor));
                     } else {
-                        UPar.addProperty(gsonElem.param, List.of(PKjsonColor), colorRec.getInt(eColor.id));
+                        UPar.addProperty(gsonElem, List.of(PKjsonColor), colorRec.getInt(eColor.id));
                     }
                     changeAndRedraw();
 

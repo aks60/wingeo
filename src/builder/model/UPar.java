@@ -3,10 +3,10 @@ package builder.model;
 import builder.making.TRecord;
 import domain.eArtikl;
 import builder.param.ParamList;
+import builder.script.GsonElem;
 import com.google.gson.JsonObject;
 import enums.UseUnit;
 import common.UCom;
-import domain.eSetting;
 import enums.Layout;
 import java.util.HashMap;
 import java.util.List;
@@ -334,7 +334,11 @@ public class UPar {
         return true;
     }
 
-    public static void addProperty(JsonObject json, List<String> keys, int value) {
+    public static void addProperty(GsonElem gson, List<String> keys, int value) {
+        if(gson.param == null) {
+            gson.param = new JsonObject();
+        }
+        JsonObject json = gson.param;
         if (keys.size() > 1) {
             if (json.has(keys.get(0)) == false) {
                 json.add(keys.get(0), new JsonObject());
@@ -344,7 +348,7 @@ public class UPar {
             json.addProperty(keys.get(0), value);
         }
     }
-
+    
     public static void remove(JsonObject json, List<String> keys) {
         if (keys.size() > 1) {
             if (json.has(keys.get(0)) == false) {
