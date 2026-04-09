@@ -2796,13 +2796,13 @@ public class CardPanel extends javax.swing.JPanel {
 
     private void sysfurnToStvorka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sysfurnToStvorka
         try {
-            double windowsID = winNode.com5t().id;
-            int systreeID = eSystree.find(wincalc().nuni).getInt(eSystree.id);
+            double elemID = winNode.com5t().id;
+            int systreeID = wincalc().nuni;
             Query qSysfurn = new Query(eSysfurn.values(), eFurniture.values()).sql(eSysfurn.data(), eSysfurn.systree_id, systreeID);
             qSysfurn.table(eFurniture.up).join(qSysfurn, eFurniture.data(), eSysfurn.furniture_id, eFurniture.id);
             new DicName(thiz, (sysfurnRec) -> {
 
-                GsonElem stvArea = UCom.gson(wincalc().listAll, windowsID);
+                GsonElem stvArea = UCom.gson(wincalc().listAll, elemID);
                 if (sysfurnRec.get(1) == null) {
                     UPar.remove(stvArea.param, List.of(PKjson.sysfurnID));
                 } else {
