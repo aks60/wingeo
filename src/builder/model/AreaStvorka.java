@@ -113,6 +113,9 @@ public class AreaStvorka extends AreaSimple {
             handRec[1] = eArtikl.virtualRec();
             loopRec[1] = eArtikl.virtualRec();
             lockRec[1] = eArtikl.virtualRec();
+            typeOpen = TypeOpen1.EMPTY;
+            lineOpenHor = null;
+            lineOpenVer = null;            
             handColor[1] = -3;
             loopColor[1] = -3;
             lockColor[1] = -3;
