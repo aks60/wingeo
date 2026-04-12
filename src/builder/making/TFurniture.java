@@ -33,7 +33,7 @@ public class TFurniture extends Cal5e {
 
     private FurnitureVar furnitureVar = null;
     private FurnitureDet furnitureDet = null;
-    private final List artLevel = List.of(9, 11, 12); //замок, ручка, петля 
+    private final List LEVEL = List.of(9, 11, 12, 13); //замок, ручка, петля 
     private boolean max_size_message = true;
 
     public TFurniture(Wincalc winc) {
@@ -143,7 +143,7 @@ public class TFurniture extends Cal5e {
             if (shortPass == true) {
                 if (furndetRec.getInt(eFurndet.furndet_id) == furndetRec.getInt(eFurndet.id) && furndetRec.get(eFurndet.furniture_id2) == null) {
                     if (artiklRec.getInt(eArtikl.level1) != 2
-                            || (artiklRec.getInt(eArtikl.level1) == 2 && artLevel.contains(artiklRec.getInt(eArtikl.level2)) == false)) {
+                            || (artiklRec.getInt(eArtikl.level1) == 2 && LEVEL.contains(artiklRec.getInt(eArtikl.level2)) == false)) {
                         return false;  //т.к. ручки, подвеса, замка на этом уровне нет
                     }
                 }
@@ -204,7 +204,7 @@ public class TFurniture extends Cal5e {
                     //артикул и цвет в spcAdd и в свойства створки
                     //если level2 = 13 идет только в тарификацию 
                     if (shortPass == true && spcAdd.artiklRec.getInt(eArtikl.level1) == 2
-                            && artLevel.contains(artiklRec.getInt(eArtikl.level2)) == true) {
+                            && LEVEL.contains(artiklRec.getInt(eArtikl.level2)) == true) {
                         settingStvAndSpc(areaStv, spcAdd);
 
                     } else { //цвет элемента в spcAdd
@@ -239,7 +239,7 @@ public class TFurniture extends Cal5e {
 
         if (spcAdd.artiklRec.getInt(eArtikl.level1) == 2) {
             //РУЧКА
-            if (spcAdd.artiklRec.getInt(eArtikl.level2) == 11) {
+            if (List.of(11, 13).contains(spcAdd.artiklRec.getInt(eArtikl.level2))) {
 
                 //Артикл
                 if (UPar.isFinite(areaStv.gson.param, PKjson.artiklHand)) { //если есть параметр то устан. вручную

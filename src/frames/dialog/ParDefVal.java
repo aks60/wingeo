@@ -55,7 +55,7 @@ public class ParDefVal extends javax.swing.JDialog {
                 vectorList.add(vector);
             }
         }
-        Collections.sort(vectorList, (o1, o2) -> o1.get(1).toString().compareTo(o2.get(1).toString()));
+        Collections.sort(vectorList, (o1, o2) -> o1.get(0).toString().compareTo(o2.get(0).toString()));
         DefaultTableModel dm = (DefaultTableModel) tab1.getModel();
         dm.getDataVector().clear();
         for (Vector vector : vectorList) {
@@ -79,6 +79,7 @@ public class ParDefVal extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Справочник параметров");
+        setPreferredSize(new java.awt.Dimension(360, 549));
 
         pannorth.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         pannorth.setMaximumSize(new java.awt.Dimension(32767, 31));
