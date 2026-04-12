@@ -640,16 +640,25 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         listenerParam2 = (record) -> {
             UGui.stopCellEditing(tab2, tab3, tab4, tab5, tab7);
+            Wincalc winc = wincalc();
             int index = UGui.getIndexRec(tab5);
             int index2 = UGui.getIndexRec(tab7);
             if (index != -1) {
+                
+                //Экземпляр нового скрипта
                 Record sysprodRec = qSysprod.get(index);
                 String script = sysprodRec.getStr(eSysprod.script);
                 String script2 = UGui.ioknaParamUpdate(script, record.getInt(0));
                 sysprodRec.set(eSysprod.script, script2);
-                wincalc().build(script2);
+                winc.build(script2);
+                
+                //Установим курсор
                 selectionTree2();
                 UGui.setSelectedIndex(tab7, index2);
+                
+                //Перерисуем конструкцию
+                canvas.init(winc);
+                canvas.draw();                
             }
         };
     }
@@ -683,12 +692,12 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     public void changeAndRedraw() {
         try {
             //Сохраним скрипт в базе
-            String script = wincalc().gson.toJson();
+            Wincalc winc = wincalc();
+            String script = winc.gson.toJson();
             Record sysprodRec = qSysprod.get(UGui.getIndexRec(tab5));
             sysprodRec.set(eSysprod.script, script);
 
             //Экземпляр нового скрипта
-            Wincalc winc = wincalc();
             winc.build(script);
             winc.imageIcon = Canvas.createIcon(winc, 68);
 

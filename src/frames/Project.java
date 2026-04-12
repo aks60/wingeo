@@ -459,6 +459,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
 
         UGui.buttonCellEditor(tab3, 1).addActionListener(event -> {
             UGui.stopCellEditing(tab2, tab3, tab4, tab5);
+            Wincalc winc = wincalc();
             int id = qSyspar1.getAs(UGui.getIndexRec(tab3), eSyspar1.id);
             int fixed = eSyspar1.find(id).getInt(eSyspar1.fixed);
             if (fixed != 1) {
@@ -468,14 +469,21 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                     int index = UGui.getIndexRec(tab2);
                     int index2 = UGui.getIndexRec(tab3);
                     if (index != -1) {
+
+                        //Экземпляр нового скрипта
                         Record prjprodRec = qPrjprod.get(index);
                         String script = prjprodRec.getStr(ePrjprod.script);
                         String script2 = UGui.ioknaParamUpdate(script, record.getInt(0));
                         prjprodRec.set(ePrjprod.script, script2);
-                        qPrjprod.execsql();
-                        wincalc().build(script2);
+                        winc.build(script2);
+
+                        //Установим курсор
                         selectionTree();
                         UGui.setSelectedIndex(tab3, index2);
+
+                        //Перерисуем конструкцию
+                        canvas.init(winc);
+                        canvas.draw();
                     }
                 }, grup);
             } else {
@@ -577,17 +585,13 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
     //Изменить скрипт в базе и перерисовать
     public void changeAndRedraw() {
         try {
-            //Сохраним скрипт в базе
+            //Экземпляр нового скрипта
+            Wincalc winc = wincalc();
             String script = wincalc().gson.toJson();
             Record prjprodRec = qPrjprod.get(UGui.getIndexRec(tab2));
             prjprodRec.set(ePrjprod.script, script);
-            //qSysprod.update(sysprodRec);
-
-            //Экземпляр нового скрипта
-            Wincalc winc = wincalc();
             winc.build(script);
             winc.imageIcon = Canvas.createIcon(winc, 68);
-            //sysprodRec.setNo(ePrjprod.values().length, winc);
 
             //Запомним курсор
             DefMutableTreeNode selectNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();

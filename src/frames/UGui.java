@@ -226,6 +226,37 @@ public class UGui {
         }
     }
 
+    public static String ioknaParamUpdate2(String script, int ioknaID) {
+        Gson gson = new GsonBuilder().create();
+        GsonRoot gsonRoot = gson.fromJson(script, GsonRoot.class);
+        //JsonObject jsonObj = gson.fromJson(gsonRoot.param, JsonObject.class);
+        JsonArray jsonArr = null;
+        if (gsonRoot.param == null) {
+            gsonRoot.param = new JsonObject();
+        }
+        int groups1ID, groups2ID;
+        if (ioknaID < 0) {
+            groups1ID = eParams.find(ioknaID).getInt(eParams.groups_id);
+        } else {
+            groups1ID = eParmap.find(ioknaID).getInt(eParmap.groups_id);
+        }
+        for (int i = 0; i < jsonArr.size(); i++) {
+            int ioknaID2 = jsonArr.get(i).getAsInt();
+            if (ioknaID < 0) {
+                groups2ID = eParams.find(ioknaID2).getInt(eParams.groups_id);
+            } else {
+                groups2ID = eParmap.find(ioknaID2).getInt(eParmap.groups_id);
+            }
+            //Удаление из "ioknaParam": [-45987, -47475]
+            if (groups1ID == groups2ID) {
+                jsonArr.remove(i);
+            }
+        }
+        jsonArr.add(ioknaID);
+        gsonRoot.param.add(PKjson.ioknaParam, jsonArr);
+        //gsonRoot.param = jsonObj;
+        return gsonRoot.toJson();
+    }
     public static String ioknaParamUpdate(String script, int ioknaID) {
         Gson gson = new GsonBuilder().create();
         GsonRoot gsonRoot = gson.fromJson(script, GsonRoot.class);
@@ -238,20 +269,21 @@ public class UGui {
             JsonArray jsonArr2 = jsonObj.getAsJsonArray(PKjson.ioknaParam);
             jsonArr = (jsonArr == null) ? new JsonArray() : jsonArr2;
         }
-        int titleID, titleID2;
+        int groups1ID, groups2ID;
         if (ioknaID < 0) {
-            titleID = eParams.find(ioknaID).getInt(eParams.groups_id);
+            groups1ID = eParams.find(ioknaID).getInt(eParams.groups_id);
         } else {
-            titleID = eParmap.find(ioknaID).getInt(eParmap.groups_id);
+            groups1ID = eParmap.find(ioknaID).getInt(eParmap.groups_id);
         }
         for (int i = 0; i < jsonArr.size(); i++) {
             int ioknaID2 = jsonArr.get(i).getAsInt();
             if (ioknaID < 0) {
-                titleID2 = eParams.find(ioknaID2).getInt(eParams.groups_id);
+                groups2ID = eParams.find(ioknaID2).getInt(eParams.groups_id);
             } else {
-                titleID2 = eParmap.find(ioknaID2).getInt(eParmap.groups_id);
+                groups2ID = eParmap.find(ioknaID2).getInt(eParmap.groups_id);
             }
-            if (titleID == titleID2) {
+            //Удаление из "ioknaParam": [-45987, -47475]
+            if (groups1ID == groups2ID) {
                 jsonArr.remove(i);
             }
         }
