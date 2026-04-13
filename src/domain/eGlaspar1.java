@@ -15,7 +15,7 @@ public enum eGlaspar1 implements Field {
     up("0", "0", "0", "Парам.групп заполнения", "PARGRUP"),
     id("4", "10", "0", "Идентификатор", "id"),    
     text("12", "64", "1", "Значения параметра", "PTEXT"),
-    groups_id("4", "10", "0", "Название параметра", "PNUMB"),
+    groups_id("4", "10", "0", "Название группы параметров", "PNUMB"),
     glasgrp_id("4", "10", "0", "Группа", "glasgrp_id");
 
     private MetaField meta = new MetaField(this);

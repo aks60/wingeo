@@ -1,5 +1,6 @@
 package frames;
 
+import builder.Wincalc;
 import builder.model.Com5t;
 import builder.script.GsonRoot;
 import com.google.gson.Gson;
@@ -46,10 +47,8 @@ import javax.swing.text.DocumentFilter;
 import javax.swing.text.PlainDocument;
 import frames.swing.comp.DefCellEditorBtn;
 import frames.swing.comp.DefTableModel;
-import java.util.Enumeration;
 import javax.swing.JPanel;
 import javax.swing.JTree;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import common.listener.ListenerObject;
 import common.eProfile;
@@ -57,7 +56,6 @@ import common.listener.ListenerRecord;
 import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
-import domain.eElemdet;
 import domain.eFurndet;
 import domain.eParmap;
 import domain.ePrjprod;
@@ -65,7 +63,6 @@ import enums.PKjson;
 import enums.Type;
 import frames.swing.comp.DefMutableTreeNode;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -226,71 +223,31 @@ public class UGui {
         }
     }
 
-    public static String ioknaParamUpdate2(String script, int ioknaID) {
-        Gson gson = new GsonBuilder().create();
-        GsonRoot gsonRoot = gson.fromJson(script, GsonRoot.class);
-        //JsonObject jsonObj = gson.fromJson(gsonRoot.param, JsonObject.class);
-        JsonArray jsonArr = null;
-        if (gsonRoot.param == null) {
-            gsonRoot.param = new JsonObject();
+    public static String ioknaParamUpdate(Wincalc winc, int groups1ID, int ioknaID) {
+        if (winc.gson.param == null) {
+            winc.gson.param = new JsonObject();
+            winc.gson.param.add(PKjson.ioknaParam, new JsonArray());
         }
-        int groups1ID, groups2ID;
-        if (ioknaID < 0) {
-            groups1ID = eParams.find(ioknaID).getInt(eParams.groups_id);
-        } else {
-            groups1ID = eParmap.find(ioknaID).getInt(eParmap.groups_id);
-        }
-        for (int i = 0; i < jsonArr.size(); i++) {
-            int ioknaID2 = jsonArr.get(i).getAsInt();
-            if (ioknaID < 0) {
-                groups2ID = eParams.find(ioknaID2).getInt(eParams.groups_id);
-            } else {
-                groups2ID = eParmap.find(ioknaID2).getInt(eParmap.groups_id);
-            }
-            //Удаление из "ioknaParam": [-45987, -47475]
+        JsonArray ioknaList = winc.gson.param.getAsJsonArray(PKjson.ioknaParam);
+        
+        //Цикл по "ioknaParam": [-8421, -47475]
+        for (int i = 0; i < ioknaList.size(); i++) {
+            int ioknaID2 = ioknaList.get(i).getAsInt();
+
+            //Идентификатор названия группы по таблици groups
+            int groups2ID = eParams.find(ioknaID2).getInt(eParams.groups_id);
+
+            //Удаление из "ioknaParam": [-8421, -47475] 
             if (groups1ID == groups2ID) {
-                jsonArr.remove(i);
+                ioknaList.remove(i);
+                break;
             }
         }
-        jsonArr.add(ioknaID);
-        gsonRoot.param.add(PKjson.ioknaParam, jsonArr);
-        //gsonRoot.param = jsonObj;
-        return gsonRoot.toJson();
-    }
-    public static String ioknaParamUpdate(String script, int ioknaID) {
-        Gson gson = new GsonBuilder().create();
-        GsonRoot gsonRoot = gson.fromJson(script, GsonRoot.class);
-        JsonObject jsonObj = gson.fromJson(gsonRoot.param, JsonObject.class);
-        JsonArray jsonArr = null;
-        if (jsonObj == null) {
-            jsonObj = new JsonObject();
-            jsonArr = new JsonArray();
-        } else {
-            JsonArray jsonArr2 = jsonObj.getAsJsonArray(PKjson.ioknaParam);
-            jsonArr = (jsonArr == null) ? new JsonArray() : jsonArr2;
+        if (ioknaID != -1) {
+            ioknaList.add(ioknaID);
+            winc.gson.param.add(PKjson.ioknaParam, ioknaList);
         }
-        int groups1ID, groups2ID;
-        if (ioknaID < 0) {
-            groups1ID = eParams.find(ioknaID).getInt(eParams.groups_id);
-        } else {
-            groups1ID = eParmap.find(ioknaID).getInt(eParmap.groups_id);
-        }
-        for (int i = 0; i < jsonArr.size(); i++) {
-            int ioknaID2 = jsonArr.get(i).getAsInt();
-            if (ioknaID < 0) {
-                groups2ID = eParams.find(ioknaID2).getInt(eParams.groups_id);
-            } else {
-                groups2ID = eParmap.find(ioknaID2).getInt(eParmap.groups_id);
-            }
-            //Удаление из "ioknaParam": [-45987, -47475]
-            if (groups1ID == groups2ID) {
-                jsonArr.remove(i);
-            }
-        }
-        jsonArr.add(ioknaID);
-        jsonObj.add(PKjson.ioknaParam, jsonArr);
-        gsonRoot.param = jsonObj;
-        return gsonRoot.toJson();
+        return winc.gson.toJson();
     }
 
     public static String designTitle() {
@@ -1039,7 +996,7 @@ public class UGui {
         winTree.setComponentPopupMenu(null);
 
         if (com5t.type == Type.GLASS && com5t.owner.type != Type.STVORKA) {
-            winTree.setComponentPopupMenu(ppm);       
+            winTree.setComponentPopupMenu(ppm);
             if (Type.DOOR == com5t.winc.gson.type) {
                 boolean b[] = {true, false, false, false, false, true};
                 List.of(0, 1, 2, 3, 4, 5).forEach(i -> ppm.getComponent(i).setVisible(b[i]));

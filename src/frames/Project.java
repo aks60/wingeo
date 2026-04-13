@@ -4,6 +4,7 @@ import builder.Kitcalc;
 import frames.swing.comp.ProgressBar;
 import builder.model.Com5t;
 import builder.Wincalc;
+import builder.making.TFurniture;
 import builder.making.TRecord;
 import builder.making.UColor;
 import builder.model.AreaStvorka;
@@ -471,12 +472,15 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                     if (index != -1) {
 
                         //Ёкземпл€р нового скрипта
+                        Record sypar1Rec = qSyspar1.get(index2);
                         Record prjprodRec = qPrjprod.get(index);
-                        String script = prjprodRec.getStr(ePrjprod.script);
-                        String script2 = UGui.ioknaParamUpdate(script, record.getInt(0));
+                        String script2 = UGui.ioknaParamUpdate(winc, sypar1Rec.getInt(eSyspar1.groups_id), record.getInt(0));
                         prjprodRec.set(ePrjprod.script, script2);
                         winc.build(script2);
 
+                        //ѕересчЄт фурнитуры с учЄтом настроек                    
+                        new TFurniture(winc, true).furn();
+                        
                         //”становим курсор
                         selectionTree();
                         UGui.setSelectedIndex(tab3, index2);

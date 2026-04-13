@@ -197,9 +197,7 @@ public class ParSysVal extends javax.swing.JDialog {
     }//GEN-LAST:event_btnChouce
 
     private void btnRemov(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemov
-        Record record = new Record(1);
-        record.add(null);
-        listener.action(record);
+        listener.action(new Record(Arrays.asList(null, null)));
         this.dispose();
     }//GEN-LAST:event_btnRemov
 

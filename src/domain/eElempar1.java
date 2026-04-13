@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public enum eElempar1 implements Field {
     up("0", "0", "0", "Параметры составов", "PARVSTM"),
     id("4", "10", "0", "Группа", "id"), //см. eEnum параметры
-    text("12", "64", "1", "Значения параметра", "PTEXT"),
+    text("12", "64", "1", "Название группы параметров", "PTEXT"),
     groups_id("4", "10", "0", "Название параметра", "PNUMB"),
     element_id("4", "10", "0", "Вставка", "element_id");
 

@@ -16,6 +16,7 @@ import domain.eGroups;
 import frames.UGui;
 import frames.swing.comp.DefCellEditorNumb;
 import frames.swing.comp.DefCellRendererNumb;
+import java.util.Arrays;
 import java.util.List;
 import report.sup.ExecuteCmd;
 import report.sup.RTable;
@@ -262,7 +263,7 @@ public class DicCurrenc extends javax.swing.JDialog {
     }//GEN-LAST:event_btnChoice
 
     private void btnRemove(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemove
-        listener1.action(eCurrenc.up.newRecord(Query.SEL));
+        listener1.action(new dataset.Record(Arrays.asList(null, null)));
         this.dispose();
     }//GEN-LAST:event_btnRemove
 

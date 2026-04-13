@@ -116,6 +116,9 @@ public class AreaStvorka extends AreaSimple {
             typeOpen = TypeOpen1.EMPTY;
             lineOpenHor = null;
             lineOpenVer = null;            
+            handColor[0] = -3;
+            loopColor[0] = -3;
+            lockColor[0] = -3;
             handColor[1] = -3;
             loopColor[1] = -3;
             lockColor[1] = -3;

@@ -8,6 +8,7 @@ import domain.eParams;
 import frames.swing.comp.DefTableModel;
 import common.listener.ListenerRecord;
 import dataset.Field;
+import java.util.Arrays;
 import startup.App;
 
 public class ParUserVal extends javax.swing.JDialog {
@@ -209,9 +210,7 @@ public class ParUserVal extends javax.swing.JDialog {
     }//GEN-LAST:event_tab1MouseClicked
 
     private void btnRemov(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemov
-        Record record = new Record(1);
-        record.add(null);
-        listener.action(record);
+        listener.action(new Record(Arrays.asList(null, null)));
         this.dispose();
     }//GEN-LAST:event_btnRemov
     // <editor-fold defaultstate="collapsed" desc="Generated Code"> 

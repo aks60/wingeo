@@ -644,21 +644,24 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             int index = UGui.getIndexRec(tab5);
             int index2 = UGui.getIndexRec(tab7);
             if (index != -1) {
-                
+
                 //Ёкземпл€р нового скрипта
+                Record sypar1Rec = qSyspar1b.get(index2);
                 Record sysprodRec = qSysprod.get(index);
-                String script = sysprodRec.getStr(eSysprod.script);
-                String script2 = UGui.ioknaParamUpdate(script, record.getInt(0));
+                String script2 = UGui.ioknaParamUpdate(winc, sypar1Rec.getInt(eSyspar1.groups_id), record.getInt(0));
                 sysprodRec.set(eSysprod.script, script2);
                 winc.build(script2);
                 
+                //ѕересчЄт фурнитуры с учЄтом настроек                    
+                new TFurniture(winc, true).furn();
+
                 //”становим курсор
                 selectionTree2();
                 UGui.setSelectedIndex(tab7, index2);
-                
+
                 //ѕерерисуем конструкцию
                 canvas.init(winc);
-                canvas.draw();                
+                canvas.draw();
             }
         };
     }

@@ -14,7 +14,7 @@ public enum eJoinpar1 implements Field {
     up("0", "0", "0", "Параметры вар.соединений", "PARCONV"),
     id("4", "10", "0", "Идентификатор", "id"),
     text("12", "64", "1", "Значения параметра", "PTEXT"),
-    groups_id("4", "10", "0", "Название параметра", "PNUMB"),
+    groups_id("4", "10", "0", "Название группы параметров", "PNUMB"),
     joinvar_id("4", "10", "0", "Варианты соед.", "joinvar_id");
 
     private MetaField meta = new MetaField(this);
