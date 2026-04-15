@@ -12,7 +12,6 @@ import domain.eArtikl;
 import domain.eColor;
 import domain.eElement;
 import domain.eSysfurn;
-import domain.eSysprof;
 import domain.eSyssize;
 import enums.Layout;
 import enums.LayoutHand;
@@ -21,7 +20,7 @@ import enums.Type;
 import enums.TypeJoin;
 import enums.TypeOpen1;
 import enums.TypeOpen2;
-import enums.UseSide;
+import frames.swing.comp.Canvas;
 import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,10 @@ public class AreaStvorka extends AreaSimple {
 
     public LineString lineOpenHor = null; //линии горизонт. открывания
     public LineString lineOpenVer = null; //линии вертик. открывания
-    public Polygon handOpen = null; //ручка открывания    
+    public Polygon imageHand = UGeo.newPolygon(0, 0, 0, 120, 20, 120, 20, 0); //ручка шаблон 
+    public Polygon areaHand = null; //ручка открывания 
+    public Coordinate cooHand = null;
+    public LineSegment segmentHand = null;
     public int handColor[] = {-3, -3}; //цвет ручки 0-вручную 1-авторасчёт
     public int loopColor[] = {-3, -3}; //цвет подвеса 0-вручную 1-авторасчёт
     public int lockColor[] = {-3, -3}; //цвет замка 0-вручную 1-авторасчёт
@@ -92,7 +94,7 @@ public class AreaStvorka extends AreaSimple {
                 }
             }
             coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки  
-            
+
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.initStvorka() " + e);
         }
@@ -115,7 +117,7 @@ public class AreaStvorka extends AreaSimple {
             lockRec[1] = eArtikl.virtualRec();
             typeOpen = TypeOpen1.EMPTY;
             lineOpenHor = null;
-            lineOpenVer = null;            
+            lineOpenVer = null;
             handColor[0] = -3;
             loopColor[0] = -3;
             lockColor[0] = -3;
@@ -171,22 +173,6 @@ public class AreaStvorka extends AreaSimple {
                 int index = sysfurnRec.getInt(eSysfurn.side_open);
                 typeOpen = (index == TypeOpen2.REQ.id) ? typeOpen : (index == TypeOpen2.LEF.id) ? TypeOpen1.LEFT : TypeOpen1.RIGH;
             }
-            //Положение ручки на створке, ручка задана параметром
-            if (UPar.isFinite(gson.param, PKjson.positionHand)) {
-                int position = gson.param.get(PKjson.positionHand).getAsInt();
-                if (position == LayoutHand.VAR.id) { //вариационная
-                    handLayout = LayoutHand.VAR;
-                    if (UPar.isFinite(gson.param, PKjson.heightHand)) {
-                        handHeight = gson.param.get(PKjson.heightHand).getAsInt();
-                        if (UPar.isFinite(gson.param, PKjson.heightHand)) {
-                            handHeight = gson.param.get(PKjson.heightHand).getAsInt();
-                        }
-                    }
-                } else { //по середине или константная
-                    handLayout = (position == LayoutHand.MIDL.id) ? LayoutHand.MIDL : LayoutHand.CONST;
-                    //handHeight = owner.area.getEnvelopeInternal().getHeight() / 2;
-                }
-            }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.initArtikle() " + e);
         }
@@ -218,62 +204,80 @@ public class AreaStvorka extends AreaSimple {
 
             //Высота ручки, линии открывания
             if (this.typeOpen != TypeOpen1.EMPTY) {
-                if (UPar.isFinite(gson.param, PKjson.positionHand) == false) {
 
-                    if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutHand.MIDL.id) { //по середине
-                        handLayout = LayoutHand.MIDL;
-                        handHeight = this.area.getEnvelopeInternal().getHeight() / 2;
-                    } else if (sysfurnRec.getInt(eSysfurn.hand_pos) == LayoutHand.CONST.id) { //константная
-                        handLayout = LayoutHand.CONST;
-                        handHeight = this.area.getEnvelopeInternal().getHeight() / 2;
+                ElemSimple stvside = TypeOpen1.getHand(this, this.typeOpen);
+                int indexSideOpen = UGeo.getIndex(this.area, stvside.id);
+                segmentHand = UGeo.getSegment(area, indexSideOpen).offset(-1 * this.artiklRec.getDbl(eArtikl.height) / 2 + 10); //линия сегмента ручки
+
+                //Ручка задана параметром
+                handHeight = segmentHand.getLength() / 2;
+                if (UPar.isFinite(gson.param, PKjson.positionHand)) {
+                    int position = gson.param.get(PKjson.positionHand).getAsInt();
+                    //Установлена на высоте (вариационная)
+                    if (position == LayoutHand.VAR.id) {
+                        handLayout = LayoutHand.VAR;
+                        if (UPar.isFinite(gson.param, PKjson.heightHand)) {
+                            handHeight = gson.param.get(PKjson.heightHand).getAsInt();
+                        }
+                        //По середине или константная (конст.-настраивается в коструктиве)
+                    } else {
+                        handLayout = (position == LayoutHand.MIDL.id) ? LayoutHand.MIDL : LayoutHand.CONST;
                     }
                 }
+                cooHand = segmentHand.pointAlong(this.handHeight / segmentHand.getLength()); //положение ручки на створке
+                AffineTransformation aff = new AffineTransformation().translationInstance(cooHand.x, cooHand.y);
+                Polygon imageHand2 = (Polygon) aff.transform(this.imageHand);
+                //this.areaHand = imageHand2;
 
-                //Линии гориз. открывания
-                ElemSimple stvside = TypeOpen1.getHand(this, this.typeOpen);
-                int ind = UGeo.getIndex(this.area, stvside.id);
-                Coordinate h = UGeo.getSegment(area, ind).midPoint(); //высота ручки по умолчанию
-                LineSegment s1 = UGeo.getSegment(area, ind - 1);
-                LineSegment s2 = UGeo.getSegment(area, ind + 1);
+                AffineTransformation aff2 = new AffineTransformation();
+                aff2.setToRotation(-1 * (Math.PI /2 - segmentHand.angle()), imageHand2.getCentroid().getX(), imageHand2.getCentroid().getY());
+                this.areaHand = (Polygon) aff2.transform(imageHand2);
+
+                //Линии гориз. открывания   
+                Coordinate h = UGeo.getSegment(area, indexSideOpen).midPoint();
+                LineSegment s1 = UGeo.getSegment(area, indexSideOpen - 1);
+                LineSegment s2 = UGeo.getSegment(area, indexSideOpen + 1);
                 lineOpenHor = gf.createLineString(UGeo.arrCoord(s1.p0.x, s1.p0.y, h.x, h.y, s2.p1.x, s2.p1.y, h.x, h.y));
 
                 //Линии вертик. открывания
                 if (typeOpen == TypeOpen1.LEFTUP || typeOpen == TypeOpen1.RIGHUP) {
                     ElemSimple stv2 = UCom.layout(this.frames, Layout.TOP);
-                    ind = UGeo.getIndex(this.area, stv2.id);
-                    Coordinate p2 = UGeo.getSegment(area, ind).midPoint();
-                    s1 = UGeo.getSegment(area, ind - 1);
-                    s2 = UGeo.getSegment(area, ind + 1);
+                    indexSideOpen = UGeo.getIndex(this.area, stv2.id);
+                    Coordinate p2 = UGeo.getSegment(area, indexSideOpen).midPoint();
+                    s1 = UGeo.getSegment(area, indexSideOpen - 1);
+                    s2 = UGeo.getSegment(area, indexSideOpen + 1);
                     lineOpenVer = gf.createLineString(UGeo.arrCoord(p2.x, p2.y, s1.p0.x, s1.p0.y, p2.x, p2.y, s2.p1.x, s2.p1.y));
                 }
-                //Полигон ручки
-                double DX = 10, DY = 60;
-                if (handLayout == LayoutHand.VAR && this.handHeight != 0) {
-                    LineSegment lineSegm = UGeo.getSegment(area, ind);
-                    h = lineSegm.pointAlong((this.handHeight / lineSegm.getLength())); //высота ручки на створке
-                }
-                Record sysprofRec = eSysprof.find5(winc.nuni, stvside.type.id2, UseSide.ANY, UseSide.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
-                Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
-                double dx = artiklRec.getDbl(eArtikl.height) / 2;
-                if (typeOpen == TypeOpen1.UPPER) {
-                    h.y = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? h.y - 2 * dx : h.y + 2 * dx;
-                } else {
-                    h.x = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? h.x - dx : h.x + dx;
-                }
-                if (root.type == Type.DOOR) {
-                    this.handOpen = gf.createPolygon(UGeo.arrCoord(h.x - DX, h.y - DY, h.x + DX, h.y - DY, h.x + DX, h.y + DY, h.x - DX, h.y + DY));
-                } else {
-                    this.handOpen = gf.createPolygon(UGeo.arrCoord(h.x - DX, h.y - DY, h.x + DX, h.y - DY, h.x + DX, h.y + DY, h.x - DX, h.y + DY));
-                }
+                //AffineTransformation trans = AffineTransformation.translationInstance(80 * winc.canvas.scale(), (lineSegment.minY() - this.handHeight) * winc.scale);
+                //this.imageHand = (Polygon) trans.transform(this.imageHand);
+
+//                double DX = 10, DY = 60;                
+//                if (handLayout == LayoutHand.VAR && this.handHeight != 0) {
+//                    Object o1 = lineSegment.minY();
+//                    h = lineSegment.pointAlong(lineSegment.minY() - this.handHeight); //высота ручки на створке
+//                }
+//                Record sysprofRec = eSysprof.find5(winc.nuni, stvside.type.id2, UseSide.ANY, UseSide.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
+//                Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
+//                double dx = artiklRec.getDbl(eArtikl.height) / 2;
+//                if (typeOpen == TypeOpen1.UPPER) {
+//                    h.y = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? h.y - 2 * dx : h.y + 2 * dx;
+//                } else {
+//                    h.x = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? h.x - dx : h.x + dx;
+//                }
+//                if (root.type == Type.DOOR) {
+//                    this.imageHand = gf.createPolygon(UGeo.arrCoord(h.x - DX, h.y - DY, h.x + DX, h.y - DY, h.x + DX, h.y + DY, h.x - DX, h.y + DY));
+//                } else {
+//                    this.imageHand = gf.createPolygon(UGeo.arrCoord(h.x - DX, h.y - DY, h.x + DX, h.y - DY, h.x + DX, h.y + DY, h.x - DX, h.y + DY));
+//                }
                 //Направление открывания
-                if (typeOpen != TypeOpen1.UPPER) {
-                    double anglHoriz = UGeo.anglHor(stvside.x1(), stvside.y1(), stvside.x2(), stvside.y2());
-                    if (!(anglHoriz == 90 || anglHoriz == 270)) {
-                        AffineTransformation aff = new AffineTransformation();
-                        aff.setToRotation(Math.toRadians(anglHoriz), this.handOpen.getCentroid().getX(), this.handOpen.getCentroid().getY());
-                        this.handOpen = (Polygon) aff.transform(this.handOpen);
-                    }
-                }
+//                if (typeOpen != TypeOpen1.UPPER) {
+//                    double anglHoriz = UGeo.anglHor(stvside.x1(), stvside.y1(), stvside.x2(), stvside.y2());
+//                    if (!(anglHoriz == 90 || anglHoriz == 270)) {
+//                        AffineTransformation aff = new AffineTransformation();
+//                        aff.setToRotation(Math.toRadians(anglHoriz), this.imageHand.getCentroid().getX(), this.imageHand.getCentroid().getY());
+//                        this.imageHand = (Polygon) aff.transform(this.imageHand);
+//                    }
+//                }
             }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.setLocation " + e);
@@ -322,7 +326,7 @@ public class AreaStvorka extends AreaSimple {
 
     public void paint() {
         if (winc.sceleton == false) {
-            if (this.handOpen != null && winc.sceleton == false) {
+            if (this.imageHand != null && winc.sceleton == false) {
                 winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
 
                 if (this.lineOpenHor != null) { //линии горизонт. открывания
@@ -333,8 +337,9 @@ public class AreaStvorka extends AreaSimple {
                     Shape shape = new ShapeWriter().toShape(this.lineOpenVer);
                     winc.gc2d.draw(shape);
                 }
-                if (this.handOpen != null) {
-                    Shape shape = new ShapeWriter().toShape(this.handOpen);
+                //Для картинок в строках winc.canvas равен null
+                if (winc.canvas != null) {
+                    Shape shape = new ShapeWriter().toShape(areaHand);
                     int handColor2 = (handColor[1] == -3) ? handColor[0] : handColor[1];
                     Record colorRec = eColor.find(handColor2);
                     int rgb = colorRec.getInt(eColor.rgb);

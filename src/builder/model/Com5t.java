@@ -23,6 +23,7 @@ public class Com5t {
 
     public static final int MAXSIDE = 200;
     public static final int MAXPOINT = 1000;
+    //public static double MARGIN = 200; //для размерных линий 
 
     //public static GeometryFactory gf = new GeometryFactory(new PrecisionModel(1000));
     //public static GeometryFactory gf = new GeometryFactory(Co7eSequenceFactory.instance());
