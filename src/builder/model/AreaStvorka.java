@@ -203,7 +203,7 @@ public class AreaStvorka extends AreaSimple {
             Polygon stvFalz = UGeo.bufferGeometry(stvShell, this.frames, 0, 1);
             this.area = gf.createMultiPolygon(new Polygon[]{stvShell, stvInner, stvFalz, (Polygon) frameBox});
 
-            //Высота ручки, линии открывания
+            //Высота ручки
             if (this.typeOpen != TypeOpen1.EMPTY) {
 
                 ElemSimple stvside = TypeOpen1.getHand(this, this.typeOpen);
