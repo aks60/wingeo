@@ -306,7 +306,7 @@ public class AreaStvorka extends AreaSimple {
                     winc.gc2d.draw(shape);
                 }
                 //Для картинок в строках winc.canvas равен null
-                if (winc.canvas != null) {
+                //if (winc.canvas != null) {
                     Shape shape = new ShapeWriter().toShape(areaHand);
                     int handColor2 = (handColor[1] == -3) ? handColor[0] : handColor[1];
                     Record colorRec = eColor.find(handColor2);
@@ -315,7 +315,7 @@ public class AreaStvorka extends AreaSimple {
                     winc.gc2d.fill(shape);
                     winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
                     winc.gc2d.draw(shape);
-                }
+                //}
                 if (timer.isRunning() == true) {
                     this.frames.stream().filter(e -> e.type == Type.STV_SIDE).forEach(e -> ((Com5t) e).timer.start());
                 }
