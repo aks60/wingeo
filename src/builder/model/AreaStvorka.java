@@ -44,9 +44,10 @@ public class AreaStvorka extends AreaSimple {
 
     public LineString lineOpenHor = null; //линии горизонт. открывания
     public LineString lineOpenVer = null; //линии вертик. открывания
-    public Polygon imageHand = UGeo.newPolygon(0, 0, 0, 120, 20, 120, 20, 0); //ручка шаблон 
-    //public Polygon imageHand = UGeo.newPolygon( 0, 0,  0, 20,  5, 20,  10, 120,  20, 120,  25, 20,  30, 20,  30, 0); //ручка шаблон 
-    public Polygon areaHand = null; //ручка открывания 
+    public Geometry imageHand = gf.createMultiPolygon(new Polygon[]{
+        UGeo.newPolygon(0, 0, 0, 40, 10, 40, 10, 10, 30, 10, 30, 40, 40, 40, 40, 0),
+        UGeo.newPolygon(10, 10, 10, 120, 30, 120, 30, 10)}); //ручка шаблон 
+    public Geometry areaHand = null; //ручка открывания 
     public LineSegment segmentHand = null;
     public int handColor[] = {-3, -3}; //цвет ручки 0-вручную 1-авторасчёт
     public int loopColor[] = {-3, -3}; //цвет подвеса 0-вручную 1-авторасчёт
@@ -212,24 +213,23 @@ public class AreaStvorka extends AreaSimple {
                 //Ручка задана параметром
                 handHeight = segmentHand.getLength() / 2;
                 if (UPar.isFinite(gson.param, PKjson.positionHand)) {
-                    int position = gson.param.get(PKjson.positionHand).getAsInt();                  
+                    int position = gson.param.get(PKjson.positionHand).getAsInt();
                     if (position == LayoutHand.VAR.id) { //установлена на высоте (вариационная)
                         handLayout = LayoutHand.VAR;
                         if (UPar.isFinite(gson.param, PKjson.heightHand)) {
                             handHeight = gson.param.get(PKjson.heightHand).getAsInt();
-                        }                      
+                        }
                     } else { //по середине или константная (конст.-настраивается в коструктиве)
                         handLayout = (position == LayoutHand.MIDL.id) ? LayoutHand.MIDL : LayoutHand.CONST;
                     }
                 }
-                
+
                 //Полигон ручки
                 Coordinate cooHand = segmentHand.pointAlong(1 - (this.handHeight + 20) / segmentHand.getLength()); //положение ручки на створке
-                AffineTransformation aff = new AffineTransformation().translationInstance(cooHand.x, cooHand.y);
-                Polygon imageHand1 = (Polygon) aff.transform(this.imageHand);
-                aff.setToRotation(segmentHand.angle() - Math.PI / 2, cooHand.x, cooHand.y);
-                Polygon imageHand2 = (Polygon) aff.transform(imageHand1);                
-                this.areaHand = imageHand2;
+                AffineTransformation aff = new AffineTransformation().translationInstance(cooHand.x - 10, cooHand.y);
+                Geometry imageHand = aff.transform(this.imageHand);
+                aff.setToRotation(segmentHand.angle() - Math.PI / 2, cooHand.x - 10, cooHand.y);
+                this.areaHand  = aff.transform(imageHand);
 
                 //Линии гориз. открывания                                   
                 Coordinate h = UGeo.getSegment(area, indexSideOpen).midPoint();
