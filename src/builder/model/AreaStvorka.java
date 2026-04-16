@@ -45,8 +45,8 @@ public class AreaStvorka extends AreaSimple {
     public LineString lineOpenHor = null; //линии горизонт. открывания
     public LineString lineOpenVer = null; //линии вертик. открывания
     public Polygon imageHand = UGeo.newPolygon(0, 0, 0, 120, 20, 120, 20, 0); //ручка шаблон 
+    //public Polygon imageHand = UGeo.newPolygon( 0, 0,  0, 20,  5, 20,  10, 120,  20, 120,  25, 20,  30, 20,  30, 0); //ручка шаблон 
     public Polygon areaHand = null; //ручка открывания 
-    public Coordinate cooHand = null;
     public LineSegment segmentHand = null;
     public int handColor[] = {-3, -3}; //цвет ручки 0-вручную 1-авторасчёт
     public int loopColor[] = {-3, -3}; //цвет подвеса 0-вручную 1-авторасчёт
@@ -210,32 +210,26 @@ public class AreaStvorka extends AreaSimple {
                 segmentHand = UGeo.getSegment(area, indexSideOpen).offset(-1 * this.artiklRec.getDbl(eArtikl.height) / 2 + 10); //линия сегмента ручки
 
                 //Ручка задана параметром
-                Object o1 = segmentHand.getLength();
                 handHeight = segmentHand.getLength() / 2;
                 if (UPar.isFinite(gson.param, PKjson.positionHand)) {
-                    int position = gson.param.get(PKjson.positionHand).getAsInt();
-                    //Установлена на высоте (вариационная)
-                    if (position == LayoutHand.VAR.id) {
+                    int position = gson.param.get(PKjson.positionHand).getAsInt();                  
+                    if (position == LayoutHand.VAR.id) { //установлена на высоте (вариационная)
                         handLayout = LayoutHand.VAR;
                         if (UPar.isFinite(gson.param, PKjson.heightHand)) {
                             handHeight = gson.param.get(PKjson.heightHand).getAsInt();
-                        }
-                        //По середине или константная (конст.-настраивается в коструктиве)
-                    } else {
+                        }                      
+                    } else { //по середине или константная (конст.-настраивается в коструктиве)
                         handLayout = (position == LayoutHand.MIDL.id) ? LayoutHand.MIDL : LayoutHand.CONST;
                     }
                 }
-                Object o2 = Math.toDegrees(segmentHand.angle());
                 
-                cooHand = segmentHand.pointAlong(this.handHeight / segmentHand.getLength()); //положение ручки на створке
+                //Полигон ручки
+                Coordinate cooHand = segmentHand.pointAlong(1 - (this.handHeight + 20) / segmentHand.getLength()); //положение ручки на створке
                 AffineTransformation aff = new AffineTransformation().translationInstance(cooHand.x, cooHand.y);
-                Polygon imageHand2 = (Polygon) aff.transform(this.imageHand);
-                //this.areaHand = imageHand2;
-
-                AffineTransformation aff2 = new AffineTransformation();
-                //aff2.setToRotation(-1 * Math.PI / 2 - segmentHand.angle(), imageHand2.getCentroid().getX(), imageHand2.getCentroid().getY());
-                aff2.setToRotation(Math.toRadians(45), imageHand2.getCentroid().getX(), imageHand2.getCentroid().getY());
-                this.areaHand = (Polygon) aff2.transform(imageHand2);
+                Polygon imageHand1 = (Polygon) aff.transform(this.imageHand);
+                aff.setToRotation(segmentHand.angle() - Math.PI / 2, cooHand.x, cooHand.y);
+                Polygon imageHand2 = (Polygon) aff.transform(imageHand1);                
+                this.areaHand = imageHand2;
 
                 //Линии гориз. открывания                                   
                 Coordinate h = UGeo.getSegment(area, indexSideOpen).midPoint();
@@ -252,36 +246,6 @@ public class AreaStvorka extends AreaSimple {
                     s2 = UGeo.getSegment(area, indexSideOpen + 1);
                     lineOpenVer = gf.createLineString(UGeo.arrCoord(p2.x, p2.y, s1.p0.x, s1.p0.y, p2.x, p2.y, s2.p1.x, s2.p1.y));
                 }
-                //AffineTransformation trans = AffineTransformation.translationInstance(80 * winc.canvas.scale(), (lineSegment.minY() - this.handHeight) * winc.scale);
-                //this.imageHand = (Polygon) trans.transform(this.imageHand);
-
-//                double DX = 10, DY = 60;                
-//                if (handLayout == LayoutHand.VAR && this.handHeight != 0) {
-//                    Object o1 = lineSegment.minY();
-//                    h = lineSegment.pointAlong(lineSegment.minY() - this.handHeight); //высота ручки на створке
-//                }
-//                Record sysprofRec = eSysprof.find5(winc.nuni, stvside.type.id2, UseSide.ANY, UseSide.ANY); //ТАК ДЕЛАТЬ НЕЛЬЗЯ...
-//                Record artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false); //артикул
-//                double dx = artiklRec.getDbl(eArtikl.height) / 2;
-//                if (typeOpen == TypeOpen1.UPPER) {
-//                    h.y = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? h.y - 2 * dx : h.y + 2 * dx;
-//                } else {
-//                    h.x = (typeOpen == TypeOpen1.LEFT || typeOpen == TypeOpen1.LEFTUP) ? h.x - dx : h.x + dx;
-//                }
-//                if (root.type == Type.DOOR) {
-//                    this.imageHand = gf.createPolygon(UGeo.arrCoord(h.x - DX, h.y - DY, h.x + DX, h.y - DY, h.x + DX, h.y + DY, h.x - DX, h.y + DY));
-//                } else {
-//                    this.imageHand = gf.createPolygon(UGeo.arrCoord(h.x - DX, h.y - DY, h.x + DX, h.y - DY, h.x + DX, h.y + DY, h.x - DX, h.y + DY));
-//                }
-                //Направление открывания
-//                if (typeOpen != TypeOpen1.UPPER) {
-//                    double anglHoriz = UGeo.anglHor(stvside.x1(), stvside.y1(), stvside.x2(), stvside.y2());
-//                    if (!(anglHoriz == 90 || anglHoriz == 270)) {
-//                        AffineTransformation aff = new AffineTransformation();
-//                        aff.setToRotation(Math.toRadians(anglHoriz), this.imageHand.getCentroid().getX(), this.imageHand.getCentroid().getY());
-//                        this.imageHand = (Polygon) aff.transform(this.imageHand);
-//                    }
-//                }
             }
         } catch (Exception e) {
             System.err.println("Ошибка:AreaStvorka.setLocation " + e);
