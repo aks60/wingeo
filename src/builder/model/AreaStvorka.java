@@ -208,7 +208,7 @@ public class AreaStvorka extends AreaSimple {
 
                 ElemSimple stvside = TypeOpen1.getHand(this, this.typeOpen);
                 int indexSideOpen = UGeo.getIndex(this.area, stvside.id);
-                segmentHand = UGeo.getSegment(area, indexSideOpen).offset(-1 * this.artiklRec.getDbl(eArtikl.height) / 2 + 10); //линия сегмента ручки
+                segmentHand = UGeo.getSegment(area, indexSideOpen).offset(-1 * this.artiklRec.getDbl(eArtikl.height) / 2 + 20); //линия сегмента ручки
 
                 //Ручка задана параметром
                 handHeight = segmentHand.getLength() / 2;
@@ -226,9 +226,9 @@ public class AreaStvorka extends AreaSimple {
 
                 //Полигон ручки
                 Coordinate cooHand = segmentHand.pointAlong(1 - (this.handHeight + 20) / segmentHand.getLength()); //положение ручки на створке
-                AffineTransformation aff = new AffineTransformation().translationInstance(cooHand.x - 10, cooHand.y);
+                AffineTransformation aff = new AffineTransformation().translationInstance(cooHand.x, cooHand.y);
                 Geometry imageHand = aff.transform(this.imageHand);
-                aff.setToRotation(segmentHand.angle() - Math.PI / 2, cooHand.x - 10, cooHand.y);
+                aff.setToRotation(segmentHand.angle() - Math.PI / 2, cooHand.x, cooHand.y);
                 this.areaHand  = aff.transform(imageHand);
 
                 //Линии гориз. открывания                                   
