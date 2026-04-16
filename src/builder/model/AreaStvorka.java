@@ -210,6 +210,7 @@ public class AreaStvorka extends AreaSimple {
                 segmentHand = UGeo.getSegment(area, indexSideOpen).offset(-1 * this.artiklRec.getDbl(eArtikl.height) / 2 + 10); //линия сегмента ручки
 
                 //Ручка задана параметром
+                Object o1 = segmentHand.getLength();
                 handHeight = segmentHand.getLength() / 2;
                 if (UPar.isFinite(gson.param, PKjson.positionHand)) {
                     int position = gson.param.get(PKjson.positionHand).getAsInt();
@@ -224,16 +225,19 @@ public class AreaStvorka extends AreaSimple {
                         handLayout = (position == LayoutHand.MIDL.id) ? LayoutHand.MIDL : LayoutHand.CONST;
                     }
                 }
+                Object o2 = Math.toDegrees(segmentHand.angle());
+                
                 cooHand = segmentHand.pointAlong(this.handHeight / segmentHand.getLength()); //положение ручки на створке
                 AffineTransformation aff = new AffineTransformation().translationInstance(cooHand.x, cooHand.y);
                 Polygon imageHand2 = (Polygon) aff.transform(this.imageHand);
                 //this.areaHand = imageHand2;
 
                 AffineTransformation aff2 = new AffineTransformation();
-                aff2.setToRotation(-1 * (Math.PI /2 - segmentHand.angle()), imageHand2.getCentroid().getX(), imageHand2.getCentroid().getY());
+                //aff2.setToRotation(-1 * Math.PI / 2 - segmentHand.angle(), imageHand2.getCentroid().getX(), imageHand2.getCentroid().getY());
+                aff2.setToRotation(Math.toRadians(45), imageHand2.getCentroid().getX(), imageHand2.getCentroid().getY());
                 this.areaHand = (Polygon) aff2.transform(imageHand2);
 
-                //Линии гориз. открывания   
+                //Линии гориз. открывания                                   
                 Coordinate h = UGeo.getSegment(area, indexSideOpen).midPoint();
                 LineSegment s1 = UGeo.getSegment(area, indexSideOpen - 1);
                 LineSegment s2 = UGeo.getSegment(area, indexSideOpen + 1);
