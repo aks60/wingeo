@@ -44,10 +44,10 @@ public class AreaStvorka extends AreaSimple {
 
     public LineString lineOpenHor = null; //линии горизонт. открывания
     public LineString lineOpenVer = null; //линии вертик. открывания
+    public Geometry areaHand = null; //ручка открывания 
     public Geometry imageHand = gf.createMultiPolygon(new Polygon[]{
         UGeo.newPolygon(0, 0, 0, 40, 10, 40, 10, 10, 30, 10, 30, 40, 40, 40, 40, 0),
-        UGeo.newPolygon(10, 10, 10, 120, 30, 120, 30, 10)}); //ручка шаблон 
-    public Geometry areaHand = null; //ручка открывания 
+        UGeo.newPolygon(10, 10, 10, 120, 30, 120, 30, 10)}); //ручка шаблон     
     public int handColor[] = {-3, -3}; //цвет ручки 0-вручную 1-авторасчёт
     public int loopColor[] = {-3, -3}; //цвет подвеса 0-вручную 1-авторасчёт
     public int lockColor[] = {-3, -3}; //цвет замка 0-вручную 1-авторасчёт
