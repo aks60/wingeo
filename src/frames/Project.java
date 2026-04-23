@@ -686,7 +686,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
             Record projectRec = qProject.get(UGui.getIndexRec(tab1));
             if (UGui.getIndexRec(tab1) != -1) {
 
-                TTariffic.calculateProject(projectRec, norm_otx);
+                TTariffic.calculate(projectRec, norm_otx);
 
                 //Заполним вес, площадь
                 txt8.setText(UCom.format(projectRec.getDbl(eProject.square) / 1000000, 2)); //площадь

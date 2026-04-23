@@ -375,7 +375,7 @@ public class TTariffic extends Cal5e {
         return true;
     }
 
-    public static void calculateProject(Record projectRec, boolean norm_otx) {
+    public static void calculate(Record projectRec, boolean norm_otx) {
         try {
             List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             double square = 0, weight = 0,
