@@ -1,11 +1,10 @@
 package frames;
 
-import builder.Kitcalc;
 import frames.swing.comp.ProgressBar;
 import builder.model.Com5t;
 import builder.Wincalc;
 import builder.making.TFurniture;
-import builder.making.TRecord;
+import builder.making.TTariffic;
 import builder.making.UColor;
 import builder.model.AreaStvorka;
 import builder.model.UPar;
@@ -310,7 +309,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
             {" Итого за заказ", projectRec.getDbl(eProject.disc_all, 0),
                 projectRec.getDbl(eProject.cost1_win, 0) + projectRec.getDbl(eProject.cost1_kit, 0),
                 projectRec.getDbl(eProject.cost2_win, 0) + projectRec.getDbl(eProject.cost2_kit, 0)}};
-        ((DefaultTableModel) tab5.getModel()).setDataVector(data, column);        
+        ((DefaultTableModel) tab5.getModel()).setDataVector(data, column);
         tab5.getColumnModel().getColumn(0).setCellRenderer(defaultTableCellRenderer);
         tab5.getColumnModel().getColumn(2).setCellRenderer(defaultTableCellRenderer);
         tab5.getColumnModel().getColumn(3).setCellRenderer(defaultTableCellRenderer);
@@ -481,7 +480,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
 
                         //Пересчёт фурнитуры с учётом настроек                    
                         new TFurniture(winc, true).furn();
-                        
+
                         //Установим курсор
                         selectionTree();
                         UGui.setSelectedIndex(tab3, index2);
@@ -685,56 +684,9 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
             int index = UGui.getIndexRec(tab1);
             UGui.stopCellEditingAndExecSql();
             Record projectRec = qProject.get(UGui.getIndexRec(tab1));
-            //Record currencRec = qCurrenc.stream().filter(rec -> rec.get(eCurrenc.id).equals(projectRec.get(eProject.currenc_id))).findFirst().orElse(eCurrenc.up.newRecord(Query.SEL));
-            double square = 0, weight = 0,
-                    cost1_win = 0, //без скидки менеджера
-                    cost2_win = 0; //со скидкой менеджера
-            //Пересчёт заказа
             if (UGui.getIndexRec(tab1) != -1) {
 
-                //Цикл по конструкциям
-                for (Record prjprodRec : qPrjprod) {
-                    Object w = prjprodRec.get(ePrjprod.values().length);
-                    if (w instanceof Wincalc) {
-
-                        Wincalc win = (Wincalc) w;
-                        String script = prjprodRec.getStr(ePrjprod.script);
-                        win.build(script); //калкуляция                              
-                        win.specific(norm_otx, true); //конструктив  
-
-                        double numProd = prjprodRec.getDbl(ePrjprod.num);
-                        square += numProd * win.root.area.getGeometryN(0).getArea(); //площадь изделий  
-                        weight += numProd * win.weight; //вес изделий
-
-                        cost1_win += numProd * win.cost1; //стоимость конструкций без скидки менеджера
-                        cost2_win += numProd * win.cost2; //стоимость конструкций со скидкой менеджера
-                    }
-                }
-                //Комплектация
-                double discKit = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);
-                ArrayList<TRecord> kitList = Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true); //комплекты               
-
-                //Сохраним новые кальк.данные в проекте
-                if (weight != projectRec.getDbl(eProject.weight)) {
-                    projectRec.set(eProject.weight, weight);  //вес изделий
-                }
-                if (square != projectRec.getDbl(eProject.square)) {
-                    projectRec.set(eProject.square, square);  //площадь изделий 
-                }
-                if (cost1_win != projectRec.getDbl(eProject.cost1_win, 0)) {
-                    projectRec.set(eProject.cost1_win, cost1_win); //стоимость конструкции без скидки менеджера
-                }
-                if (cost2_win != projectRec.getDbl(eProject.cost2_win, 0)) {
-                    projectRec.set(eProject.cost2_win, cost2_win); //стоимость конструкции со скидкой менеджера
-                }
-                if (Kitcalc.cost1 != projectRec.getDbl(eProject.cost1_kit, 0)) {
-                    projectRec.set(eProject.cost1_kit, Kitcalc.cost1); //стоимость комплектации без скидки менеджера
-                }
-                if (Kitcalc.cost2 != projectRec.getDbl(eProject.cost2_kit, 0)) {
-                    projectRec.set(eProject.cost2_kit, Kitcalc.cost2); //стоимость комплектации со скидкой менеджера
-                }
-                projectRec.set(eProject.date5, new GregorianCalendar().getTime());
-                qProject.execsql();
+                TTariffic.calculateProject(projectRec, norm_otx);
 
                 //Заполним вес, площадь
                 txt8.setText(UCom.format(projectRec.getDbl(eProject.square) / 1000000, 2)); //площадь

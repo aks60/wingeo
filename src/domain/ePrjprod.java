@@ -46,19 +46,19 @@ public enum ePrjprod implements Field {
         return query;
     }
     
-    public static Record find(int _id) {
+    public static Record find(int projectID) {
         if (Query.conf.equals("NET")) {
-            return data().stream().filter(rec -> _id == rec.getInt(id)).findFirst().orElse(null);
+            return data().stream().filter(rec -> projectID == rec.getInt(id)).findFirst().orElse(null);
         }
-        Query recordList = new Query(values()).select(up, "where", id, "=", _id);
+        Query recordList = new Query(values()).select(up, "where", id, "=", projectID);
         return (recordList.isEmpty() == true) ? null : recordList.get(0);
     }
 
-    public static List<Record> filter(int _project_id) {
+    public static List<Record> filter(int projectID) {
         if (Query.conf.equals("NET")) {
-            return data().stream().filter(rec -> _project_id == rec.getInt(project_id)).collect(Collectors.toList());
+            return data().stream().filter(rec -> projectID == rec.getInt(project_id)).collect(Collectors.toList());
         }
-        return new Query(values()).select(up, "where", project_id, "=", _project_id);
+        return new Query(values()).select(up, "where", project_id, "=", projectID);
     }
     
     public String toString() {

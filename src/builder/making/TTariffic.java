@@ -1,5 +1,6 @@
 package builder.making;
 
+import builder.Kitcalc;
 import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
@@ -8,21 +9,23 @@ import domain.eCurrenc;
 import domain.eGroups;
 import domain.eRulecalc;
 import domain.eSystree;
-import enums.Layout;
 import enums.TypeForm;
 import enums.UseUnit;
 import builder.Wincalc;
-import builder.model.Com5t;
-import static builder.model.Com5t.MAXSIDE;
 import builder.model.ElemSimple;
 import common.UCom;
+import dataset.Query;
 import domain.eElemdet;
 import domain.eElement;
+import domain.ePrjprod;
+import domain.eProject;
 import enums.Scale;
 import enums.Type;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * Расчёт стоимости элементов окна алгоритм см. в UML
@@ -183,12 +186,12 @@ public class TTariffic extends Cal5e {
 
                         //ФИЛЬТР по количеству
                         if (UCom.containsNumbJust(rulecalcRec.getStr(eRulecalc.quant), quantity3) == true) {
-                            
+
                             //ПРАВИЛО по форме позиции
                             int typeformID1 = TypeForm.typeform(spcRec.elem5e);
                             int typeformID2 = (rulecalcRec.getInt(eRulecalc.form) == 0) ? 1 : rulecalcRec.getInt(eRulecalc.form);
                             if (typeformID1 == typeformID2 || typeformID2 == 1) {
-                                
+
                                 //По себестоимости или стоимости
                                 if (rulecalcRec.getInt(eRulecalc.sebes) == 1) {
                                     spcRec.costprice = spcRec.costprice * rulecalcRec.getDbl(eRulecalc.coeff) + rulecalcRec.getDbl(eRulecalc.suppl);  //увеличение себестоимости в coeff раз и на incr величину надбавки
@@ -370,5 +373,58 @@ public class TTariffic extends Cal5e {
             return false;
         }
         return true;
+    }
+
+    public static void calculateProject(Record projectRec, boolean norm_otx) {
+        try {
+            List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
+            double square = 0, weight = 0,
+                    cost1_win = 0, //без скидки менеджера
+                    cost2_win = 0; //со скидкой менеджера
+
+            //Цикл по конструкциям
+            for (Record prjprodRec : prjprodList) {
+
+                String script = prjprodRec.getStr(ePrjprod.script);
+                Wincalc win = new Wincalc(script);
+                win.specific(norm_otx, true); //конструктив  
+
+                double numProd = prjprodRec.getDbl(ePrjprod.num);
+                square += numProd * win.root.area.getGeometryN(0).getArea(); //площадь изделий  
+                weight += numProd * win.weight; //вес изделий
+
+                cost1_win += numProd * win.cost1; //стоимость конструкций без скидки менеджера
+                cost2_win += numProd * win.cost2; //стоимость конструкций со скидкой менеджера
+            }
+            //Комплектация
+            double discKit = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);
+            ArrayList<TRecord> kitList = Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true); //комплекты               
+
+            //Сохраним новые кальк.данные в проекте
+            if (weight != projectRec.getDbl(eProject.weight)) {
+                projectRec.set(eProject.weight, weight);  //вес изделий
+            }
+            if (square != projectRec.getDbl(eProject.square)) {
+                projectRec.set(eProject.square, square);  //площадь изделий 
+            }
+            if (cost1_win != projectRec.getDbl(eProject.cost1_win, 0)) {
+                projectRec.set(eProject.cost1_win, cost1_win); //стоимость конструкции без скидки менеджера
+            }
+            if (cost2_win != projectRec.getDbl(eProject.cost2_win, 0)) {
+                projectRec.set(eProject.cost2_win, cost2_win); //стоимость конструкции со скидкой менеджера
+            }
+            if (Kitcalc.cost1 != projectRec.getDbl(eProject.cost1_kit, 0)) {
+                projectRec.set(eProject.cost1_kit, Kitcalc.cost1); //стоимость комплектации без скидки менеджера
+            }
+            if (Kitcalc.cost2 != projectRec.getDbl(eProject.cost2_kit, 0)) {
+                projectRec.set(eProject.cost2_kit, Kitcalc.cost2); //стоимость комплектации со скидкой менеджера
+            }
+            projectRec.set(eProject.date5, new GregorianCalendar().getTime());
+            new Query(eProject.values()).update2(projectRec);
+
+        } catch (Exception e) {
+            System.err.println("Ошибка:Wincalc.calculate() " + e);
+        }
+
     }
 }

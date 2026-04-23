@@ -31,6 +31,7 @@ import common.eProp;
 import common.listener.ListenerAction;
 import common.listener.ListenerKey;
 import common.listener.ListenerMouse;
+import dataset.Query;
 import dataset.Record;
 import domain.eArtikl;
 import domain.eColor;
@@ -44,17 +45,20 @@ import domain.eSyssize;
 import enums.PKjson;
 import enums.Type;
 import enums.UseType;
+import frames.UGui;
 import frames.swing.comp.Canvas;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import static startup.App.Top;
 
 // см. алгоритм git -> 804d27409d
@@ -242,7 +246,7 @@ public class Wincalc {
         try {
             listArea.forEach(e -> e.initArtikle());
             listElem.forEach(e -> e.initArtikle());
-            
+
         } catch (JsonSyntaxException e) {
             System.err.println("Ошибка: Wincalc.artikle()");
         }
