@@ -107,7 +107,7 @@ public class Test {
             //clearDB();
             //PSConvert.exec();
             //frame();
-            //wincalc("min");
+            wincalc("min");
             //param();
             //query();
             //json();

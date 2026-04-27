@@ -1,6 +1,5 @@
 package builder;
 
-import builder.making.TFurniture;
 import builder.model.AreaRectangl;
 import builder.model.AreaSimple;
 import builder.model.AreaStvorka;
@@ -10,7 +9,6 @@ import builder.model.ElemFrame;
 import builder.model.ElemGlass;
 import builder.model.ElemSimple;
 import builder.making.TRecord;
-import builder.making.UColor;
 import builder.model.AreaArch;
 import builder.model.AreaDoor;
 import builder.model.AreaTrapeze;
@@ -24,14 +22,12 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import common.UCom;
 import common.eProp;
 import common.listener.ListenerAction;
 import common.listener.ListenerKey;
 import common.listener.ListenerMouse;
-import dataset.Query;
 import dataset.Record;
 import domain.eArtikl;
 import domain.eColor;
@@ -45,20 +41,17 @@ import domain.eSyssize;
 import enums.PKjson;
 import enums.Type;
 import enums.UseType;
-import frames.UGui;
 import frames.swing.comp.Canvas;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import static startup.App.Top;
 
 // см. алгоритм git -> 804d27409d
@@ -319,25 +312,29 @@ public class Wincalc {
 
             //Заполним список спецификации
             for (ElemSimple elem5e : listElem) {
-                if (elem5e.spcRec.code.isEmpty() || elem5e.spcRec.code.trim().charAt(0) != '@') {
+                if (elem5e.spcRec.code.trim().charAt(0) != '@') {
                     this.listSpec.add(elem5e.spcRec);
                 }
                 for (TRecord spc : elem5e.spcRec.spcList) {
-                    if (spc.code.isEmpty() || spc.code.trim().charAt(0) != '@') {
+                    if (spc.code.trim().charAt(0) != '@') {
                         this.listSpec.add(spc);
                     }
                 }
             }
             //Если спецификация на продукт менеджера
             if (manager == true) {
-                int prjprodID = Integer.valueOf(eProp.prjprodID.getProp());
+                int prjprodID = Integer.parseInt(eProp.prjprodID.getProp());
                 Record prjprodRec = ePrjprod.find(prjprodID);
                 Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
                 if (prjprodRec != null) {
                     //Скидка менеджера
-                    double disc = projectRec.getDbl(eProject.disc_all, 0) + projectRec.getDbl(eProject.disc_win, 0);
+                    double disc_win = projectRec.getDbl(eProject.disc_win, 0);
                     for (TRecord tRecord : this.listSpec) {
-                        tRecord.cost2 = tRecord.cost2 - disc * tRecord.cost2 / 100; //скидка менеджера
+                        tRecord.cost2 = tRecord.cost2 - disc_win * tRecord.cost2 / 100; //скидка менеджера
+                    }
+                    double disc_all = projectRec.getDbl(eProject.disc_all, 0);
+                    for (TRecord tRecord : this.listSpec) {
+                        tRecord.cost2 = tRecord.cost2 - disc_all * tRecord.cost2 / 100; //скидка менеджера
                     }
                 } else {
                     JOptionPane.showMessageDialog(Top.frame, "Выберите конструкцию в списке заказов", "Предупреждение", JOptionPane.OK_OPTION);

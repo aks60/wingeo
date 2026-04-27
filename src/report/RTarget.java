@@ -25,7 +25,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -110,7 +109,7 @@ public class RTarget {
 
                     List<TRecord> listSpc = new ArrayList<TRecord>();
                     listSpc.addAll(winc.listSpec);
-                    listSpc.addAll(Kitcalc.tarifficProd(winc, prjprodRec, 0, true, true));
+                    listSpc.addAll(Kitcalc.tarifficProd(winc, prjprodRec, 0, 0, true, true));
 
                     //“‡·ÎËˆ‡ π2 »«ƒ≈À»≈ –≈ ¬»«»“€  
                     square += winc.root.area.getGeometryN(0).getArea();

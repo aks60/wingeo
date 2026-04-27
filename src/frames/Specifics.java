@@ -99,8 +99,9 @@ public class Specifics extends javax.swing.JFrame {
                 this.listTRec.addAll(winc.listSpec); //добавим спецификацию                
 
                 //Добавим комплекты
-                double discKit = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);
-                ArrayList<TRecord> listKit = Kitcalc.tarifficProd(winc, prjprodRec, discKit, true, false); //комплекты
+                double discKit = projectRec.getDbl(eProject.disc_kit, 0);
+                double discAll = projectRec.getDbl(eProject.disc_all, 0);
+                ArrayList<TRecord> listKit = Kitcalc.tarifficProd(winc, prjprodRec, discKit, discAll, true, false); //комплекты
                 this.listTRec.addAll(listKit);
 
             } else {

@@ -69,8 +69,9 @@ public class RSpecific {
                     winc.specific(true, true);
                     spcList.addAll(winc.listSpec); //добавим спецификацию
                 }
-                double discKit = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);
-                List<TRecord> list = Kitcalc.tarifficProd(winc, prjprodRec, discKit, true, false); //добавим комплекты
+                double discKit = projectRec.getDbl(eProject.disc_kit, 0);
+                double discAll = projectRec.getDbl(eProject.disc_all, 0);
+                List<TRecord> list = Kitcalc.tarifficProd(winc, prjprodRec, discKit, discAll, true, false); //добавим комплекты
                 list.forEach(rec -> kitList.add(new RRecord(rec)));
             }
 

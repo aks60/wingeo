@@ -26,11 +26,11 @@ public class Kitcalc {
     }
 
     //Комплекты конструкции
-    public static ArrayList<TRecord> tarifficFree(Wincalc win, Record projectdRec, double discKit, boolean normOtx, boolean numProd) {
+    public static ArrayList<TRecord> tarifficFree(Wincalc win, Record projectdRec, double discKit, double discAll, boolean normOtx, boolean numProd) {
         try {
             if (projectdRec != null) {
                 List<Record> prjkitList = ePrjkit.filter5(projectdRec.getInt(eProject.id));
-                return calculate(win, prjkitList, discKit, normOtx, numProd);
+                return calculate(win, prjkitList, discKit, discAll, normOtx, numProd);
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Kitscalc.tarifficFree() " + e);
@@ -39,11 +39,11 @@ public class Kitcalc {
     }
     
     //Комплекты конструкции
-    public static ArrayList<TRecord> tarifficProd(Wincalc win, Record prjprodRec, double discKit, boolean normOtx, boolean numProd) {
+    public static ArrayList<TRecord> tarifficProd(Wincalc win, Record prjprodRec, double discKit, double discAll, boolean normOtx, boolean numProd) {
         try {
             if (prjprodRec != null) {
                 List<dataset.Record> kitList = ePrjkit.filter3(prjprodRec.getInt(ePrjprod.id));
-                return calculate(win, kitList, discKit, normOtx, numProd);
+                return calculate(win, kitList, discKit, discAll, normOtx, numProd);
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Kitscalc.specificProd() " + e);
@@ -52,11 +52,11 @@ public class Kitcalc {
     }
 
     //Комплекты заказа (комплекты в изделиях и комп. в проекте)
-    public static ArrayList<TRecord> tarifficProj(Wincalc win, Record projectdRec, double discKit, boolean normOtx, boolean numProd) {
+    public static ArrayList<TRecord> tarifficProj(Wincalc win, Record projectdRec, double discKit, double discAll, boolean normOtx, boolean numProd) {
         try {
             if (projectdRec != null) {
                 List<Record> prjkitList = ePrjkit.filter4(projectdRec.getInt(eProject.id));
-                return calculate(win, prjkitList, discKit, normOtx, numProd);
+                return calculate(win, prjkitList, discKit, discAll, normOtx, numProd);
             }
         } catch (Exception e) {
             System.err.println("Ошибка:Kitscalc.specificProj() " + e);
@@ -65,7 +65,7 @@ public class Kitcalc {
     }
 
     //Список комплектов (коэф.рентабельности и сложн.форм не учитываются)
-    private static ArrayList<TRecord> calculate(Wincalc winc, List<Record> listKit, double discKit, boolean normOtx, boolean isNumProd) {
+    private static ArrayList<TRecord> calculate(Wincalc winc, List<Record> listKit, double discKit, double discAll, boolean normOtx, boolean isNumProd) {
         init();
         //Цикл по комплектам
         for (Record prjkitRec : listKit) {
@@ -102,6 +102,7 @@ public class Kitcalc {
                 spcRec.price = spcRec.price * artiklK; //цена за един.изм 
                 spcRec.cost1 = spcRec.price * spcRec.quant2; //стоимость без скидки                     
                 spcRec.cost2 = spcRec.cost1 - discKit * spcRec.cost1 / 100; //стоимость со скид.менеджера
+                spcRec.cost2 = spcRec.cost2 - discAll * spcRec.cost2 / 100; //стоимость со скид.менеджера
                 cost1 += spcRec.cost1;
                 cost2 += spcRec.cost2;
                 kitList.add(spcRec);

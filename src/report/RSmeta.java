@@ -92,8 +92,9 @@ public class RSmeta {
         try {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Record sysuserRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
-            double discKit = projectRec.getDbl(eProject.disc_kit, 0) +  projectRec.getDbl(eProject.disc_all, 0);
-            double discWin = projectRec.getDbl(eProject.disc_win, 0) +  projectRec.getDbl(eProject.disc_all, 0);
+            double discKit = projectRec.getDbl(eProject.disc_kit, 0);
+            double discWin = projectRec.getDbl(eProject.disc_win, 0);
+            double discAll = projectRec.getDbl(eProject.disc_all, 0);
 
             doc.getElementById("h01").text("Смета №" + projectRec.getStr(eProject.num_ord) + " от '" + UGui.convert2Date(projectRec.get(eProject.date4)) + "'");
 
@@ -137,7 +138,7 @@ public class RSmeta {
             //СЕКЦИЯ №2
             {
                 Elements trList = doc.getElementById("tab6").getElementsByTag("tr");
-                Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true);
+                Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, discAll, true, true);
                 trList.get(0).getElementsByTag("td").get(1).text(UCom.format(projectRec.getDbl(eProject.cost2_win, 0), 9) + " руб."); //всего за изделия
                 trList.get(1).getElementsByTag("td").get(1).text(UCom.format(projectRec.getDbl(eProject.cost2_kit, 0), 9) + " руб.+"); //всего за комплекты
                 trList.get(2).getElementsByTag("td").get(1)
@@ -163,8 +164,9 @@ public class RSmeta {
     private static void loadDoc2(List<Record> prjprodList, Document doc) {
         try {
             double totalTab4 = 0, totalTab5 = 0, square = 0f;
-            double discWin = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);            
-            double discKit = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);            
+            double discWin = projectRec.getDbl(eProject.disc_kit, 0);            
+            double discKit = projectRec.getDbl(eProject.disc_kit, 0);
+            double discAll = projectRec.getDbl(eProject.disc_all, 0);            
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             Query qSysuser = new Query(eSysuser.values()).sql(eSysuser.data(), eSysuser.login, prjpartRec.getStr(ePrjpart.login));
             qSysuser.add(eSysuser.up.newRecord("SEL")); //если qSysuser.size() == 0                       
@@ -210,7 +212,7 @@ public class RSmeta {
                     Record prjprodRec = prjprodList.get(i);
                     Wincalc winc = wincList.get(i);
                     int numProd = prjprodRec.getInt(ePrjprod.num);                    
-                    Kitcalc.tarifficProd(winc, prjprodRec, discKit, true, true);
+                    Kitcalc.tarifficProd(winc, prjprodRec, discKit, discAll, true, true);
 
                     //Изделие
                     loadTab2(prjprodList, winc, tab2List, i, numProd);
@@ -245,7 +247,7 @@ public class RSmeta {
                 totalTab4 = loadTab4(prjprodList, wincList, tab4Elem);
 
                 //Комплектация все
-                ArrayList<TRecord> prjkitAllList = Kitcalc.tarifficProj(new Wincalc(), projectRec, 0, true, true);
+                ArrayList<TRecord> prjkitAllList = Kitcalc.tarifficProj(new Wincalc(), projectRec, 0, 0, true, true);
                 String template5 = tab5Elem.getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
                 for (int i = 1; i < prjkitAllList.size(); i++) {
                     tab5Elem.getElementsByTag("tbody").append(template5);

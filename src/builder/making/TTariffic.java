@@ -387,7 +387,9 @@ public class TTariffic extends Cal5e {
 
                 String script = prjprodRec.getStr(ePrjprod.script);
                 Wincalc win = new Wincalc(script);
-                win.specific(norm_otx, true); //конструктив  
+                
+                //Конструктив 
+                win.specific(norm_otx, true);  
 
                 double numProd = prjprodRec.getDbl(ePrjprod.num);
                 square += numProd * win.root.area.getGeometryN(0).getArea(); //площадь изделий  
@@ -397,28 +399,18 @@ public class TTariffic extends Cal5e {
                 cost2_win += numProd * win.cost2; //стоимость конструкций со скидкой менеджера
             }
             //Комплектация
-            double discKit = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);
-            ArrayList<TRecord> kitList = Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true); //комплекты               
+            double discKit = projectRec.getDbl(eProject.disc_kit, 0);
+            double discAll = projectRec.getDbl(eProject.disc_all, 0);
+            ArrayList<TRecord> kitList = Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, discAll, true, true); //комплекты               
 
             //Сохраним новые кальк.данные в проекте
-            if (weight != projectRec.getDbl(eProject.weight)) {
-                projectRec.set(eProject.weight, weight);  //вес изделий
-            }
-            if (square != projectRec.getDbl(eProject.square)) {
-                projectRec.set(eProject.square, square);  //площадь изделий 
-            }
-            if (cost1_win != projectRec.getDbl(eProject.cost1_win, 0)) {
-                projectRec.set(eProject.cost1_win, cost1_win); //стоимость конструкции без скидки менеджера
-            }
-            if (cost2_win != projectRec.getDbl(eProject.cost2_win, 0)) {
-                projectRec.set(eProject.cost2_win, cost2_win); //стоимость конструкции со скидкой менеджера
-            }
-            if (Kitcalc.cost1 != projectRec.getDbl(eProject.cost1_kit, 0)) {
-                projectRec.set(eProject.cost1_kit, Kitcalc.cost1); //стоимость комплектации без скидки менеджера
-            }
-            if (Kitcalc.cost2 != projectRec.getDbl(eProject.cost2_kit, 0)) {
-                projectRec.set(eProject.cost2_kit, Kitcalc.cost2); //стоимость комплектации со скидкой менеджера
-            }
+            projectRec.set(eProject.weight, weight);  //вес изделий
+            projectRec.set(eProject.square, square);  //площадь изделий 
+            projectRec.set(eProject.cost1_win, cost1_win); //стоимость конструкции без скидки менеджера
+            projectRec.set(eProject.cost2_win, cost2_win); //стоимость конструкции со скидкой менеджера
+            projectRec.set(eProject.cost1_kit, Kitcalc.cost1); //стоимость комплектации без скидки менеджера
+            projectRec.set(eProject.cost2_kit, Kitcalc.cost2); //стоимость комплектации со скидкой менеджера
+
             projectRec.set(eProject.date5, new GregorianCalendar().getTime());
             new Query(eProject.values()).update2(projectRec);
 

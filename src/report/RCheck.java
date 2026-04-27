@@ -135,8 +135,9 @@ public class RCheck {
             }
             //—≈ ÷»ﬂ π3
             {
-                double discWin = projectRec.getDbl(eProject.disc_win, 0) + projectRec.getDbl(eProject.disc_all, 0);
-                double discKit = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);
+                double discWin = projectRec.getDbl(eProject.disc_win, 0);
+                double discKit = projectRec.getDbl(eProject.disc_kit, 0);
+                double discAll = projectRec.getDbl(eProject.disc_all, 0);
                 String templateRow = doc.getElementById("tab3").getElementsByTag("tbody").get(0).getElementsByTag("tr").get(0).html();
                 for (int i = 0; i < prjprodList.size(); i++) {
                     doc.getElementById("tab3").getElementsByTag("tbody").append(templateRow);
@@ -160,7 +161,7 @@ public class RCheck {
 
                     total += numProd * (winc.cost2 - discWin * winc.cost2 / 100);
                 }
-                Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true);
+                Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, discAll, true, true);
                 int index = prjprodList.size();
                 Elements tdList = trList.get(index).getElementsByTag("td");
                 tdList.get(0).text(String.valueOf(index + 1));
@@ -187,8 +188,9 @@ public class RCheck {
             Record prjpart1Rec = ePrjpart.find(projectRec.getInt(eProject.vendor_id));
             Record prjpart2Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
             List<Wincalc> wincList = wincList(prjprodList);
-            double discKit = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);
-            double discWin = projectRec.getDbl(eProject.disc_win, 0) + projectRec.getDbl(eProject.disc_all, 0);
+            double discKit = projectRec.getDbl(eProject.disc_kit, 0);
+            double discWin = projectRec.getDbl(eProject.disc_win, 0);
+            double discAll = projectRec.getDbl(eProject.disc_all, 0);
 
             doc.getElementById("h01").text("—˜∏Ú-Ù‡ÍÚÛ‡ π" + projectRec.getStr(eProject.num_acc) + " ÓÚ '" + UGui.convert2Date(projectRec.get(eProject.date4)) + "'");
             //—≈ ÷»ﬂ π1
@@ -238,7 +240,7 @@ public class RCheck {
                     Elements tdList = trList.get(i).getElementsByTag("td");
                     Wincalc winc = wincList.get(i);
                     Record prjprodRec = prjprodList.get(i);
-                    Kitcalc.tarifficProd(new Wincalc(), prjprodRec, 0, true, true);
+                    Kitcalc.tarifficProd(new Wincalc(), prjprodRec, 0, 0, true, true);
                     double numProd = prjprodRec.getInt(ePrjprod.num);
                     double nds = winc.cost2 * 20 / 120;
 
@@ -255,7 +257,7 @@ public class RCheck {
 
                     total += numProd * (winc.cost2 - discWin * winc.cost2 / 100);
                 }
-                Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, true, true);
+                Kitcalc.tarifficProj(new Wincalc(), projectRec, discKit, discAll, true, true);
                 int index = prjprodList.size();
                 double nds = Kitcalc.cost2 * 20 / 120;
                 Elements tdList = trList.get(index).getElementsByTag("td");
