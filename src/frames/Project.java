@@ -301,19 +301,24 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
     }
 
     public void loadingTab5() {
+
         Record projectRec = qProject.get(UGui.getIndexRec(tab1));
+        double disc_win = projectRec.getDbl(eProject.disc_win, 0);
+        double disc_kit = projectRec.getDbl(eProject.disc_kit, 0);
+        double disc_all = projectRec.getDbl(eProject.disc_all, 0);
+        double cost1_win = projectRec.getDbl(eProject.cost1_win, 0);
+        double cost1_kit = projectRec.getDbl(eProject.cost1_kit, 0);
+        double cost2_win = cost1_win - cost1_win * disc_win / 100;
+        double cost2_kit = cost1_kit - cost1_kit * disc_kit / 100;
 
         Object data[][] = {
-            {" Конструкции", projectRec.getDbl(eProject.disc_win, 0), 
-                projectRec.getDbl(eProject.cost1_win, 0), 
-                projectRec.getDbl(eProject.cost2_win, 0)},
-            {" Комплектации", projectRec.getDbl(eProject.disc_kit, 0), 
-                projectRec.getDbl(eProject.cost1_kit, 0), 
-                projectRec.getDbl(eProject.cost2_kit, 0)},
+            {" Конструкции", projectRec.getDbl(eProject.disc_win, 0),
+                cost1_win, cost2_win},
+            {" Комплектации", projectRec.getDbl(eProject.disc_kit, 0),
+                cost1_kit, cost2_kit},
             {" Итого за заказ", projectRec.getDbl(eProject.disc_all, 0),
-                projectRec.getDbl(eProject.cost1_win, 0) + projectRec.getDbl(eProject.cost1_kit, 0),
-                projectRec.getDbl(eProject.cost2_win, 0) + projectRec.getDbl(eProject.cost2_kit, 0)}};
-        
+                cost1_win + cost1_kit, (cost2_win + cost2_kit) - (cost2_win + cost2_kit) * disc_all / 100}};
+
         ((DefaultTableModel) tab5.getModel()).setDataVector(data, column);
         tab5.getColumnModel().getColumn(0).setCellRenderer(defaultTableCellRenderer);
         tab5.getColumnModel().getColumn(2).setCellRenderer(defaultTableCellRenderer);
@@ -698,12 +703,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                 txt7.setText(UCom.format(projectRec.getDbl(eProject.weight), 1)); //вес 
 
                 //Заполним таблицу
-                tab5.setValueAt(projectRec.getDbl(eProject.cost1_win, 0), 0, 2); //стоимость конструкций без скидки
-                tab5.setValueAt(projectRec.getDbl(eProject.cost2_win, 0), 0, 3); //стоимость конструкций со скидкой
-                tab5.setValueAt(projectRec.getDbl(eProject.cost1_kit, 0), 1, 2); //стоимость комплектации без скидки
-                tab5.setValueAt(projectRec.getDbl(eProject.cost2_kit, 0), 1, 3); //стоимость комплектации со скидкой
-                tab5.setValueAt(projectRec.getDbl(eProject.cost1_win, 0) + projectRec.getDbl(eProject.cost1_kit, 0), 2, 2); //итого стоимость без скидки
-                tab5.setValueAt(projectRec.getDbl(eProject.cost2_win, 0) + projectRec.getDbl(eProject.cost2_kit, 0), 2, 3); //итого стоимость со скидкой
+                loadingTab5();
 
                 if (index != -1) {
                     ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
@@ -1308,7 +1308,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         pan11.setPreferredSize(new java.awt.Dimension(400, 500));
         pan11.setLayout(new java.awt.BorderLayout());
 
-        pan9.setPreferredSize(new java.awt.Dimension(450, 220));
+        pan9.setPreferredSize(new java.awt.Dimension(450, 180));
         pan9.setLayout(new java.awt.BorderLayout());
 
         pan19.setPreferredSize(new java.awt.Dimension(450, 45));
@@ -1496,7 +1496,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         pan5.setPreferredSize(new java.awt.Dimension(400, 450));
         pan5.setLayout(new java.awt.BorderLayout());
 
-        pan7.setPreferredSize(new java.awt.Dimension(10, 360));
+        pan7.setPreferredSize(new java.awt.Dimension(10, 300));
         pan7.setLayout(new java.awt.CardLayout());
 
         pan14.setLayout(new java.awt.BorderLayout());
@@ -1555,7 +1555,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         );
         pan12Layout.setVerticalGroup(
             pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 339, Short.MAX_VALUE)
+            .addGap(0, 279, Short.MAX_VALUE)
         );
 
         pan7.add(pan12, "card12");

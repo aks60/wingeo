@@ -767,7 +767,7 @@
                     <Container class="javax.swing.JPanel" name="pan9">
                       <Properties>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[450, 220]"/>
+                          <Dimension value="[450, 180]"/>
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1065,7 +1065,7 @@
                     <Container class="javax.swing.JPanel" name="pan7">
                       <Properties>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 360]"/>
+                          <Dimension value="[10, 300]"/>
                         </Property>
                       </Properties>
                       <Constraints>
@@ -1178,7 +1178,7 @@
                             </DimensionLayout>
                             <DimensionLayout dim="1">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <EmptySpace min="0" pref="339" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="279" max="32767" attributes="0"/>
                               </Group>
                             </DimensionLayout>
                           </Layout>

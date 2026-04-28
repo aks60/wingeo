@@ -4,7 +4,6 @@ import dataset.Record;
 import domain.eArtikl;
 import domain.eColor;
 import enums.UseUnit;
-import enums.TypeArt;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;
