@@ -4,8 +4,6 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
-import static domain.eGroups.up;
-import frames.UGui;
 
 public enum eProject implements Field {
     up("0", "0", "0", "Заказы проектов", "LISTPRJ"),
@@ -16,18 +14,14 @@ public enum eProject implements Field {
     square("8", "15", "1", "Площадь изделий", "PSQRA"),
     weight("8", "15", "1", "Вес изделий", "EMPTY"),   
     type_calc("5", "5", "1", "Тип расчтета", "PTYPE"),
-    type_norm("5", "5", "1", "Учет норм отходов", "CTYPE"),      
-    
+    type_norm("5", "5", "1", "Учет норм отходов", "CTYPE"),         
     disc_win("8", "15", "1", "Cкидка на конструкции", "KDESC"),
     disc_kit("8", "15", "1", "Cкидка на комплектацию", "ADESC"),
     disc_all("8", "15", "1", "Cкидка общая", "PDESC"),    
     cost1_win("8", "15", "1", "Cтоимость конструкций без скидки", "KPRIC"),   
     cost2_win("8", "15", "1", "Cтоимость конструкции со скидками", "KPRCD"),    
     cost1_kit("8", "15", "1", "Cтоимость комплектации без скидки", "APRIC"),    
-    cost2_kit("8", "15", "1", "Cтоимость комплектации со скидками", "APRCD"),
-    cost1_all("8", "15", "1", "Cтоимость общая без скидки", "APRCD"), 
-    cost2_all("8", "15", "1", "Cтоимость общая со скидками", "APRCD"), 
-     
+    cost2_kit("8", "15", "1", "Cтоимость комплектации со скидками", "APRCD"),     
     costpric("8", "15", "1", "Cебестоимость проекта с отходом", "PSEBE"),     
     markup("8", "15", "1", "Наценка %", "PMARG"),  
     flag1("5", "5", "1", "Отправка в производство", "PWORK"),   
