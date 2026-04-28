@@ -321,27 +321,27 @@ public class Wincalc {
                     }
                 }
             }
-//            
-//            //Если спецификация на продукт менеджера
-//            if (manager == true) {
-//                int prjprodID = Integer.valueOf(eProp.prjprodID.getProp());
-//                Record prjprodRec = ePrjprod.find(prjprodID);
-//                Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
-//                if (prjprodRec != null) {
-//                    //Скидка менеджера
-//                    double disc_win = projectRec.getDbl(eProject.disc_win, 0);
-//                    for (TRecord tRecord : this.listSpec) {
-//                        tRecord.cost2 = tRecord.cost2 - disc_win * tRecord.cost2 / 100; //скидка менеджера
-//                    }
-//                } else {
-//                    JOptionPane.showMessageDialog(Top.frame, "Выберите конструкцию в списке заказов", "Предупреждение", JOptionPane.OK_OPTION);
-//                }
-//            }
+            
+            //Если спецификация на продукт менеджера
+            if (manager == true) {
+                int prjprodID = Integer.valueOf(eProp.prjprodID.getProp());
+                Record prjprodRec = ePrjprod.find(prjprodID);
+                Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
+                if (prjprodRec != null) {
+                    //Скидка менеджера
+                    double discWin = projectRec.getDbl(eProject.disc_win, 0);
+                    for (TRecord tRecord : this.listSpec) {
+                        tRecord.cost2 = tRecord.cost2 - discWin * tRecord.cost2 / 100; //скидка менеджера
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(Top.frame, "Выберите конструкцию в списке заказов", "Предупреждение", JOptionPane.OK_OPTION);
+                }
+            }
             
             //Итоговая стоимость
             for (TRecord spc : this.listSpec) {
-                this.cost1 += spc.cost1; //общая стоимость без скидки
-                this.cost2 += spc.cost2; //общая стоимость со скидкой                                   
+                this.cost1 += spc.cost1; //общая стоимость без скидки менеджера
+                this.cost2 += spc.cost2; //общая стоимость со скидкой менеджера                                   
             }
 
             //Вес изделия

@@ -45,8 +45,8 @@ public class TRecord {
     public double quant2 = 0;  //Количество (с отх./без отх.)
     public double costprice = 0;  //Себестоимость   
     public double price = 0;  //Цена за единицу измерения
-    public double cost1 = 0;  //Стоимость без технологической скидки
-    public double cost2 = 0;  //Стоимость с технологической скидкой
+    public double cost1 = 0;  //Стоимость без скидки менеджера
+    public double cost2 = 0;  //Стоимость со скидкой менеджера
 
     public TRecord() {
     }

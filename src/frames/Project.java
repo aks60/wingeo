@@ -303,13 +303,11 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
     public void loadingTab5() {
 
         Record projectRec = qProject.get(UGui.getIndexRec(tab1));
-        double disc_win = projectRec.getDbl(eProject.disc_win, 0);
-        double disc_kit = projectRec.getDbl(eProject.disc_kit, 0);
         double disc_all = projectRec.getDbl(eProject.disc_all, 0);
         double cost1_win = projectRec.getDbl(eProject.cost1_win, 0);
         double cost1_kit = projectRec.getDbl(eProject.cost1_kit, 0);
-        double cost2_win = cost1_win - cost1_win * disc_win / 100;
-        double cost2_kit = cost1_kit - cost1_kit * disc_kit / 100;
+        double cost2_win = projectRec.getDbl(eProject.cost2_win, 0);
+        double cost2_kit = projectRec.getDbl(eProject.cost2_kit, 0);
 
         Object data[][] = {
             {" Конструкции", projectRec.getDbl(eProject.disc_win, 0),

@@ -100,8 +100,8 @@ public class Kitcalc {
                 spcRec.costprice = spcRec.costprice - spcRec.costprice * artiklS / 100; //себесстоимость со скидкой 
                 spcRec.price = spcRec.costprice;
                 spcRec.price = spcRec.price * artiklK; //цена за един.изм 
-                spcRec.cost1 = spcRec.price * spcRec.quant2; //стоимость без скидки                     
-                spcRec.cost2 = spcRec.cost1 - discKit * spcRec.cost1 / 100; //стоимость со скид.менеджера
+                spcRec.cost1 = spcRec.price * spcRec.quant2; //стоимость без скидки менеджера                     
+                spcRec.cost2 = spcRec.cost1 - discKit * spcRec.cost1 / 100; //стоимость со скидкой менеджера
                 cost1 += spcRec.cost1;
                 cost2 += spcRec.cost2;
                 kitList.add(spcRec);
