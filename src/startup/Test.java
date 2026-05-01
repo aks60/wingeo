@@ -54,7 +54,6 @@ import org.locationtech.jts.util.GeometricShapeFactory;
 import static dataset.Entity.printJSO;
 import domain.eSyssize;
 
-///
 public class Test {
 
     private JFrame frame = null;
@@ -107,7 +106,7 @@ public class Test {
             //clearDB();
             //PSConvert.exec();
             //frame();
-            //wincalc("min");
+            wincalc("min");
             //param();
             //query();
             //json();

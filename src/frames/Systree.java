@@ -43,11 +43,6 @@ import builder.Wincalc;
 import builder.making.TFurniture;
 import builder.script.GsonElem;
 import common.UCom;
-import domain.eArtdet;
-import domain.eColor;
-import enums.Layout;
-import enums.PKjson;
-import frames.dialog.DicColor;
 import frames.swing.comp.Canvas;
 import frames.swing.comp.DefMutableTreeNode;
 import java.awt.CardLayout;
@@ -62,8 +57,6 @@ import startup.App;
 import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;
 import builder.making.UColor;
-import builder.model.AreaStvorka;
-import builder.model.UPar;
 import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
@@ -92,8 +85,7 @@ import static java.util.stream.Collectors.toList;
 import javax.swing.JTree;
 import org.locationtech.jts.geom.Envelope;
 import common.listener.ListenerGet;
-import common.listener.ListenerSet;
-import frames.swing.comp.CardPanel;
+import frames.swing.comp.CardPanels;
 
 public class Systree extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
@@ -116,7 +108,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private boolean writeNuni = true;
     private Canvas canvas = new Canvas();
     private Scene scene = null;
-    private CardPanel cardPanel = null;
+    private CardPanels cardPanel = null;
     private TableFieldFormat rsvSystree;
     private java.awt.Frame models = null;
     private DefMutableTreeNode sysNode = null;
@@ -127,7 +119,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         initComponents();
         scene = new Scene(canvas, this, this);
         initElements();
-        cardPanel = new CardPanel(listenerWincalc, listenerCangeAndRedraw, winTree, ppmTree, qGroups, qSysprof, pan7);
+        cardPanel = new CardPanels(listenerWincalc, listenerCangeAndRedraw, winTree, ppmTree, qGroups, qSysprof, pan7);
         loadingData();
         loadingModel();
         listenerAdd();
@@ -143,7 +135,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         this.systreeID = nuni;
         this.writeNuni = false;
         initElements();
-        cardPanel = new CardPanel(listenerWincalc, listenerCangeAndRedraw, winTree, ppmTree, qGroups, qSysprof, pan7);
+        cardPanel = new CardPanels(listenerWincalc, listenerCangeAndRedraw, winTree, ppmTree, qGroups, qSysprof, pan7);
         loadingData();
         loadingModel();
         listenerAdd();

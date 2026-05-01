@@ -60,12 +60,10 @@ public class TFurniture extends Cal5e {
                 for (AreaSimple areaSimple : stvorkaList) {
                     AreaStvorka areaStv = (AreaStvorka) areaSimple;
 
-                    //Найдём из списка систем.фурн. фурнитуру которая установлена в створку                 
-                    Record sysfurnRec = sysfurnList.stream().filter(rec -> rec.getInt(eSysfurn.id) == areaStv.sysfurnRec.getInt(eSysfurn.id)).findFirst().orElse(null);
-                    if (sysfurnRec == null) {  //если запрошенной areaStv.sysfurnRec нет в списке то первая по умолч.
-                        sysfurnRec = sysfurnList.get(0); //значение по умолчанию, первая SYSFURN в списке системы
+                    if (areaStv.sysfurnRec == null) {  //то первая по умолч.
+                        areaStv.sysfurnRec = sysfurnList.get(0); //значение по умолчанию, первая SYSFURN в списке системы
                     }
-                    Record furnitureRec = eFurniture.find(sysfurnRec.getInt(eSysfurn.furniture_id));
+                    Record furnitureRec = eFurniture.find(areaStv.sysfurnRec.getInt(eSysfurn.furniture_id));
 
                     //Проверка с предупреждением на max высоту, ширину, периметр
                     Envelope env = areaStv.area.getEnvelopeInternal();
@@ -80,7 +78,8 @@ public class TFurniture extends Cal5e {
                             return;
                         }
                     }
-                    variant(areaStv, furnitureRec, 1); //основная фурнитура
+                    //Основная фурнитура
+                    variant(areaStv, furnitureRec, 1);
                 }
             }
         } catch (Exception e) {
@@ -137,14 +136,14 @@ public class TFurniture extends Cal5e {
         try {
             Record artiklRec = eArtikl.find(furndetRec.getInt(eFurndet.artikl_id), false);
             HashMap<Integer, String> mapParam = new HashMap<Integer, String>(); //тут накапливаются параметры element и specific
-            
+
             //ФИЛЬТР сделано для убыстрения поиска ручки, 
             //подвеса, замка при конструировании окна
             if (shortPass == true) {
                 if (furndetRec.getInt(eFurndet.furndet_id) == furndetRec.getInt(eFurndet.id) && furndetRec.get(eFurndet.furniture_id2) == null) {
                     if (artiklRec.getInt(eArtikl.level1) != 2
                             || (artiklRec.getInt(eArtikl.level1) == 2 && LEVEL.contains(artiklRec.getInt(eArtikl.level2)) == false)) {
-                        return false;  //т.к. ручки, подвеса, замка на этом уровне нет
+                        return false;  //т.к. ручки, подвеса, замка на этих уровнях нет
                     }
                 }
             }
@@ -188,7 +187,6 @@ public class TFurniture extends Cal5e {
                     length = el.length() - 2 * el.artiklRec.getDbl(eArtikl.size_falz);
                 }
                 if (length >= furnside2Rec.getDbl(eFurnside2.len_max) || (length < furnside2Rec.getDbl(eFurnside2.len_min))) {
-
                     return false; //не прошли ограничение сторон
                 }
             }

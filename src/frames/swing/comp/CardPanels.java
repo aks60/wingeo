@@ -58,7 +58,7 @@ import common.listener.ListenerRecord;
 import common.listener.ListenerSet;
 import javax.swing.JPanel;
 
-public class CardPanel extends javax.swing.JPanel {
+public class CardPanels extends javax.swing.JPanel {
 
     private JPanel panCont;
     private ListenerGet<Wincalc> listenerWincalc;
@@ -72,7 +72,7 @@ public class CardPanel extends javax.swing.JPanel {
     javax.swing.JPopupMenu ppmTree = new javax.swing.JPopupMenu();
     private DefMutableTreeNode winNode = null;
 
-    public CardPanel(ListenerGet listenerWincalc, ListenerAction listenerChangeAndRedraw,
+    public CardPanels(ListenerGet listenerWincalc, ListenerAction listenerChangeAndRedraw,
             JTree winTree, JPopupMenu ppmTree, Query qGroups, Query qSysprof, JPanel panCont) {
         initComponents();
         this.panCont = panCont;

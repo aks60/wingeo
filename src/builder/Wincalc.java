@@ -1,5 +1,6 @@
 package builder;
 
+import builder.making.TFurniture;
 import builder.model.AreaRectangl;
 import builder.model.AreaSimple;
 import builder.model.AreaStvorka;
@@ -136,6 +137,8 @@ public class Wincalc {
             artikle(); //артиклы конструкции
 
             location(); //координаты конструкции
+            
+            new TFurniture(this, true).furn();
 
         } catch (JsonSyntaxException e) {
             System.err.println("Ошибка: Wincalc.build()");

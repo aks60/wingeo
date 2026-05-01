@@ -1,6 +1,7 @@
 package builder.model;
 
 import builder.Wincalc;
+import builder.making.TFurniture;
 import builder.making.TRecord;
 import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
