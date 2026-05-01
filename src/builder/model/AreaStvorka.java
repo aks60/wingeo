@@ -37,9 +37,11 @@ public class AreaStvorka extends AreaSimple {
 
     public TRecord spcRec = null; //спецификация москитки
     public Record sysfurnRec = eSysfurn.up.newRecord(Query.SEL); //фурнитура 
-    public Record handRec[] = {eArtikl.virtualRec(), eArtikl.virtualRec()}; //ручка 0-вручную 1-авторасчёт
-    public Record loopRec[] = {eArtikl.virtualRec(), eArtikl.virtualRec()}; //подвес(петли) 0-вручную 1-авторасчёт
-    public Record lockRec[] = {eArtikl.virtualRec(), eArtikl.virtualRec()}; //замок 0-вручную 1-авторасчёт
+    //[0]-вручную, то что отображается в интерфейсе
+    //[1]-подбор по параметрам, то что отображается на рисунке и идет в спецификацию
+    public Record handRec[] = {eArtikl.virtualRec(), eArtikl.virtualRec()}; //ручка 0-вручную 1-подбор
+    public Record loopRec[] = {eArtikl.virtualRec(), eArtikl.virtualRec()}; //подвес(петли) 0-вручную 1-подбор
+    public Record lockRec[] = {eArtikl.virtualRec(), eArtikl.virtualRec()}; //замок 0-вручную 1-подбор
     public Record mosqRec = eArtikl.virtualRec(); //москитка
     public Record elementRec = eElement.up.newRecord(Query.SEL); //состав москидки 
 
@@ -49,9 +51,9 @@ public class AreaStvorka extends AreaSimple {
     public Geometry imageHand = gf.createMultiPolygon(new Polygon[]{
         UGeo.newPolygon(-20, -20, -20, 20, -10, 20, -10, -10, 10, -10, 10, 20, 20, 20, 20, -20),
         UGeo.newPolygon(-10, -10, -10, 120, 10, 120, 10, -10)}); //ручка шаблон     
-    public int handColor[] = {-3, -3}; //цвет ручки 0-вручную 1-авторасчёт
-    public int loopColor[] = {-3, -3}; //цвет подвеса 0-вручную 1-авторасчёт
-    public int lockColor[] = {-3, -3}; //цвет замка 0-вручную 1-авторасчёт
+    public int handColor[] = {-3, -3}; //цвет ручки 0-вручную 1-подбор
+    public int loopColor[] = {-3, -3}; //цвет подвеса 0-вручную 1-подбор
+    public int lockColor[] = {-3, -3}; //цвет замка 0-вручную 1-подбор
     public int mosqColor = -3; //цвет москитки вирт.
 
     public double handHeight = 0; //высота ручки

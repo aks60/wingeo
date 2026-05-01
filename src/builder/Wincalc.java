@@ -138,7 +138,7 @@ public class Wincalc {
 
             location(); //координаты конструкции
             
-            new TFurniture(this, true).furn();
+            //new TFurniture(this, true).furn(); //пересчёт конструктива
 
         } catch (JsonSyntaxException e) {
             System.err.println("Ошибка: Wincalc.build()");
