@@ -1420,6 +1420,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                 }
             }
         });
+        tab5.setName("tab5"); // NOI18N
         tab5.getTableHeader().setReorderingAllowed(false);
         scr5.setViewportView(tab5);
 
@@ -1607,6 +1608,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
             }
         });
         tab4.setFillsViewportHeight(true);
+        tab4.setName("tab4"); // NOI18N
         tab4.setPreferredSize(new java.awt.Dimension(700, 32));
         tab4.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tab4.addMouseListener(new java.awt.event.MouseAdapter() {

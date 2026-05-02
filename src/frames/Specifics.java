@@ -495,6 +495,7 @@ public class Specifics extends javax.swing.JFrame {
             }
         });
         tab1.setFillsViewportHeight(true);
+        tab1.setName("tab1"); // NOI18N
         tab1.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         tab1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -741,8 +742,8 @@ public class Specifics extends javax.swing.JFrame {
 
         btnTest.setVisible(eProp.typuse.equals("99"));
         App.loadLocationWin(this, btnClose, (e) -> {
-            App.saveLocationWin(this, btnClose);
-        });
+            App.saveLocationWin(this, btnClose, tab1);
+        }, tab1);
 
         filterTable = new TableFieldFilter(4, tab1);
         south.add(filterTable, 0);
