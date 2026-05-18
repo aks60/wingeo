@@ -43,11 +43,6 @@ import builder.Wincalc;
 import builder.making.TFurniture;
 import builder.script.GsonElem;
 import common.UCom;
-import domain.eArtdet;
-import domain.eColor;
-import enums.Layout;
-import enums.PKjson;
-import frames.dialog.DicColor;
 import frames.swing.comp.Canvas;
 import frames.swing.comp.DefMutableTreeNode;
 import java.awt.CardLayout;
@@ -62,8 +57,6 @@ import startup.App;
 import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;
 import builder.making.UColor;
-import builder.model.AreaStvorka;
-import builder.model.UPar;
 import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
@@ -92,8 +85,7 @@ import static java.util.stream.Collectors.toList;
 import javax.swing.JTree;
 import org.locationtech.jts.geom.Envelope;
 import common.listener.ListenerGet;
-import common.listener.ListenerSet;
-import frames.swing.comp.CardPanel;
+import frames.swing.comp.CardPanels;
 
 public class Systree extends javax.swing.JFrame implements ListenerReload, ListenerAction {
 
@@ -116,18 +108,19 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private boolean writeNuni = true;
     private Canvas canvas = new Canvas();
     private Scene scene = null;
-    private CardPanel cardPanel = null;
+    private CardPanels cardPanel = null;
     private TableFieldFormat rsvSystree;
     private java.awt.Frame models = null;
     private DefMutableTreeNode sysNode = null;
     private DefMutableTreeNode winNode = null;
     private TreeNode[] selectedPath = null;
+    private TreeNode[] selectedPath2 = null;
 
     public Systree() {
         initComponents();
         scene = new Scene(canvas, this, this);
         initElements();
-        cardPanel = new CardPanel(listenerWincalc, listenerCangeAndRedraw, winTree, ppmTree, qGroups, qSysprof, pan7);
+        cardPanel = new CardPanels(listenerWincalc, listenerCangeAndRedraw, winTree, ppmTree, qGroups, qSysprof, pan7);
         loadingData();
         loadingModel();
         listenerAdd();
@@ -143,7 +136,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         this.systreeID = nuni;
         this.writeNuni = false;
         initElements();
-        cardPanel = new CardPanel(listenerWincalc, listenerCangeAndRedraw, winTree, ppmTree, qGroups, qSysprof, pan7);
+        cardPanel = new CardPanels(listenerWincalc, listenerCangeAndRedraw, winTree, ppmTree, qGroups, qSysprof, pan7);
         loadingData();
         loadingModel();
         listenerAdd();
@@ -651,7 +644,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 String script2 = UGui.ioknaParamUpdate(winc, sypar1Rec.getInt(eSyspar1.groups_id), record.getInt(0));
                 sysprodRec.set(eSysprod.script, script2);
                 winc.build(script2);
-                
+
                 //Пересчёт фурнитуры с учётом настроек                    
                 new TFurniture(winc, true).furn();
 
@@ -817,6 +810,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         btnTree = new javax.swing.JButton();
         btnMoveD = new javax.swing.JButton();
         btnFind2 = new javax.swing.JButton();
+        btnRefresh = new javax.swing.JButton();
         centr = new javax.swing.JPanel();
         scr1 = new javax.swing.JScrollPane();
         sysTree = new javax.swing.JTree();
@@ -1151,6 +1145,22 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
         });
 
+        btnRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c038.gif"))); // NOI18N
+        btnRefresh.setToolTipText(bundle.getString("Удалить")); // NOI18N
+        btnRefresh.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnRefresh.setFocusable(false);
+        btnRefresh.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnRefresh.setMaximumSize(new java.awt.Dimension(25, 25));
+        btnRefresh.setMinimumSize(new java.awt.Dimension(25, 25));
+        btnRefresh.setPreferredSize(new java.awt.Dimension(25, 25));
+        btnRefresh.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
+        btnRefresh.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshete(evt);
+            }
+        });
+
         javax.swing.GroupLayout toolLayout = new javax.swing.GroupLayout(tool);
         tool.setLayout(toolLayout);
         toolLayout.setHorizontalGroup(
@@ -1160,6 +1170,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 .addComponent(btnIns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnFind1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1170,7 +1182,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 .addComponent(btnMoveU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMoveD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 539, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 506, Short.MAX_VALUE)
                 .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnReport1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1189,7 +1201,8 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 .addComponent(btnFind1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnMoveU, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnMoveD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnTree, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnTree, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnRefresh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(btnFind2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -1288,7 +1301,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         );
         pan12Layout.setVerticalGroup(
             pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 323, Short.MAX_VALUE)
+            .addGap(0, 387, Short.MAX_VALUE)
         );
 
         pan7.add(pan12, "card12");
@@ -1544,7 +1557,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         .addGroup(pan6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lab14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         tabb1.addTab("   Основные   ", pan6);
@@ -1953,9 +1966,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_findFromArtikl
 
     private void btnReport(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReport
-        changeAndRedraw();
-//            Object o1 = winTree.getLastSelectedPathComponent();
-//            System.out.println(o1);        
+        //changeAndRedraw();
+        DefMutableTreeNode node = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
+        selectedPath2 = node.getPath();
     }//GEN-LAST:event_btnReport
 
     private void btnClose(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClose
@@ -1963,7 +1976,9 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     }//GEN-LAST:event_btnClose
 
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
-        System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(wincalc().gson.toJson())));
+        winTree.setSelectionPath(new TreePath(selectedPath2));
+
+//System.out.println(new GsonBuilder().setPrettyPrinting().create().toJson(JsonParser.parseString(wincalc().gson.toJson())));
     }//GEN-LAST:event_btnTestActionPerformed
 
     private void btnMove(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMove
@@ -2216,6 +2231,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         });
     }//GEN-LAST:event_elementsView
 
+    private void btnRefreshete(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshete
+        changeAndRedraw();
+    }//GEN-LAST:event_btnRefreshete
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code"> 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu addImpost;
@@ -2232,6 +2251,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
     private javax.swing.JButton btnIns;
     private javax.swing.JButton btnMoveD;
     private javax.swing.JButton btnMoveU;
+    private javax.swing.JButton btnRefresh;
     private javax.swing.JButton btnReport1;
     private javax.swing.JButton btnTest;
     private javax.swing.JButton btnTree;

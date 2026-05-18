@@ -60,14 +60,14 @@ public class AreaSimple extends Com5t {
                         ? gson.param.get(PKjson.colorID3).getAsInt() : owner.colorID3;
             } else {
                 colorID1 = (UPar.isFinite(gson.param, PKjson.colorID1))
-                        ? gson.param.get(PKjson.colorID1).getAsInt()
-                        : UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id));
+                        ? gson.param.get(PKjson.colorID1).getAsInt() : (winc.gson.color1 == -3)
+                        ? UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id)) : winc.gson.color1; //базовый
                 colorID2 = (UPar.isFinite(gson.param, PKjson.colorID2))
-                        ? gson.param.get(PKjson.colorID2).getAsInt()
-                        : UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id));
+                        ? gson.param.get(PKjson.colorID1).getAsInt() : (winc.gson.color2 == -3)
+                        ? UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id)) : winc.gson.color2; //внутр
                 colorID3 = (UPar.isFinite(gson.param, PKjson.colorID3))
-                        ? gson.param.get(PKjson.colorID3).getAsInt()
-                        : UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id));
+                        ? gson.param.get(PKjson.colorID1).getAsInt() : (winc.gson.color3 == -3)
+                        ? UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id)) : winc.gson.color3; //внещний
             }
 
         } catch (Exception e) {

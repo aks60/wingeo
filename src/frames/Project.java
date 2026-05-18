@@ -78,7 +78,7 @@ import startup.App;
 import common.listener.ListenerReload;
 import static dataset.Query.INS;
 import domain.eSysprof;
-import frames.swing.comp.CardPanel;
+import frames.swing.comp.CardPanels;
 import frames.swing.comp.MainMenu;
 import java.util.ArrayList;
 import static java.util.stream.Collectors.toList;
@@ -103,7 +103,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
     private DefMutableTreeNode winNode = null;
     private Canvas canvas = new Canvas();
     private Scene scene = null;
-    private CardPanel cardPanel = null;
+    private CardPanels cardPanel = null;
     Object[] column = new String[]{"", "Скидка (%)", "Без скидок", "Со скидкой"};
     private Gson gson = new GsonBuilder().create();
     DefaultTableCellRenderer defaultTableCellRenderer = new DefaultTableCellRenderer() {
@@ -121,7 +121,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         scene = new Scene(canvas, this, this);
         //btnReport.setVisible(menureport);
         initElements();
-        cardPanel = new CardPanel(listenerWincalc, listenerCangeAndRedraw, winTree, ppmTree, qGroups, qSysprof, pan7);
+        cardPanel = new CardPanels(listenerWincalc, listenerCangeAndRedraw, winTree, ppmTree, qGroups, qSysprof, pan7);
         loadingData();
         loadingModel();
         listenerAdd();
@@ -1420,6 +1420,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                 }
             }
         });
+        tab5.setName("tab5"); // NOI18N
         tab5.getTableHeader().setReorderingAllowed(false);
         scr5.setViewportView(tab5);
 
@@ -1607,6 +1608,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
             }
         });
         tab4.setFillsViewportHeight(true);
+        tab4.setName("tab4"); // NOI18N
         tab4.setPreferredSize(new java.awt.Dimension(700, 32));
         tab4.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tab4.addMouseListener(new java.awt.event.MouseAdapter() {

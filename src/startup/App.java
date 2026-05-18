@@ -299,6 +299,51 @@ public enum App {
         }
     }
 
+//    public static void loadLocationWin(Window window, JButton btn, ActionListener listener) {
+//
+//        addButtonMouseListener(btn, listener);
+//
+//        Preferences pref = Preferences.userNodeForPackage(window.getClass()).node(window.getClass().getSimpleName());
+//
+//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+//        Dimension frameSize = window.getSize();
+//
+//        frameSize.height = pref.getInt("_height", window.getHeight());
+//        frameSize.width = pref.getInt("_width", window.getWidth());
+//
+//        if (frameSize.height > screenSize.height) {
+//            frameSize.height = screenSize.height;
+//        }
+//        if (frameSize.width > screenSize.width) {
+//            frameSize.width = screenSize.width;
+//        }
+//
+//        if (window.getClass().getSimpleName().equals("Setting")) {
+//            window.setLocation(20, 100);
+//        } else {
+//            window.setLocation((screenSize.width - frameSize.width) / 2,
+//                    (screenSize.height - frameSize.height - 48) / 2 + 48);
+//        }
+//            for (int i = 0; i < window.comp.length; ++i) {
+//
+//                if (comp[i] instanceof JTable) {
+//                    JTable tab = (JTable) comp[i];
+//                    pref = pref.node(tab.getName());
+//                    for (int k = 0; k < tab.getColumnCount(); ++k) {
+//                        tab.getColumnModel().getColumn(k).setPreferredWidth(
+//                                pref.getInt("colWidth" + k, tab.getColumnModel().getColumn(k).getPreferredWidth()));
+//                    }
+//                } else if (comp[i] instanceof JSplitPane) {
+//                    JSplitPane split = (JSplitPane) comp[i];
+//                    pref = pref.node(split.getName());
+//                    int v = pref.getInt("dividerLocation", split.getDividerLocation());
+//                    split.setDividerLocation(v);
+//                }
+//            }
+//
+//        window.setPreferredSize(frameSize);
+//        window.pack();
+//    }
     public static void loadLocationWin(Window window, JButton btn, ActionListener listener, JComponent... comp) {
 
         addButtonMouseListener(btn, listener);

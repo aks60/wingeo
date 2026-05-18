@@ -1,6 +1,7 @@
 package report.sup;
 
 import common.eProp;
+import dataset.Connect;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,11 +23,11 @@ import javax.swing.JOptionPane;
 public class ExecuteCmd {
 
     public static void documentType(JFrame owner) {
+        if (Connect.webapp == false) {
+            ExecuteCmd.startHtml("report.html");
+            //ExecuteCmd.startExcel("report.html");
+            //ExecuteCmd.startWord("report.html");
 
-        ExecuteCmd.startHtml("report.html");
-        //ExecuteCmd.startExcel("report.html");
-        //ExecuteCmd.startWord("report.html");
-        
 //        Object[] options = {"HTML", "WORD", "EXCEL"};
 //        int n = JOptionPane.showOptionDialog(owner, "Выберите формат файла для отчёта", "Формирование отчёта",
 //                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
@@ -37,6 +38,7 @@ public class ExecuteCmd {
 //        } else if (n == 2) {
 //            ExecuteCmd.startExcel("report.html");
 //        }
+        }
     }
 
     //Запуск файла из каталога
@@ -105,7 +107,7 @@ public class ExecuteCmd {
                 Runtime.getRuntime().exec(cmd);
             }
         } catch (FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);            
+            JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);
         } catch (Exception e) {
             System.err.println("Ошибка:ExecuteCmd.startExcel" + e);
         }
