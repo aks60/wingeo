@@ -1,16 +1,7 @@
 package common;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.Window;
-import java.awt.event.ActionListener;
 import java.util.Locale;
 import java.util.prefs.Preferences;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JSplitPane;
-import javax.swing.JTable;
-import javax.swing.Timer;
 
 public enum eProp {
 
