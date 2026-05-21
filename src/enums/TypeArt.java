@@ -3,7 +3,6 @@ package enums;
 import dataset.Record;
 import domain.eArtikl;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Типы мат. ценностей

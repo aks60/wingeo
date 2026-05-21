@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package frames.swing.column;
 
 
@@ -14,7 +9,6 @@ package frames.swing.column;
 import java.util.*;
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.*;
 import javax.swing.table.*;
 import javax.swing.plaf.basic.*;
 

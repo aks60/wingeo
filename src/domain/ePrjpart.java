@@ -4,11 +4,6 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
-import static domain.eColor.up;
-import static domain.ePrjkit.up;
-import frames.UGui;
-import java.util.List;
-import static java.util.stream.Collectors.toList;
 
 public enum ePrjpart implements Field {
     up("0", "0", "0", "Контрагент", "CLIENTS"),

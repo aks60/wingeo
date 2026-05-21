@@ -3,14 +3,8 @@ package builder.param;
 import dataset.Query;
 import domain.eArtikl;
 import domain.eColor;
-import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
-import javax.swing.JFormattedTextField.AbstractFormatterFactory;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.MaskFormatter;
-import javax.swing.text.NumberFormatter;
-import domain.eSetting;
 import enums.Enam;
 import java.util.ArrayList;
 

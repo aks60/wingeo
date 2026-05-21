@@ -54,8 +54,6 @@ import startup.App;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import common.listener.ListenerGet;
-import common.listener.ListenerRecord;
-import common.listener.ListenerSet;
 import javax.swing.JPanel;
 
 public class CardPanels extends javax.swing.JPanel {

@@ -1,6 +1,5 @@
 package frames;
 
-import common.eProp;
 import dataset.Query;
 import domain.eProject;
 import javax.swing.RowFilter;

@@ -1,6 +1,5 @@
 package frames;
 
-import common.eProp;
 import dataset.Query;
 import domain.eSyssize;
 import java.awt.Frame;

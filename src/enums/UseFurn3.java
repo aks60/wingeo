@@ -4,11 +4,6 @@
  * and open the template in the editor.
  */
 package enums;
-
-import static enums.UseSide.values;
-import static enums.TypeOpen1.values;
-
-//Ограничение сторон, назначение стороны фурнитуры
 public enum UseFurn3 implements Enam {
     P1(1, "Сторона"),
     P2(2, "Ось поворота"),

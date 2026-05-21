@@ -3,9 +3,6 @@ package domain;
 import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
-import dataset.Record;
-import static domain.eGroups.up;
-import frames.UGui;
 
 public enum eKits implements Field {
     up("0", "0", "0", "Комплекты", "KOMPLST"),

@@ -1,12 +1,9 @@
 package report.sup;
 
 import builder.making.TRecord;
-import builder.making.TTariffic;
 import domain.eColor;
 import common.UCom;
-import domain.eArtikl;
 import enums.UseUnit;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;

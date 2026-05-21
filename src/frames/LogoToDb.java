@@ -7,7 +7,6 @@ import common.eProp;
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import startup.App;
 

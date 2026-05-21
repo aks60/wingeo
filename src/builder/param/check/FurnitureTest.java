@@ -14,7 +14,6 @@ import static builder.param.check.WincalcTest.furnitureDet3;
 import static builder.param.check.WincalcTest.furnitureDet4;
 import static builder.param.check.WincalcTest.frame2_left;
 import static builder.param.check.WincalcTest.frame3_left;
-import static builder.param.check.WincalcTest.iwin3;
 import static builder.param.check.WincalcTest.stv2_left_3;
 import static builder.param.check.WincalcTest.stv2_left_4;
 import static builder.param.check.WincalcTest.stv3_right_3;

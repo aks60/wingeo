@@ -1,6 +1,5 @@
 package frames;
 
-import common.eProp;
 import frames.swing.comp.ProgressBar;
 import common.listener.ListenerFrame;
 import dataset.Field;

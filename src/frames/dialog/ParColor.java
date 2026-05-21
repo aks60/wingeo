@@ -1,6 +1,5 @@
 package frames.dialog;
 
-import common.eProp;
 import frames.UGui;
 import dataset.Query;
 import dataset.Record;
@@ -17,7 +16,6 @@ import common.listener.ListenerRecord;
 import dataset.Field;
 import domain.eParmap;
 import java.awt.Component;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

@@ -9,7 +9,6 @@ import dataset.Record;
 import domain.eArtikl;
 import domain.eElement;
 import domain.eFurniture;
-import domain.eSetting;
 import domain.eSysfurn;
 import domain.eSysprof;
 import domain.eSystree;
@@ -17,7 +16,6 @@ import enums.Layout;
 import enums.Type;
 import enums.TypeOpen1;
 import java.util.List;
-import org.locationtech.jts.geom.LineSegment;
 
 /**
  * Участвует в допустимости элемента в конструкции через параметр

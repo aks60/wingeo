@@ -1,8 +1,5 @@
 package enums;
 
-import dataset.Record;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Stream;
 
 //Тип профиля в системе конструкций

@@ -13,7 +13,6 @@ package builder.model;
 
 import static builder.model.Com5t.gf;
 import domain.eArtikl;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +30,6 @@ import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.LinearRing;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.operation.buffer.BufferParameters;
-import startup.Test;
 
 /**
  * Creates a buffer polygon with a varying buffer distance at each vertex along

@@ -1,7 +1,5 @@
 package dataset;
 
-import domain.eArtdet;
-import domain.eArtikl;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;

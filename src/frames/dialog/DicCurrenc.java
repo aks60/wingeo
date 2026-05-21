@@ -1,25 +1,17 @@
 package frames.dialog;
 
-import common.eProp;
-import common.eProp;
 import dataset.Query;
 import domain.eCurrenc;
 import java.awt.Frame;
-import java.awt.Window;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 import frames.swing.comp.DefTableModel;
 import common.listener.ListenerRecord;
-import domain.eGroups;
 import frames.UGui;
 import frames.swing.comp.DefCellEditorNumb;
 import frames.swing.comp.DefCellRendererNumb;
 import java.util.Arrays;
-import java.util.List;
-import report.sup.ExecuteCmd;
-import report.sup.RTable;
 import startup.App;
 
 public class DicCurrenc extends javax.swing.JDialog {

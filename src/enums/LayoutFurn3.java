@@ -1,9 +1,5 @@
 package enums;
 
-import static enums.UseSide.values;
-import static enums.TypeOpen1.values;
-
-//Стороны конструкции. Против час. стрелки.
 //TODO не разобрался с отрицательными параметрами которые привязаны к 24038 и 25038
 public enum LayoutFurn3 implements Enam {
     P1(1, "Нижняя"),

@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import dataset.Record;
 import domain.eProject;
-import domain.eSystree;
-import enums.Scale;
 
 public class Kitcalc {
 

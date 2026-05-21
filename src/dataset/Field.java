@@ -1,7 +1,5 @@
 package dataset;
 
-import domain.eGroups;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;

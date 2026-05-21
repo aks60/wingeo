@@ -18,7 +18,6 @@ import enums.Type;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 
 /**

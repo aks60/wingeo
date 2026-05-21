@@ -1,11 +1,9 @@
 package dataset;
 
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -39,8 +37,6 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import javax.swing.JOptionPane;
-import startup.Test;
 
 //https://www.novixys.com/blog/how-to-generate-rsa-keys-java/
 //https://gist.github.com/thomasdarimont/b05e3e785e088e35d37890480dd84364

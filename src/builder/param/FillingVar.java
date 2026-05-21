@@ -6,7 +6,6 @@ import domain.eGlaspar1;
 import java.util.List;
 import builder.Wincalc;
 import builder.model.Com5t;
-import builder.model.ElemGlass;
 import builder.model.ElemSimple;
 import builder.model.UGeo;
 import common.UCom;

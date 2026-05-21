@@ -12,7 +12,6 @@ import builder.model.ElemSimple;
 import common.UCom;
 import enums.Type;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 //Cоединения
 public class JoiningDet extends Par5s {

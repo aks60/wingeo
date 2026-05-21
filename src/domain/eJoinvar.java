@@ -4,10 +4,7 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
-import static domain.eGroups.up;
-import frames.UGui;
 import java.util.List;
-import java.util.Set;
 import static java.util.stream.Collectors.toList;
 
 public enum eJoinvar implements Field {

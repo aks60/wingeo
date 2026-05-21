@@ -4,14 +4,8 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
-import static domain.eGroups.up;
-import static domain.ePrjprod.project_id;
-import static domain.ePrjprod.up;
-import static domain.ePrjprod.values;
-import frames.UGui;
 import java.util.List;
 import java.util.stream.Collectors;
-import static java.util.stream.Collectors.toList;
 
 public enum ePrjkit implements Field {
     up("0", "0", "0", "Комплекты изделия", "EMPTY"),

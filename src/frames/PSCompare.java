@@ -3,7 +3,6 @@ package frames;
 import builder.Wincalc;
 import builder.making.TRecord;
 import common.UCom;
-import common.eProp;
 import common.listener.ListenerFrame;
 import dataset.Query;
 import dataset.Record;

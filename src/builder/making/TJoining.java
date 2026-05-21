@@ -10,18 +10,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import builder.Wincalc;
-import builder.model.ElemFrame;
 import builder.model.ElemJoining;
 import builder.param.ElementDet;
 import builder.param.JoiningDet;
 import builder.param.JoiningVar;
 import builder.model.ElemSimple;
-import dataset.Query;
 import domain.eSetting;
 import enums.TypeJoin;
 import enums.Type;
 import java.util.ArrayList;
-import org.locationtech.jts.geom.Coordinate;
 
 //Соединения
 public class TJoining extends Cal5e {

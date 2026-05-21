@@ -1,6 +1,5 @@
 package frames.dialog;
 
-import common.eProp;
 import common.listener.ListenerFrame;
 import dataset.Field;
 import frames.UGui;
@@ -9,7 +8,6 @@ import dataset.Record;
 import java.util.Set;
 import javax.swing.table.DefaultTableModel;
 import common.listener.ListenerRecord;
-import frames.swing.comp.DefTableModel;
 import frames.swing.comp.ProgressBar;
 import java.util.Arrays;
 import javax.swing.table.TableRowSorter;

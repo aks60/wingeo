@@ -13,7 +13,6 @@ import builder.param.ElementDet;
 import builder.param.ElementVar;
 import builder.model.ElemSimple;
 import common.UCom;
-import dataset.Query;
 import enums.Type;
 import java.util.ArrayList;
 import java.util.stream.Collectors;

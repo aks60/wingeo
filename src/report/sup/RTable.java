@@ -1,9 +1,7 @@
 package report.sup;
 
-import report.sup.RColumn;
 import common.eProp;
 import java.io.File;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.swing.JTable;
@@ -11,7 +9,6 @@ import dataset.Field;
 import dataset.Record;
 import dataset.Table;
 import java.io.FileNotFoundException;
-import java.nio.charset.Charset;
 import javax.swing.JOptionPane;
 
 //Преобразование документа в HTML </p>

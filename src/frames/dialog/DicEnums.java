@@ -1,6 +1,5 @@
 package frames.dialog;
 
-import common.eProp;
 import frames.UGui;
 import dataset.Record;
 import enums.Enam;

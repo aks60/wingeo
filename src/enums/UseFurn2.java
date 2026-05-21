@@ -1,7 +1,5 @@
 package enums;
 
-import static enums.LayoutFurn1.values;
-
 public enum UseFurn2 implements Enam {
     P1(-1, "Ведомая"),
     P2(0, "Обычная"),

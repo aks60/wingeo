@@ -1,8 +1,6 @@
 package frames;
 
-import common.eProp;
 import common.listener.ListenerRecord;
-import dataset.Connect;
 import dataset.Query;
 import dataset.Record;
 import domain.eColor;

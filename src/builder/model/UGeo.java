@@ -26,7 +26,6 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import java.util.Map;
 import java.util.Set;
-import org.locationtech.jts.algorithm.CGAlgorithmsDD;
 import org.locationtech.jts.geom.LinearRing;
 
 /**

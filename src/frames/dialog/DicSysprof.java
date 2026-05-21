@@ -1,6 +1,5 @@
 package frames.dialog;
 
-import common.eProp;
 import dataset.Field;
 import dataset.Query;
 import dataset.Record;
@@ -9,7 +8,6 @@ import domain.eSysprof;
 import enums.UseSide;
 import frames.UGui;
 import frames.swing.comp.DefTableModel;
-import java.util.List;
 import common.listener.ListenerRecord;
 import java.util.Arrays;
 import startup.App;

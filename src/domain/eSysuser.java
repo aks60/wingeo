@@ -4,15 +4,6 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
-import static domain.eArtikl.code;
-import static domain.eArtikl.height;
-import static domain.eArtikl.id;
-import static domain.eArtikl.name;
-import static domain.eArtikl.size_centr;
-import static domain.eArtikl.size_falz;
-import static domain.eArtikl.syssize_id;
-import static domain.eArtikl.tech_code;
-import static domain.eArtikl.up;
 
 public enum eSysuser implements Field {
 

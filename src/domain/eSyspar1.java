@@ -4,9 +4,6 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
-import static domain.eArtikl.up;
-import static domain.ePrjkit.up;
-import frames.UGui;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 

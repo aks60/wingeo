@@ -1,9 +1,4 @@
 package enums;
-
-import static enums.TypeOpen1.values;
-import java.util.Arrays;
-
-//Расположение area  и profile объединены в один список Enum
 public enum Layout implements Enam {
     ANY(-1, "Любая"),
     HOR(-2, "Гор."),

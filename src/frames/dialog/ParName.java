@@ -28,7 +28,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collections;
-import javax.swing.JTable;
 import startup.App;
 
 public class ParName extends javax.swing.JDialog {

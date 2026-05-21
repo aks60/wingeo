@@ -2,7 +2,6 @@ package frames.dialog;
 
 import builder.making.UColor;
 import common.eProp;
-import common.eProp;
 import dataset.Query;
 import frames.UGui;
 import dataset.Record;

@@ -4,11 +4,8 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
-import static domain.eArtikl.up;
-import static domain.eArtikl.values;
 import java.util.List;
 import java.util.stream.Collectors;
-import static domain.eArtikl.groups4_id;
 
 public enum ePrjprod implements Field {
     up("0", "0", "0", "Изделия заказa", "EMPTY"),

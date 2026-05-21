@@ -1,6 +1,5 @@
 package frames.dialog;
 
-import common.eProp;
 import common.listener.ListenerFrame;
 import frames.UGui;
 import dataset.Query;
@@ -23,7 +22,6 @@ import java.util.Collections;
 import java.util.List;
 import javax.swing.JButton;
 import startup.App;
-import startup.Tex;
 
 public class DicGroups extends javax.swing.JDialog {
 

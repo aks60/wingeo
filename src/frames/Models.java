@@ -12,7 +12,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import builder.Wincalc;
 import builder.making.TJoining;
-import builder.model.UGeo;
 import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;

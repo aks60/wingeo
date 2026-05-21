@@ -6,7 +6,6 @@ import report.sup.RRecord;
 import report.sup.ExecuteCmd;
 import builder.Wincalc;
 import builder.making.TRecord;
-import builder.making.TTariffic;
 import common.UCom;
 import dataset.Record;
 import domain.eArtikl;
@@ -22,7 +21,6 @@ import static java.util.stream.Collectors.toList;
 import javax.swing.JOptionPane;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 //Спецификация

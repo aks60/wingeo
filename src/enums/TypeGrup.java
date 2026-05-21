@@ -1,7 +1,5 @@
 package enums;
 
-import static enums.UseUnit.values;
-
 public enum TypeGrup implements Enam {
     PARAM_USER(1, "Параметры пользов."),
     COLOR_GRP(2, "Группы текстур"),

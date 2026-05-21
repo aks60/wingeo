@@ -6,7 +6,6 @@ import dataset.Query;
 import dataset.Record;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public enum eElement implements Field {

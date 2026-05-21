@@ -13,7 +13,6 @@ import java.util.List;
 import static org.locationtech.jts.algorithm.Angle.angle;
 import static org.locationtech.jts.algorithm.Angle.diff;
 import org.locationtech.jts.geom.Coordinate;
-import startup.Test;
 
 public class ElemJoining {
 

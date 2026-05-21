@@ -1,8 +1,6 @@
 
 package enums;
 
-import static enums.UseUnit.values;
-
 public enum TypeOpen2 implements Enam {
     REQ(1, "Запрос"),
     LEF(2, "Левое"),

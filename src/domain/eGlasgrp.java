@@ -4,9 +4,6 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
-import static domain.eArtikl.up;
-import static domain.eColor.up;
-import frames.UGui;
 import java.util.ArrayList;
 
 public enum eGlasgrp implements Field {

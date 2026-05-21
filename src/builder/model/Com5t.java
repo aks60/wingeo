@@ -2,7 +2,6 @@ package builder.model;
 
 import builder.Wincalc;
 import builder.script.GsonElem;
-import com.google.gson.JsonObject;
 import dataset.Record;
 import domain.eArtikl;
 import domain.eColor;
@@ -10,7 +9,6 @@ import enums.Layout;
 import enums.Type;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 import javax.swing.Timer;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;

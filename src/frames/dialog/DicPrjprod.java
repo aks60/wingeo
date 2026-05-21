@@ -1,12 +1,7 @@
 package frames.dialog;
 
-import common.eProp;
-import dataset.Field;
 import dataset.Query;
 import dataset.Record;
-import domain.eArtikl;
-import domain.eSysprof;
-import enums.UseSide;
 import frames.UGui;
 import frames.swing.comp.DefTableModel;
 import common.listener.ListenerRecord;

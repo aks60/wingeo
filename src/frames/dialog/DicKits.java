@@ -4,7 +4,6 @@ import builder.model.UPar;
 import builder.param.KitDet;
 import builder.param.ParamList;
 import common.UCom;
-import common.eProp;
 import common.listener.ListenerObject;
 import dataset.Connect;
 import dataset.Field;

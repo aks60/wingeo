@@ -3,59 +3,20 @@ package builder.param.check;
 import java.util.HashMap;
 
 import static builder.param.check.WincalcTest.param;
-import static builder.param.check.WincalcTest.hmParam;
 import static builder.param.check.WincalcTest.grup;
-import static builder.param.check.WincalcTest.record;
-
-import static builder.param.check.WincalcTest.elementVar2;
-import static builder.param.check.WincalcTest.elementDet2;
-import static builder.param.check.WincalcTest.joiningVar2;
-import static builder.param.check.WincalcTest.joiningDet2;
 import static builder.param.check.WincalcTest.fillingVar2;
 import static builder.param.check.WincalcTest.fillingDet2;
-import static builder.param.check.WincalcTest.furnitureVar2;
-import static builder.param.check.WincalcTest.furnitureDet2;
-
-import static builder.param.check.WincalcTest.elementVar3;
-import static builder.param.check.WincalcTest.elementDet3;
-import static builder.param.check.WincalcTest.joiningVar3;
-import static builder.param.check.WincalcTest.joiningDet3;
 import static builder.param.check.WincalcTest.fillingVar3;
 import static builder.param.check.WincalcTest.fillingDet3;
-import static builder.param.check.WincalcTest.furnitureVar3;
-import static builder.param.check.WincalcTest.furnitureDet3;
-
-import static builder.param.check.WincalcTest.elementVar4;
-import static builder.param.check.WincalcTest.elementDet4;
-import static builder.param.check.WincalcTest.joiningVar4;
-import static builder.param.check.WincalcTest.joiningDet4;
 import static builder.param.check.WincalcTest.fillingVar4;
 import static builder.param.check.WincalcTest.fillingDet4;
-import static builder.param.check.WincalcTest.furnitureVar4;
-import static builder.param.check.WincalcTest.furnitureDet4;
-import static builder.param.check.WincalcTest.iwin2;
-import static builder.param.check.WincalcTest.iwin3;
-import static builder.param.check.WincalcTest.iwin4;
-import static builder.param.check.WincalcTest.imp2_horiz;
-import static builder.param.check.WincalcTest.imp2_vert;
-import static builder.param.check.WincalcTest.glass2_top;
 import static builder.param.check.WincalcTest.glass2_left;
 import static builder.param.check.WincalcTest.glass2_right;
-import static builder.param.check.WincalcTest.frame3_left;
-import static builder.param.check.WincalcTest.frame3_right;
-import static builder.param.check.WincalcTest.imp3_vert;
 import static builder.param.check.WincalcTest.glass3_top;
 import static builder.param.check.WincalcTest.glass3_left;
-import static builder.param.check.WincalcTest.frame4_left;
-import static builder.param.check.WincalcTest.frame4_right;
-import static builder.param.check.WincalcTest.glass4_right;
 import static builder.param.check.WincalcTest.glass4_left;
 import static builder.param.check.WincalcTest.stv2_left_3;
-import static builder.param.check.WincalcTest.stv3_right_3;
-import static builder.param.check.WincalcTest.stv4_left_1;
 import static builder.param.check.WincalcTest.stv4_right_3;
-import static builder.param.check.WincalcTest.frame2_left;
-import static builder.param.check.WincalcTest.frame2_right;
 
 public class FillingTest {
 

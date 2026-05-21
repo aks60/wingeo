@@ -12,7 +12,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import javax.swing.JOptionPane;
-import startup.App;
 
 /**
  * Соединение через PostgresSQL

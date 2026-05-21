@@ -1,7 +1,6 @@
 package frames.dialog;
 
 import builder.Wincalc;
-import common.eProp;
 import common.listener.ListenerRecord;
 import common.eProp;
 import dataset.Query;

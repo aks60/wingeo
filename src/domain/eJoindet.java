@@ -4,11 +4,7 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
-import static domain.eGroups.up;
-import frames.UGui;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 
 //Не менять индекс поля, см. UColor

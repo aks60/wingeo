@@ -2,19 +2,14 @@ package report;
 
 import builder.Wincalc;
 import common.eProp;
-import common.listener.ListenerFrame;
 import dataset.Record;
 import domain.ePrjprod;
-import frames.UGui;
 import frames.swing.comp.Canvas;
-import frames.swing.comp.ProgressBar;
-import java.awt.Window;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
-import static startup.Test.frame;
 
 public class URep {
     

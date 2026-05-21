@@ -1,7 +1,6 @@
 package frames.swing.comp;
 
 import java.awt.Component;
-import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;

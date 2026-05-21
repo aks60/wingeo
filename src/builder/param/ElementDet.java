@@ -3,7 +3,6 @@ package builder.param;
 import dataset.Record;
 import domain.eElemdet;
 import domain.eElempar2;
-import domain.eSetting;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;

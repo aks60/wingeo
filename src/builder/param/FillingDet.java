@@ -13,9 +13,6 @@ import builder.model.UGeo;
 import common.UCom;
 import enums.Layout;
 import enums.Type;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 

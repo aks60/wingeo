@@ -5,7 +5,6 @@ import common.eProp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 public class Record<E> extends ArrayList<E> {
 

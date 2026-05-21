@@ -1,6 +1,5 @@
 package frames.dialog;
 
-import common.eProp;
 import common.listener.ListenerFrame;
 import frames.UGui;
 import dataset.Field;
@@ -16,7 +15,6 @@ import java.util.stream.Collectors;
 import common.listener.ListenerRecord;
 import frames.swing.comp.ProgressBar;
 import frames.swing.comp.TableFieldFilter;
-import java.util.ArrayList;
 import startup.App;
 
 //Справочник артикулов

@@ -1,13 +1,9 @@
 package builder.script;
 
-import builder.Wincalc;
-import builder.model.Com5t;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import enums.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GsonRoot extends GsonElem {
 

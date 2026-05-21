@@ -1,7 +1,5 @@
 package enums;
 
-import static enums.TypeOpen2.values;
-
 public enum LayoutHand implements Enam {
 
     MIDL(1, "По середине"),

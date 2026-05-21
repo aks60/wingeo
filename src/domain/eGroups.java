@@ -4,7 +4,6 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
-import frames.UGui;
 
 public enum eGroups implements Field {
     up("0", "0", "0", "Справочники", "EMPTY"),

@@ -1,8 +1,6 @@
 package builder.param.check;
 
 import builder.Wincalc;
-import builder.model.AreaSimple;
-import builder.model.Com5t;
 import builder.model.ElemSimple;
 import builder.param.ElementDet;
 import builder.param.ElementVar;

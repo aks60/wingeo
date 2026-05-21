@@ -2,8 +2,6 @@ package startup;
 
 import builder.script.GsonScript;
 import common.eProp;
-import common.eProfile;
-import common.eProp;
 import frames.PSConvert;
 import dataset.Connect;
 import dataset.Field;

@@ -1,7 +1,6 @@
 package frames;
 
 import common.UCom;
-import common.eProp;
 import common.listener.ListenerRecord;
 import dataset.Query;
 import dataset.Record;

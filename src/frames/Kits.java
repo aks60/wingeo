@@ -2,7 +2,6 @@ package frames;
 
 import frames.swing.comp.ProgressBar;
 import builder.param.ParamList;
-import common.eProp;
 import common.listener.ListenerFrame;
 import common.listener.ListenerRecord;
 import dataset.Connect;

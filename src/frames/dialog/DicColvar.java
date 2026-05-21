@@ -1,10 +1,8 @@
 package frames.dialog;
 
-import common.eProp;
 import frames.UGui;
 import dataset.Record;
 import enums.UseColor;
-import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 import common.listener.ListenerRecord;
 import java.util.Arrays;

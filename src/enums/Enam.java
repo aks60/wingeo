@@ -1,9 +1,5 @@
 package enums;
 
-import dataset.Field;
-import java.text.ParseException;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 import javax.swing.JFormattedTextField.AbstractFormatterFactory;

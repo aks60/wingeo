@@ -1,6 +1,5 @@
 package builder;
 
-import builder.making.TFurniture;
 import builder.model.AreaRectangl;
 import builder.model.AreaSimple;
 import builder.model.AreaStvorka;

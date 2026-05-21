@@ -1,9 +1,6 @@
 package frames.dialog;
 
-import common.eProp;
 import dataset.Record;
-import domain.eFurniture;
-import java.util.ArrayList;
 import common.listener.ListenerRecord;
 import java.util.Arrays;
 import startup.App;

@@ -1,6 +1,5 @@
 package frames.dialog;
 
-import common.eProp;
 import common.listener.ListenerFrame;
 import frames.UGui;
 import dataset.Query;
@@ -17,7 +16,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import common.listener.ListenerRecord;
-import domain.eElemdet;
 import frames.UTree;
 import frames.swing.comp.ProgressBar;
 import frames.swing.comp.TableFieldFilter;
@@ -26,7 +24,6 @@ import javax.swing.JOptionPane;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import startup.App;
-import startup.Tex;
 
 //Справочник артикулов
 public class DicArtikl2 extends javax.swing.JDialog {

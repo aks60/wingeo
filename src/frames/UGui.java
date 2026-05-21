@@ -2,9 +2,6 @@ package frames;
 
 import builder.Wincalc;
 import builder.model.Com5t;
-import builder.script.GsonRoot;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import common.eProp;
@@ -57,7 +54,6 @@ import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
 import domain.eFurndet;
-import domain.eParmap;
 import domain.ePrjprod;
 import enums.PKjson;
 import enums.Type;

@@ -18,7 +18,6 @@ import domain.eColor;
 import domain.eGroups;
 import enums.LayoutHand;
 import enums.Type;
-import java.util.Map;
 
 //Фурнитура
 public class FurnitureDet extends Par5s {
