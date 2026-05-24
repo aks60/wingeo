@@ -61,15 +61,15 @@ public class AreaSimple extends Com5t {
                         ? gson.param.get(PKjson.colorID1).getAsInt() : (winc.gson.color1 == -3)
                         ? UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id)) : winc.gson.color1; //базовый
                 colorID2 = (UPar.isFinite(gson.param, PKjson.colorID2))
-                        ? gson.param.get(PKjson.colorID1).getAsInt() : (winc.gson.color2 == -3)
+                        ? gson.param.get(PKjson.colorID2).getAsInt() : (winc.gson.color2 == -3)
                         ? UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id)) : winc.gson.color2; //внутр
                 colorID3 = (UPar.isFinite(gson.param, PKjson.colorID3))
-                        ? gson.param.get(PKjson.colorID1).getAsInt() : (winc.gson.color3 == -3)
+                        ? gson.param.get(PKjson.colorID3).getAsInt() : (winc.gson.color3 == -3)
                         ? UColor.findColorFromArtdet(sysprofRec.getInt(eSysprof.artikl_id)) : winc.gson.color3; //внещний
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaFrame.initArtikle() " + e);
+            System.err.println("Ошибка:AreaSimple.initArtikle() " + e);
         }
     }
 
