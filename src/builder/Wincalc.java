@@ -321,7 +321,7 @@ public class Wincalc {
                     }
                 }
             }
-            
+
             //Если спецификация на продукт менеджера
             if (manager == true) {
                 int prjprodID = Integer.valueOf(eProp.prjprodID.getProp());
@@ -337,7 +337,7 @@ public class Wincalc {
                     JOptionPane.showMessageDialog(Top.frame, "Выберите конструкцию в списке заказов", "Предупреждение", JOptionPane.OK_OPTION);
                 }
             }
-            
+
             //Итоговая стоимость
             for (TRecord spc : this.listSpec) {
                 this.cost1 += spc.cost1; //общая стоимость без скидки менеджера
@@ -360,40 +360,31 @@ public class Wincalc {
     //Рисуем конструкцию
     public void draw() {
         try {
+            //Прорисовка стеклопакетов
+            UCom.filter(this.listElem, Type.GLASS).stream().forEach(el -> el.paint());
 
-            if (this.sceleton == false) {
+            //Прорисовка раскладок
+            UCom.filter(this.listElem, Type.GLASS).stream().forEach(el -> ((ElemGlass) el).rascladkaPaint());
 
-                //Прорисовка стеклопакетов
-                UCom.filter(this.listElem, Type.GLASS).stream().forEach(el -> el.paint());
+            //Прорисовка москиток
+            UCom.filter(this.listElem, Type.MOSQUIT).stream().forEach(el -> ((ElemMosquit) el).paint());
 
-                //Прорисовка раскладок
-                UCom.filter(this.listElem, Type.GLASS).stream().forEach(el -> ((ElemGlass) el).rascladkaPaint());
+            //Прорисовка импостов
+            UCom.filter(this.listElem, Type.IMPOST, Type.SHTULP, Type.STOIKA).stream().forEach(el -> el.paint());
 
-                //Прорисовка москиток
-                UCom.filter(this.listElem, Type.MOSQUIT).stream().forEach(el -> ((ElemMosquit) el).paint());
+            //Прорисовка рам
+            UCom.filter(this.listElem, Type.BOX_SIDE).stream().forEach(el -> el.paint());
 
-                //Прорисовка импостов
-                UCom.filter(this.listElem, Type.IMPOST, Type.SHTULP, Type.STOIKA).stream().forEach(el -> el.paint());
+            //Прорисовка профилей створок
+            UCom.filter(this.listElem, Type.STV_SIDE).stream().forEach(el -> el.paint());
 
-                //Прорисовка рам
-                UCom.filter(this.listElem, Type.BOX_SIDE).stream().forEach(el -> el.paint());
+            //Прорисока фурнитуры створок
+            UCom.filter(this.listArea, Type.STVORKA).stream().forEach(el -> el.paint());
 
-                //Прорисовка профилей створок
-                UCom.filter(this.listElem, Type.STV_SIDE).stream().forEach(el -> el.paint());
-
-                //Прорисока фурнитуры створок
-                UCom.filter(this.listArea, Type.STVORKA).stream().forEach(el -> el.paint());
-
-                //Размерные линии
-                if (this.scale > .1) {
-                    this.root.paint();
-                }
-            } else {
-                //this.listArea.stream().forEach(el -> System.out.println("id=" + el.id));
-                this.listArea.stream().forEach(el -> el.paint());
-                this.listElem.stream().forEach(el -> el.paint());
+            //Размерные линии
+            if (this.scale > .1) {
+                this.root.paint();
             }
-
 // <editor-fold defaultstate="collapsed" desc="Раскладка"> 
 /*            
             //Прорисовка раскладок

@@ -281,7 +281,9 @@ public class ElemFrame extends ElemSimple {
             winc.gc2d.draw(shape);
 
         } else if (this.area != null) {
-            //
+            winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
+            Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(0));
+            winc.gc2d.draw(shape);
         }
     }
 

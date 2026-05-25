@@ -322,7 +322,7 @@ public class AreaStvorka extends AreaSimple {
             if (timer.isRunning() == true) {
                 this.frames.stream().filter(e -> e.type == Type.STV_SIDE).forEach(e -> ((Com5t) e).timer.start());
             }
-        } else {
+        } else if (this.area != null) {
             winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
             for (int i = 0; i < 3; ++i) {
                 Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(i));

@@ -25,7 +25,6 @@ public class Canvas extends javax.swing.JPanel {
     public Wincalc winc = null;
     public static double margin = 200; //для размерных линий 
     public static double scaleZoom = 1; //для масштабированя, т.к. scale постоянно пересчитывается
-    int css = 0;
 
     public Canvas() {
         initComponents();
@@ -135,7 +134,6 @@ public class Canvas extends javax.swing.JPanel {
     }
     
     public double scale() {
-        System.out.println(++css);
         Envelope env = winc.root.area.getGeometryN(0).getEnvelopeInternal();
         double dX = env.getMaxX(), dY = env.getMaxY();
         return  (getWidth() / (margin + dX) > getHeight() / (margin + dY))
