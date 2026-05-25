@@ -260,12 +260,12 @@ public class Scene extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRevert
 
     private void btnScale1btnMove(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScale1btnMove
-        canvas.koef_scale = canvas.koef_scale + .1;
+        canvas.scaleZoom = canvas.scaleZoom + .1;
         this.canvas.draw();
     }//GEN-LAST:event_btnScale1btnMove
 
     private void btnScale2btnMove(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScale2btnMove
-        canvas.koef_scale = canvas.koef_scale - .1;
+        canvas.scaleZoom = canvas.scaleZoom - .1;
         this.canvas.draw();
     }//GEN-LAST:event_btnScale2btnMove
 
