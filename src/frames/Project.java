@@ -233,6 +233,10 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         for (int i = first; i < qProjectAll.size(); ++i) {
             qProject.add(qProjectAll.get(i));
         }
+//        for(int i = qProjectAll.size() - 1; i > first; i--) {
+//           qProject.add(qProjectAll.get(i)); 
+//        }
+            
         //Выделяем заказ если сохранён в Property
         int orderID = Integer.valueOf(eProp.orderID.getProp());
         ((DefTableModel) tab1.getModel()).fireTableDataChanged();

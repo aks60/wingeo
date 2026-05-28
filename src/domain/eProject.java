@@ -44,6 +44,23 @@ public enum eProject implements Field {
         return meta;
     }
     
+    public Field[] fields() {
+        return values();
+    }
+
+    public static Query data() {
+        if (query.size() == 0) {
+//            query.select(up, "order by", id);
+            query.select(up, "order by", id, "desc");
+            Query.listOpenTable.add(query);
+        }
+        return query;
+    }
+
+    public Query query() {
+        return query;
+    }
+    
     public static Record find(int _id) {
         if (_id == -3) {
             return up.newRecord(Query.SEL);
@@ -53,22 +70,6 @@ public enum eProject implements Field {
         }
         Query recordList = new Query(values()).select(up, "where", id, "='", _id, "'");
         return (recordList.isEmpty() == true) ? up.newRecord(Query.SEL) : recordList.get(0);
-    }
-    
-    public Field[] fields() {
-        return values();
-    }
-
-    public static Query data() {
-        if (query.size() == 0) {
-            query.select(up, "order by", id);
-            Query.listOpenTable.add(query);
-        }
-        return query;
-    }
-
-    public Query query() {
-        return query;
     }
     
     public String toString() {
