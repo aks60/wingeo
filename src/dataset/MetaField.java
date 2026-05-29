@@ -17,6 +17,7 @@ public class MetaField {
     private static DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
     private boolean isnull = false; //запретить null в таблице
     private Field field = null; //enum
+    public Object defval = null; //значение по умолчанию
     public String fname = null; //служебное для переопределения имя поля
     public String descr = ""; //описание поля
     private TYPE type = TYPE.OBJ; //тип поля
@@ -32,20 +33,26 @@ public class MetaField {
 
     public void init(Object... p) {
 
-        if (p.length < 5) {
-            System.err.println("MetaField.init() - ОШИБКА! Количество параметров меньше 4. Поле <" + p[0].toString() + ">");
-            return;
+        if (p.length == 5) {
+            type(Integer.valueOf(p[0].toString())); //тип поля
+            this.size = Integer.valueOf(p[1].toString());
+            this.isnull = p[2].equals("1"); //разрешено null
+            this.descr = p[3].toString(); //описание поля 
+            this.fname = p[4].toString(); //переопределение имени поля
+            
+        } else if(p.length == 6) {
+            type(Integer.valueOf(p[0].toString())); //тип поля
+            this.size = Integer.valueOf(p[1].toString());
+            this.isnull = p[2].equals("1"); //разрешено null
+            this.defval = p[3].toString(); //значение по умолчанию 
+            this.descr = p[4].toString(); //описание поля 
+            this.fname = p[5].toString(); //переопределение имени поля            
+        } else {
+            System.err.println("MetaField.init() - ОШИБКА! Количество параметров... Поле <" + p[0].toString() + ">");
         }
-        type(Integer.valueOf(p[Entity.type.ordinal()].toString())); //тип поля
-        this.size = Integer.valueOf(p[Entity.size.ordinal()].toString());
-        this.isnull = p[Entity.nullable.ordinal()].equals("1"); //разрешено null
-        this.descr = p[Entity.comment.ordinal()].toString(); //описание поля 
-        this.fname = p[Entity.fname.ordinal()].toString(); //переопределение имени поля
     }
 
-    /**
-     * Проверка нужна для корректного ввода данных пользователем
-     */
+    //Проверка нужна для корректного ввода данных пользователем
     public String validateField(Object value) {
 
         if (fname == null || size == 0) {
@@ -88,7 +95,7 @@ public class MetaField {
     public void descr(String descr) {
         this.descr = descr;
     }
-    
+
     public String descr() {
         return descr;
     }
@@ -99,6 +106,13 @@ public class MetaField {
 
     public boolean isnull() {
         return isnull;
+    }
+    public void defval(Object val) {
+        this.defval = val;
+    }
+
+    public Object defval() {
+        return defval;
     }
 
     public void type(int type) {

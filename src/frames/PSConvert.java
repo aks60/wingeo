@@ -238,6 +238,9 @@ public class PSConvert {
 
             Field f2 = f[i];
             ddl = ddl + "\n" + f2.name() + "  " + UGui.typeField(f2.meta().type(), f2.meta().size());
+            if (f2.meta().defval() != null) {
+                ddl = ddl + " DEFAULT " + f2.meta().defval();
+            }
             if (f2.meta().isnull() == false) {
                 ddl = ddl + " NOT NULL";
             }
