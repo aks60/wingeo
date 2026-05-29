@@ -126,6 +126,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         loadingModel();
         listenerAdd();
         loadingTab1();
+        UGui.updateBorderAndSql(tab1, List.of(tab1, tab2, tab3, tab4));
     }
 
     private void loadingData() {
@@ -1695,6 +1696,8 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
 
         if (tab1.getBorder() != null) {
             UGui.insertRecordCur(tab1, eProject.up, (projectRec) -> {
+                projectRec.set(eProject.num_ord, projectRec.getStr(eProject.id));
+                projectRec.set(eProject.num_acc, projectRec.getStr(eProject.id));
                 projectRec.set(eProject.manager, eProfile.user);
                 projectRec.set(eProject.date4, UGui.getDateCur());
             });

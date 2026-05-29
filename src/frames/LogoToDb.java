@@ -40,7 +40,7 @@ public class LogoToDb extends javax.swing.JDialog {
                 edUser.setText("TEXNOLOG"); //user
                 edPass.setText("masterkey"); //pass                
             }
-            connectToDb();
+            //connectToDb();
 
         } else {
             edUser.setText(eProp.user.getProp());
