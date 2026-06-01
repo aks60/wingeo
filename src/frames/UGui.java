@@ -225,7 +225,7 @@ public class UGui {
             winc.gson.param.add(PKjson.ioknaParam, new JsonArray());
         }
         JsonArray ioknaList = winc.gson.param.getAsJsonArray(PKjson.ioknaParam);
-        
+
         //Цикл по "ioknaParam": [-8421, -47475]
         for (int i = 0; i < ioknaList.size(); i++) {
             int ioknaID2 = ioknaList.get(i).getAsInt();
@@ -528,6 +528,18 @@ public class UGui {
         return q.stream().filter(rec -> rec.getInt(1) == 1).findFirst().orElse(null);
     }
 
+    //Создать запись
+    public static void createRecord(Field field, ListenerRecord listener) {
+        Record record = field.newRecord(Query.INS);
+        record.setNo(field.fields()[1], Connect.genId(field));
+        for (Field fld : field.fields()) {
+            if (fld.meta().defval() != null) {
+                record.set(fld, fld.meta().defval());
+            }
+        }
+        listener.action(record);
+    }
+
     //Вставить запись
     public static void insertRecordCur(JTable table, Field field, ListenerRecord listener) {
 
@@ -536,7 +548,11 @@ public class UGui {
         Query query = ((DefTableModel) table.getModel()).getQuery();
         Record record = field.newRecord(Query.INS);
         record.setNo(field.fields()[1], Connect.genId(field));
-
+        for (Field fld : field.fields()) {
+            if (fld.meta().defval() != null) {
+                record.set(fld, fld.meta().defval());
+            }
+        }
         if (++index <= table.getRowCount()) {
             query.add(index, record);
         } else {
