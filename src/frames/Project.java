@@ -133,26 +133,15 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         qGroups.sq2(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id, eGroups.grup, TypeGrup.COLOR_MAP.id);
         qParams.sql(eParams.data(), eParams.up);
         qCurrenc.sql(eCurrenc.data(), eCurrenc.up).sort(eCurrenc.name);
-        qProjectAll.clear();
         String login = eProp.user.getProp();
-        List keyList = new ArrayList();
-        for (Record rec : ePrjpart.data()) {
-            if (login.equalsIgnoreCase(rec.getStr(ePrjpart.login))) {
-                keyList.add(rec.getInt(ePrjpart.id));
-            }
-        }
-        for (Record rec : eProject.data()) {
-            if(keyList.contains(rec.getInt(eProject.prjpart_id)))
-            qProjectAll.add(rec);
-        }
-        qProjectAll.sort(eProject.date4);
+        qProjectAll.sql(eProject.data(), eProject.login, login).sort(eProject.date4);
         qPrjpart.sql(ePrjpart.data(), ePrjpart.up);
     }
 
     public void loadingModel() {
 
         new DefTableModel(tab1, qProject, eProject.num_ord, eProject.num_acc, eProject.date4, eProject.date5,
-                eProject.date6, eProject.prjpart_id, eProject.vendor_id, eProject.manager) {
+                eProject.date6, eProject.prjpart_id, eProject.vendor_id, eProject.login) {
             @Override
             public Object getValueAt(int col, int row, Object val) {
                 Field field = columns[col];
@@ -1707,7 +1696,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
             UGui.insertRecordCur(tab1, eProject.up, (projectRec) -> {
                 projectRec.set(eProject.num_ord, projectRec.getStr(eProject.id));
                 projectRec.set(eProject.num_acc, projectRec.getStr(eProject.id));
-                projectRec.set(eProject.manager, eProfile.user);
+                projectRec.set(eProject.login, eProfile.user);
                 projectRec.set(eProject.date4, UGui.getDateCur());
             });
 
