@@ -140,8 +140,8 @@ public class Adm extends javax.swing.JFrame {
         try {
             DefaultTableModel dm = (DefaultTableModel) tab4.getModel();
             dm.getDataVector().clear();
-            String sql = "SELECT DISTINCT a.rdb$role_name , b.rdb$user, c.fio, c.phone, c.email FROM rdb$roles a left join "
-                    + " rdb$user_privileges b on a.rdb$role_name = b.rdb$relation_name AND "
+            String sql = "SELECT DISTINCT a.rdb$role_name , b.rdb$user, c.fio, c.phone, c.email, c.sysuser_id "
+                    + "FROM rdb$roles a left join rdb$user_privileges b on a.rdb$role_name = b.rdb$relation_name AND "
                     + " b.rdb$user != 'SYSDBA' AND NOT EXISTS (SELECT * FROM rdb$roles c WHERE c.rdb$role_name = b.rdb$user) "
                     + " left join sysuser c on upper(b.rdb$user) = upper(c.login) where b.rdb$user is not null ORDER BY 1";
             Statement statement = Connect.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
@@ -163,7 +163,8 @@ public class Adm extends javax.swing.JFrame {
                 Object fio = (sysuserRec.get(eSysuser.fio) == null) ? "" : sysuserRec.get(eSysuser.fio);
                 Object phone = (sysuserRec.get(eSysuser.phone) == null) ? "" : rs.getObject("phone");
                 Object email = (sysuserRec.get(eSysuser.email) == null) ? "" : rs.getObject("email");
-                List rec = List.of(++npp, login, permis, role, fio, phone, email);
+                Object sysuser_id = (sysuserRec.get(eSysuser.sysuser_id) == null) ? "" : "xfxfxfx";
+                List rec = List.of(++npp, login, permis, role, fio, phone, email, sysuser_id);
                 Vector vec = new Vector(rec);
                 dm.getDataVector().add(vec);
             }
@@ -328,6 +329,8 @@ public class Adm extends javax.swing.JFrame {
         txt6 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txt7 = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        box3 = new javax.swing.JComboBox<>();
         pan15 = new javax.swing.JPanel();
         south = new javax.swing.JPanel();
 
@@ -513,6 +516,8 @@ public class Adm extends javax.swing.JFrame {
         toolBar1.add(filler1);
 
         btnBaseEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c068.gif"))); // NOI18N
+        java.util.ResourceBundle bundle1 = java.util.ResourceBundle.getBundle("resource/hints/okno"); // NOI18N
+        btnBaseEdit.setToolTipText(bundle1.getString("Меню.Правка БД")); // NOI18N
         btnBaseEdit.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnBaseEdit.setFocusable(false);
         btnBaseEdit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -530,6 +535,7 @@ public class Adm extends javax.swing.JFrame {
         toolBar1.add(filler2);
 
         btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c069.gif"))); // NOI18N
+        btnLogin.setToolTipText(bundle1.getString("Меню.Пользователи программы")); // NOI18N
         btnLogin.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnLogin.setFocusable(false);
         btnLogin.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -552,6 +558,7 @@ public class Adm extends javax.swing.JFrame {
         buttonBaseGroup2.add(btnT7);
         btnT7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c057.gif"))); // NOI18N
         btnT7.setSelected(true);
+        btnT7.setToolTipText(bundle1.getString("Меню.База 1")); // NOI18N
         btnT7.setFocusable(false);
         btnT7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnT7.setMaximumSize(new java.awt.Dimension(28, 25));
@@ -568,6 +575,7 @@ public class Adm extends javax.swing.JFrame {
 
         buttonBaseGroup2.add(btnT8);
         btnT8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c058.gif"))); // NOI18N
+        btnT8.setToolTipText(bundle1.getString("Меню.База 2")); // NOI18N
         btnT8.setFocusable(false);
         btnT8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnT8.setMaximumSize(new java.awt.Dimension(28, 25));
@@ -584,6 +592,7 @@ public class Adm extends javax.swing.JFrame {
 
         buttonBaseGroup2.add(btnT9);
         btnT9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c059.gif"))); // NOI18N
+        btnT9.setToolTipText(bundle1.getString("Меню.База 3")); // NOI18N
         btnT9.setFocusable(false);
         btnT9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnT9.setMaximumSize(new java.awt.Dimension(28, 25));
@@ -940,17 +949,17 @@ public class Adm extends javax.swing.JFrame {
 
         tab4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "№пп", "Пользователь", "Права доступа", "Профиль", "ФИО", "Телефон", "Email"
+                "№пп", "Пользователь", "Права доступа", "Профиль", "ФИО", "Телефон", "Email", "Владелец"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1132,6 +1141,14 @@ public class Adm extends javax.swing.JFrame {
         txt7.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         txt7.setPreferredSize(new java.awt.Dimension(140, 18));
 
+        jLabel8.setText("Владелец");
+        jLabel8.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jLabel8.setPreferredSize(new java.awt.Dimension(60, 18));
+
+        box3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        box3.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        box3.setPreferredSize(new java.awt.Dimension(140, 20));
+
         javax.swing.GroupLayout pan12Layout = new javax.swing.GroupLayout(pan12);
         pan12.setLayout(pan12Layout);
         pan12Layout.setHorizontalGroup(
@@ -1160,7 +1177,7 @@ public class Adm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(40, 40, 40)
-                .addGroup(pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pan12Layout.createSequentialGroup()
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1172,7 +1189,11 @@ public class Adm extends javax.swing.JFrame {
                     .addGroup(pan12Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txt7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pan12Layout.createSequentialGroup()
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(box3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(304, Short.MAX_VALUE))
         );
         pan12Layout.setVerticalGroup(
@@ -1199,7 +1220,9 @@ public class Adm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(box2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(box2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(box3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addGroup(pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1528,6 +1551,7 @@ public class Adm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> box1;
     private javax.swing.JComboBox<String> box2;
+    private javax.swing.JComboBox<String> box3;
     private javax.swing.JButton btn10;
     private javax.swing.JButton btnBaseEdit;
     private javax.swing.JButton btnClose;
@@ -1564,6 +1588,7 @@ public class Adm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel lab1;
     private javax.swing.JLabel lab2;
     private javax.swing.JLabel lab3;
