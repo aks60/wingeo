@@ -15,7 +15,8 @@ public enum eSysuser implements Field {
     phone("12", "16", "1", "Телефон", "phone"),
     email("12", "32", "1", "Почта", "email"),
     desc("12", "64", "1", "Описание", "desc"),      
-    openkey("12", "512", "1", "Открытый ключ", "openkey");
+    openkey("12", "512", "1", "Открытый ключ", "openkey"),
+    sysuser_id("4", "10", "0", "Владелец", "sysuser_id");
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());
 

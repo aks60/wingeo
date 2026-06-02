@@ -28,8 +28,9 @@ import javax.swing.JTable;
 import javax.swing.event.ListSelectionListener;
 import startup.App;
 
+
+//Заказчик - наименование контрагента (заказчика).
 //Продавец - Дилер, Офис, Специальный
-//Контрагент - наименование контрагента (заказчика).
 //Менеджер - наименование пользователя программы, вносящего информацию по проекту, проектирующему изделия, определяющего дополнительную комплектацию, рассчитывающего стоимость проекта и т.д.
 public class Partner extends javax.swing.JFrame {
 
@@ -74,6 +75,7 @@ public class Partner extends javax.swing.JFrame {
         owner.setEnabled(false);
         loadingData();
         loadingModel();
+        btnRemove.setVisible(false);
         ((DefTableModel) tab1.getModel()).setCellEditable(false, ePrjpart.category, ePrjpart.partner, ePrjpart.login, ePrjpart.flag2);
         setVisible(true);
     }
