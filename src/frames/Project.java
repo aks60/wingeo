@@ -1274,7 +1274,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                 {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Номер заказа", "Номер счёта", "Дата регистрации", "Дата расчёта", "Дата в произволство", "Контрагент", "Продавец", "User", "ID"
+                "Номер заказа", "Номер счёта", "Дата регистрации", "Дата расчёта", "Дата в произволство", "Заказчик", "Продавец", "User", "ID"
             }
         ) {
             Class[] types = new Class [] {

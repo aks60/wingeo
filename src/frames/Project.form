@@ -679,7 +679,7 @@
                             <Column editable="true" title="&#x414;&#x430;&#x442;&#x430; &#x440;&#x435;&#x433;&#x438;&#x441;&#x442;&#x440;&#x430;&#x446;&#x438;&#x438;" type="java.lang.Object"/>
                             <Column editable="true" title="&#x414;&#x430;&#x442;&#x430; &#x440;&#x430;&#x441;&#x447;&#x451;&#x442;&#x430;" type="java.lang.Object"/>
                             <Column editable="true" title="&#x414;&#x430;&#x442;&#x430; &#x432; &#x43f;&#x440;&#x43e;&#x438;&#x437;&#x432;&#x43e;&#x43b;&#x441;&#x442;&#x432;&#x43e;" type="java.lang.Object"/>
-                            <Column editable="true" title="&#x41a;&#x43e;&#x43d;&#x442;&#x440;&#x430;&#x433;&#x435;&#x43d;&#x442;" type="java.lang.String"/>
+                            <Column editable="true" title="&#x417;&#x430;&#x43a;&#x430;&#x437;&#x447;&#x438;&#x43a;" type="java.lang.String"/>
                             <Column editable="true" title="&#x41f;&#x440;&#x43e;&#x434;&#x430;&#x432;&#x435;&#x446;" type="java.lang.Object"/>
                             <Column editable="true" title="User" type="java.lang.String"/>
                             <Column editable="false" title="ID" type="java.lang.Integer"/>
