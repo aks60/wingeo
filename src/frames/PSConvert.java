@@ -202,7 +202,9 @@ public class PSConvert {
             executeSql("GRANT ALL ON " + eSetting.up.tname() + " TO MANAGER_RW");
             executeSql("GRANT SELECT ON " + eSetting.up.tname() + " TO TEXNOLOG_RO");
             executeSql("GRANT ALL ON " + eSetting.up.tname() + " TO TEXNOLOG_RW");
-
+            executeSql("GRANT TEXNOLOG_RW TO TEXNOLOG");
+            executeSql("GRANT MANAGER_RW TO MANAGER");
+            
             if (eProp.typuse.equals("99") == true) { //при этом в firebird такие логины должны быть созданы
                 executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('MANAGER_RW','DEALER','Дилер Т.М.','89031887899','dil@jmail.com',null,null)");
                 executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('MANAGER_RW','MANAGER','Менеджер М.И.','89031237856','men@jmail.com',null,null)");
