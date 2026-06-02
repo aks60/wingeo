@@ -28,6 +28,9 @@ import javax.swing.JTable;
 import javax.swing.event.ListSelectionListener;
 import startup.App;
 
+//Продавец - Дилер, Офис, Специальный
+//Контрагент - наименование контрагента (заказчика).
+//Менеджер - наименование пользователя программы, вносящего информацию по проекту, проектирующему изделия, определяющего дополнительную комплектацию, рассчитывающего стоимость проекта и т.д.
 public class Partner extends javax.swing.JFrame {
 
     private int prjpartID = -1;
@@ -36,7 +39,8 @@ public class Partner extends javax.swing.JFrame {
     private Query qSysuser = new Query(eSysuser.values());
     private Query qPrjpart = new Query(ePrjpart.values(), eSysuser.values());
     private TableFieldFormat rsv = null;
-    private String arrCateg[] = {"заказчик", "поставшик", "офис", "дилер", "специальный"};
+    private String categArray[] = {"заказчик", "поставшик", "офис", "дилер", "специальный"};
+    private List categFilter = List.of("заказчик", "поставшик", "офис", "дилер", "специальный");
 
     public Partner() {
         initComponents();
@@ -57,9 +61,14 @@ public class Partner extends javax.swing.JFrame {
         setSelectionID(ID);
     }
 
-    public Partner(Frame owner, ListenerRecord listener) {
+    public Partner(Frame owner, ListenerRecord listener, int categGroup) {
         initComponents();
         initElements();
+        if (categGroup == 1) { //контрагент
+            categFilter = List.of("заказчик");
+        } else if (categGroup == 2) { //продавец
+            categFilter = List.of("офис", "дилер", "специальный");
+        }
         this.listener = listener;
         this.owner = owner;
         owner.setEnabled(false);
@@ -72,20 +81,22 @@ public class Partner extends javax.swing.JFrame {
     public void loadingData() {
         String val = eProp.user.getProp();
         if (Query.conf.equals("NET")) {
-            qPrjpart.sql(ePrjpart.data(), ePrjpart.login, val).sort(ePrjpart.npp);
+            List prjpartList = ePrjpart.data().stream().filter(rec -> categFilter.contains(rec.getStr(ePrjpart.category))).toList();
+            qPrjpart.sql(prjpartList, ePrjpart.login, val).sort(ePrjpart.npp);
             qPrjpart.table(eSysuser.up).join(qPrjpart, eSysuser.data(), ePrjpart.login, eSysuser.login);
+
         } else {
             qPrjpart.select(ePrjpart.up, "where", ePrjpart.login, "=", val, "order by", ePrjpart.npp);
         }
     }
 
     public void loadingModel() {
-        
+
         new DefTableModel(tab1, qPrjpart, ePrjpart.category, ePrjpart.partner, ePrjpart.login, ePrjpart.flag2);
 
         UGui.buttonCellEditor(tab1, 0).addActionListener(event -> {
             Object result = JOptionPane.showInputDialog(Partner.this, "Выберите категорию",
-                    "Изменение категории контрагента", JOptionPane.QUESTION_MESSAGE, null, arrCateg, arrCateg[0]);
+                    "Изменение категории контрагента", JOptionPane.QUESTION_MESSAGE, null, categArray, categArray[0]);
             if (result != null) {
                 UGui.stopCellEditing(tab1);
                 qPrjpart.set(result, UGui.getIndexRec(tab1), ePrjpart.category);
@@ -467,12 +478,12 @@ public class Partner extends javax.swing.JFrame {
         pan5.setPreferredSize(new java.awt.Dimension(260, 516));
         pan5.setLayout(new java.awt.BorderLayout());
 
-        pan2.setPreferredSize(new java.awt.Dimension(260, 300));
+        pan2.setPreferredSize(new java.awt.Dimension(260, 310));
         pan2.setLayout(new javax.swing.BoxLayout(pan2, javax.swing.BoxLayout.Y_AXIS));
 
         pan7.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("Шапка.Менеджер"), javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0))); // NOI18N
         pan7.setFont(frames.UGui.getFont(0,0));
-        pan7.setPreferredSize(new java.awt.Dimension(243, 80));
+        pan7.setPreferredSize(new java.awt.Dimension(243, 96));
 
         lab54.setFont(frames.UGui.getFont(0,0));
         lab54.setText("ФИО");
@@ -523,11 +534,11 @@ public class Partner extends javax.swing.JFrame {
                     .addGroup(pan7Layout.createSequentialGroup()
                         .addComponent(lab54, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt19, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
+                        .addComponent(txt19, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
                     .addGroup(pan7Layout.createSequentialGroup()
                         .addComponent(lab55, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt20, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                        .addComponent(txt20, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE))
                     .addGroup(pan7Layout.createSequentialGroup()
                         .addComponent(lab56, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -549,14 +560,14 @@ public class Partner extends javax.swing.JFrame {
                 .addGroup(pan7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lab55, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         pan2.add(pan7);
 
         tabb1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, bundle.getString("Шапка.Контрагент"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0))); // NOI18N
         tabb1.setFont(frames.UGui.getFont(0,0));
-        tabb1.setPreferredSize(new java.awt.Dimension(0, 190));
+        tabb1.setPreferredSize(new java.awt.Dimension(0, 200));
 
         pan4.setName(""); // NOI18N
 
@@ -976,10 +987,10 @@ public class Partner extends javax.swing.JFrame {
                 .addGroup(pan6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lab44, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
-        pan5.add(pan6, java.awt.BorderLayout.CENTER);
+        pan5.add(pan6, java.awt.BorderLayout.PAGE_END);
 
         center.add(pan5);
 
@@ -1017,7 +1028,7 @@ public class Partner extends javax.swing.JFrame {
                     String login = rs.getString(1).trim();
                     prjpartRec.setNo(ePrjpart.login, login);
                     prjpartRec.setNo(ePrjpart.npp, prjpartRec.get(ePrjpart.id));
-                    prjpartRec.setNo(ePrjpart.category, arrCateg[0]);
+                    prjpartRec.setNo(ePrjpart.category, categArray[0]);
                     Record sysuserRec = new Query(eSysuser.values()).sql(eSysuser.data(), eSysuser.login, login).get(0);
                     qPrjpart.table(eSysuser.up).add(sysuserRec);
                     qPrjpart.insert(prjpartRec);
@@ -1168,10 +1179,10 @@ public class Partner extends javax.swing.JFrame {
    // </editor-fold> 
 
     public void initElements() {
-        
+
         App.loadLocationWin(this, btnClose, (e) -> {
             App.saveLocationWin(this, btnClose);
-        }); 
+        });
 
         TableFieldFilter filterTable = new TableFieldFilter(1, tab1);
         south.add(filterTable, 0);

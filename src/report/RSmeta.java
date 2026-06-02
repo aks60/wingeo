@@ -90,7 +90,7 @@ public class RSmeta {
     private static void loadDoc1(List<Record> prjprodList, Document doc) {
         double square = 0f;
         try {
-            Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
+            Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart2_id));
             Record sysuserRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
             double discKit = projectRec.getDbl(eProject.disc_kit, 0);
             double discWin = projectRec.getDbl(eProject.disc_win, 0);
@@ -167,7 +167,7 @@ public class RSmeta {
             double discWin = projectRec.getDbl(eProject.disc_kit, 0);            
             double discKit = projectRec.getDbl(eProject.disc_kit, 0);
             double discAll = projectRec.getDbl(eProject.disc_all, 0);            
-            Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
+            Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart2_id));
             Query qSysuser = new Query(eSysuser.values()).sql(eSysuser.data(), eSysuser.login, prjpartRec.getStr(ePrjpart.login));
             qSysuser.add(eSysuser.up.newRecord("SEL")); //если qSysuser.size() == 0                       
             Record sysuserRec = qSysuser.get(0);

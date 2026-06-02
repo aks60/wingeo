@@ -86,8 +86,8 @@ public class RCheck {
     private static void loadDoc1(List<Record> prjprodList, Document doc) {
         double total = 0f;
         try {
-            Record prjpart1Rec = ePrjpart.find(projectRec.getInt(eProject.vendor_id));
-            Record prjpart2Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
+            Record prjpart1Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart1_id));
+            Record prjpart2Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart2_id));
             List<Wincalc> wincList = wincList(prjprodList);
 
             doc.getElementById("h01").text("Ñ÷¸ò ¹" + projectRec.getStr(eProject.num_acc) + " îò '" + UGui.convert2Date(projectRec.get(eProject.date4)) + "'");
@@ -179,8 +179,8 @@ public class RCheck {
     private static void loadDoc2(List<Record> prjprodList, Document doc) {
         double total = 0f;
         try {
-            Record prjpart1Rec = ePrjpart.find(projectRec.getInt(eProject.vendor_id));
-            Record prjpart2Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
+            Record prjpart1Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart1_id));
+            Record prjpart2Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart2_id));
             List<Wincalc> wincList = wincList(prjprodList);
             double discKit = projectRec.getDbl(eProject.disc_kit, 0);
             double discWin = projectRec.getDbl(eProject.disc_win, 0);

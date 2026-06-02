@@ -62,7 +62,7 @@ public class ROffer {
         int length = 400;
         double square = 0f; //площадь
         try {
-            Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart_id));
+            Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart2_id));
             Record sysuserRec = eSysuser.find2(prjpartRec.getStr(ePrjpart.login));
             List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
             double discWin = projectRec.getDbl(eProject.disc_win, 0);

@@ -556,7 +556,7 @@ public class PSConvert {
             updateSql(eKitdet.up, eKitdet.color2_id, "clnu1", eColor.up, "cnumb");
             updateSql(eKitdet.up, eKitdet.color3_id, "clnu2", eColor.up, "cnumb");
             updateSql(eKitpar2.up, eKitpar2.kitdet_id, "psss", eKitdet.up, "kincr");
-            updateSql(eProject.up, eProject.prjpart_id, "kname", ePrjpart.up, "partner");
+            updateSql(eProject.up, eProject.prjpart2_id, "kname", ePrjpart.up, "partner");
             executeSql("update prjpart set org_leve2 = trim(org_leve2)");
             executeSql("update groups set npp = 0 where grup != " + TypeGrup.CATEG_VST.id);
             String db = (numDb == 1) ? eProp.base1.getProp() : (numDb == 2) ? eProp.base2.getProp() : eProp.base3.getProp();
@@ -625,8 +625,8 @@ public class PSConvert {
             alterTable("syspar1", "fk_syspar1", "systree_id", "systree");
             alterTable("syspar1", "fk_syspar2", "groups_id", "groups");
             alterTable("sysprod", "fk_sysprod1", "systree_id", "systree");
-            alterTable("project", "fk_project1", "prjpart_id", "prjpart");
-            alterTable("project", "fk_project2", "vendor_id", "prjpart");
+            alterTable("project", "fk_project1", "prjpart2_id", "prjpart");
+            alterTable("project", "fk_project2", "prjpart1_id", "prjpart");
             alterTable("prjprod", "fk_prjprod1", "project_id", "project");
             alterTable("prjprod", "fk_prjprod2", "systree_id", "systree");
             alterTable("prjkit", "fk_prjkit1", "prjprod_id", "prjprod");
@@ -691,8 +691,8 @@ public class PSConvert {
                     + "delete from furnpar2 a where a.furndet_id = old.id; "
                     + "delete from furnside2 a where a.furndet_id = old.id; end");
             executeSql("create or alter trigger prjpart_bd for prjpart active before delete position 0 as begin "
-                    + "update project a set a.vendor_id = null where a.vendor_id = old.id; "
-                    + "update project a set a.prjpart_id = null where a.prjpart_id = old.id; end");
+                    + "update project a set a.prjpart1_id = null where a.prjpart1_id = old.id; "
+                    + "update project a set a.prjpart2_id = null where a.prjpart2_id = old.id; end");
             executeSql("create or alter trigger project_bd for project active before delete position 0 as begin "
                     + "delete from prjkit a where a.project_id = old.id; "
                     + "delete from prjprod a where a.project_id = old.id; end");

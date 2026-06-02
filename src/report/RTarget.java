@@ -60,7 +60,7 @@ public class RTarget {
     private static void loadDoc(Record projectRec, List<Record> prjprodList, Document doc) {
         Double square = 0.0; //площадь
         try {
-            Query qPrjpart = new Query(ePrjpart.values()).sql(ePrjpart.data(), ePrjpart.id, projectRec.getInt(eProject.prjpart_id));
+            Query qPrjpart = new Query(ePrjpart.values()).sql(ePrjpart.data(), ePrjpart.id, projectRec.getInt(eProject.prjpart2_id));
             qPrjpart.add(ePrjpart.up.newRecord("SEL"));
             Query qSysuser = new Query(eSysuser.values()).sql(eSysuser.data(), eSysuser.login, qPrjpart.get(0).getStr(ePrjpart.login));
             qSysuser.add(eSysuser.up.newRecord("SEL")); //если qSysuser.size() == 0
