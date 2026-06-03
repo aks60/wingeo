@@ -173,8 +173,13 @@ public class PSConvert {
                     executeSql("set generator GEN_" + fieldUp.tname() + " to " + max2);
                 }
                 //Создание триггеров генераторов
-                executeSql("CREATE OR ALTER TRIGGER " + fieldUp.tname() + "_bi FOR " + fieldUp.tname() + " ACTIVE BEFORE INSERT POSITION 0 as begin"
-                        + " if (new.id is null) then new.id = gen_id(gen_" + fieldUp.tname() + ", 1); end");
+                if ("SYSUSER".equals(fieldUp.tname()) == true) {
+                    executeSql("CREATE OR ALTER TRIGGER SYSUSER_BI FOR SYSUSER ACTIVE BEFORE INSERT POSITION 0 "
+                            + " as begin if (new.id is null) then new.id = gen_id(gen_SYSUSER, 1); new.sysuser_id = new.id; end");
+                } else {
+                    executeSql("CREATE OR ALTER TRIGGER " + fieldUp.tname() + "_bi FOR " + fieldUp.tname() + " ACTIVE BEFORE INSERT POSITION 0 as begin"
+                            + " if (new.id is null) then new.id = gen_id(gen_" + fieldUp.tname() + ", 1); end");
+                }
                 //DDL создание первичного ключа
                 executeSql("ALTER TABLE " + fieldUp.tname() + " ADD CONSTRAINT PK_" + fieldUp.tname() + " PRIMARY KEY (ID);");
             }
@@ -204,7 +209,7 @@ public class PSConvert {
             executeSql("GRANT ALL ON " + eSetting.up.tname() + " TO TEXNOLOG_RW");
             executeSql("GRANT TEXNOLOG_RW TO TEXNOLOG");
             executeSql("GRANT MANAGER_RW TO MANAGER");
-            
+
             if (eProp.typuse.equals("99") == true) { //при этом в firebird такие логины должны быть созданы
                 executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('MANAGER_RW','MANAGER','Менеджер М.И.','89031237856','men@jmail.com',null,null)");
                 executeSql("insert into SYSUSER(role,login,fio,phone,email,desc,openkey) values('RDB$ADMIN','ADMIN','Администратор М.Г.','89034327685','adm@jmail.com',null,null)");
@@ -638,6 +643,7 @@ public class PSConvert {
             alterTable("kitdet", "fk_kitdet2", "artikl_id", "artikl");
             alterTable("kitpar2", "fk_kitpar1", "kitdet_id", "kitdet");
             alterTable("alter table sysuser add constraint unq1_sysuser unique (user2)");
+            alterTable("sysuser", "fk_sysuser", "sysuser_id", "sysuser");
             executeSql("create or alter trigger artikl_bd for artikl active before delete position 0 as begin "
                     + "delete from artdet a where a.artikl_id = old.id; "
                     + "delete from elemdet a where a.artikl_id = old.id; "
