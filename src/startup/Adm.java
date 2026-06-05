@@ -16,16 +16,19 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Queue;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
@@ -140,13 +143,13 @@ public class Adm extends javax.swing.JFrame {
         try {
             DefaultTableModel dm = (DefaultTableModel) tab4.getModel();
             dm.getDataVector().clear();
-            String sql = "SELECT DISTINCT a.rdb$role_name , b.rdb$user, c.fio, c.phone, c.email, c.sysuser_id "
+            String sql = "SELECT DISTINCT a.rdb$role_name , b.rdb$user, c.id, c.fio, c.phone, c.email, c.sysuser_id "
                     + "FROM rdb$roles a left join rdb$user_privileges b on a.rdb$role_name = b.rdb$relation_name AND "
                     + " b.rdb$user != 'SYSDBA' AND NOT EXISTS (SELECT * FROM rdb$roles c WHERE c.rdb$role_name = b.rdb$user) "
                     + " left join sysuser c on upper(b.rdb$user) = upper(c.login) where b.rdb$user is not null ORDER BY 1";
             Statement statement = Connect.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = statement.executeQuery(sql);
-            Query userList = new Query(eSysuser.values());
+            Query sysuserList = new Query(eSysuser.values());
             int npp = 0;
             while (rs.next()) {
                 String role = rs.getString(1).trim();
@@ -158,24 +161,53 @@ public class Adm extends javax.swing.JFrame {
                 if (sysuserRec.get(eSysuser.id) == null) {
                     sysuserRec.setNo(eSysuser.role, role);
                     sysuserRec.setNo(eSysuser.login, login);
-                    userList.add(sysuserRec);
+                    sysuserList.add(sysuserRec);
                 }
                 Object fio = (sysuserRec.get(eSysuser.fio) == null) ? "" : sysuserRec.get(eSysuser.fio);
                 Object phone = (sysuserRec.get(eSysuser.phone) == null) ? "" : rs.getObject("phone");
                 Object email = (sysuserRec.get(eSysuser.email) == null) ? "" : rs.getObject("email");
-                Object sysuser_id = (sysuserRec.get(eSysuser.sysuser_id) == null) ? "" : "xfxfxfx";
-                List rec = List.of(++npp, login, permis, role, fio, phone, email, sysuser_id);
+                int ownerID = sysuserRec.getInt(eSysuser.sysuser_id);
+                Record ownerRec = eSysuser.data().stream().filter(rec -> rec.getInt(eSysuser.id) == ownerID).findFirst().get();
+                Object login2 = ownerRec.get(eSysuser.login);
+                List rec = List.of(++npp, login, permis, role, fio, phone, email, login2);
                 Vector vec = new Vector(rec);
                 dm.getDataVector().add(vec);
             }
-            userList.forEach(rec -> rec.setNo(eSysuser.id, Connect.genId(eSysuser.up)));
-            userList.execsql();
-            qSysuser.addAll(userList);
+            sysuserList.forEach(rec -> rec.setNo(eSysuser.id, Connect.genId(eSysuser.up)));
+            sysuserList.execsql();
+            qSysuser.addAll(sysuserList);
             ((DefaultTableModel) tab4.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab4);
 
         } catch (Exception e) {
             System.err.println("Ошибка: Adm.loadingTab4() " + e);
+        }
+    }
+
+    private void loadingBox4() {
+        int indexBox = -1;
+        int row = tab4.getSelectedRow();
+        Object sysuser = tab4.getValueAt(row, 7);
+
+        List<String> list = new ArrayList<String>();
+        for (int i = 0; i < tab4.getModel().getRowCount(); i++) {
+            list.add(tab4.getModel().getValueAt(i, 1).toString());
+            if (sysuser.equals(tab4.getModel().getValueAt(i, 1))) {
+                indexBox = i;
+            }
+        }
+        box4.setModel(new DefaultComboBoxModel<>(list.toArray(String[]::new)));
+        box4.setSelectedIndex(indexBox);
+    }
+
+    private void updateBox4(Record sysuserRec) {
+        String owner = box4.getSelectedItem().toString();
+        
+        if (owner.equals(sysuserRec.getStr(eSysuser.login))) {
+            sysuserRec.set(eSysuser.sysuser_id, sysuserRec.getInt(eSysuser.id));
+        } else {
+            Record ownerRec = qSysuser.stream().filter(rec -> owner.equals(rec.getStr(eSysuser.login))).findFirst().get();
+            sysuserRec.set(eSysuser.sysuser_id, ownerRec.get(eSysuser.id));
         }
     }
 
@@ -236,6 +268,11 @@ public class Adm extends javax.swing.JFrame {
                 eProp.lookandfeel.putProp(laf.getName());
             }
         }
+    }
+
+    private int getSysuserID() {
+
+        return -1;
     }
 
     @SuppressWarnings("unchecked")
@@ -330,7 +367,7 @@ public class Adm extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         txt7 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        box3 = new javax.swing.JComboBox<>();
+        box4 = new javax.swing.JComboBox<>();
         pan15 = new javax.swing.JPanel();
         south = new javax.swing.JPanel();
 
@@ -1145,9 +1182,8 @@ public class Adm extends javax.swing.JFrame {
         jLabel8.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         jLabel8.setPreferredSize(new java.awt.Dimension(60, 18));
 
-        box3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
-        box3.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        box3.setPreferredSize(new java.awt.Dimension(140, 20));
+        box4.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        box4.setPreferredSize(new java.awt.Dimension(140, 20));
 
         javax.swing.GroupLayout pan12Layout = new javax.swing.GroupLayout(pan12);
         pan12.setLayout(pan12Layout);
@@ -1193,7 +1229,7 @@ public class Adm extends javax.swing.JFrame {
                     .addGroup(pan12Layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(box3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(box4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(304, Short.MAX_VALUE))
         );
         pan12Layout.setVerticalGroup(
@@ -1222,7 +1258,7 @@ public class Adm extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(box2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(box3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(box4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addGroup(pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1300,6 +1336,7 @@ public class Adm extends javax.swing.JFrame {
     }//GEN-LAST:event_userDelete
 
     private void userUpdate(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userUpdate
+        loadingBox4();
         int row = tab4.getSelectedRow();
         card = 'U';
         if (row != -1) {
@@ -1310,7 +1347,7 @@ public class Adm extends javax.swing.JFrame {
             String role = tab4.getValueAt(row, 3).toString().substring(0, 8);
             int index1 = ("TEXNOLOG".equals(role)) ? 1 : 2;
             box1.setSelectedIndex(index1);
-            
+
             int index2 = ("чтение-запись".equals(tab4.getValueAt(row, 2))) ? 0 : 1;
             box2.setSelectedIndex(index2);
             txt1.setText(String.valueOf(tab4.getValueAt(row, 1)));
@@ -1330,6 +1367,7 @@ public class Adm extends javax.swing.JFrame {
         box2.setSelectedIndex(0);
         txt1.setEnabled(true);
         txt1.setText("");
+        loadingBox4();
         ((CardLayout) pan3.getLayout()).show(pan3, "pan13");
     }//GEN-LAST:event_userAdded
 
@@ -1472,6 +1510,8 @@ public class Adm extends javax.swing.JFrame {
                     sysuserRec.set(eSysuser.fio, fio);
                     sysuserRec.set(eSysuser.phone, phone);
                     sysuserRec.set(eSysuser.email, email);
+                    updateBox4(sysuserRec);
+                    
                     qSysuser.insert(sysuserRec);
                     qSysuser.add(sysuserRec);
                 }
@@ -1484,6 +1524,8 @@ public class Adm extends javax.swing.JFrame {
                 sysuserRec.set(eSysuser.fio, fio);
                 sysuserRec.set(eSysuser.phone, phone);
                 sysuserRec.set(eSysuser.email, email);
+                updateBox4(sysuserRec);
+                
                 qSysuser.execsql();
                 Connect.modifyPassword(login, txt2.getPassword());
                 loadingTab4();
@@ -1551,7 +1593,7 @@ public class Adm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> box1;
     private javax.swing.JComboBox<String> box2;
-    private javax.swing.JComboBox<String> box3;
+    private javax.swing.JComboBox<String> box4;
     private javax.swing.JButton btn10;
     private javax.swing.JButton btnBaseEdit;
     private javax.swing.JButton btnClose;
@@ -1644,10 +1686,10 @@ public class Adm extends javax.swing.JFrame {
 // </editor-fold> 
 
     private void initElements() {
-        
+
         App.loadLocationWin(this, btnClose, (e) -> {
             App.saveLocationWin(this, btnClose);
-        }); 
+        });
         appendToPane("\n", Color.GRAY);
         appendToPane("    Внимание!!! Перенос данных из ПрофСтрой-3 должен\n", Color.GRAY);
         appendToPane("    выполняться под управлением Firebird 2.1 НЕ ВЫШЕ.\n", Color.GRAY);
@@ -1691,5 +1733,11 @@ public class Adm extends javax.swing.JFrame {
                 }
             }
         });
+//        box4.addItemListener(e -> {
+//            if (e.getStateChange() == ItemEvent.SELECTED) {
+//                Object login = e.getItem();
+//                Record sysuserRec = qSysuser.stream().filter(rec -> login.equals(rec.get(eSysuser.login))).findFirst().get();
+//            }
+//        });
     }
 }
