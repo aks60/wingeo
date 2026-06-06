@@ -16,13 +16,13 @@ public enum ePrjpart implements Field {
     flag2("16", "5", "1", "Физ.лицо/Организация", "KCHAS"),
   
     addr_leve1("12", "64", "1", "Адрес 1го уровня", "KADRP"),
-    addr_leve2("12", "192", "1", "Адрес 2го уровня.", "KADDR"),
+    addr_leve2("12", "192", "1", "Адрес 2го уровня", "KADDR"),
     addr_phone("12", "32", "1", "Телефон", "KTELE"),
     addr_email("12", "64", "1", "E-mail", "KMAIL"),
    
     org_contact("12", "64", "1", "Контактное лицо", "KKNAM"),
     org_leve1("12", "64", "1", "Адрес 1го уровня", "KADRP"),
-    org_leve2("12", "192", "1", "Адрес 2го уровня..", "KADDR"),
+    org_leve2("12", "192", "1", "Адрес 2го уровня", "KADDR"),
     org_phone("12", "32", "1", "Телефон", "KVTEL"),
     org_email("12", "32", "1", "E-mail", "KMAIL"),
     org_fax("12", "32", "1", "Факс", "KFAXX"),  
