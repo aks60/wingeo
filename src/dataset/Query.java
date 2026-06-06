@@ -315,6 +315,16 @@ public class Query extends Table {
         return this;
     }
 
+    public Query sq2(List<Record> data, Field field, String value, Field field2, String value2) {
+        clear();
+        if (Query.conf.equals("NET")) {
+            addAll(data.stream().filter(rec -> value.equals(rec.getStr(field)) || value2.equals(rec.getInt(field2))).collect(Collectors.toList()));
+        } else {
+            select(field.fields()[0], "where", field, "=", value, "or", field2, "=", value2);
+        }
+        return this;
+    }
+
     public Query sq3(List<Record> data, Field field, int value, Field field2, int value2) {
         clear();
         if (Query.conf.equals("NET")) {

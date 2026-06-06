@@ -82,6 +82,7 @@ import domain.eSysuser;
 import frames.swing.comp.CardPanels;
 import frames.swing.comp.MainMenu;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 import org.locationtech.jts.geom.Envelope;
 
@@ -135,7 +136,15 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         qParams.sql(eParams.data(), eParams.up);
         qCurrenc.sql(eCurrenc.data(), eCurrenc.up).sort(eCurrenc.name);
         String login = eProp.user.getProp();
-        qProjectAll.sql(eProject.data(), eProject.login, login).sort(eProject.date4);
+        Record sysuserRec = eSysuser.data().stream().filter(rec -> login.equalsIgnoreCase(rec.getStr(eSysuser.login))).findFirst().get();
+        List<String> roleList = eSysuser.data().stream()
+                .filter(rec -> rec.getInt(eSysuser.sysuser_id) == sysuserRec.getInt(eSysuser.id))
+                .map(rec -> rec.getStr(eSysuser.login)).toList();
+        for (Record projectRec : eProject.data()) {
+            if (roleList.contains(projectRec.getStr(eProject.login))) {
+                qProjectAll.add(projectRec);
+            }
+        }
         qPrjpart.sql(ePrjpart.data(), ePrjpart.up);
     }
 
@@ -348,7 +357,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
             //lab2.setText("Заказ № " + projectRec.getStr(eProject.num_ord));
             int orderID = qProject.getAs(UGui.getIndexRec(tab1), eProject.id);
             eProp.orderID.putProp(String.valueOf(orderID));
-            
+
             Record sysuserRec = eSysuser.data().stream().filter(rec -> rec.getStr(eSysuser.login).equalsIgnoreCase(projectRec.getStr(eProject.login))).findFirst().get();
             txt19.setText(sysuserRec.getStr(eSysuser.fio));
             txt21.setText(sysuserRec.getStr(eSysuser.phone));
