@@ -417,6 +417,5 @@ public class TTariffic extends Cal5e {
         } catch (Exception e) {
             System.err.println("Ошибка:Wincalc.calculate() " + e);
         }
-
     }
 }
