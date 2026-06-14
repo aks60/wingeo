@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class Connect {
 
-    public static boolean cryptoCheck = false; //проверка активации программы
+    public static boolean cryptoCheck =  false; //проверка активации программы
     public static boolean webapp = true;
     private static Connection connectionApp = null;
     protected static Statement statement = null;
@@ -98,6 +98,7 @@ public class Connect {
         //JOptionPane.showMessageDialog(null, server + "-" + base, "SERVER", JOptionPane.OK_OPTION);
         webapp = false;
         try {
+            //Connect.cryptoCheck = true;
             if (typuse.equals("99")) {
                 new Crypto().httpAsync("sa-okna.ru"); //сервер всегда смотрит на sa-okna.ru
             } else {

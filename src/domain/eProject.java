@@ -10,7 +10,7 @@ public enum eProject implements Field {
     id("4", "10", "0", "Идентификатор", "id"),
     num_ord("12", "32", "1", "Номер заказа", "ZNUMB"),
     num_acc("12", "32", "1", "Номер счета", "INUMB"),         
-    login("12", "64", "1", "Менеджер", "MNAME"), //это user который создаёт проект
+    login("12", "64", "1", "User", "MNAME"), //это user который создаёт проект
     square("8", "15", "1", "0", "Площадь изделий", "PSQRA"),
     weight("8", "15", "1", "0", "Вес изделий", "EMPTY"),   
     type_calc("5", "5", "1", "Тип расчтета", "PTYPE"),
@@ -28,10 +28,9 @@ public enum eProject implements Field {
     date4("93", "19", "1", "Дата регистрации заказа", "PDATE"),
     date5("93", "19", "1", "Дата расчета заказа", "CDATE"),
     date6("93", "19", "1", "Дата отпр. в производство", "WDATE"),
-    owner("12", "32", "1",  "User", "owner"),
     currenc_id("4", "10", "1", "Валюта", "CNUMB"),
-    prjpart1_id("4", "10", "1", "Продавец", "vendor_id"),
-    prjpart2_id("4", "10", "1", "Покупатель", "prjpart_id"); //Покупатель, дилер, плательщик ...
+    prjpart1_id("4", "10", "1", "Диллер,офис,спец.", "prjpart1_id"),
+    prjpart2_id("4", "10", "1", "Зуказчик", "prjpart2_id");
 
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());
