@@ -16,7 +16,6 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -45,6 +44,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
+import static startup.App.Top;
 
 public class Adm extends javax.swing.JFrame {
 
@@ -146,14 +146,16 @@ public class Adm extends javax.swing.JFrame {
             String sql = "SELECT DISTINCT a.rdb$role_name , b.rdb$user, c.id, c.fio, c.phone, c.email, c.sysuser_id "
                     + "FROM rdb$roles a left join rdb$user_privileges b on a.rdb$role_name = b.rdb$relation_name AND "
                     + " b.rdb$user != 'SYSDBA' AND NOT EXISTS (SELECT * FROM rdb$roles c WHERE c.rdb$role_name = b.rdb$user) "
-                    + " left join sysuser c on upper(b.rdb$user) = upper(c.login) where b.rdb$user is not null ORDER BY 1";
+                    + " left join sysuser c on upper(b.rdb$user) = upper(c.login) where b.rdb$user is not null "
+                    + "UNION select d.role, d.login, d.id,  d.fio,  d.phone,  d.email, d.sysuser_id from sysuser d where d.role = 'DEALER_RW' "
+                    + "ORDER BY 1";
             Statement statement = Connect.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = statement.executeQuery(sql);
             Query sysuserList = new Query(eSysuser.values());
             int npp = 0;
             while (rs.next()) {
                 String role = rs.getString(1).trim();
-                boolean br = List.of("TEXNOLOG_RW", "MANAGER_RW").contains(role);
+                boolean br = List.of("TEXNOLOG_RW", "MANAGER_RW", "DEALER_RW").contains(role);
                 String permis = (br) ? "чтение-запись" : "только чтение";
                 String login = rs.getString(2).trim().toUpperCase();
                 Record sysuserRec = qSysuser.stream().filter(rec -> login.equalsIgnoreCase(rec.getStr(eSysuser.login)) == true)
@@ -202,7 +204,7 @@ public class Adm extends javax.swing.JFrame {
 
     private void updateBox4(Record sysuserRec) {
         String owner = box4.getSelectedItem().toString();
-        
+
         if (owner.equals(sysuserRec.getStr(eSysuser.login))) {
             sysuserRec.set(eSysuser.sysuser_id, sysuserRec.getInt(eSysuser.id));
         } else {
@@ -1312,10 +1314,16 @@ public class Adm extends javax.swing.JFrame {
     }//GEN-LAST:event_mnExit
 
     private void userDelete(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userDelete
+        int row = tab4.getSelectedRow();
+        String role = String.valueOf(tab4.getValueAt(row, 3));
+        if ("DEALER_RW".equalsIgnoreCase(role)) {
+           JOptionPane.showMessageDialog(Top.frame, "Нельзя удалить WEB пользователя", "Предупреждение", JOptionPane.OK_OPTION);
+           return;
+        }        
         if (JOptionPane.showConfirmDialog(this, "Вы уверены, что хотите удалить текущего пользователя?", "Предупреждение", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-            int row = tab4.getSelectedRow();
             if (row != -1) {
                 try {
+
                     String login = String.valueOf(tab4.getValueAt(row, 1));
                     Connect.deleteUser2(login);
 
@@ -1500,9 +1508,9 @@ public class Adm extends javax.swing.JFrame {
                 .findFirst().orElse(eSysuser.up.newRecord(Query.INS));
         if (card == 'I') {
             if (validation() == true) {
-                String role = (box1.getSelectedIndex() == 1) ? "TEXNOLOG" : "MANAGER";
-                String role2 = (box2.getSelectedIndex() == 0) ? role + "_RW" : role + "_RO";
-                Connect.addUser(login, txt2.getPassword(), role2);
+                String rol = (box1.getSelectedIndex() == 1) ? "TEXNOLOG" : "MANAGER";
+                String role = (box2.getSelectedIndex() == 0) ? rol + "_RW" : rol + "_RO";
+                Connect.addUser(login, txt2.getPassword(), role);
                 if (sysuserRec.get(eSysuser.id) == null) {
                     sysuserRec.set(eSysuser.id, Connect.genId(eSysuser.up));
                     sysuserRec.set(eSysuser.login, login);
@@ -1511,7 +1519,7 @@ public class Adm extends javax.swing.JFrame {
                     sysuserRec.set(eSysuser.phone, phone);
                     sysuserRec.set(eSysuser.email, email);
                     updateBox4(sysuserRec);
-                    
+
                     qSysuser.insert(sysuserRec);
                     qSysuser.add(sysuserRec);
                 }
@@ -1525,9 +1533,12 @@ public class Adm extends javax.swing.JFrame {
                 sysuserRec.set(eSysuser.phone, phone);
                 sysuserRec.set(eSysuser.email, email);
                 updateBox4(sysuserRec);
-                
+
                 qSysuser.execsql();
-                Connect.modifyPassword(login, txt2.getPassword());
+                if ("DEALER_RW".equalsIgnoreCase(sysuserRec.getStr(eSysuser.role)) == false) {
+                    Connect.modifyPassword(login, txt2.getPassword());
+                }
+
                 loadingTab4();
                 ((CardLayout) pan3.getLayout()).show(pan3, "pan11");
             }
