@@ -324,11 +324,12 @@ public class Wincalc {
 
             //Если спецификация на продукт менеджера
             if (manager == true) {
+                //Найдём проект к которомупр принадлежит конструкция
                 int prjprodID = Integer.valueOf(eProp.prjprodID.getProp());
                 Record prjprodRec = ePrjprod.find(prjprodID);
                 Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
                 if (prjprodRec != null) {
-                    //Скидка менеджера
+                    //Скидка менеджера в проекте
                     double discWin = projectRec.getDbl(eProject.disc_win, 0);
                     for (TRecord tRecord : this.listSpec) {
                         tRecord.cost2 = tRecord.cost2 - discWin * tRecord.cost2 / 100; //скидка менеджера

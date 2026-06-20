@@ -291,7 +291,7 @@ public class UGui {
     public static String designProject() {
         try {
             if (eProfile.profile == eProfile.P02) {
-                int productID = Integer.valueOf(eProp.sysprodID.getProp());
+                int productID = Integer.parseInt(eProp.sysprodID.getProp());
                 Record productRec = eSysprod.find(productID);
                 if (productRec != null) {
 
@@ -307,7 +307,7 @@ public class UGui {
                 }
 
             } else if (eProfile.profile == eProfile.P03) {
-                int productID = Integer.valueOf(eProp.prjprodID.getProp());
+                int productID = Integer.parseInt(eProp.prjprodID.getProp());
                 Record productRec = ePrjprod.find(productID);
                 if (productRec != null) {
 

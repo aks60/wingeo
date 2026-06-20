@@ -98,12 +98,12 @@ public class Connect {
         //JOptionPane.showMessageDialog(null, server + "-" + base, "SERVER", JOptionPane.OK_OPTION);
         webapp = false;
         try {
-            if (typuse.equals("99")) {
-                new Crypto().httpAsync("sa-okna.ru"); //сервер всегда смотрит на sa-okna.ru
-            } else {
-                new Crypto().httpAsync(server); //сервер должен смотреть на sa-okna.ru иначе швах
-            }
-            //Connect.cryptoCheck = true;
+//            if (typuse.equals("99")) {
+//                new Crypto().httpAsync("sa-okna.ru"); //сервер всегда смотрит на sa-okna.ru
+//            } else {
+//                new Crypto().httpAsync(server); //сервер должен смотреть на sa-okna.ru иначе швах
+//            }
+            Connect.cryptoCheck = true;
             
             if (Class.forName(driver) == null) {
                 JOptionPane.showMessageDialog(null, eExcep.loadDrive.mes,
