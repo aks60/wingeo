@@ -389,7 +389,7 @@ public class TTariffic extends Cal5e {
                 Wincalc win = new Wincalc(script);
                 
                 //Конструктив 
-                win.specific(norm_otx, true);  
+                win.specific(projectRec, norm_otx, true);  
 
                 double numProd = prjprodRec.getDbl(ePrjprod.num);
                 square += numProd * win.root.area.getGeometryN(0).getArea(); //площадь изделий  

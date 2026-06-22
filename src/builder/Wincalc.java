@@ -357,6 +357,61 @@ public class Wincalc {
             System.err.println("Error:Wincalc.specific() " + e);
         }
     }
+    public void specific(Record projectRec, boolean norm_otx, boolean manager) {
+        this.weight = 0;
+        this.cost1 = 0;
+        this.cost2 = 0;
+        this.listSpec.clear();
+        try {
+            //Спецификация ведущих элементов конструкции
+            listElem.forEach(elem -> elem.setSpecific());
+
+            //Детали элемента через конструктив попадают в спецификацию через функцию addSpecific();
+            new builder.making.TJoining(this).join(); //соединения
+            new builder.making.TElement(this).elem(); //составы
+            new builder.making.TFilling(this).fill(); //заполнения
+            new builder.making.TFurniture(this).furn(); //фурнитура 
+            new builder.making.TTariffic(this, norm_otx).calculate(); //тарификация
+
+            //Заполним список спецификации
+            for (ElemSimple elem5e : listElem) {
+                if (elem5e.spcRec.code.trim().charAt(0) != '@') {
+                    this.listSpec.add(elem5e.spcRec);
+                }
+                for (TRecord spc : elem5e.spcRec.spcList) {
+                    if (spc.code.trim().charAt(0) != '@') {
+                        this.listSpec.add(spc);
+                    }
+                }
+            }
+
+            //Если спецификация на продукт менеджера
+            if (manager == true) {
+                    //Скидка менеджера в проекте
+                    double discWin = projectRec.getDbl(eProject.disc_win, 0);
+                    for (TRecord tRecord : this.listSpec) {
+                        tRecord.cost2 = tRecord.cost2 - discWin * tRecord.cost2 / 100; //скидка менеджера
+                    }
+            }
+
+            //Итоговая стоимость
+            for (TRecord spc : this.listSpec) {
+                this.cost1 += spc.cost1; //общая стоимость без скидки менеджера
+                this.cost2 += spc.cost2; //общая стоимость со скидкой менеджера                                   
+            }
+
+            //Вес изделия
+            ArrayList<ElemSimple> glassList = UCom.filter(listElem, Type.GLASS);
+            for (ElemSimple el : glassList) {
+                this.weight += el.artiklRec.getDbl(eArtikl.density) * el.width() * el.height() / 1000000; //уд.вес * площадь = вес
+            }
+
+            Collections.sort(this.listSpec, (o1, o2) -> (o1.place.subSequence(0, 3) + o1.name + o1.width).compareTo(o2.place.subSequence(0, 3) + o2.name + o2.width));
+
+        } catch (Exception e) {
+            System.err.println("Error:Wincalc.specific() " + e);
+        }
+    }
 
     //Рисуем конструкцию
     public void draw() {
