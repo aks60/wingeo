@@ -14,6 +14,7 @@ import enums.UseUnit;
 import builder.Wincalc;
 import builder.model.ElemSimple;
 import common.UCom;
+import dataset.Connect;
 import dataset.Query;
 import domain.eElemdet;
 import domain.eElement;
@@ -26,6 +27,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Расчёт стоимости элементов окна алгоритм см. в UML
@@ -377,19 +379,23 @@ public class TTariffic extends Cal5e {
 
     public static void calculate(Record projectRec, boolean norm_otx) {
         try {
-            List<Record> prjprodList = ePrjprod.filter(projectRec.getInt(eProject.id));
+            List<Record> prjprodList = null;
+            if (Connect.webapp == false) {
+                prjprodList = ePrjprod.data().stream().filter(rec -> projectRec.getInt(eProject.id) == rec.getInt(ePrjprod.project_id)).collect(Collectors.toList());
+            } else {
+                prjprodList = new Query(ePrjprod.values()).select(ePrjprod.up, "where", ePrjprod.project_id, "=", projectRec.getInt(eProject.id));
+            }
             double square = 0, weight = 0,
                     cost1_win = 0, //без скидки менеджера
                     cost2_win = 0; //со скидкой менеджера
 
             //Цикл по конструкциям
             for (Record prjprodRec : prjprodList) {
-
                 String script = prjprodRec.getStr(ePrjprod.script);
                 Wincalc win = new Wincalc(script);
-                
+
                 //Конструктив 
-                win.specific(projectRec, norm_otx, true);  
+                win.specific(projectRec, norm_otx, true);
 
                 double numProd = prjprodRec.getDbl(ePrjprod.num);
                 square += numProd * win.root.area.getGeometryN(0).getArea(); //площадь изделий  
