@@ -350,7 +350,7 @@ public class Man extends javax.swing.JFrame {
         pan9.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 12, 2));
 
         btn8.setFont(frames.UGui.getFont(0,1));
-        btn8.setText(bundle.getString("Меню.Спецификация")); // NOI18N
+        btn8.setText(bundle.getString("Меню.Тарификация")); // NOI18N
         btn8.setActionCommand("");
         btn8.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btn8.setMaximumSize(new java.awt.Dimension(120, 30));
@@ -565,9 +565,9 @@ public class Man extends javax.swing.JFrame {
         //Record projectRec = eProject.find(orderID);        
         ProgressBar.create(Man.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                App.Specification.createFrame(Man.this, 1);
+                App.Specification.createFrame(Man.this, true);
             }
-        });
+        });       
     }//GEN-LAST:event_btn8
 
     private void btn9(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9

@@ -239,7 +239,7 @@ public class Specifics extends javax.swing.JFrame {
         ppmTab1.add(mmm);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Спецификация");
+        setTitle("Тарификация");
         setMinimumSize(new java.awt.Dimension(800, 500));
         setPreferredSize(new java.awt.Dimension(900, 600));
 

@@ -441,7 +441,7 @@ public class Tex extends javax.swing.JFrame {
         tb2.add(btn23);
 
         btn21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c016.gif"))); // NOI18N
-        btn21.setToolTipText(bundle.getString("Меню.Спецификация")); // NOI18N
+        btn21.setToolTipText(bundle.getString("Меню.Тарификация")); // NOI18N
         btn21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 0)));
         btn21.setFocusable(false);
         btn21.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -485,7 +485,7 @@ public class Tex extends javax.swing.JFrame {
         tb8.add(btn3);
 
         btn22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c016.gif"))); // NOI18N
-        btn22.setToolTipText(bundle.getString("Меню.Спецификация")); // NOI18N
+        btn22.setToolTipText(bundle.getString("Меню.Тарификация")); // NOI18N
         btn22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 255)));
         btn22.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btn22.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/resource/img24/c001.gif"))); // NOI18N
