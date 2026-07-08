@@ -325,8 +325,8 @@ public class RSmeta {
                 tdRec.get(3).text(eColor.find(prjkitRec.colorID1).getStr(eColor.name));
                 tdRec.get(4).text(UCom.dimension(prjkitRec.width, prjkitRec.height, prjkitRec.unit));
                 tdRec.get(5).text(String.valueOf(prjkitRec.count));
-                tdRec.get(6).text(UCom.format(prjkitRec.price, 2));
-                tdRec.get(7).text(UCom.format(prjkitRec.cost1, 2));
+                tdRec.get(6).text(UCom.format(prjkitRec.price, 9));
+                tdRec.get(7).text(UCom.format(prjkitRec.cost1, 9));
             }
 
         } catch (Exception e) {
@@ -354,13 +354,13 @@ public class RSmeta {
                 tdRec.get(3).text(UCom.format(winc.width(), 2));
                 tdRec.get(4).text(UCom.format(winc.height(), 2));
                 tdRec.get(5).text(String.valueOf(numProd));
-                tdRec.get(6).text(UCom.format(winc.cost2, 2));
-                tdRec.get(7).text(UCom.format(numProd * winc.cost2, 2));
+                tdRec.get(6).text(UCom.format(winc.cost2, 9));
+                tdRec.get(7).text(UCom.format(numProd * winc.cost2, 9));
 
                 total += numProd * winc.cost2;
             }
             Elements tdFoot = tabElem.getElementsByTag("tfoot").get(0).getElementsByTag("td");
-            tdFoot.get(1).text(UCom.format(projectRec.getDbl(eProject.cost2_win, 0), 2));
+            tdFoot.get(1).text(UCom.format(projectRec.getDbl(eProject.cost2_win, 0), 9));
 
         } catch (Exception e) {
             System.err.println("Ошибка: RSmeta.loadTab4() " + e);
@@ -386,14 +386,13 @@ public class RSmeta {
                 tdRec.get(3).text(eColor.find(prjkitRec.colorID1).getStr(eColor.name));
                 tdRec.get(4).text(UCom.dimension(prjkitRec.width, prjkitRec.height, prjkitRec.unit));
                 tdRec.get(5).text(String.valueOf(prjkitRec.count));
-                tdRec.get(6).text(UCom.format(prjkitRec.price, 2));
-                tdRec.get(7).text(UCom.format(prjkitRec.cost2, 2));
+                tdRec.get(6).text(UCom.format(prjkitRec.price, 9));
+                tdRec.get(7).text(UCom.format(prjkitRec.cost2, 9));
 
                 total += prjkitRec.cost2;
             }
             Elements tdFoot = tabElem.getElementsByTag("tfoot").get(0).getElementsByTag("td");
-            tdFoot.get(1).text(UCom.format(projectRec.getDbl(eProject.cost2_kit), 2));  //всего за комплекты
-            System.out.println(projectRec.getDbl(eProject.cost2_kit));
+            tdFoot.get(1).text(UCom.format(projectRec.getDbl(eProject.cost2_kit), 9));  //всего за комплекты
 
         } catch (Exception e) {
             System.err.println("Ошибка: RSmeta.loadTab5() " + e);
