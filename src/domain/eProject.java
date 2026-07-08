@@ -49,8 +49,8 @@ public enum eProject implements Field {
 
     public static Query data() {
         if (query.size() == 0) {
-//            query.select(up, "order by", id);
-            query.select(up, "order by", id, "desc");
+            query.select(up, "order by", id);
+//            query.select(up, "order by", id, "desc");
             Query.listOpenTable.add(query);
         }
         return query;
