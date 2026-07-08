@@ -64,7 +64,7 @@ public class RSpecific {
                 String script = prjprodRec.getStr(ePrjprod.script);
                 if (script.isEmpty() == false) {
                     winc.build(script);
-                    winc.specific(true, true);
+                    winc.specific(projectRec, true, true);
                     spcList.addAll(winc.listSpec); //добавим спецификацию
                 }
                 double discKit = projectRec.getDbl(eProject.disc_kit, 0);

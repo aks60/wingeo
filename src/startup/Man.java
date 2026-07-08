@@ -561,8 +561,8 @@ public class Man extends javax.swing.JFrame {
     }//GEN-LAST:event_btn6
 
     private void btn8(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8
-        //int orderID = Integer.valueOf(eProp.orderID.read());
-        //Record projectRec = eProject.find(orderID);        
+        //int projectID = Integer.valueOf(eProp.projectID.read());
+        //Record projectRec = eProject.find(projectID);        
         ProgressBar.create(Man.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
                 App.Specification.createFrame(Man.this, true);
@@ -571,8 +571,8 @@ public class Man extends javax.swing.JFrame {
     }//GEN-LAST:event_btn8
 
     private void btn9(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9
-//        int orderID = Integer.valueOf(eProp.orderID.read());
-//        Record projectRec = eProject.find(orderID);         
+//        int projectID = Integer.valueOf(eProp.projectID.read());
+//        Record projectRec = eProject.find(projectID);         
 //        ProgressBar.create(Man.this, new ListenerFrame() {
 //            @Override
 //            public void actionRequest(Object obj) {
@@ -612,8 +612,8 @@ public class Man extends javax.swing.JFrame {
 
     private void btn15(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn15
 
-        int orderID = Integer.valueOf(eProp.prjprodID.getProp());
-        Record projectRec = eProject.find(orderID);
+        int projectID = Integer.valueOf(eProp.prjprodID.getProp());
+        Record projectRec = eProject.find(projectID);
         List<Record> prjprodList = List.of(projectRec);
 
         ProgressBar.create(Man.this, new ListenerFrame() {
@@ -625,8 +625,8 @@ public class Man extends javax.swing.JFrame {
     }//GEN-LAST:event_btn15
 
     private void btn16(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn16
-        int orderID = Integer.valueOf(eProp.orderID.getProp());
-        Record projectRec = eProject.find(orderID);
+        int projectID = Integer.valueOf(eProp.projectID.getProp());
+        Record projectRec = eProject.find(projectID);
         List<Record> prjprodList = List.of(projectRec);
         ProgressBar.create(Man.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
@@ -637,8 +637,8 @@ public class Man extends javax.swing.JFrame {
 
     private void btn17(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn17
 
-        int orderID = Integer.valueOf(eProp.orderID.getProp());
-        Record projectRec = eProject.find(orderID);
+        int projectID = Integer.valueOf(eProp.projectID.getProp());
+        Record projectRec = eProject.find(projectID);
         ProgressBar.create(Man.this, new ListenerFrame() {
             @Override
             public void actionRequest(Object obj) {

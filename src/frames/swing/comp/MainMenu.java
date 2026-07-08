@@ -24,7 +24,7 @@ public class MainMenu {
 
         //prjprodID = Integer.valueOf(eProp.prjprodID.read());
         //prjprodRec = ePrjprod.find(prjprodID);
-        //progectID = Integer.valueOf(eProp.orderID.read());
+        //progectID = Integer.valueOf(eProp.projectID.read());
         //projectRec = eProject.find(progectID);
         if (men instanceof javax.swing.JMenu) {
 
@@ -232,7 +232,7 @@ public class MainMenu {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ProgressBar.create(frame, new ListenerFrame() {
                     public void actionRequest(Object obj) {
-                        int progectID = Integer.valueOf(eProp.orderID.read());
+                        int progectID = Integer.valueOf(eProp.projectID.read());
                         List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
                         new RSpecific().parseDoc(prjprodList);
                     }
@@ -248,7 +248,7 @@ public class MainMenu {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ProgressBar.create(frame, new ListenerFrame() {
                     public void actionRequest(Object obj) {
-                        int progectID = Integer.valueOf(eProp.orderID.getProp());
+                        int progectID = Integer.valueOf(eProp.projectID.getProp());
                         List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
                         new RMaterial().parseDoc2(prjprodList);
                     }
@@ -264,7 +264,7 @@ public class MainMenu {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ProgressBar.create(frame, new ListenerFrame() {
                     public void actionRequest(Object obj) {
-                        int progectID = Integer.valueOf(eProp.orderID.getProp());
+                        int progectID = Integer.valueOf(eProp.projectID.getProp());
                         List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
                         new RTarget().parseDoc(prjprodList);
                     }
@@ -281,7 +281,7 @@ public class MainMenu {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ProgressBar.create(frame, new ListenerFrame() {
                     public void actionRequest(Object obj) {
-                        int progectID = Integer.valueOf(eProp.orderID.getProp());
+                        int progectID = Integer.valueOf(eProp.projectID.getProp());
                         List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
                         new RSmeta().parseDoc1(prjprodList);
                     }
@@ -297,7 +297,7 @@ public class MainMenu {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ProgressBar.create(frame, new ListenerFrame() {
                     public void actionRequest(Object obj) {
-                        int progectID = Integer.valueOf(eProp.orderID.getProp());
+                        int progectID = Integer.valueOf(eProp.projectID.getProp());
                         List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
                         new RSmeta().parseDoc2(prjprodList);
                     }
@@ -314,7 +314,7 @@ public class MainMenu {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ProgressBar.create(frame, new ListenerFrame() {
                     public void actionRequest(Object obj) {
-                        int progectID = Integer.valueOf(eProp.orderID.getProp());
+                        int progectID = Integer.valueOf(eProp.projectID.getProp());
                         List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
                         new RCheck().parseDoc1(prjprodList);
                     }
@@ -331,7 +331,7 @@ public class MainMenu {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ProgressBar.create(frame, new ListenerFrame() {
                     public void actionRequest(Object obj) {
-                        int progectID = Integer.valueOf(eProp.orderID.getProp());
+                        int progectID = Integer.valueOf(eProp.projectID.getProp());
                         List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
                         new RCheck().parseDoc2(prjprodList);
                     }
@@ -349,7 +349,7 @@ public class MainMenu {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ProgressBar.create(frame, new ListenerFrame() {
                     public void actionRequest(Object obj) {
-                        int progectID = Integer.valueOf(eProp.orderID.getProp());
+                        int progectID = Integer.valueOf(eProp.projectID.getProp());
                         List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
                         new ROffer().parseDoc(prjprodList);
                     }

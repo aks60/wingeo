@@ -19,7 +19,7 @@ public enum eProp {
     server3("sa-okna.ru"),
     sysprodID("-1"), //выбранный системный шаблон продукта
     prjprodID("-1"), //выбранный продукт для клиента
-    orderID("-1"), //выбранный заказ клиента
+    projectID("-1"), //выбранный заказ клиента
     base_num("1"),
     old_version("0"), //переключение на пред. версию
     base1("/opt/database/fbase/bimax.fdb?encoding=win1251"),

@@ -247,11 +247,11 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         }
 
         //Выделяем заказ если сохранён в Property
-        int orderID = Integer.valueOf(eProp.orderID.getProp());
+        int projectID = Integer.valueOf(eProp.projectID.getProp());
         ((DefTableModel) tab1.getModel()).fireTableDataChanged();
         int index = -1;
         for (int index2 = 0; index2 < qProject.size(); ++index2) {
-            if (qProject.get(index2).getInt(ePrjprod.id) == orderID) {
+            if (qProject.get(index2).getInt(ePrjprod.id) == projectID) {
                 index = index2;
             }
         }
@@ -355,8 +355,8 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
 
             Record projectRec = qProject.get(UGui.getIndexRec(tab1));
             //lab2.setText("Заказ № " + projectRec.getStr(eProject.num_ord));
-            int orderID = qProject.getAs(UGui.getIndexRec(tab1), eProject.id);
-            eProp.orderID.putProp(String.valueOf(orderID));
+            int projectID = qProject.getAs(UGui.getIndexRec(tab1), eProject.id);
+            eProp.projectID.putProp(String.valueOf(projectID));
 
             Record sysuserRec = eSysuser.data().stream().filter(rec -> rec.getStr(eSysuser.login).equalsIgnoreCase(projectRec.getStr(eProject.login))).findFirst().get();
             txt19.setText(sysuserRec.getStr(eSysuser.fio));

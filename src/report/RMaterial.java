@@ -7,6 +7,7 @@ import report.sup.ExecuteCmd;
 import builder.Wincalc;
 import builder.making.TRecord;
 import common.UCom;
+import common.eProp;
 import dataset.Record;
 import domain.ePrjprod;
 import domain.eProject;
@@ -47,7 +48,7 @@ public class RMaterial {
             System.err.println("ќшибка:RMaterial.parseDoc1()" + e);
         }
     }
-    
+
     public void parseDoc2(List<Record> prjprodList) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Material.html");
@@ -82,7 +83,7 @@ public class RMaterial {
             String script = prjprodRec.getStr(ePrjprod.script);
             if (script.isEmpty() == false) {
                 winc.build(script); //калкул€ци€ 
-                winc.specific(true, true);
+                winc.specific(projectRec, true, true);
                 winList.addAll(winc.listSpec);
                 kitList.addAll(Kitcalc.tarifficProd(winc, prjprodRec, 0, 0, true, true)); //добавим комплекты
             }
@@ -113,7 +114,7 @@ public class RMaterial {
         doc.getElementsByTag("tfoot").get(0).selectFirst("tr:eq(0)")
                 .selectFirst("td:eq(1)").text(UCom.format(total, 9));
     }
-    
+
     private static void loadDoc2(Record projectRec, List<Record> prjprodList, Document doc) {
         npp = 0;
         List<RRecord> spcList = new ArrayList<RRecord>();
@@ -124,7 +125,7 @@ public class RMaterial {
             String script = prjprodRec.getStr(ePrjprod.script);
             if (script.isEmpty() == false) {
                 winc.build(script); //калкул€ци€ 
-                winc.specific(true, true);
+                winc.specific(projectRec, true, true);
                 winList.addAll(winc.listSpec);
             }
         }

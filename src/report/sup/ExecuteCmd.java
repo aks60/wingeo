@@ -24,9 +24,9 @@ public class ExecuteCmd {
 
     public static void documentType(JFrame owner) {
         if (Connect.webapp == false) {
-            //ExecuteCmd.startHtml("report.html");
+            ExecuteCmd.startHtml("report.html");
             //ExecuteCmd.startExcel("report.html");
-            ExecuteCmd.startWord("report.html");
+            //ExecuteCmd.startWord("report.html");
 
 //        Object[] options = {"HTML", "WORD", "EXCEL"};
 //        int n = JOptionPane.showOptionDialog(owner, "Выберите формат файла для отчёта", "Формирование отчёта",

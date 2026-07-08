@@ -83,19 +83,20 @@ public class Specifics extends javax.swing.JFrame {
     public void loadingData() {
         UGui.stopCellEditingAndExecSql();
         this.listTRec.clear();
+        int projectID = Integer.valueOf(eProp.projectID.getProp());
+        Record projectRec = eProject.find(projectID);
 
         //Со скидкой менеджера и комплектов
         if (this.man == true) {
             int prjprodID = Integer.valueOf(eProp.prjprodID.getProp());
             Record prjprodRec = ePrjprod.find(prjprodID);
 
-            if (prjprodRec != null) {
-                Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
+            if (prjprodRec != null) {                
                 String script = prjprodRec.getStr(ePrjprod.script);
                 JsonElement je = new Gson().fromJson(script, JsonElement.class);
                 je.getAsJsonObject().addProperty("nuni", prjprodRec.getInt(ePrjprod.systree_id));
                 winc.build(je.toString());
-                winc.specific(cbx2.getSelectedIndex() == 0, true);
+                winc.specific(projectRec, cbx2.getSelectedIndex() == 0, true);
                 this.listTRec.addAll(winc.listSpec); //добавим спецификацию                
 
                 //Добавим комплекты
@@ -117,7 +118,8 @@ public class Specifics extends javax.swing.JFrame {
                 JsonElement je = new Gson().fromJson(script, JsonElement.class);
                 je.getAsJsonObject().addProperty("nuni", sysprodRec.getInt(eSysprod.systree_id));
                 winc.build(je.toString());
-                winc.specific(cbx2.getSelectedIndex() == 0, false);
+                
+                winc.specific(projectRec, cbx2.getSelectedIndex() == 0, false);
                 this.listTRec.addAll(winc.listSpec); //добавим спецификацию                   
             } else {
                 JOptionPane.showMessageDialog(this, "Выберите конструкцию в системе профилей", "Предупреждение", JOptionPane.OK_OPTION);
