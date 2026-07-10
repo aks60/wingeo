@@ -28,10 +28,10 @@ import org.jsoup.select.Elements;
 //Ñ÷¸ò
 public class RCheck {
 
-    private static Record projectRec;
-    public static Document doc;
-    public static List<Wincalc> wincList;
-    
+    private Record projectRec;
+    public Document doc;
+    public List<Wincalc> wincList;
+
     public void parseDoc1(List<Record> prjprodList) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Check1.html");
@@ -84,7 +84,7 @@ public class RCheck {
         }
     }
 
-    private static void loadDoc1(List<Record> prjprodList) {
+    private void loadDoc1(List<Record> prjprodList) {
         double total = 0f;
         try {
             Record prjpart1Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart1_id));
@@ -177,7 +177,7 @@ public class RCheck {
         }
     }
 
-    private static void loadDoc2(List<Record> prjprodList) {
+    private void loadDoc2(List<Record> prjprodList) {
         double total = 0f;
         try {
             Record prjpart1Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart1_id));
@@ -279,7 +279,7 @@ public class RCheck {
         }
     }
 
-//    private static List<Wincalc> wincList(List<Record> prjprodList) {
+//    private  List<Wincalc> wincList(List<Record> prjprodList) {
 //        List<Wincalc> list = new ArrayList<Wincalc>();
 //        try {
 //            for (int index = 0; index < prjprodList.size(); ++index) {
@@ -294,8 +294,7 @@ public class RCheck {
 //        }
 //        return list;
 //    }
-
-    private static byte[] toByteArray(BufferedImage bi) {
+    private byte[] toByteArray(BufferedImage bi) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
             ImageIO.write(bi, "png", outputStream);

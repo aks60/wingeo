@@ -33,9 +33,9 @@ import org.jsoup.select.Elements;
 
 public class RSmeta {
 
-    private static Record projectRec;
-    public static Document doc;
-    public static List<Wincalc> wincList;
+    private Record projectRec;
+    public Document doc;
+    public List<Wincalc> wincList;
 
     public void parseDoc1(List<Record> prjprodList) {
         try {
@@ -88,7 +88,7 @@ public class RSmeta {
         }
     }
 
-    private static void loadDoc1(List<Record> prjprodList) {
+    private void loadDoc1(List<Record> prjprodList) {
         double square = 0f;
         try {
             Record prjpartRec = ePrjpart.find(projectRec.getInt(eProject.prjpart2_id));
@@ -162,7 +162,7 @@ public class RSmeta {
         }
     }
 
-    private static void loadDoc2(List<Record> prjprodList) {
+    private void loadDoc2(List<Record> prjprodList) {
         try {
             double totalTab4 = 0, totalTab5 = 0, square = 0f;
             double discWin = projectRec.getDbl(eProject.disc_win, 0);
@@ -220,7 +220,7 @@ public class RSmeta {
                     Elements td = tab2List.get(i).getElementsByTag("td");
 
                     //Комплектация к изделию
-                    if (Kitcalc.kitList.isEmpty()) {                       
+                    if (Kitcalc.kitList.isEmpty()) {
                         tab3List.get(i).html("");
 
                     } else {
@@ -279,7 +279,7 @@ public class RSmeta {
     }
 
     //Свойства изделия
-    public static void loadTab2(List<Record> prjprodList, Wincalc winc, Elements tabList, int indexProd, int numProd) {
+    public void loadTab2(List<Record> prjprodList, Wincalc winc, Elements tabList, int indexProd, int numProd) {
         try {
             Record prjprodRec = prjprodList.get(indexProd);
             double discWin = projectRec.getDbl(eProject.disc_win, 0) + projectRec.getDbl(eProject.disc_all, 0);
@@ -309,7 +309,7 @@ public class RSmeta {
     }
 
     //Комплектация изделия
-    public static void loadTab3(List<TRecord> kitList, Wincalc winc, Elements tabList, int index) {
+    public void loadTab3(List<TRecord> kitList, Wincalc winc, Elements tabList, int index) {
         try {
             double discKit = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);
             //Цикл по строкам комплектации
@@ -336,7 +336,7 @@ public class RSmeta {
     }
 
     //Изделия все
-    public static double loadTab4(List<Record> prjprodList, List<Wincalc> wincList, Element tabElem) {
+    public double loadTab4(List<Record> prjprodList, List<Wincalc> wincList, Element tabElem) {
         double total = 0;
         double discWin = projectRec.getDbl(eProject.disc_win, 0) + projectRec.getDbl(eProject.disc_all, 0);
         try {
@@ -370,7 +370,7 @@ public class RSmeta {
     }
 
     //Комплектация все
-    public static double loadTab5(ArrayList<TRecord> prjkitList, Element tabElem) {
+    public double loadTab5(ArrayList<TRecord> prjkitList, Element tabElem) {
         double total = 0;
         try {
             double discKit = projectRec.getDbl(eProject.disc_kit, 0) + projectRec.getDbl(eProject.disc_all, 0);

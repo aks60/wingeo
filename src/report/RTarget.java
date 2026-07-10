@@ -34,9 +34,9 @@ import report.sup.RRecord;
 //«‡‰‡ÌËÂ ‚ ˆÂı
 public class RTarget {
 
-    public static Document doc;
-    public static List<Wincalc> wincList;
-    
+    public Document doc;
+    public List<Wincalc> wincList;
+
     public void parseDoc(List<Record> prjprodList) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Target.html");
@@ -58,9 +58,9 @@ public class RTarget {
         } catch (Exception e) {
             System.err.println("Œ¯Ë·Í‡:Target.parseDoc() " + e);
         }
-    }   
+    }
 
-    private static void loadDoc(Record projectRec, List<Record> prjprodList) {
+    private void loadDoc(Record projectRec, List<Record> prjprodList) {
         Double square = 0.0; //ÔÎÓ˘‡‰¸
         try {
             Query qPrjpart = new Query(ePrjpart.values()).sql(ePrjpart.data(), ePrjpart.id, projectRec.getInt(eProject.prjpart2_id));
@@ -178,7 +178,7 @@ public class RTarget {
     }
 
     //œ–Œ‘»À‹ / ¿–Ã»–Œ¬¿Õ»≈
-    public static void loadTab3(List<TRecord> listSpec, Element tab, String templateTr, int numProd) {
+    public void loadTab3(List<TRecord> listSpec, Element tab, String templateTr, int numProd) {
         List<TRecord> spcListA = new ArrayList<TRecord>();
         List<TRecord> spcListB = new ArrayList<TRecord>();
 
@@ -188,7 +188,7 @@ public class RTarget {
                 spcListA.add(spcRecA);
                 int count = spcListB.size();
                 for (TRecord spcRecB : listSpec) {
-                    
+
                     if (spcRecB.elem5e != null) {
                         if (TypeArt.isType(spcRecB.artiklRec, TypeArt.X107) == true && spcRecB.elem5e.id == spcRecA.id) {
                             spcListB.add(spcRecB);
@@ -229,7 +229,7 @@ public class RTarget {
     }
 
     //”œÀŒ“Õ»“≈À»
-    public static void loadTab4(List<TRecord> listSpec, Element tab, String templateTr, int countNum) {
+    public void loadTab4(List<TRecord> listSpec, Element tab, String templateTr, int countNum) {
 
         List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
@@ -254,7 +254,7 @@ public class RTarget {
     }
 
     //ÿ“¿œ» 
-    public static void loadTab5(List<TRecord> listSpec, Element tab, String templateTr, int countNum) {
+    public void loadTab5(List<TRecord> listSpec, Element tab, String templateTr, int countNum) {
 
         List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
@@ -281,7 +281,7 @@ public class RTarget {
     }
 
     //¿ —≈——”¿–€
-    public static void loadTab6(List<TRecord> listSpec, Element tab, String templateTr, int countNum) {
+    public void loadTab6(List<TRecord> listSpec, Element tab, String templateTr, int countNum) {
 
         List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
@@ -310,7 +310,7 @@ public class RTarget {
     }
 
     //‘”–Õ»“”–¿ 
-    public static void loadTab7(List<TRecord> listSpec, Element tab, String templateTr, int countNum) {
+    public void loadTab7(List<TRecord> listSpec, Element tab, String templateTr, int countNum) {
         List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
             if (TypeArt.isType(spcRec.artiklRec, TypeArt.X209, TypeArt.X210,
@@ -337,7 +337,7 @@ public class RTarget {
     }
 
     //«¿œŒÀÕ≈Õ»ﬂ
-    public static void loadTab8(List<TRecord> listSpec, Element tab, String templateTr, int countNum) {
+    public void loadTab8(List<TRecord> listSpec, Element tab, String templateTr, int countNum) {
 
         List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {
@@ -364,7 +364,7 @@ public class RTarget {
     }
 
     //œ–Œ◊≈≈
-    public static void loadTab9(List<TRecord> listSpec, Element tab, String templateTr, int countNum) {
+    public void loadTab9(List<TRecord> listSpec, Element tab, String templateTr, int countNum) {
 
         List<TRecord> spcList = new ArrayList<TRecord>();
         listSpec.forEach(spcRec -> {

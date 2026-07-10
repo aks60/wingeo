@@ -32,9 +32,9 @@ import org.jsoup.select.Elements;
 //Коммерческое предложение
 public class ROffer {
 
-    public static Document doc;
-    public static List<Wincalc> wincList;
-    
+    public Document doc;
+    public List<Wincalc> wincList;
+
     public void parseDoc(List<Record> prjprodList) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Offer.html");
@@ -61,7 +61,7 @@ public class ROffer {
         }
     }
 
-    private static void loadDoc(Record projectRec) {
+    private void loadDoc(Record projectRec) {
         int length = 400;
         double square = 0f; //площадь
         try {

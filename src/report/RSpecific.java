@@ -26,8 +26,8 @@ import org.jsoup.select.Elements;
 //Спецификация
 public class RSpecific {
 
-    private static int npp = 0;
-    public static Document doc;
+    private  int npp = 0;
+    public  Document doc;
 
     public void parseDoc(List<Record> prjprodList) {
         try {
@@ -54,7 +54,7 @@ public class RSpecific {
         }
     }
 
-    private static void loadDoc(Record projectRec, List<Record> prjprodList) {
+    private  void loadDoc(Record projectRec, List<Record> prjprodList) {
         try {
             List<TRecord> spcList = new ArrayList<TRecord>();
             List<RRecord> kitList = new ArrayList<RRecord>();
@@ -123,7 +123,7 @@ public class RSpecific {
         }
     }
 
-    private static void recordAdd(Elements templateRec, RRecord specificRec) {
+    private  void recordAdd(Elements templateRec, RRecord specificRec) {
         Elements tdList = templateRec.get(1).getElementsByTag("td");
         tdList.get(0).text(String.valueOf(++npp));
         tdList.get(1).text(specificRec.artikl());

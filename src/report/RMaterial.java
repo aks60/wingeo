@@ -24,8 +24,8 @@ import org.jsoup.select.Elements;
 //Разход материала
 public class RMaterial {
 
-    private static int npp = 0;
-    public static Document doc;
+    private int npp = 0;
+    public Document doc;
 
     public void parseDoc1(List<Record> prjprodList) {
         try {
@@ -73,7 +73,7 @@ public class RMaterial {
         }
     }
 
-    private static void loadDoc1(Record projectRec, List<Record> prjprodList) {
+    private void loadDoc1(Record projectRec, List<Record> prjprodList) {
         npp = 0;
         List<RRecord> spcList = new ArrayList<RRecord>();
         List<TRecord> winList = new ArrayList<TRecord>();
@@ -116,7 +116,7 @@ public class RMaterial {
                 .selectFirst("td:eq(1)").text(UCom.format(total, 9));
     }
 
-    private static void loadDoc2(Record projectRec, List<Record> prjprodList) {
+    private void loadDoc2(Record projectRec, List<Record> prjprodList) {
         npp = 0;
         List<RRecord> spcList = new ArrayList<RRecord>();
         List<TRecord> winList = new ArrayList<TRecord>();
@@ -159,7 +159,7 @@ public class RMaterial {
                 .selectFirst("td:eq(1)").text(UCom.format(total, 9));
     }
 
-    private static void recordAdd(Elements tdList, RRecord spcRec) {
+    private void recordAdd(Elements tdList, RRecord spcRec) {
         tdList.get(0).text(String.valueOf(++npp));
         tdList.get(1).text(spcRec.artikl());
         tdList.get(2).text(spcRec.name());
