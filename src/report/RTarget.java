@@ -34,6 +34,8 @@ import report.sup.RRecord;
 //Задание в цех
 public class RTarget {
 
+    public static List<Wincalc> wincList;
+    
     public void parseDoc(List<Record> prjprodList) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Target.html");
@@ -84,7 +86,7 @@ public class RTarget {
                 //Заполним файл шаблонами заказов
                 Element div2 = doc.getElementById("div2");
                 String templateBody = div2.html();
-                List<Wincalc> wincList = URep.wincList(prjprodList, 400);
+                wincList = URep.wincList(prjprodList, 400);
                 for (int i = 1; i < prjprodList.size(); i++) {
                     div2.append(templateBody);
                 }
