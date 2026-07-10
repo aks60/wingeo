@@ -39,25 +39,5 @@ public class URep {
         }
         return list;
     }    
-    
-//    public static void specificRep(int n, Window frame) {
-//        ProgressBar.create(frame.this, new ListenerFrame() {
-//            public void actionRequest(Object obj) {
-//                //Спецификация
-//                List<Record> prjprodList =  List.of(qPrjprod.get(UGui.getIndexRec(tab2)));
-//                new RSpecific().parseDoc(prjprodList);
-//            }
-//        });     
-//    }
-//    
-//    public static void materialRep(int n) {
-//        
-//    }
-//    
-//    public static void targetRep(int n) {
-//        
-//    }
-//    public static void smetaRep(int n) {
-//        
-//    }
+
 }
