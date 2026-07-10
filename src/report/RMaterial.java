@@ -25,19 +25,20 @@ import org.jsoup.select.Elements;
 public class RMaterial {
 
     private static int npp = 0;
+    public static Document doc;
 
     public void parseDoc1(List<Record> prjprodList) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Material.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
-            Document doc = Jsoup.parse(tempFile, "windows-1251");
+            doc = Jsoup.parse(tempFile, "windows-1251");
 
             Record prjprodRec = prjprodList.get(0);
             Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
 
             //Заполним отчёт
-            loadDoc1(projectRec, prjprodList, doc);
+            loadDoc1(projectRec, prjprodList);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"), "windows-1251");
@@ -54,13 +55,13 @@ public class RMaterial {
             InputStream in = getClass().getResourceAsStream("/resource/report/Material.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
-            Document doc = Jsoup.parse(tempFile, "windows-1251");
+            doc = Jsoup.parse(tempFile, "windows-1251");
 
             Record prjprodRec = prjprodList.get(0);
             Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
 
             //Заполним отчёт
-            loadDoc2(projectRec, prjprodList, doc);
+            loadDoc2(projectRec, prjprodList);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"), "windows-1251");
@@ -72,7 +73,7 @@ public class RMaterial {
         }
     }
 
-    private static void loadDoc1(Record projectRec, List<Record> prjprodList, Document doc) {
+    private static void loadDoc1(Record projectRec, List<Record> prjprodList) {
         npp = 0;
         List<RRecord> spcList = new ArrayList<RRecord>();
         List<TRecord> winList = new ArrayList<TRecord>();
@@ -115,7 +116,7 @@ public class RMaterial {
                 .selectFirst("td:eq(1)").text(UCom.format(total, 9));
     }
 
-    private static void loadDoc2(Record projectRec, List<Record> prjprodList, Document doc) {
+    private static void loadDoc2(Record projectRec, List<Record> prjprodList) {
         npp = 0;
         List<RRecord> spcList = new ArrayList<RRecord>();
         List<TRecord> winList = new ArrayList<TRecord>();

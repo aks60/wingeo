@@ -27,6 +27,7 @@ import org.jsoup.select.Elements;
 public class RSpecific {
 
     private static int npp = 0;
+    public static Document doc;
 
     public void parseDoc(List<Record> prjprodList) {
         try {
@@ -34,13 +35,13 @@ public class RSpecific {
             InputStream in = getClass().getResourceAsStream("/resource/report/Specific.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
-            Document doc = Jsoup.parse(tempFile, "windows-1251");
+            doc = Jsoup.parse(tempFile, "windows-1251");
 
             Record prjprodRec = prjprodList.get(0);
             Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
 
             //Çàïîëíèì îò÷¸ò
-            loadDoc(projectRec, prjprodList, doc);
+            loadDoc(projectRec, prjprodList);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"), "windows-1251");
@@ -53,7 +54,7 @@ public class RSpecific {
         }
     }
 
-    private static void loadDoc(Record projectRec, List<Record> prjprodList, Document doc) {
+    private static void loadDoc(Record projectRec, List<Record> prjprodList) {
         try {
             List<TRecord> spcList = new ArrayList<TRecord>();
             List<RRecord> kitList = new ArrayList<RRecord>();
@@ -91,23 +92,23 @@ public class RSpecific {
 
             templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ÏÐÎÔÈËÈ");
             doc.getElementsByTag("tbody").append(templateRec.get(0).html());
-            listSpc1.forEach(rec -> recordAdd(templateRec, rec, doc));
+            listSpc1.forEach(rec -> recordAdd(templateRec, rec));
 
             templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ÀÊÑÅÑÑÓÀÐÛ");
             doc.getElementsByTag("tbody").append(templateRec.get(0).html());
-            listSpc2.forEach(rec -> recordAdd(templateRec, rec, doc));
+            listSpc2.forEach(rec -> recordAdd(templateRec, rec));
 
             templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ÓÏËÎÒÍÅÍÈß");
             doc.getElementsByTag("tbody").append(templateRec.get(0).html());
-            listSpc3.forEach(rec -> recordAdd(templateRec, rec, doc));
+            listSpc3.forEach(rec -> recordAdd(templateRec, rec));
 
             templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ÇÀÏÎËÍÅÍÈß");
             doc.getElementsByTag("tbody").append(templateRec.get(0).html());
-            listSpc5.forEach(rec -> recordAdd(templateRec, rec, doc));
+            listSpc5.forEach(rec -> recordAdd(templateRec, rec));
 
             templateRec.get(0).getElementsByTag("td").get(0).selectFirst("b").text("ÊÎÌÏËÅÊÒÛ");
             doc.getElementsByTag("tbody").append(templateRec.get(0).html());
-            kitList.forEach(rec -> recordAdd(templateRec, rec, doc));
+            kitList.forEach(rec -> recordAdd(templateRec, rec));
 
             double total = listSpc1.stream().mapToDouble(rec -> rec.spc().cost2).sum()
                     + listSpc2.stream().mapToDouble(rec -> rec.spc().cost2).sum()
@@ -122,7 +123,7 @@ public class RSpecific {
         }
     }
 
-    private static void recordAdd(Elements templateRec, RRecord specificRec, Document doc) {
+    private static void recordAdd(Elements templateRec, RRecord specificRec) {
         Elements tdList = templateRec.get(1).getElementsByTag("td");
         tdList.get(0).text(String.valueOf(++npp));
         tdList.get(1).text(specificRec.artikl());

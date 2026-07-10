@@ -32,6 +32,7 @@ import org.jsoup.select.Elements;
 //Коммерческое предложение
 public class ROffer {
 
+    public static Document doc;
     public static List<Wincalc> wincList;
     
     public void parseDoc(List<Record> prjprodList) {
@@ -39,13 +40,13 @@ public class ROffer {
             InputStream in = getClass().getResourceAsStream("/resource/report/Offer.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
-            Document doc = Jsoup.parse(tempFile, "windows-1251");
+            doc = Jsoup.parse(tempFile, "windows-1251");
 
             Record prjprodRec = prjprodList.get(0);
             Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
 
             //Заполним отчёт
-            loadDoc(projectRec, doc);
+            loadDoc(projectRec);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"), "windows-1251");
@@ -60,7 +61,7 @@ public class ROffer {
         }
     }
 
-    private static void loadDoc(Record projectRec, Document doc) {
+    private static void loadDoc(Record projectRec) {
         int length = 400;
         double square = 0f; //площадь
         try {

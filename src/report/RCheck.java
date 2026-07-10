@@ -29,6 +29,7 @@ import org.jsoup.select.Elements;
 public class RCheck {
 
     private static Record projectRec;
+    public static Document doc;
     public static List<Wincalc> wincList;
     
     public void parseDoc1(List<Record> prjprodList) {
@@ -36,13 +37,13 @@ public class RCheck {
             InputStream in = getClass().getResourceAsStream("/resource/report/Check1.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
-            Document doc = Jsoup.parse(tempFile, "windows-1251");
+            doc = Jsoup.parse(tempFile, "windows-1251");
 
             Record prjprodRec = prjprodList.get(0);
             projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
 
             //Заполним отчёт
-            loadDoc1(prjprodList, doc);
+            loadDoc1(prjprodList);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"), "windows-1251");
@@ -62,13 +63,13 @@ public class RCheck {
             InputStream in = getClass().getResourceAsStream("/resource/report/Check2.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
-            Document doc = Jsoup.parse(tempFile, "windows-1251");
+            doc = Jsoup.parse(tempFile, "windows-1251");
 
             Record prjprodRec = prjprodList.get(0);
             projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
 
             //Заполним отчёт
-            loadDoc2(prjprodList, doc);
+            loadDoc2(prjprodList);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"), "windows-1251");
@@ -83,7 +84,7 @@ public class RCheck {
         }
     }
 
-    private static void loadDoc1(List<Record> prjprodList, Document doc) {
+    private static void loadDoc1(List<Record> prjprodList) {
         double total = 0f;
         try {
             Record prjpart1Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart1_id));
@@ -176,7 +177,7 @@ public class RCheck {
         }
     }
 
-    private static void loadDoc2(List<Record> prjprodList, Document doc) {
+    private static void loadDoc2(List<Record> prjprodList) {
         double total = 0f;
         try {
             Record prjpart1Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart1_id));

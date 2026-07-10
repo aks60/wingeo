@@ -34,6 +34,7 @@ import report.sup.RRecord;
 //Задание в цех
 public class RTarget {
 
+    public static Document doc;
     public static List<Wincalc> wincList;
     
     public void parseDoc(List<Record> prjprodList) {
@@ -41,13 +42,13 @@ public class RTarget {
             InputStream in = getClass().getResourceAsStream("/resource/report/Target.html");
             File tempFile = File.createTempFile("report", "html");
             in.transferTo(new FileOutputStream(tempFile));
-            Document doc = Jsoup.parse(tempFile, "windows-1251");
+            doc = Jsoup.parse(tempFile, "windows-1251");
 
             Record prjprodRec = prjprodList.get(0);
             Record projectRec = eProject.find(prjprodRec.getInt(ePrjprod.project_id));
 
             //Заполним отчёт
-            loadDoc(projectRec, prjprodList, doc);
+            loadDoc(projectRec, prjprodList);
 
             String str = doc.html();
             str = new String(str.getBytes("windows-1251"), "windows-1251");
@@ -59,7 +60,7 @@ public class RTarget {
         }
     }   
 
-    private static void loadDoc(Record projectRec, List<Record> prjprodList, Document doc) {
+    private static void loadDoc(Record projectRec, List<Record> prjprodList) {
         Double square = 0.0; //площадь
         try {
             Query qPrjpart = new Query(ePrjpart.values()).sql(ePrjpart.data(), ePrjpart.id, projectRec.getInt(eProject.prjpart2_id));
