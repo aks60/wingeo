@@ -30,11 +30,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import static report.URep.wincList;
 
 public class RSmeta {
 
     private static Record projectRec;
+    public static List<Wincalc> wincList;
 
     public void parseDoc1(List<Record> prjprodList) {
         try {
@@ -101,7 +101,7 @@ public class RSmeta {
             //Заполним файл шаблонами заказов
             Element div2 = doc.getElementById("div2");
             String template2 = div2.html();
-            List<Wincalc> wincList = wincList(prjprodList, 400);
+            wincList = URep.wincList(prjprodList, 400);
 
             //СЕКЦИЯ №1
             {
@@ -175,7 +175,7 @@ public class RSmeta {
                     + UGui.convert2Date(projectRec.get(eProject.date4)) + "'");
             Element div2 = doc.getElementById("div2");
             String template2 = div2.html();
-            List<Wincalc> wincList = URep.wincList(prjprodList, 400);
+            wincList = URep.wincList(prjprodList, 400);
 
             //СЕКЦИЯ №1
             {

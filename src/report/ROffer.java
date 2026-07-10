@@ -32,6 +32,8 @@ import org.jsoup.select.Elements;
 //Коммерческое предложение
 public class ROffer {
 
+    public static List<Wincalc> wincList;
+    
     public void parseDoc(List<Record> prjprodList) {
         try {
             InputStream in = getClass().getResourceAsStream("/resource/report/Offer.html");
@@ -103,7 +105,7 @@ public class ROffer {
             {
                 Element div2 = doc.getElementById("div2");
                 String template2 = div2.html();
-                List<Wincalc> wincList = URep.wincList(prjprodList, 400);; //wincList(prjprodList, length);
+                wincList = URep.wincList(prjprodList, 400); //wincList(prjprodList, length);
                 for (int i = 1; i < prjprodList.size(); i++) {
                     div2.append(template2);
                 }

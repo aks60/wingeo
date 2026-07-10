@@ -18,7 +18,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
@@ -30,6 +29,7 @@ import org.jsoup.select.Elements;
 public class RCheck {
 
     private static Record projectRec;
+    public static List<Wincalc> wincList;
     
     public void parseDoc1(List<Record> prjprodList) {
         try {
@@ -88,7 +88,7 @@ public class RCheck {
         try {
             Record prjpart1Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart1_id));
             Record prjpart2Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart2_id));
-            List<Wincalc> wincList = wincList(prjprodList);
+            wincList = URep.wincList(prjprodList, 400);
 
             doc.getElementById("h01").text("—˜∏Ú π" + projectRec.getStr(eProject.num_acc) + " ÓÚ '" + UGui.convert2Date(projectRec.get(eProject.date4)) + "'");
             //—≈ ÷»ﬂ π1
@@ -181,7 +181,7 @@ public class RCheck {
         try {
             Record prjpart1Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart1_id));
             Record prjpart2Rec = ePrjpart.find(projectRec.getInt(eProject.prjpart2_id));
-            List<Wincalc> wincList = wincList(prjprodList);
+            wincList = URep.wincList(prjprodList, 400);
             double discKit = projectRec.getDbl(eProject.disc_kit, 0);
             double discWin = projectRec.getDbl(eProject.disc_win, 0);
             double discAll = projectRec.getDbl(eProject.disc_all, 0);
@@ -278,21 +278,21 @@ public class RCheck {
         }
     }
 
-    private static List<Wincalc> wincList(List<Record> prjprodList) {
-        List<Wincalc> list = new ArrayList<Wincalc>();
-        try {
-            for (int index = 0; index < prjprodList.size(); ++index) {
-                Record prjprodRec = prjprodList.get(index);
-                String script = prjprodRec.getStr(ePrjprod.script);
-                Wincalc winc = new Wincalc(script);
-                winc.specific(true);
-                list.add(winc);
-            }
-        } catch (Exception e) {
-            System.err.println("Œ¯Ë·Í‡:HtmlOfSmeta.wincList()" + e);
-        }
-        return list;
-    }
+//    private static List<Wincalc> wincList(List<Record> prjprodList) {
+//        List<Wincalc> list = new ArrayList<Wincalc>();
+//        try {
+//            for (int index = 0; index < prjprodList.size(); ++index) {
+//                Record prjprodRec = prjprodList.get(index);
+//                String script = prjprodRec.getStr(ePrjprod.script);
+//                Wincalc winc = new Wincalc(script);
+//                winc.specific(true);
+//                list.add(winc);
+//            }
+//        } catch (Exception e) {
+//            System.err.println("Œ¯Ë·Í‡:HtmlOfSmeta.wincList()" + e);
+//        }
+//        return list;
+//    }
 
     private static byte[] toByteArray(BufferedImage bi) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
