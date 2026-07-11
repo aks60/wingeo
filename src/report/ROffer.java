@@ -133,6 +133,7 @@ public class ROffer {
                     String gname = (elemGlass != null) ? elemGlass.artiklRec.getStr(eArtikl.code) + " - " + elemGlass.artiklRec.getStr(eArtikl.name) : "";
 
                     imgList.get(i).attr("src", "C:\\Users\\All Users\\Avers\\Okna\\img" + (i + 1) + ".gif");
+                    imgList.get(i).attr("id", "img" + (i + 1));
 
                     trList.get(0).getElementsByTag("td").get(0).text("Изделие № " + (i + 1));
                     trList.get(2).getElementsByTag("td").get(1).text(eSystree.nameSysprof(prjprodRec.getInt(ePrjprod.systree_id)));
@@ -163,6 +164,7 @@ public class ROffer {
             for (int i = 0; i < imgList.size(); i++) {
                 Element get = imgList.get(i);
                 get.attr("src", "C:\\Users\\All Users\\Avers\\Okna\\img" + (i + 1) + ".gif");
+                get.attr("id", "img" + (i + 1));
             }
         } catch (Exception e) {
             System.err.println("Ошибка:HtmlOfOffer.load()" + e);

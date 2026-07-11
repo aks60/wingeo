@@ -154,6 +154,7 @@ public class RSmeta {
                 for (int i = 0; i < imgList.size(); i++) {
                     Element get = imgList.get(i);
                     get.attr("src", "C:\\Users\\All Users\\Avers\\Okna\\img" + (i + 1) + ".gif");
+                    get.attr("id", "img" + (i + 1));
                 }
             }
 
@@ -270,6 +271,7 @@ public class RSmeta {
                 for (int i = 0; i < imgList.size(); i++) {
                     Element get = imgList.get(i);
                     get.attr("src", "C:\\Users\\All Users\\Avers\\Okna\\img" + (i + 1) + ".gif");
+                    get.attr("id", "img" + (i + 1));
                 }
             }
 

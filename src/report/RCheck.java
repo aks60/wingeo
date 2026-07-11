@@ -279,21 +279,6 @@ public class RCheck {
         }
     }
 
-//    private  List<Wincalc> wincList(List<Record> prjprodList) {
-//        List<Wincalc> list = new ArrayList<Wincalc>();
-//        try {
-//            for (int index = 0; index < prjprodList.size(); ++index) {
-//                Record prjprodRec = prjprodList.get(index);
-//                String script = prjprodRec.getStr(ePrjprod.script);
-//                Wincalc winc = new Wincalc(script);
-//                winc.specific(true);
-//                list.add(winc);
-//            }
-//        } catch (Exception e) {
-//            System.err.println("Îøèáêà:HtmlOfSmeta.wincList()" + e);
-//        }
-//        return list;
-//    }
     private byte[] toByteArray(BufferedImage bi) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
