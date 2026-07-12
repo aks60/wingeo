@@ -19,6 +19,7 @@ import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
 
 public class ElemCross extends ElemSimple {
@@ -67,6 +68,15 @@ public class ElemCross extends ElemSimple {
             List<Geometry> geoSplit = UGeo.splitPolygon((Polygon) geoShell.copy(), lineImp);
             owner.childs.get(0).area = (Polygon) geoSplit.get(0);
             owner.childs.get(2).area = (Polygon) geoSplit.get(1);
+            
+            //Если импост изменились координаты
+            LineString lineNew = (LineString) geoSplit.get(2);
+            if(lineImp.toGeometry(gf).equals(lineNew) == false) {
+                this.x1(lineNew.getCoordinateN(0).x);
+                this.y1(lineNew.getCoordinateN(0).y);
+                this.x2(lineNew.getCoordinateN(1).x);
+                this.y2(lineNew.getCoordinateN(1).y);                
+            }
 
             //Левый и правый сегмент вдоль импоста
             double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr); //ширина

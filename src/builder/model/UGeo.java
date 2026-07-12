@@ -216,6 +216,7 @@ public class UGeo {
             }
             outList.add(Com5t.gf.createPolygon(cooL.toArray(new Coordinate[0])));
             outList.add(Com5t.gf.createPolygon(cooR.toArray(new Coordinate[0])));
+            outList.add(Com5t.gf.createLineString(crosTwo.toArray(new Coordinate[0])));
 
         } catch (Exception e) {
             System.err.println("Ошибка:UGeo.splitPolygon()" + e);
