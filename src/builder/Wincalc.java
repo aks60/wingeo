@@ -284,8 +284,9 @@ public class Wincalc {
             root.addJoining();  //L и T соединения
             UCom.filter(listArea, Type.STVORKA).forEach(e -> e.addJoining()); //прил. соед.
 
-        } catch (Exception s) {
-            System.err.println("Ошибка:Wincalc.location() " + s);
+        } catch (Exception e) {
+            System.err.println("Ошибка:Wincalc.location() " + e);
+            throw e;
         }
     }
 
@@ -295,7 +296,7 @@ public class Wincalc {
         Record projectRec = eProject.find(projectID);
         specific(projectRec, norm_otx, false);
     }
-    
+
     public void specific(Record projectRec, boolean norm_otx, boolean manager) {
         this.weight = 0;
         this.cost1 = 0;
@@ -326,11 +327,11 @@ public class Wincalc {
 
             //Если спецификация на продукт менеджера
             if (manager == true) {
-                    //Скидка менеджера в проекте
-                    double discWin = projectRec.getDbl(eProject.disc_win, 0);
-                    for (TRecord tRecord : this.listSpec) {
-                        tRecord.cost2 = tRecord.cost2 - discWin * tRecord.cost2 / 100; //скидка менеджера
-                    }
+                //Скидка менеджера в проекте
+                double discWin = projectRec.getDbl(eProject.disc_win, 0);
+                for (TRecord tRecord : this.listSpec) {
+                    tRecord.cost2 = tRecord.cost2 - discWin * tRecord.cost2 / 100; //скидка менеджера
+                }
             }
 
             //Итоговая стоимость
