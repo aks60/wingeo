@@ -156,12 +156,14 @@ public class AreaSimple extends Com5t {
                                     int i = list.size() / 2; //index середины дуги
                                     Coordinate c1 = list.get(i), c2 = list.get(i + 1);
                                     Coordinate smid = new LineSegment(c1.x, c1.y, c2.x, c2.y).midPoint();
-                                    Rectangle2D rec = new Rectangle2D.Double(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
+                                    Rectangle2D rec = new Rectangle2D.Double(smid.x - SIZE , smid.y - SIZE , SIZE*2, SIZE*2);
+//                                    Rectangle2D rec = new Rectangle2D.Double(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
                                     winc.gc2d.draw(rec);
 
                                 } else {
                                     Coordinate smid = new LineSegment(el.x1(), el.y1(), el.x2(), el.y2()).midPoint();
-                                    Rectangle2D rec = new Rectangle2D.Double(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
+                                    Rectangle2D rec = new Rectangle2D.Double(smid.x - SIZE, smid.y - SIZE, SIZE*2, SIZE*2);
+//                                    Rectangle2D rec = new Rectangle2D.Double(smid.x - SIZE / 2, smid.y - SIZE / 2, SIZE, SIZE);
                                     winc.gc2d.draw(rec);
                                 }
                             }
