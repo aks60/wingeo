@@ -573,7 +573,7 @@ public class UGeo {
     //Изменение размера окна (потянул точку)
     public static void movePoint(ElemSimple elem, double x, double y) {
 
-        if (x > 0 || y > 0) {
+        if (x > 0 && y > 0) {
             if (List.of(Layout.BOT, Layout.HOR).contains(elem.layout())) {
                 if (elem.passMask[0] == 0) {
                     elem.y1(y);

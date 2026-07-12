@@ -185,7 +185,7 @@ public abstract class ElemSimple extends Com5t {
                     }
                 }
                 if (X < 0 || Y < 0) {
-                    UGeo.moveGson(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
+                    //UGeo.moveGson(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
                 }
             }
         });

@@ -64,23 +64,23 @@ public class ElemCross extends ElemSimple {
             Geometry geoFalz = owner.area.getGeometryN(2);
 
             //Пилим полигон импостом
-            LineSegment lineImp = new LineSegment(new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id));
-            List<Geometry> geoSplit = UGeo.splitPolygon((Polygon) geoShell.copy(), lineImp);
+            LineSegment segmImp = new LineSegment(new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id));
+            List<Geometry> geoSplit = UGeo.splitPolygon((Polygon) geoShell.copy(), segmImp);
             owner.childs.get(0).area = (Polygon) geoSplit.get(0);
             owner.childs.get(2).area = (Polygon) geoSplit.get(1);
             
             //Если импост изменились координаты
-            LineString lineNew = (LineString) geoSplit.get(2);
-            if(lineImp.toGeometry(gf).equals(lineNew) == false) {
-                this.x1(lineNew.getCoordinateN(0).x);
-                this.y1(lineNew.getCoordinateN(0).y);
-                this.x2(lineNew.getCoordinateN(1).x);
-                this.y2(lineNew.getCoordinateN(1).y);                
+            LineString lineImp = (LineString) geoSplit.get(2);
+            if(segmImp.toGeometry(gf).equals(lineImp) == false) {
+                this.x1(lineImp.getCoordinateN(0).x);
+                this.y1(lineImp.getCoordinateN(0).y);
+                this.x2(lineImp.getCoordinateN(1).x);
+                this.y2(lineImp.getCoordinateN(1).y);                
             }
 
             //Левый и правый сегмент вдоль импоста
             double delta = this.artiklRec.getDbl(eArtikl.height) - this.artiklRec.getDbl(eArtikl.size_centr); //ширина
-            LineSegment offsetSegment[] = {lineImp.offset(+delta), lineImp.offset(-delta)};
+            LineSegment offsetSegment[] = {segmImp.offset(+delta), segmImp.offset(-delta)};
 
             //Точки пересечения канвы сегментами импоста
             Polygon areaCanvas = UGeo.newPolygon(0, 0, 0, 10000, 10000, 10000, 10000, 0);
