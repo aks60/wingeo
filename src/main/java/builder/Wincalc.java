@@ -33,7 +33,6 @@ import domain.eArtikl;
 import domain.eColor;
 import domain.eParams;
 import domain.eParmap;
-import domain.ePrjprod;
 import domain.eProject;
 import domain.eSyspar1;
 import domain.eSysprof;
@@ -51,8 +50,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import static startup.App.Top;
 
 // см. алгоритм git -> 804d27409d
 //TODO сделать выбор цветов на всё окно с учётом 'первый артикул из сист. профилей'
