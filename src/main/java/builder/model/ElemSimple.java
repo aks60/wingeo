@@ -62,7 +62,11 @@ public abstract class ElemSimple extends Com5t {
                 pointPress = evt.getPoint();
                 Coordinate wincPress = new Coordinate((evt.getX() - Canvas.translateXY[0])
                         / winc.scale, (evt.getY() - Canvas.translateXY[1]) / winc.scale);
-                boolean inside = this.area.contains(gf.createPoint(wincPress));
+
+                if (winc.listElem.stream().anyMatch(e -> e.passMask[1] > 0 && e != this)) {
+                    return; //исключение более двух ареа одновременно изменять координаты
+                }
+                boolean inside = this.area.contains(gf.createPoint(wincPress)); //если точка лежит внутри ареа
 
                 //Если клик внутри контура
                 if (inside == true) {
@@ -191,7 +195,7 @@ public abstract class ElemSimple extends Com5t {
                 timerKey.stop();
                 timerKey.start();
             }
-        });        
+        });
     }
 
     @Override
