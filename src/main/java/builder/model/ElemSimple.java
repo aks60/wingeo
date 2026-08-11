@@ -56,6 +56,85 @@ public abstract class ElemSimple extends Com5t {
 
     public void addListenerEvents() {
 
+        //НАЖАЛИ мышку
+        this.winc.mousePressed.add((evt) -> {
+            if (this.area != null) {
+                pointPress = evt.getPoint();
+                Coordinate wincPress = new Coordinate((evt.getX() - Canvas.translateXY[0])
+                        / winc.scale, (evt.getY() - Canvas.translateXY[1]) / winc.scale);
+                boolean inside = this.area.contains(gf.createPoint(wincPress));
+
+                //Если клик внутри контура
+                if (inside == true) {
+                    ++passMask[1];
+                    LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
+                    double coeff = segm.segmentFraction(wincPress); //доля расстояния вдоль этого отрезка.
+
+                    if (coeff < .33) { //кликнул начало вектора
+                        passMask[1] = (passMask[0] != 0) ? 1 : passMask[1];
+                        passMask[0] = 0;
+
+                    } else if (coeff > .67) {//кликнул конец вектора
+                        passMask[1] = (passMask[0] != 1) ? 1 : passMask[1];
+                        passMask[0] = 1;
+
+                    } else {//кликнул по середине вектора                 
+                        passMask[1] = (passMask[0] != 2) ? 1 : passMask[1];
+                        passMask[0] = 2;
+                    }
+                } else { //Промах, всё обнуляю
+                    passMask = UCom.getArr(0, 0);
+                }
+                winc.canvas.requestFocusInWindow();
+                winc.canvas.repaint();
+            }
+        });
+        //ПЕРЕМЕСТИЛИ мышкой
+        this.winc.mouseDragged.add((evt) -> {
+            //Фильтр движухи откл. когда passMask[1] > 1 
+            if (passMask[1] > 1 && this.area != null) {
+
+                double X = 0, Y = 0;
+                double dX = evt.getX() - pointPress.getX(); //приращение по горизонт.
+                double dY = evt.getY() - pointPress.getY(); //приращение по вертикали 
+                pointPress = evt.getPoint(); //новое положение клика точки
+
+                if (passMask[0] == 0) { //начало вектора
+                    X = dX / winc.scale + x1();
+                    Y = dY / winc.scale + y1();
+                    UGeo.movePoint(this, X, Y);
+
+                } else if (passMask[0] == 1) { //конец вектора
+                    X = dX / winc.scale + x2();
+                    Y = dY / winc.scale + y2();
+                    UGeo.movePoint(this, X, Y);
+
+                } else if (passMask[0] == 2) { //середина вектора
+                    X = dX / winc.scale + x2();
+                    Y = dY / winc.scale + y2();
+                    if (Y > 0 && List.of(Layout.BOT, Layout.TOP, Layout.HOR).contains(layout())) {
+                        if (this.h() != null) {
+                            this.h(this.h() - dY / winc.scale);
+                        } else {
+                            this.y1(Y);
+                            this.y2(Y);
+                        }
+                    }
+                    if (X > 0 && List.of(Layout.LEF, Layout.RIG, Layout.VER).contains(layout())) {
+                        if (this.h() != null) {
+                            this.h(this.h() - dX / winc.scale);
+                        } else {
+                            this.x1(X);
+                            this.x2(X);
+                        }
+                    }
+                }
+                if (X < 0 || Y < 0) {
+                    //UGeo.moveGson(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
+                }
+            }
+        });
+        //ПЕРЕМЕСТИЛИ клавой
         this.winc.keyboardPressed.add((var evt) -> {
 
             if (this.area != null && passMask[1] > 0) {
@@ -112,83 +191,7 @@ public abstract class ElemSimple extends Com5t {
                 timerKey.stop();
                 timerKey.start();
             }
-        });
-        this.winc.mousePressed.add((evt) -> {
-            if (this.area != null) {
-                pointPress = evt.getPoint();
-                Coordinate wincPress = new Coordinate((evt.getX() - Canvas.translateXY[0])
-                        / winc.scale, (evt.getY() - Canvas.translateXY[1]) / winc.scale);
-                boolean inside = this.area.contains(gf.createPoint(wincPress));
-
-                //Если клик внутри контура
-                if (inside == true) {
-                    ++passMask[1];
-                    LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
-                    double coeff = segm.segmentFraction(wincPress); //доля расстояния вдоль этого отрезка.
-
-                    if (coeff < .33) { //кликнул начало вектора
-                        passMask[1] = (passMask[0] != 0) ? 1 : passMask[1];
-                        passMask[0] = 0;
-
-                    } else if (coeff > .67) {//кликнул конец вектора
-                        passMask[1] = (passMask[0] != 1) ? 1 : passMask[1];
-                        passMask[0] = 1;
-
-                    } else {//кликнул по середине вектора                 
-                        passMask[1] = (passMask[0] != 2) ? 1 : passMask[1];
-                        passMask[0] = 2;
-                    }
-                } else { //Промах, всё обнуляю
-                    passMask = UCom.getArr(0, 0);
-                }
-                winc.canvas.requestFocusInWindow();
-                winc.canvas.repaint();
-            }
-        });
-        this.winc.mouseDragged.add((evt) -> {
-            //Фильтр движухи откл. когда passMask[1] > 1 
-            if (passMask[1] > 1 && this.area != null) {
-
-                double X = 0, Y = 0;
-                double dX = evt.getX() - pointPress.getX(); //прирощение по горизонтали
-                double dY = evt.getY() - pointPress.getY(); //прирощение по вертикали 
-                pointPress = evt.getPoint(); //новое положение клика точки
-
-                if (passMask[0] == 0) { //начало вектора
-                    X = dX / winc.scale + x1();
-                    Y = dY / winc.scale + y1();
-                    UGeo.movePoint(this, X, Y);
-
-                } else if (passMask[0] == 1) { //конец вектора
-                    X = dX / winc.scale + x2();
-                    Y = dY / winc.scale + y2();
-                    UGeo.movePoint(this, X, Y);
-
-                } else if (passMask[0] == 2) { //середина вектора
-                    X = dX / winc.scale + x2();
-                    Y = dY / winc.scale + y2();
-                    if (Y > 0 && List.of(Layout.BOT, Layout.TOP, Layout.HOR).contains(layout())) {
-                        if (this.h() != null) {
-                            this.h(this.h() - dY / winc.scale);
-                        } else {
-                            this.y1(Y);
-                            this.y2(Y);
-                        }
-                    }
-                    if (X > 0 && List.of(Layout.LEF, Layout.RIG, Layout.VER).contains(layout())) {
-                        if (this.h() != null) {
-                            this.h(this.h() - dX / winc.scale);
-                        } else {
-                            this.x1(X);
-                            this.x2(X);
-                        }
-                    }
-                }
-                if (X < 0 || Y < 0) {
-                    //UGeo.moveGson(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
-                }
-            }
-        });
+        });        
     }
 
     @Override
