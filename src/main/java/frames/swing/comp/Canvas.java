@@ -65,13 +65,6 @@ public class Canvas extends javax.swing.JPanel {
                     repaint();
                 }
             });
-            addComponentListener(new ComponentAdapter() {
-
-                public void componentResized(ComponentEvent event) {
-                    winc.scale = scale();
-                    repaint();
-                }
-            });
         }
         this.requestFocus();
     }
