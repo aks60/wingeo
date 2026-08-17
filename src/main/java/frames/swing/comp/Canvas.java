@@ -138,28 +138,28 @@ public class Canvas extends javax.swing.JPanel {
     }
 
     public double scale() {
-        return winc.scale;
-//        Envelope env = winc.root.area.getGeometryN(0).getEnvelopeInternal();
-//        double dX = env.getMaxX(), dY = env.getMaxY();
-//        double scaleLocal = (getWidth() / (margin + dX) > getHeight() / (margin + dY))
-//                ? scaleZoom * getHeight() / (margin + dY) : scaleZoom * getWidth() / (margin + dX);
-//        if (Math.abs(winc.scale - scaleLocal) > .1E-4) {
-//            try {
-//                System.out.println("Ã¿—ÿ“¿¡ = " + (winc.scale - scaleLocal));
-//                //MouseMotionAdapter mouseMotionAdapter = (MouseMotionAdapter) this.getMouseMotionListeners()[0];
-//                PointerInfo info = MouseInfo.getPointerInfo();
-//                java.awt.Point location = info.getLocation();
-//                int x = (int) location.getX();
-//                int y = (int) location.getY();
-//                location.setLocation(0, 0);
-//                Robot robot = new Robot();
-//                //robot.mouseMove(30, 30);
-//                
-//            } catch (AWTException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return scaleLocal;
+        //return winc.scale;
+        Envelope env = winc.root.area.getGeometryN(0).getEnvelopeInternal();
+        double dX = env.getMaxX(), dY = env.getMaxY();
+        double scaleLocal = (getWidth() / (margin + dX) > getHeight() / (margin + dY))
+                ? scaleZoom * getHeight() / (margin + dY) : scaleZoom * getWidth() / (margin + dX);
+        if (Math.abs(winc.scale - scaleLocal) > .1E-4) {
+            try {
+                System.out.println("Ã¿—ÿ“¿¡ = " + (winc.scale - scaleLocal));
+                //MouseMotionAdapter mouseMotionAdapter = (MouseMotionAdapter) this.getMouseMotionListeners()[0];
+                PointerInfo info = MouseInfo.getPointerInfo();
+                java.awt.Point location = info.getLocation();
+                int x = (int) location.getX();
+                int y = (int) location.getY();
+                location.setLocation(0, 0);
+                Robot robot = new Robot();
+                //robot.mouseMove(30, 30);
+                
+            } catch (AWTException e) {
+                e.printStackTrace();
+            }
+        }
+        return scaleLocal;
     }
 
     @SuppressWarnings("unchecked")
