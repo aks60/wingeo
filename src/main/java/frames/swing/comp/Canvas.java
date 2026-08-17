@@ -2,11 +2,13 @@ package frames.swing.comp;
 
 import builder.Wincalc;
 import common.UCom;
+import java.awt.AWTException;
 import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.PointerInfo;
+import java.awt.Robot;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
@@ -20,7 +22,6 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import org.locationtech.jts.geom.Envelope;
-import org.locationtech.jts.geom.Point;
 
 public class Canvas extends javax.swing.JPanel {
 
@@ -137,20 +138,28 @@ public class Canvas extends javax.swing.JPanel {
     }
 
     public double scale() {
-        Envelope env = winc.root.area.getGeometryN(0).getEnvelopeInternal();
-        double dX = env.getMaxX(), dY = env.getMaxY();
-        double scaleLocal = (getWidth() / (margin + dX) > getHeight() / (margin + dY))
-                ? scaleZoom * getHeight() / (margin + dY) : scaleZoom * getWidth() / (margin + dX);
-        if (Math.abs(winc.scale - scaleLocal) > .1E-4) {
-            System.out.println("Ã¿—ÿ“¿¡ = " + (winc.scale - scaleLocal));
-            //MouseMotionAdapter mouseMotionAdapter = (MouseMotionAdapter) this.getMouseMotionListeners()[0];
-            PointerInfo info = MouseInfo.getPointerInfo();
-            java.awt.Point location = info.getLocation();
-            int x = (int) location.getX();
-            int y = (int) location.getY();
-            location.setLocation(0, 0);
-        }
-        return scaleLocal;
+        return winc.scale;
+//        Envelope env = winc.root.area.getGeometryN(0).getEnvelopeInternal();
+//        double dX = env.getMaxX(), dY = env.getMaxY();
+//        double scaleLocal = (getWidth() / (margin + dX) > getHeight() / (margin + dY))
+//                ? scaleZoom * getHeight() / (margin + dY) : scaleZoom * getWidth() / (margin + dX);
+//        if (Math.abs(winc.scale - scaleLocal) > .1E-4) {
+//            try {
+//                System.out.println("Ã¿—ÿ“¿¡ = " + (winc.scale - scaleLocal));
+//                //MouseMotionAdapter mouseMotionAdapter = (MouseMotionAdapter) this.getMouseMotionListeners()[0];
+//                PointerInfo info = MouseInfo.getPointerInfo();
+//                java.awt.Point location = info.getLocation();
+//                int x = (int) location.getX();
+//                int y = (int) location.getY();
+//                location.setLocation(0, 0);
+//                Robot robot = new Robot();
+//                //robot.mouseMove(30, 30);
+//                
+//            } catch (AWTException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return scaleLocal;
     }
 
     @SuppressWarnings("unchecked")
