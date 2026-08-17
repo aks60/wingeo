@@ -295,7 +295,7 @@ public enum App {
             //Top.frame.setState(Frame.ICONIFIED);
 
         } catch (Exception e) {
-            System.err.println("Ошибка: App.createApp()");
+            System.err.println("Error: App.createApp()");
         }
     }
 

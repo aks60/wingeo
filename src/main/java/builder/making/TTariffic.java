@@ -130,7 +130,7 @@ public class TTariffic extends Cal5e {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Tariffic.calculate() " + e);
+            System.err.println("Error: Tariffic.calculate() " + e);
         }
     }
 
@@ -206,7 +206,7 @@ public class TTariffic extends Cal5e {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Tariffic.rulecalcTarif() " + e);
+            System.err.println("Error: Tariffic.rulecalcTarif() " + e);
         }
     }
 
@@ -421,7 +421,7 @@ public class TTariffic extends Cal5e {
             new Query(eProject.values()).update2(projectRec);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Wincalc.calculate() " + e);
+            System.err.println("Error: Wincalc.calculate() " + e);
         }
     }
 }

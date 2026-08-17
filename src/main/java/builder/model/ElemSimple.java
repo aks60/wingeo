@@ -218,7 +218,7 @@ public abstract class ElemSimple extends Com5t {
                 return (this.type == Type.IMPOST || this.type == Type.SHTULP) ? Layout.VER : Layout.LEF;
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemSimple.layout() " + e);
+            System.err.println("Error: ElemSimple.layout() " + e);
         }
         return Layout.ANY;
     }

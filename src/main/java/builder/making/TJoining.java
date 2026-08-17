@@ -114,7 +114,7 @@ public class TJoining extends Cal5e {
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Joining.join() " + e);
+            System.err.println("Error: Joining.join() " + e);
         } 
     }
 

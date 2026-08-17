@@ -64,7 +64,7 @@ public class FillingTest {
             
             System.err.println("builder.param.check.FillingTest.fillingVar() - ÂÛÏÎËÍÅÍÎ");
         } catch (Exception e) {
-            System.err.println("Îøèáêà:FillingtTest.fillingVar() " + e);
+            System.err.println("Error: FillingtTest.fillingVar() " + e);
         }
     }
 
@@ -126,7 +126,7 @@ public class FillingTest {
             
             System.err.println("builder.param.check.FillingTest.fillingDet() - ÂÛÏÎËÍÅÍÎ");
         } catch (Exception e) {
-            System.err.println("Îøèáêà:FillingTest.fillingDet() " + e);
+            System.err.println("Error: FillingTest.fillingDet() " + e);
         }
     }
 }

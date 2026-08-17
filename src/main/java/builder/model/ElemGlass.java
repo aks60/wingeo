@@ -105,7 +105,7 @@ public class ElemGlass extends ElemSimple {
                 coo[coo.length - 1].z = coo[1].z;
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemGlass.setLocation. " + e);
+            System.err.println("Error: ElemGlass.setLocation. " + e);
         }
     }
 
@@ -129,7 +129,7 @@ public class ElemGlass extends ElemSimple {
 
             //Test.init() 
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemGlass.setSpecific() " + e);
+            System.err.println("Error: ElemGlass.setSpecific() " + e);
         }
     }
 
@@ -230,7 +230,7 @@ public class ElemGlass extends ElemSimple {
 
             //Test.init(owner.area.getGeometryN(0), owner.area.getGeometryN(1), owner.area.getGeometryN(2));
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemGlass.addSpecific()  " + e);
+            System.err.println("Error: ElemGlass.addSpecific()  " + e);
         }
     }
 

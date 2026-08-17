@@ -191,7 +191,7 @@ in (31017, 37017)
 
             System.err.println("builder.param.check.ElementTest.elementVart() - ÂÛÏÎËÍÅÍÎ");
         } catch (Exception e) {
-            System.err.println("Îøèáêà:ElementTest.elementVar() " + e);
+            System.err.println("Error: ElementTest.elementVar() " + e);
         }
     }
 
@@ -278,7 +278,7 @@ d on c.artikl_id = d.id where a.groups_id in (31017, 37017)
 
             System.err.println("builder.param.check.ElementTest.elementDet() - ÂÛÏÎËÍÅÍÎ");
         } catch (Exception e) {
-            System.err.println("Îøèáêà:ElementTest.elementDet() " + e);
+            System.err.println("Error: ElementTest.elementDet() " + e);
         }
     }
 

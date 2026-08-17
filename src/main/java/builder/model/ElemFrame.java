@@ -69,7 +69,7 @@ public class ElemFrame extends ElemSimple {
             artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true); //аналог 
 
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemFrame.initArtikle() " + e);
+            System.err.println("Error: ElemFrame.initArtikle() " + e);
         }
     }
 
@@ -94,7 +94,7 @@ public class ElemFrame extends ElemSimple {
 
             //Test.init(owner.area.getGeometryN(0), owner.area.getGeometryN(1));
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemFrame.setLocation " + e);
+            System.err.println("Error: ElemFrame.setLocation " + e);
         }
     }
 
@@ -132,7 +132,7 @@ public class ElemFrame extends ElemSimple {
 
             //Test.init(this.area);
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemFrame.setSpecific() " + e);
+            System.err.println("Error: ElemFrame.setSpecific() " + e);
         }
     }
 
@@ -263,7 +263,7 @@ public class ElemFrame extends ElemSimple {
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemFrame.addSpecific() " + e);
+            System.err.println("Error: ElemFrame.addSpecific() " + e);
         }
     }
 

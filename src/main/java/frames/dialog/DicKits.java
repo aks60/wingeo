@@ -815,7 +815,7 @@ public class DicKits extends javax.swing.JDialog {
                 }, false, false);
             }
         } catch (Exception e) {
-            System.err.println("Ошибка: " + e);
+            System.err.println("Error: " + e);
         }
     }//GEN-LAST:event_colorToWindows
 

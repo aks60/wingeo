@@ -173,7 +173,7 @@ public class RCheck {
                 trList.get(1).getElementsByTag("td").get(0).text(UMon.inwords(total + Kitcalc.cost2));
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Check.loadDoc1()" + e);
+            System.err.println("Error: Check.loadDoc1()" + e);
         }
     }
 
@@ -275,7 +275,7 @@ public class RCheck {
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Check.loadDoc2()" + e);
+            System.err.println("Error: Check.loadDoc2()" + e);
         }
     }
 

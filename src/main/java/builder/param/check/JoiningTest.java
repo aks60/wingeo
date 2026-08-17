@@ -89,7 +89,7 @@ public class JoiningTest {
             
             System.err.println("builder.param.check.JoiningTest.joiningVar() - ÂÛÏÎËÍÅÍÎ");
         } catch (Exception e) {
-            System.err.println("Îøèáêà:JoiningTest.joiningVar() " + e);
+            System.err.println("Error: JoiningTest.joiningVar() " + e);
         }
     }
 
@@ -137,7 +137,7 @@ joining d on d.id = c.joining_id where a.groups_id = 11009
             
             System.err.println("builder.param.check.JoiningTest.joiningDet() - ÂÛÏÎËÍÅÍÎ");
         } catch (Exception e) {
-            System.err.println("Îøèáêà:JoiningTest.joiningDet() " + e);
+            System.err.println("Error: JoiningTest.joiningDet() " + e);
         }
     }
 }

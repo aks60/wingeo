@@ -182,7 +182,7 @@ public class Adm extends javax.swing.JFrame {
             UGui.setSelectedRow(tab4);
 
         } catch (Exception e) {
-            System.err.println("Ошибка: Adm.loadingTab4() " + e);
+            System.err.println("Error: Adm.loadingTab4() " + e);
         }
     }
 
@@ -1337,7 +1337,7 @@ public class Adm extends javax.swing.JFrame {
 
                 } catch (SQLException e) {
                     JOptionPane.showMessageDialog(this, "Ошибка удаления пользователя", "ВНИМАНИЕ!", 1);
-                    System.err.println("Ошибка:Adm.userDelete() " + e);
+                    System.err.println("Error: Adm.userDelete() " + e);
                 }
             }
         }

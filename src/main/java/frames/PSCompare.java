@@ -138,7 +138,7 @@ public class PSCompare extends javax.swing.JFrame {
                 hmColor.put(rs.getInt("CNUMB"), rs.getString("CNAME"));
             }
         } catch (SQLException e) {
-            System.err.println("Ошибка: DBCompare.loadingData().  " + e);
+            System.err.println("Error: DBCompare.loadingData().  " + e);
         }
     }
 
@@ -256,7 +256,7 @@ public class PSCompare extends javax.swing.JFrame {
             tab6.getColumnModel().getColumn(5).setMaxWidth(80);
             rs.close();
         } catch (SQLException e) {
-            System.err.println("Ошибка: DBCompare.loadingTab4().  " + e);
+            System.err.println("Error: DBCompare.loadingTab4().  " + e);
         }
     }
 
@@ -283,7 +283,7 @@ public class PSCompare extends javax.swing.JFrame {
                         hmSpc.put(art_code, new Vector(List.of(art_code, artiklRec.get(eArtikl.name), 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)));
                     }
                 } catch (Exception e) {
-                    System.err.println("Ошибка:PSCompare.loadingTabGroup2()");
+                    System.err.println("Error: PSCompare.loadingTabGroup2()");
                 }
             }
             winc.listSpec.forEach(specRec -> {
@@ -427,7 +427,7 @@ public class PSCompare extends javax.swing.JFrame {
                     }
                 }
             } catch (Exception e) {
-                System.err.println("Ошибка:DBCompare.loadingTabGroup1() Тавлица CONNLST отсуствует!");
+                System.err.println("Error: DBCompare.loadingTabGroup1() Тавлица CONNLST отсуствует!");
             }
 
             //=== Таблица 6 ===
@@ -497,7 +497,7 @@ public class PSCompare extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.err.println("Ошибка SQL: DBCompare.loadingTabGroup2().  " + e);
         } catch (Exception e) {
-            System.err.println("Ошибка: DBCompare.loadingTabGroup2().  " + e);
+            System.err.println("Error: DBCompare.loadingTabGroup2().  " + e);
         }
     }
 
@@ -579,7 +579,7 @@ public class PSCompare extends javax.swing.JFrame {
             System.out.println();
 
         } catch (SQLException e) {
-            System.err.println("Ошибка: DBCompare.iwinPs4()  " + e);
+            System.err.println("Error: DBCompare.iwinPs4()  " + e);
         }
     }
 

@@ -46,7 +46,7 @@ public class Rulecalc extends javax.swing.JFrame {
             qRulecalc.sql(eRulecalc.data(), eRulecalc.up).sort(eRulecalc.type);
             qRulecalc.table(eArtikl.up).join(qRulecalc, eArtikl.data(), eRulecalc.artikl_id, eArtikl.id);
         } catch (Exception e) {
-            System.err.println("Ошибка:Rulecalc.loadingModel() " + e);
+            System.err.println("Error: Rulecalc.loadingModel() " + e);
         }
     }
 
@@ -116,7 +116,7 @@ public class Rulecalc extends javax.swing.JFrame {
             UGui.setSelectedRow(tab2);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Rulecalc.loadingModel() " + e);
+            System.err.println("Error: Rulecalc.loadingModel() " + e);
         }
     }
 

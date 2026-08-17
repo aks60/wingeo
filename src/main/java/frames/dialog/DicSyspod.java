@@ -117,7 +117,7 @@ public class DicSyspod extends javax.swing.JDialog {
                 dm.addRow(arrayRec);
 
             } catch (Exception e) {
-                System.err.println("Ошибка:DicSyspod.loadingTab2() " + e);
+                System.err.println("Error: DicSyspod.loadingTab2() " + e);
             }
         }
     }

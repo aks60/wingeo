@@ -35,7 +35,7 @@ public class URep {
                 list.add(winc);
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:HtmlOfSmeta.wincList()" + e);
+            System.err.println("Error: HtmlOfSmeta.wincList()" + e);
         }
         return list;
     }    

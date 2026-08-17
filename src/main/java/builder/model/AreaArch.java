@@ -66,7 +66,7 @@ public class AreaArch extends AreaSimple {
 
             //Test.init(this.area.getGeometryN(0));
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaArch.setLocation" + toString() + e);
+            System.err.println("Error: AreaArch.setLocation" + toString() + e);
         }
     }
 

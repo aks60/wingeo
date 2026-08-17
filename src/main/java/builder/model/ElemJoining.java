@@ -71,7 +71,7 @@ public class ElemJoining {
             elem1.spcRec.spcList.add(spcAdd);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemJoinning.addSpecific() " + e);
+            System.err.println("Error: ElemJoinning.addSpecific() " + e);
         }
     }
 

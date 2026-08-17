@@ -46,7 +46,7 @@ public class RMaterial {
             ExecuteCmd.documentType(null);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:RMaterial.parseDoc1()" + e);
+            System.err.println("Error: RMaterial.parseDoc1()" + e);
         }
     }
 
@@ -69,7 +69,7 @@ public class RMaterial {
             ExecuteCmd.documentType(null);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:RMaterial.parseDoc1()" + e);
+            System.err.println("Error: RMaterial.parseDoc1()" + e);
         }
     }
 

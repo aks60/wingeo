@@ -50,7 +50,7 @@ public class RSpecific {
 
         } catch (Exception e) {
             //JOptionPane.showMessageDialog(null, "ERROR*2 " + e, "ВНИМАНИЕ!", 1);
-            System.err.println("Ошибка:RSpecific.parseDoc1() " + e);
+            System.err.println("Error: RSpecific.parseDoc1() " + e);
         }
     }
 
@@ -119,7 +119,7 @@ public class RSpecific {
                     .selectFirst("td:eq(1)").text(UCom.format(total, 9));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Неправильный формат даты RSpecific.loadDoc() : " + e, "ВНИМАНИЕ!", 1);
-            System.err.println("Ошибка:RSpecific.loadDoc() " + e);
+            System.err.println("Error: RSpecific.loadDoc() " + e);
         }
     }
 

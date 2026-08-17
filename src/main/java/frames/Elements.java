@@ -1274,7 +1274,7 @@ public class Elements extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Elements.btnMove()");
+            System.err.println("Error: Elements.btnMove()");
         }
     }//GEN-LAST:event_btnMove
 

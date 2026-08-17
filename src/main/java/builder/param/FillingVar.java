@@ -142,7 +142,7 @@ public class FillingVar extends Par5s {
                     assert !(grup > 0 && grup < 50000) : "Код " + grup + "  не обработан!!!";
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:param.FillingVar.check()  parametr=" + grup + "    " + e);
+            System.err.println("Error: param.FillingVar.check()  parametr=" + grup + "    " + e);
             return false;
         }
         return true;

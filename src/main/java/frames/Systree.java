@@ -338,7 +338,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             winTree.setRootVisible(false);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.loadingWinTree() " + e);
+            System.err.println("Error: Systree.loadingWinTree() " + e);
         }
     }
 
@@ -354,7 +354,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 record.add(iwinc);
 
             } catch (Exception e) {
-                System.err.println("Ошибка:Systree.loadingTab5() " + e);
+                System.err.println("Error: Systree.loadingTab5() " + e);
             }
         }
         ((DefaultTableModel) tab5.getModel()).fireTableDataChanged();
@@ -412,7 +412,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.selectionTree1() " + e);
+            System.err.println("Error: Systree.selectionTree1() " + e);
         }
     }
 
@@ -442,7 +442,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 lab2.setText("Элемент ID = " + UCom.format(com5t.id, 2));
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.selectionTree2() " + e);
+            System.err.println("Error: Systree.selectionTree2() " + e);
         }
     }
 
@@ -715,7 +715,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             selectionTree2();
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.updateScript() " + e);
+            System.err.println("Error: Systree.updateScript() " + e);
         }
     }
 
@@ -752,7 +752,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.undoChanges() " + e);
+            System.err.println("Error: Systree.undoChanges() " + e);
         }
     }
 
@@ -2155,7 +2155,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             changeAndRedraw();
 
         } catch (Exception e) {
-            System.err.println("Ошибка: Systree.addStvorkaAction()");
+            System.err.println("Error: Systree.addStvorkaAction()");
         }
     }//GEN-LAST:event_addStvorkaAction
 
@@ -2401,7 +2401,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 UGui.scrollRectToIndex(qSysprod.size() - 1, tab5);
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.loadLocalScript()");
+            System.err.println("Error: Systree.loadLocalScript()");
         }
     }
 }

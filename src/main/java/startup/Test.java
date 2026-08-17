@@ -84,7 +84,7 @@ public class Test {
             }
             return null;
         } catch (Exception e) {
-            System.err.println("Ошибка:Test.connect() " + e);
+            System.err.println("Error: Test.connect() " + e);
             return null;
         }
     }
@@ -309,7 +309,7 @@ public class Test {
                 Connect.setConnection(Test.connect2());
 
             } catch (Exception e) {
-                System.err.println("Ошибка:main.Test.query()");
+                System.err.println("Error: main.Test.query()");
             }
         }
         {

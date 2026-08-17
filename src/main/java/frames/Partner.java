@@ -1037,7 +1037,7 @@ public class Partner extends javax.swing.JFrame {
 
                     //loadingData();
                 } catch (Exception e) {
-                    System.err.println("Ошибка:Partner.btnInsert() " + e);
+                    System.err.println("Error: Partner.btnInsert() " + e);
                 }
             });
         }

@@ -126,7 +126,7 @@ public class Query extends Table {
             insert2(record);
 
         } catch (SQLException e) {
-            System.err.println("Ошибка:Query.insert() " + e);
+            System.err.println("Error: Query.insert() " + e);
         }
     }
 
@@ -159,7 +159,7 @@ public class Query extends Table {
             update2(record);
 
         } catch (SQLException e) {
-            System.err.println("Ошибка:Query.update() " + e);
+            System.err.println("Error: Query.update() " + e);
         }
     }
 
@@ -191,7 +191,7 @@ public class Query extends Table {
             return true;
 
         } catch (SQLException e) {
-            System.err.println("Ошибка:Query.delete() " + e);
+            System.err.println("Error: Query.delete() " + e);
             if (Connect.webapp == false && e.getErrorCode() == 335544466) {
                 JOptionPane.showMessageDialog(App.active, "Нельзя удалить запись на которую имеются ссылки из других форм", "SQL предупреждение", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -236,7 +236,7 @@ public class Query extends Table {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Query.execsql() " + e);
+            System.err.println("Error: Query.execsql() " + e);
         }
     }
 
@@ -526,7 +526,7 @@ public class Query extends Table {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Query.join()");
+            System.err.println("Error: Query.join()");
         }
         return this;
     }
@@ -562,7 +562,7 @@ public class Query extends Table {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Query.join()");
+            System.err.println("Error: Query.join()");
         }
         return this;
     }
@@ -626,7 +626,7 @@ public class Query extends Table {
                 System.err.println("ВНИМАНИЕ! Ошибка сортировки.");
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Query.sort()");
+            System.err.println("Error: Query.sort()");
         }
         return this;
     }

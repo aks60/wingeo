@@ -154,13 +154,13 @@ public class Crypto {
             executor.shutdownNow();
 
         } catch (HttpTimeoutException e) {
-            System.err.println("Ошибка: Crypto.httpAsync() №1 " + e);
+            System.err.println("Error: Crypto.httpAsync() №1 " + e);
         } catch (ExecutionException e2) {
-            System.err.println("Ошибка: Crypto.httpAsync() №2 " + e2);
+            System.err.println("Error: Crypto.httpAsync() №2 " + e2);
         } catch (InterruptedException e3) {
-            System.err.println("Ошибка: Crypto.httpAsync() №3 " + e3);
+            System.err.println("Error: Crypto.httpAsync() №3 " + e3);
         } catch (Exception e4) {
-            System.err.println("Ошибка: Crypto.httpAsync() №4 " + e4);
+            System.err.println("Error: Crypto.httpAsync() №4 " + e4);
         }
     }
 
@@ -221,7 +221,7 @@ public class Crypto {
             //System.out.println("httpSynch3 = " + response.body());
             //testServer(encodeMesStr);
         } catch (Exception e) {
-            System.err.println("Ошибка: Crypto.httpSynch() " + e);
+            System.err.println("Error: Crypto.httpSynch() " + e);
         }
     }
 

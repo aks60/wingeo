@@ -159,7 +159,7 @@ public class RSmeta {
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка:HtmlOfSmeta.loadDoc1()" + e);
+            System.err.println("Error: HtmlOfSmeta.loadDoc1()" + e);
         }
     }
 
@@ -276,7 +276,7 @@ public class RSmeta {
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка:HtmlOfSmeta.loadDoc2() " + e);
+            System.err.println("Error: HtmlOfSmeta.loadDoc2() " + e);
         }
     }
 
@@ -306,7 +306,7 @@ public class RSmeta {
             trRec.get(12).getElementsByTag("td").get(1).text(UCom.format(numProd * (winc.cost2 - discWin * winc.cost2 / 100), 9)); //со скидкой менеджера
 
         } catch (Exception e) {
-            System.err.println("Ошибка: RSmeta.loadTab2() " + e);
+            System.err.println("Error: RSmeta.loadTab2() " + e);
         }
     }
 
@@ -333,7 +333,7 @@ public class RSmeta {
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка: RSmeta.loadTab3() " + e);
+            System.err.println("Error: RSmeta.loadTab3() " + e);
         }
     }
 
@@ -366,7 +366,7 @@ public class RSmeta {
             tdFoot.get(1).text(UCom.format(projectRec.getDbl(eProject.cost2_win, 0), 9));
 
         } catch (Exception e) {
-            System.err.println("Ошибка: RSmeta.loadTab4() " + e);
+            System.err.println("Error: RSmeta.loadTab4() " + e);
         }
         return total;
     }
@@ -398,7 +398,7 @@ public class RSmeta {
             tdFoot.get(1).text(UCom.format(projectRec.getDbl(eProject.cost2_kit), 9));  //всего за комплекты
 
         } catch (Exception e) {
-            System.err.println("Ошибка: RSmeta.loadTab5() " + e);
+            System.err.println("Error: RSmeta.loadTab5() " + e);
         }
         return total;
     }

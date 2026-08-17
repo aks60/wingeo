@@ -71,7 +71,7 @@ public class ElemBlinds extends ElemSimple {
             spcRec.height = (envBlinds.getMaxY() - envBlinds.getMinY()) + 2 * dXY;
 
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemBlinds.setSpecific() " + e);
+            System.err.println("Error: ElemBlinds.setSpecific() " + e);
         }        
     }
 
@@ -111,7 +111,7 @@ public class ElemBlinds extends ElemSimple {
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemMosquit.addSpecific() " + e);
+            System.err.println("Error: ElemMosquit.addSpecific() " + e);
         }        
     }
 

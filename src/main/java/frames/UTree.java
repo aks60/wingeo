@@ -42,7 +42,7 @@ public class UTree {
             loadWinTree(winc.root.childs);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UTree.loadWinTree() " + e);
+            System.err.println("Error: UTree.loadWinTree() " + e);
         }
         return root;
     }
@@ -69,7 +69,7 @@ public class UTree {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:UTree.loadWinTree(2) " + e);
+            System.err.println("Error: UTree.loadWinTree(2) " + e);
         }
     }
 
@@ -116,7 +116,7 @@ public class UTree {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:UTree.loadStvorka() " + e);
+            System.err.println("Error: UTree.loadStvorka() " + e);
         }
     }
 

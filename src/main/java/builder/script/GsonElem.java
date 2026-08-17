@@ -104,7 +104,7 @@ public class GsonElem {
                 }
             });
         } catch (Exception e) {
-            System.err.println("Ошибка:GeoElem.setOwnerAndForm() " + e);
+            System.err.println("Error: GeoElem.setOwnerAndForm() " + e);
         }
     }
 

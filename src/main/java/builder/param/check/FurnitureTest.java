@@ -61,7 +61,7 @@ public class FurnitureTest {
             
             System.err.println("builder.param.check.FurnitureTest.furnitureVar() - ÂÛÏÎËÍÅÍÎ");
         } catch (Exception e) {
-            System.err.println("Îøèáêà:furnitureTest.furnitureVar() " + e);
+            System.err.println("Error: furnitureTest.furnitureVar() " + e);
         }
     }
 
@@ -140,7 +140,7 @@ public class FurnitureTest {
             
             System.err.println("builder.param.check.FurnitureTest.furnitureDet() - ÂÛÏÎËÍÅÍÎ");
         } catch (Exception e) {
-            System.err.println("Îøèáêà:furnitureTest.furnitureDet() " + e);
+            System.err.println("Error: furnitureTest.furnitureDet() " + e);
         }
     }
 }

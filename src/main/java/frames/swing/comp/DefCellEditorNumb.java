@@ -95,7 +95,7 @@ public class DefCellEditorNumb extends DefaultCellEditor {
             return super.getTableCellEditorComponent(table, val, isSelected, row, column);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:DefCellEditor.getTableCellEditorComponent() " + e);
+            System.err.println("Error: DefCellEditor.getTableCellEditorComponent() " + e);
             return null;
         }
     }

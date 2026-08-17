@@ -31,7 +31,7 @@ public class AreaTrapeze extends AreaSimple {
 
             //Test.init(this.area);
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaRectangl.setLocation" + toString() + e);
+            System.err.println("Error: AreaRectangl.setLocation" + toString() + e);
         }
     }
 
