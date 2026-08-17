@@ -93,6 +93,7 @@ public abstract class ElemSimple extends Com5t {
                 winc.canvas.repaint();
             }
         });
+        
         //ÏÅÐÅÌÅÑÒÈËÈ ìûøêîé
         this.winc.mouseDragged.add((evt) -> {
             //Ôèëüòð äâèæóõè îòêë. êîãäà passMask[1] > 1 
@@ -138,8 +139,9 @@ public abstract class ElemSimple extends Com5t {
                 }
             }
         });
+        
         //ÏÅÐÅÌÅÑÒÈËÈ êëàâîé
-        this.winc.keyboardPressed.add((var evt) -> {
+        this.winc.keyboardPressed.add((evt) -> {
 
             if (this.area != null && passMask[1] > 0) {
 
