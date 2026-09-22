@@ -18,7 +18,9 @@ import dataset.Query;
 import frames.PathToDb;
 import frames.UGui;
 import frames.swing.comp.MainMenu;
+import java.awt.Desktop;
 import java.awt.Dimension;
+import java.net.URI;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -174,6 +176,7 @@ public class Tex extends javax.swing.JFrame {
         mn05 = new javax.swing.JMenu();
         mn51 = new javax.swing.JMenuItem();
         mn52 = new javax.swing.JMenuItem();
+        mn95 = new javax.swing.JMenuItem();
         mn54 = new javax.swing.JMenuItem();
 
         spcSystem.setFont(frames.UGui.getFont(0,1));
@@ -912,6 +915,16 @@ public class Tex extends javax.swing.JFrame {
         });
         mn05.add(mn52);
 
+        mn95.setFont(frames.UGui.getFont(0,1));
+        mn95.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b053.gif"))); // NOI18N
+        mn95.setText("Сайт разработки");
+        mn95.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnWebSite(evt);
+            }
+        });
+        mn05.add(mn95);
+
         mn54.setFont(frames.UGui.getFont(0,1));
         mn54.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b053.gif"))); // NOI18N
         mn54.setText(bundle.getString("Меню.О программе")); // NOI18N
@@ -1184,6 +1197,19 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
         UGui.stopCellEditingAndExecSql();
     }//GEN-LAST:event_btnSave
 
+    private void mnWebSite(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnWebSite
+        if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+            try {
+                URI uri = new URI("http://sa-okna.ru/winaks/");
+                Desktop.getDesktop().browse(uri);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Операция открытия браузера не поддерживается на этой системе.");
+        }
+    }//GEN-LAST:event_mnWebSite
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn11;
@@ -1257,6 +1283,7 @@ private void mn94(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mn94
     private javax.swing.JMenuItem mn92;
     private javax.swing.JPopupMenu.Separator mn93;
     private javax.swing.JMenuItem mn94;
+    private javax.swing.JMenuItem mn95;
     private javax.swing.JPopupMenu ppmSpecif;
     private javax.swing.JMenuItem spcProduct;
     private javax.swing.JMenuItem spcSystem;
