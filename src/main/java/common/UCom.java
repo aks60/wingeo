@@ -40,7 +40,7 @@ public class UCom {
                 return true;
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:UCom.check() " + e);
+            System.err.println("Error: UCom.check() " + e);
         }
         return false;
     }
@@ -72,7 +72,7 @@ public class UCom {
             return df.format(val);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UCom.format() " + e);
+            System.err.println("Error: UCom.format() " + e);
             return val.toString();
         }
     }
@@ -83,7 +83,7 @@ public class UCom {
             return df.format(val);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UCom.format2() " + e);
+            System.err.println("Error: UCom.format2() " + e);
             return val.toString();
         }
     }
@@ -114,7 +114,7 @@ public class UCom {
             return Integer.valueOf(str);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UCom.getInt()");
+            System.err.println("Error: UCom.getInt()");
             return 0;
         }
     }
@@ -127,7 +127,7 @@ public class UCom {
                 return Float.valueOf(str);
 
             } catch (java.lang.NumberFormatException e) {
-                System.err.println("Ошибка:UCom.getDbl() " + e);
+                System.err.println("Error: UCom.getDbl() " + e);
             }
         }
         throw new NumberFormatException("Ошибка:UCom.getDbl(\"" + str + "\")");
@@ -148,7 +148,7 @@ public class UCom {
             try {
                 return Double.valueOf(str);
             } catch (java.lang.NumberFormatException e) {
-                System.err.println("Ошибка:UCom.getDbl() " + e);
+                System.err.println("Error: UCom.getDbl() " + e);
             }
         }
         throw new NumberFormatException("Ошибка:UCom.getDbl(\"" + str + "\")");
@@ -213,7 +213,7 @@ public class UCom {
             return elemFrame;
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UCom.layout()");
+            System.err.println("Error: UCom.layout()");
         }
         return null;
     }
@@ -254,7 +254,7 @@ public class UCom {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:UCom.parserInt() " + e);
+            System.err.println("Error: UCom.parserInt() " + e);
             arrList = new ArrayList<Object>(List.of(-1, -1));
         }
         return arrList.stream().toArray(Integer[]::new);
@@ -291,7 +291,7 @@ public class UCom {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:UCom.parserFloat() " + e);
+            System.err.println("Error: UCom.parserFloat() " + e);
             arrList = new ArrayList<Object>(List.of(-1, -1));
         }
         return arrList.stream().toArray(Double[]::new);
@@ -337,7 +337,7 @@ public class UCom {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:UCom.containsColor() " + e);
+            System.err.println("Error: UCom.containsColor() " + e);
         }
         return false;
     }
@@ -382,7 +382,7 @@ public class UCom {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:UCom.containsNumbJust() " + e);
+            System.err.println("Error: UCom.containsNumbJust() " + e);
         }
         return false;
     }
@@ -427,7 +427,7 @@ public class UCom {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:UCom.containsNumbExp() " + e);
+            System.err.println("Error: UCom.containsNumbExp() " + e);
         }
         return false;
     }
@@ -459,7 +459,7 @@ public class UCom {
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UCom.containsNumb() " + e);
+            System.err.println("Error: UCom.containsNumb() " + e);
         }
         return false;
     }
@@ -475,7 +475,7 @@ public class UCom {
                 return true;
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:UCom.containsNumbAny() " + e);
+            System.err.println("Error: UCom.containsNumbAny() " + e);
         }
         return false;
     }
@@ -490,7 +490,7 @@ public class UCom {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:UCom.containsStr() " + e);
+            System.err.println("Error: UCom.containsStr() " + e);
         }
         return false;
     }
@@ -507,7 +507,7 @@ public class UCom {
                 return true;
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:UCom.containsStr() " + e);
+            System.err.println("Error: UCom.containsStr() " + e);
         }
         return false;
     }
@@ -557,7 +557,7 @@ public class UCom {
             }
         } catch (Exception e) {
             String message = "Соединение не найдено для elem.id=" + elem.id + ", side=" + side;
-            System.err.println("Ошибка:UCom.join() " + message + " " + e);
+            System.err.println("Error: UCom.join() " + message + " " + e);
         }
         if (side != 2) {
             String message = "Соединение не найдено для elem.id=" + elem.id + ", side=" + side;
@@ -611,7 +611,7 @@ public class UCom {
             }
         } catch (Exception e) {
             String message = "Соединение не найдено для elem.id=" + elem.id + ", side=" + side;
-            System.err.println("Ошибка:ArrayJoin.elem() " + message + " " + e);
+            System.err.println("Error: ArrayJoin.elem() " + message + " " + e);
         }
         if (side != 2) {
             String message = "Соединение не найдено для elem.id=" + elem.id + ", side=" + side;

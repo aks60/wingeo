@@ -54,7 +54,7 @@ public class ExecuteCmd {
         } catch (URISyntaxException e) {
             System.err.println("Синтаксическая ошибка" + e);
         } catch (IOException e) {
-            System.err.println("Ошибка:ExecuteCmd.startHelp" + e);
+            System.err.println("Error: ExecuteCmd.startHelp" + e);
         }
     }
 
@@ -71,7 +71,7 @@ public class ExecuteCmd {
                 Runtime.getRuntime().exec(cmd);
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:ExecuteCmd.startHtml" + e);
+            System.err.println("Error: ExecuteCmd.startHtml" + e);
         }
     }
 
@@ -90,7 +90,7 @@ public class ExecuteCmd {
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);
         } catch (Exception e) {
-            System.err.println("Ошибка:ExecuteCmd.startWord" + e);
+            System.err.println("Error: ExecuteCmd.startWord" + e);
         }
     }
 
@@ -109,7 +109,7 @@ public class ExecuteCmd {
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);
         } catch (Exception e) {
-            System.err.println("Ошибка:ExecuteCmd.startExcel" + e);
+            System.err.println("Error: ExecuteCmd.startExcel" + e);
         }
     }
 
@@ -134,7 +134,7 @@ public class ExecuteCmd {
             in.close();
             out.close();
         } catch (IOException e) {
-            System.err.println("Ошибка:ExecuteCmd.startZip" + e);
+            System.err.println("Error: ExecuteCmd.startZip" + e);
         }
         startHtml("report.html");
     }

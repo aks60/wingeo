@@ -97,7 +97,7 @@ public class Par5s {
             return result;
 
         } catch (Exception e) {
-            System.err.println("Ошибка: Par5s.calcScript() " + e);
+            System.err.println("Error: Par5s.calcScript() " + e);
         } finally {
             Context.exit();
         }
@@ -119,7 +119,7 @@ public class Par5s {
 //            return result;
 //
 //        } catch (Exception e) {
-//            System.err.println("Ошибка: Par5s.calcScript() " + e);
+//            System.err.println("Error: Par5s.calcScript() " + e);
 //            return 0;
 //        }
         return null;

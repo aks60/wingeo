@@ -281,7 +281,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                     record.add(iwin2);
 
                 } catch (Exception e) {
-                    System.err.println("Ошибка:Project.loadingTab2() " + e);
+                    System.err.println("Error: Project.loadingTab2() " + e);
                 }
             }
             ((DefaultTableModel) tab2.getModel()).fireTableDataChanged();
@@ -343,7 +343,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
             winTree.setRootVisible(false);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Project.loadingWinTree() " + e);
+            System.err.println("Error: Project.loadingWinTree() " + e);
         }
     }
 
@@ -427,7 +427,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Project.selectionTree() " + e);
+            System.err.println("Error: Project.selectionTree() " + e);
         }
     }
 
@@ -641,7 +641,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
             selectionTree();
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Project.updateScript() " + e);
+            System.err.println("Error: Project.updateScript() " + e);
         }
     }
 
@@ -678,7 +678,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
 
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.undoChanges() " + e);
+            System.err.println("Error: Systree.undoChanges() " + e);
         }
     }
 
@@ -729,7 +729,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Project.btnCalc() " + e);
+            System.err.println("Error: Project.btnCalc() " + e);
         }
     }
 
@@ -771,7 +771,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
             }, qResult);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.artiklToFurniture() " + e);
+            System.err.println("Error: Systree.artiklToFurniture() " + e);
         }
     }
 
@@ -818,7 +818,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
             }, colorSet, true, false);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.colorToProfile() " + e);
+            System.err.println("Error: Systree.colorToProfile() " + e);
         }
     }
 
@@ -839,7 +839,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
             }, colorSet, true, false);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.colorToElement() " + e);
+            System.err.println("Error: Systree.colorToElement() " + e);
         }
     }
 
@@ -860,7 +860,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
                 }, colorSet, true, false);
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.colorToElement() " + e);
+            System.err.println("Error: Systree.colorToElement() " + e);
         }
     }
 
@@ -2000,7 +2000,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
             changeAndRedraw();
 
         } catch (Exception e) {
-            System.err.println("Ошибка: Systree.addStvorkaAction()");
+            System.err.println("Error: Systree.addStvorkaAction()");
         }
     }//GEN-LAST:event_addStvorkaAction
 

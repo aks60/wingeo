@@ -460,7 +460,7 @@ public class DicColor extends javax.swing.JDialog {
                 colorList.forEach(rec -> colorSet.add(rec));
             }
         } catch (Exception e) {
-            System.err.println("Ошибка: DicColor.filterTxt() " + e);
+            System.err.println("Error: DicColor.filterTxt() " + e);
         }
         return colorSet;
     }
@@ -483,7 +483,7 @@ public class DicColor extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка: DicColor.filterDet() " + e);
+            System.err.println("Error: DicColor.filterDet() " + e);
         }
 
         return colorSet;

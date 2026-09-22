@@ -728,7 +728,7 @@ public class Furniturs extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Furniturs.deteilFind()");
+            System.err.println("Error: Furniturs.deteilFind()");
         }
     }
 
@@ -1689,7 +1689,7 @@ public class Furniturs extends javax.swing.JFrame {
 
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Furniturs.btnInser2()");
+            System.err.println("Error: Furniturs.btnInser2()");
         }
     }//GEN-LAST:event_btnInser2
 

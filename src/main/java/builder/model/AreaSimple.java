@@ -69,7 +69,7 @@ public class AreaSimple extends Com5t {
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaSimple.initArtikle() " + e);
+            System.err.println("Error: AreaSimple.initArtikle() " + e);
         }
     }
 
@@ -82,7 +82,7 @@ public class AreaSimple extends Com5t {
 
             //Test.init(this.area.getGeometryN(0), this.area.getGeometryN(1), this.area.getGeometryN(2));
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaSimple.setLocation" + toString() + e);
+            System.err.println("Error: AreaSimple.setLocation" + toString() + e);
         }
     }
 
@@ -292,7 +292,7 @@ public class AreaSimple extends Com5t {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaSimple.paint() " + e);
+            System.err.println("Error: AreaSimple.paint() " + e);
         }
     }
 }

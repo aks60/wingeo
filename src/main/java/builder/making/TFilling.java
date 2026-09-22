@@ -98,7 +98,7 @@ public class TFilling extends Cal5e {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Filling.fill() " + e);
+            System.err.println("Error: Filling.fill() " + e);
         }
     }
 
@@ -121,7 +121,7 @@ public class TFilling extends Cal5e {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Filling.detail() " + e);
+            System.err.println("Error: Filling.detail() " + e);
         }
     }
 }

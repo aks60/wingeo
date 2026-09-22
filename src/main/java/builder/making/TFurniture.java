@@ -83,7 +83,7 @@ public class TFurniture extends Cal5e {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Furniture.furn() " + e);
+            System.err.println("Error: Furniture.furn() " + e);
         }
     }
 
@@ -128,7 +128,7 @@ public class TFurniture extends Cal5e {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Furniture.variant() " + e);
+            System.err.println("Error: Furniture.variant() " + e);
         }
     }
 
@@ -225,7 +225,7 @@ public class TFurniture extends Cal5e {
             return true;
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Furniture.detail() " + e);
+            System.err.println("Error: Furniture.detail() " + e);
             return false;
         }
     }

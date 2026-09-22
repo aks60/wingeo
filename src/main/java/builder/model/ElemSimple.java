@@ -93,6 +93,7 @@ public abstract class ElemSimple extends Com5t {
                 winc.canvas.repaint();
             }
         });
+        
         //œ≈–≈Ã≈—“»À» Ï˚¯ÍÓÈ
         this.winc.mouseDragged.add((evt) -> {
             //‘ËÎ¸Ú ‰‚ËÊÛıË ÓÚÍÎ. ÍÓ„‰‡ passMask[1] > 1 
@@ -133,13 +134,12 @@ public abstract class ElemSimple extends Com5t {
                         }
                     }
                 }
-                if (X < 0 || Y < 0) {
-                    //UGeo.moveGson(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale);
-                }
+                //if (X < 0 || Y < 0) { UGeo.moveGson(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale); }
             }
         });
+        
         //œ≈–≈Ã≈—“»À» ÍÎ‡‚ÓÈ
-        this.winc.keyboardPressed.add((var evt) -> {
+        this.winc.keyboardPressed.add((evt) -> {
 
             if (this.area != null && passMask[1] > 0) {
 
@@ -216,7 +216,7 @@ public abstract class ElemSimple extends Com5t {
                 return (this.type == Type.IMPOST || this.type == Type.SHTULP) ? Layout.VER : Layout.LEF;
             }
         } catch (Exception e) {
-            System.err.println("Œ¯Ë·Í‡:ElemSimple.layout() " + e);
+            System.err.println("Error: ElemSimple.layout() " + e);
         }
         return Layout.ANY;
     }

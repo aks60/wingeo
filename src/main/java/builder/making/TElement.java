@@ -61,7 +61,7 @@ public class TElement extends Cal5e {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:TElement.elem() " + e);
+            System.err.println("Error: TElement.elem() " + e);
         }
     }
 
@@ -71,7 +71,7 @@ public class TElement extends Cal5e {
             return elementVar.filter(elem5e, elementRec);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:TElement.elem() " + e);
+            System.err.println("Error: TElement.elem() " + e);
             return false;
         }
     }
@@ -132,7 +132,7 @@ public class TElement extends Cal5e {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:TElement.detail() " + e);
+            System.err.println("Error: TElement.detail() " + e);
         }
     }
 

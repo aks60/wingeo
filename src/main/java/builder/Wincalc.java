@@ -134,7 +134,7 @@ public class Wincalc {
             location(); //координаты конструкции
 
         } catch (JsonSyntaxException e) {
-            System.err.println("Ошибка: Wincalc.build()");
+            System.err.println("Error: Wincalc.build()");
         }
     }
 
@@ -177,7 +177,7 @@ public class Wincalc {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Wincalce.parametr() " + e);
+            System.err.println("Error: Wincalce.parametr() " + e);
         }
     }
 
@@ -226,7 +226,7 @@ public class Wincalc {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Wincalc.creator(*) " + e);
+            System.err.println("Error: Wincalc.creator(*) " + e);
         }
     }
 
@@ -237,7 +237,7 @@ public class Wincalc {
             listElem.forEach(e -> e.initArtikle());
 
         } catch (JsonSyntaxException e) {
-            System.err.println("Ошибка: Wincalc.artikle()");
+            System.err.println("Error: Wincalc.artikle()");
         }
     }
 
@@ -281,7 +281,7 @@ public class Wincalc {
             UCom.filter(listArea, Type.STVORKA).forEach(e -> e.addJoining()); //прил. соед.
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Wincalc.location() " + e);
+            System.err.println("Error: Wincalc.location() " + e);
             throw e;
         }
     }
@@ -395,7 +395,7 @@ public class Wincalc {
              */
 // </editor-fold> 
         } catch (Exception s) {
-            System.err.println("Ошибка:Wincalc.draw() " + s);
+            System.err.println("Error: Wincalc.draw() " + s);
         }
     }
 

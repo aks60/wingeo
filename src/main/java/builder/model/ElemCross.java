@@ -93,7 +93,7 @@ public class ElemCross extends ElemSimple {
 
             //Test.init(geoShell, Com5t.gf.createLineString(coo));
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemCross.setLocation " + e);
+            System.err.println("Error: ElemCross.setLocation " + e);
         }
     }
 
@@ -129,7 +129,7 @@ public class ElemCross extends ElemSimple {
 
             //Test.init(this.area);
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemCross.setSpecific() " + e);
+            System.err.println("Error: ElemCross.setSpecific() " + e);
         }
     }
 
@@ -169,7 +169,7 @@ public class ElemCross extends ElemSimple {
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemCross.addSpecific() " + e);
+            System.err.println("Error: ElemCross.addSpecific() " + e);
         }
     }
 

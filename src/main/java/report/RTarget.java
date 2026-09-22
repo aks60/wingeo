@@ -56,7 +56,7 @@ public class RTarget {
             ExecuteCmd.documentType(null);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Target.parseDoc() " + e);
+            System.err.println("Error: Target.parseDoc() " + e);
         }
     }
 
@@ -174,7 +174,7 @@ public class RTarget {
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Target.loadDoc() " + e);
+            System.err.println("Error: Target.loadDoc() " + e);
         }
     }
 

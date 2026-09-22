@@ -192,7 +192,7 @@ public class UColor {
                 return false;
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:UColor.colorFromProduct(3) " + e);
+            System.err.println("Error: UColor.colorFromProduct(3) " + e);
         }
         return true;
     }
@@ -424,7 +424,7 @@ public class UColor {
                     return -1;
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Color.getID_colorUS() " + e);
+            System.err.println("Error: Color.getID_colorUS() " + e);
             return -1;
         }
     }

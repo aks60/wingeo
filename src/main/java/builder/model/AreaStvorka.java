@@ -99,7 +99,7 @@ public class AreaStvorka extends AreaSimple {
             coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки  
 
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaStvorka.initStvorka() " + e);
+            System.err.println("Error: AreaStvorka.initStvorka() " + e);
         }
     }
 
@@ -177,7 +177,7 @@ public class AreaStvorka extends AreaSimple {
                 lockColor[0] = gson.param.get(PKjson.colorLock).getAsInt();
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaStvorka.initArtikle() " + e);
+            System.err.println("Error: AreaStvorka.initArtikle() " + e);
         }
     }
 
@@ -252,7 +252,7 @@ public class AreaStvorka extends AreaSimple {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaStvorka.setLocation " + e);
+            System.err.println("Error: AreaStvorka.setLocation " + e);
         }
     }
 
@@ -292,7 +292,7 @@ public class AreaStvorka extends AreaSimple {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaStvorka.joining() " + e);
+            System.err.println("Error: AreaStvorka.joining() " + e);
         }
     }
 

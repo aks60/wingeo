@@ -263,7 +263,7 @@ public class CardPanels extends javax.swing.JPanel {
                 List.of(pan12, pan13, pan15, pan16).forEach(it -> it.repaint());
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:CardPanel.selectionTree " + e);
+            System.err.println("Error: CardPanel.selectionTree " + e);
         }
     }
 
@@ -314,7 +314,7 @@ public class CardPanels extends javax.swing.JPanel {
             }, qResult);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.artiklToFurniture() " + e);
+            System.err.println("Error: Systree.artiklToFurniture() " + e);
         }
     }
 
@@ -361,7 +361,7 @@ public class CardPanels extends javax.swing.JPanel {
             }, colorSet, true, false);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.colorToProfile() " + e);
+            System.err.println("Error: Systree.colorToProfile() " + e);
         }
     }
 
@@ -382,7 +382,7 @@ public class CardPanels extends javax.swing.JPanel {
             }, colorSet, true, false);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.colorToElement() " + e);
+            System.err.println("Error: Systree.colorToElement() " + e);
         }
     }
 
@@ -402,7 +402,7 @@ public class CardPanels extends javax.swing.JPanel {
                 }, colorSet, true, false);
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.colorToElement() " + e);
+            System.err.println("Error: Systree.colorToElement() " + e);
         }
     }
 
@@ -2600,7 +2600,7 @@ public class CardPanels extends javax.swing.JPanel {
                 }, qSysprofFilter);
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.sysprofToFrame() " + e);
+            System.err.println("Error: Systree.sysprofToFrame() " + e);
         }
     }//GEN-LAST:event_sysprofToFrame
 
@@ -2643,7 +2643,7 @@ public class CardPanels extends javax.swing.JPanel {
             }, qArtikl);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.artiklToGlass() " + e);
+            System.err.println("Error: Systree.artiklToGlass() " + e);
         }
     }//GEN-LAST:event_artiklToGlass
 
@@ -2674,7 +2674,7 @@ public class CardPanels extends javax.swing.JPanel {
             }, qArtikl);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.rascladkaToGlass() " + e);
+            System.err.println("Error: Systree.rascladkaToGlass() " + e);
         }
     }//GEN-LAST:event_artiklToRascladka
 
@@ -2718,7 +2718,7 @@ public class CardPanels extends javax.swing.JPanel {
             }, qResult);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.handlToStvorka() " + e);
+            System.err.println("Error: Systree.handlToStvorka() " + e);
         }
     }//GEN-LAST:event_blindsToStvorka
 
@@ -2750,7 +2750,7 @@ public class CardPanels extends javax.swing.JPanel {
                     }, qBlinds);
         
                 } catch (Exception e) {
-                    System.err.println("Ошибка:Systree.handlToStvorka() " + e);
+                    System.err.println("Error: Systree.handlToStvorka() " + e);
                 }*/
     }//GEN-LAST:event_artiklToBlinds
 
@@ -2784,7 +2784,7 @@ public class CardPanels extends javax.swing.JPanel {
                 }, qSysprofFilter);
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.sysprofToStvorka() " + e);
+            System.err.println("Error: Systree.sysprofToStvorka() " + e);
         }
     }//GEN-LAST:event_sysprofToStvorka
 
@@ -2811,7 +2811,7 @@ public class CardPanels extends javax.swing.JPanel {
             }, qSysfurn, eFurniture.name);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.sysfurnToStvorka() " + e);
+            System.err.println("Error: Systree.sysfurnToStvorka() " + e);
         }
     }//GEN-LAST:event_sysfurnToStvorka
 
@@ -2831,7 +2831,7 @@ public class CardPanels extends javax.swing.JPanel {
             }, TypeOpen1.REQUEST, TypeOpen1.LEFT, TypeOpen1.LEFTUP, TypeOpen1.LEFMOV,
                     TypeOpen1.RIGH, TypeOpen1.RIGHUP, TypeOpen1.RIGMOV, TypeOpen1.UPPER, TypeOpen1.EMPTY);
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.typeOpenToStvorka() " + e);
+            System.err.println("Error: Systree.typeOpenToStvorka() " + e);
         }
     }//GEN-LAST:event_typeOpenToStvorka
 
@@ -2871,7 +2871,7 @@ public class CardPanels extends javax.swing.JPanel {
                 }
 
             } catch (Exception e) {
-                System.err.println("Ошибка:Systree.heightHandlToStvorka() " + e);
+                System.err.println("Error: Systree.heightHandlToStvorka() " + e);
             }
 
         }, indexLayoutHandl);
@@ -2924,7 +2924,7 @@ public class CardPanels extends javax.swing.JPanel {
             }, qArtikl);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.artiklToMosq() " + e);
+            System.err.println("Error: Systree.artiklToMosq() " + e);
         }
     }//GEN-LAST:event_artiklToMosq
 
@@ -2955,7 +2955,7 @@ public class CardPanels extends javax.swing.JPanel {
                 }, qElements, eElement.name);
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.mosqToElements() " + e);
+            System.err.println("Error: Systree.mosqToElements() " + e);
         }
     }//GEN-LAST:event_elemsToMosq
 
@@ -2971,7 +2971,7 @@ public class CardPanels extends javax.swing.JPanel {
                 App.Joining.createFrame(thiz, elemJoin);
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.joinToFrame() " + e);
+            System.err.println("Error: Systree.joinToFrame() " + e);
         }
     }//GEN-LAST:event_joinToFrame
 
@@ -3005,7 +3005,7 @@ public class CardPanels extends javax.swing.JPanel {
                 }, qSysprofFilter);
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Systree.sysprofToKorobka() " + e);
+            System.err.println("Error: Systree.sysprofToKorobka() " + e);
         }
     }//GEN-LAST:event_sysprofToKorobka
 

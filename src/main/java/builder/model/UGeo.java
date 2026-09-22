@@ -44,7 +44,7 @@ public class UGeo {
             return PointLocation.isInRing(c, g.getGeometryN(0).getCoordinates());
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Com5t.inside()");
+            System.err.println("Error: Com5t.inside()");
             return false;
         }
     }
@@ -83,7 +83,7 @@ public class UGeo {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.anglCut()  " + e);
+            System.err.println("Error: UGeo.anglCut()  " + e);
         }
         double gip = (direction == '-') ? s2a.p0.distance(cross) : s1a.p1.distance(cross);
         return Math.toDegrees(Math.asin(spcRec.height / gip));
@@ -219,7 +219,7 @@ public class UGeo {
             outList.add(Com5t.gf.createLineString(crosTwo.toArray(new Coordinate[0])));
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.splitPolygon()" + e);
+            System.err.println("Error: UGeo.splitPolygon()" + e);
         }
         return outList;
     }
@@ -257,7 +257,7 @@ public class UGeo {
             }
             //Test.init(poly1, poly2); 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.buffer() " + e);
+            System.err.println("Error: UGeo.buffer() " + e);
         }
         return null;
     }
@@ -335,7 +335,7 @@ public class UGeo {
             result = gf.createPolygon(listOut.toArray(new Coordinate[0]));
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.bufferRectangl() " + e);
+            System.err.println("Error: UGeo.bufferRectangl() " + e);
         }
         return result;
     }
@@ -387,7 +387,7 @@ public class UGeo {
             result = gf.createPolygon(listInner.toArray(new Coordinate[0]));
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.bufferCurve() " + e);
+            System.err.println("Error: UGeo.bufferCurve() " + e);
         }
         return result;
     }
@@ -425,7 +425,7 @@ public class UGeo {
             result = geoBuffer;
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.bufferPolygon() " + e);
+            System.err.println("Error: UGeo.bufferPolygon() " + e);
         }
         return result;
     }
@@ -464,7 +464,7 @@ public class UGeo {
             return gf.createLineString(lm);
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.newLineArch()");
+            System.err.println("Error: UGeo.newLineArch()");
             return null;
         }
     }
@@ -498,7 +498,7 @@ public class UGeo {
                 return i;
             }
         }
-        System.err.println("Ошибка:UGeo.getIndex()");
+        System.err.println("Error: UGeo.getIndex()");
         return -1;
     }
 
@@ -704,7 +704,7 @@ public class UGeo {
 //                }
 //            }
 //        } catch (Exception e) {
-//            System.err.println("Ошибка:UGeo.splitPolygon()" + e);
+//            System.err.println("Error: UGeo.splitPolygon()" + e);
 //        }
 //        return outList;
 //    }
@@ -837,7 +837,7 @@ public class UGeo {
             result = gf.createMultiPolygon(new Polygon[]{(Polygon) gemetry[1], (Polygon) gemetry[2]});;
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.buffeCross() " + e);
+            System.err.println("Error: UGeo.buffeCross() " + e);
         }
         return result;
     }         
@@ -902,7 +902,7 @@ public class UGeo {
             return gf.createMultiPolygon(new Polygon[]{geoShell, geoInner});
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.bufferDiff() " + e);
+            System.err.println("Error: UGeo.bufferDiff() " + e);
         }
         return null;
     }
@@ -1094,7 +1094,7 @@ public class UGeo {
             return new Geometry[]{line, gm.getGeometryN(0), gm.getGeometryN(1)};
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.splitPolygonImp() " + e);
+            System.err.println("Error: UGeo.splitPolygonImp() " + e);
             return null;
         }
     }
@@ -1220,7 +1220,7 @@ public class UGeo {
             result = gf.createPolygon(cooInner.toArray(new Coordinate[0]));
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.buffeCross() " + e);
+            System.err.println("Error: UGeo.buffeCross() " + e);
         }
         return result;
     }
@@ -1238,7 +1238,7 @@ public class UGeo {
             Geometry geom = geoBuffer.getResult();
             return ringToPolygon(line, geom);
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.buffer() " + e);
+            System.err.println("Error: UGeo.buffer() " + e);
             return null;
         }
     }
@@ -1318,7 +1318,7 @@ public class UGeo {
             //return (Polygon) arcGeo;
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.bufferUnion()  " + e);
+            System.err.println("Error: UGeo.bufferUnion()  " + e);
             return gf.createPolygon();
         }
     }
@@ -1379,7 +1379,7 @@ public class UGeo {
             //return (Polygon) arcGeo;
 
         } catch (Exception e) {
-            System.err.println("Ошибка:UGeo.bufferUnion() " + e);
+            System.err.println("Error: UGeo.bufferUnion() " + e);
             return gf.createPolygon();
         }
     }

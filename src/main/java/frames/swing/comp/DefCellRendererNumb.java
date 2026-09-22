@@ -39,7 +39,7 @@ public class DefCellRendererNumb extends DefaultTableCellRenderer {
             return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             
         } catch (Exception e) {
-            System.err.println("Ошибка:DefCellRendererNumb.getTableCellRendererComponent() " + e);
+            System.err.println("Error: DefCellRendererNumb.getTableCellRendererComponent() " + e);
             return null;
         }
     }

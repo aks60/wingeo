@@ -31,7 +31,7 @@ public class Kitcalc {
                 return calculate(win, prjkitList, discKit, discAll, normOtx, numProd);
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Kitscalc.tarifficFree() " + e);
+            System.err.println("Error: Kitscalc.tarifficFree() " + e);
         }
         return null;
     }
@@ -44,7 +44,7 @@ public class Kitcalc {
                 return calculate(win, kitList, discKit, discAll, normOtx, numProd);
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Kitscalc.specificProd() " + e);
+            System.err.println("Error: Kitscalc.specificProd() " + e);
         }
         return null;
     }
@@ -57,7 +57,7 @@ public class Kitcalc {
                 return calculate(win, prjkitList, discKit, discAll, normOtx, numProd);
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:Kitscalc.specificProj() " + e);
+            System.err.println("Error: Kitscalc.specificProj() " + e);
         }
         return null;
     }

@@ -101,7 +101,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 record.add(iwin2);
 
             } catch (Exception e) {
-                System.err.println("Îøèáêà:Models.loadingTab() " + e);
+                System.err.println("Error: Models.loadingTab() " + e);
             }
         }
         ((DefaultTableModel) tab.getModel()).fireTableDataChanged();
@@ -137,7 +137,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 UGui.setSelectedIndex(tab1, index);
             }
         } catch (Exception e) {
-            System.err.println("Îøèáêà:Models.reload() " + e);
+            System.err.println("Error: Models.reload() " + e);
         }
         return null;
     }
@@ -575,7 +575,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 }
             }
         } catch (Exception e) {
-            System.err.println("Îøèáêà:Models.btnInsert()");
+            System.err.println("Error: Models.btnInsert()");
         }
     }//GEN-LAST:event_btnInsert
 

@@ -32,7 +32,7 @@ public class AreaDoor extends AreaSimple {
 
             //Test.init(this.area);
         } catch (Exception e) {
-            System.err.println("Ошибка:AreaDoor.setLocation" + toString() + e);
+            System.err.println("Error: AreaDoor.setLocation" + toString() + e);
         }
     }
 

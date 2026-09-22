@@ -59,7 +59,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
                             fintPreName(table, indexColumn);
                         }
                     } catch (Exception e) {
-                        System.err.println("Ошибка:FilterTable.mousePressed() " + e);
+                        System.err.println("Error: FilterTable.mousePressed() " + e);
                     }
                 }
             });
@@ -106,7 +106,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
                 });
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:TableFieldFilter.fintPreName() " + e);
+            System.err.println("Error: TableFieldFilter.fintPreName() " + e);
         }
     }
 
@@ -268,7 +268,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
                 }
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:FilterTable.txtCaretUpdate() " + e);
+            System.err.println("Error: FilterTable.txtCaretUpdate() " + e);
         }
     }//GEN-LAST:event_txtCaretUpdate
 
@@ -288,7 +288,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
             }
             UGui.scrollRectToRow(table.getSelectedRow() - 1, table);
         } catch (Exception e) {
-            System.err.println("Ошибка:FilterTable.btn1ActiPerf() " + e);
+            System.err.println("Error: FilterTable.btn1ActiPerf() " + e);
         }
     }//GEN-LAST:event_btn1ActiPerf
 
@@ -303,7 +303,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
                         txtFilter.setText(t.getTransferData(DataFlavor.stringFlavor).toString());
                     }
                 } catch (UnsupportedFlavorException | IOException ex) {
-                    System.err.println("Ошибка:TableFilter.btn2ActiPerf()");
+                    System.err.println("Error: TableFilter.btn2ActiPerf()");
                 }
             } else {
                 btn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b041.gif")));
@@ -311,7 +311,7 @@ public class TableFieldFilter extends javax.swing.JPanel {
                 txtFilter.setText("");
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:TableFilter.btn2ActiPerf()");
+            System.err.println("Error: TableFilter.btn2ActiPerf()");
         }
     }//GEN-LAST:event_btn2ActiPerf
 

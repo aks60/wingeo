@@ -100,7 +100,7 @@ public interface Field {
             return value.toString();
 
         } catch (Exception e) {
-            System.err.println("Ошибка:Ашудв.vrapper() " + e);
+            System.err.println("Error: Ашудв.vrapper() " + e);
             return null;
         }
     }

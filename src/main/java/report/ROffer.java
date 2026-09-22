@@ -167,7 +167,7 @@ public class ROffer {
                 get.attr("id", "img" + (i + 1));
             }
         } catch (Exception e) {
-            System.err.println("Ошибка:HtmlOfOffer.load()" + e);
+            System.err.println("Error: HtmlOfOffer.load()" + e);
         }
     }
 }

@@ -42,7 +42,7 @@ public class Connect {
                     return connectionApp;
                 }
             } catch (SQLException e) {
-                System.err.println("Ошибка:getConnection() " + e);
+                System.err.println("Error: getConnection() " + e);
                 return null;
             }
 
@@ -56,12 +56,12 @@ public class Connect {
                 return connectionWeb;
 
             } catch (NamingException e) {
-                System.err.println("Ошибка:Connect.connection() №1 ");
+                System.err.println("Error: Connect.connection() №1 ");
                 e.printStackTrace();
                 return null;
 
             } catch (SQLException e) {
-                System.err.println("Ошибка:Connect.connection() №2 ");
+                System.err.println("Error: Connect.connection() №2 ");
                 e.printStackTrace();
                 return null;
             }
@@ -144,7 +144,7 @@ public class Connect {
             connectionApp.createStatement().executeUpdate("grant " + role + " to " + user);
 
         } catch (SQLException e) {
-            System.err.println("Ошибка:Connect.addUser() " + e);
+            System.err.println("Error: Connect.addUser() " + e);
             JOptionPane.showMessageDialog(null, eExcep.getError(e.getErrorCode()).mes, "ВНИМАНИЕ!", 1);
         }
     }
@@ -159,7 +159,7 @@ public class Connect {
             connectionApp.createStatement().executeUpdate("DROP USER " + user);
 
         } catch (SQLException e) {
-            System.err.println("Ошибка:Connect.deleteUser() " + e);
+            System.err.println("Error: Connect.deleteUser() " + e);
         }
     }
 
@@ -177,7 +177,7 @@ public class Connect {
             String sql = "ALTER USER " + user + " PASSWORD '" + String.valueOf(password) + "'";
             connectionApp.createStatement().executeUpdate(sql);
         } catch (Exception e) {
-            System.err.println("Ошибка:Connect.modifyPassword() " + e);
+            System.err.println("Error: Connect.modifyPassword() " + e);
         }
     }
 
@@ -197,7 +197,7 @@ public class Connect {
             return next_id;
 
         } catch (SQLException e) {
-            System.err.println("Ошибка:Connect.genId() " + e);
+            System.err.println("Error: Connect.genId() " + e);
             JOptionPane.showMessageDialog(null, "Не удалось сгенерировать ключ записи. Перезагрузите программу.", "НЕУДАЧА", 1);
             return -1;
         }

@@ -72,7 +72,7 @@ public class ElemMosquit extends ElemSimple {
             spcRec.height = (envMosq.getMaxY() - envMosq.getMinY()) + 2 * dXY;
 
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemMosquit.setSpecific() " + e);
+            System.err.println("Error: ElemMosquit.setSpecific() " + e);
         }
     }
 
@@ -113,7 +113,7 @@ public class ElemMosquit extends ElemSimple {
             }
 
         } catch (Exception e) {
-            System.err.println("Ошибка:ElemMosquit.addSpecific() " + e);
+            System.err.println("Error: ElemMosquit.addSpecific() " + e);
         }
     }
 

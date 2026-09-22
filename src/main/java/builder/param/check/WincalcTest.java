@@ -115,7 +115,7 @@ public class WincalcTest {
             glass2_left = (ElemSimple) getElem(iwin2, 10);
             glass2_right = (ElemSimple) getElem(iwin2, 13);
         } catch (Exception e) {
-            System.err.println("Ошибка: WinacalcTest.iwin2() " + e);
+            System.err.println("Error: WinacalcTest.iwin2() " + e);
         }
     }
 
@@ -144,7 +144,7 @@ public class WincalcTest {
             glass3_top = (ElemSimple) getElem(iwin3, 6);
             glass3_left = (ElemSimple) getElem(iwin3, 10);
         } catch (Exception e) {
-            System.err.println("Ошибка: WinacalcTest.iwin3() " + e);
+            System.err.println("Error: WinacalcTest.iwin3() " + e);
         }
     }
 
@@ -174,7 +174,7 @@ public class WincalcTest {
             glass4_right = (ElemSimple) getElem(iwin4, 6);
             glass4_left = (ElemSimple) getElem(iwin4, 9);
         } catch (Exception e) {
-            System.err.println("Ошибка: WinacalcTest.iwin4() " + e);
+            System.err.println("Error: WinacalcTest.iwin4() " + e);
         }
     }
 
