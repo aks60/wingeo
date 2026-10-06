@@ -3,9 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.sa</groupId>
   <artifactId>wingeo</artifactId>
-  <name>wingeo</name>
-  <version>2.0</version>
+  <version>2.0.1</version>
   <build>
+    <finalName>wingeo</finalName>
     <plugins>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
