@@ -47,7 +47,7 @@
     </dependencies>      
     <properties>
         <project.build.sourceEncoding>windows-1251</project.build.sourceEncoding>
-        <maven.compiler.release>24</maven.compiler.release>
+        <maven.compiler.release>25</maven.compiler.release>
         <exec.mainClass>startup.Main</exec.mainClass>
     </properties>
     <build>
