@@ -48,11 +48,28 @@
     <properties>
         <project.build.sourceEncoding>windows-1251</project.build.sourceEncoding>
         <maven.compiler.release>25</maven.compiler.release>
-        <exec.mainClass>startup.Main</exec.mainClass>
+        <exec.mainClass>startup.Main</exec.mainClass>      
     </properties>
     <build>
-        <plugins>
+        <plugins>         
             <!--Плагин jar-->
+<!--            <plugin>			
+                <groupId>io.github.bekoenig.getdown</groupId>
+                <artifactId>getdown-maven-plugin</artifactId>
+                <version>0.9.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals> 
+                            <goal>updates</goal> 
+                        </goals>
+                        <configuration>
+                            <appbase>http://sa-okna.ru/deploy</appbase>
+                            <mainClass>startup.Main</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>             -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -133,7 +150,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>           
         </plugins>
         <finalName>wingeo</finalName>   
     </build>      
