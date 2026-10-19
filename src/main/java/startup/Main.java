@@ -2,6 +2,7 @@ package startup;
 
 import frames.LogoToDb;
 import common.eProp;
+import java.util.List;
 import java.util.Locale;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -18,24 +19,11 @@ public class Main {
 
     //java -jar C:\\Okna\\winapp\\dist\\winapp.jar tex
     public static void main(String[] args) {
-        //Если продакшин то цыкла не будет
-        for (int index = 0; index < args.length; index++) {
 
-            //Доп. защита
-            if (args[0].equals("adm") || args[0].equals("tex") || args[0].equals("man")) {
-                eProp.typuse = "99";
-            }
-
-            if (index == 0 && args[0].equals("adm")) {
-                eProp.profile = args[0];
-
-            } else if (index == 0 && args[0].equals("tex")) {
-                eProp.profile = args[0];
-
-            } else if (index == 0 && args[0].equals("man")) {
-                eProp.profile = args[0];
-            }
-        }
+        if (args.length != 0 && List.of("adm", "tex", "man").contains(args[0])) {
+            eProp.typuse = "99";
+            eProp.profile = args[0];
+        }        
 
         SwingUtilities.invokeLater(new Runnable() {
 
