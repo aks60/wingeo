@@ -8,6 +8,23 @@
     <finalName>wingeo</finalName>
     <plugins>
       <plugin>
+        <groupId>io.github.bekoenig.getdown</groupId>
+        <artifactId>getdown-maven-plugin</artifactId>
+        <version>0.9.3</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>updates</goal>
+            </goals>
+            <configuration>
+              <appbase>http://sa-okna.ru/deploy</appbase>
+              <mainClass>startup.Main</mainClass>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <artifactId>maven-jar-plugin</artifactId>
         <version>3.5.0</version>
         <configuration>
