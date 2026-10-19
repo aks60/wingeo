@@ -8,14 +8,9 @@ Without this configuration present, some functionality in the IDE may be limited
 -->
     <config-data xmlns="http://www.netbeans.org/ns/maven-config-data/1">
         <configurations>
-            <configuration id="MANAGER" profiles="ma-loc">
-                <property name="loc"/>
-                <property name="man"/>
-            </configuration>
-            <configuration id="TEXNOLOG" profiles="tex-loc">
-                <property name="loc"/>
-                <property name="tex"/>
-            </configuration>
+            <configuration id="MANAGER" profiles=""/>
+            <configuration id="TEXNOLOG" profiles=""/>
+            <configuration id="PRODUCT" profiles=""/>
         </configurations>
     </config-data>
 </project-shared-configuration>
