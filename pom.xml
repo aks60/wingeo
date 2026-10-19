@@ -52,8 +52,8 @@
     </properties>
     <build>
         <plugins>         
-            <!--Плагин jar-->
-<!--            <plugin>			
+            <!--Плаги getdown-->
+<!--            <plugin>         			
                 <groupId>io.github.bekoenig.getdown</groupId>
                 <artifactId>getdown-maven-plugin</artifactId>
                 <version>0.9.3</version>
@@ -64,12 +64,16 @@
                             <goal>updates</goal> 
                         </goals>
                         <configuration>
+                            <excludeDependencies>true</excludeDependencies>  
+                            <scope>compile</scope>                         
+                            <excludeTransitive>false</excludeTransitive>
                             <appbase>http://sa-okna.ru/deploy</appbase>
                             <mainClass>startup.Main</mainClass>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>             -->
+            </plugin>    -->
+            <!--Плагин jar-->         
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -129,8 +133,8 @@
                         <goals>
                             <goal>shade</goal>
                         </goals>
-                        <configuration>
-                            <!-- 1. Exclude module-info.class files to fix encapsulation error -->
+                        <configuration>                            
+                            <excludeDependencies>true</excludeDependencies> 
                             <filters>
                                 <filter>
                                     <artifact>*:*</artifact>
