@@ -69,6 +69,7 @@
                             <excludeTransitive>false</excludeTransitive>
                             <appbase>http://sa-okna.ru/deploy</appbase>
                             <mainClass>startup.Main</mainClass>
+                            <libPath>lib</libPath>
                         </configuration>
                     </execution>
                 </executions>
