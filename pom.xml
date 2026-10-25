@@ -53,7 +53,7 @@
     <build>
         <plugins>         
             <!--Плаги getdown-->
-            <plugin>         			
+<!--            <plugin>         			
                 <groupId>io.github.bekoenig.getdown</groupId>
                 <artifactId>getdown-maven-plugin</artifactId>
                 <version>0.9.3</version>
@@ -73,7 +73,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>    
+            </plugin>    -->
             <!--Плагин jar-->         
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
