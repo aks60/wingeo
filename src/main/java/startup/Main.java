@@ -20,8 +20,8 @@ public class Main {
     //java -jar C:\\Okna\\winapp\\dist\\winapp.jar tex
     public static void main(String[] args) {
 
-        if (args.length != 0 && List.of("adm", "tex", "man").contains(args[0])) {
-            eProp.typuse = "99";
+        if (args.length != 0) { //&& List.of("adm", "tex", "man").contains(args[0])) {
+            //eProp.typuse = "99";
             eProp.profile = args[0];
         }        
 
