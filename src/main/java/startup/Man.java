@@ -16,9 +16,12 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
+import report.RCheck;
 import report.RTarget;
 import report.RMaterial;
 import report.ROffer;
+import report.RSmeta;
+import report.RSpecific;
 
 public class Man extends javax.swing.JFrame {
 
@@ -92,9 +95,6 @@ public class Man extends javax.swing.JFrame {
         btn21 = new javax.swing.JButton();
         pan13 = new javax.swing.JPanel();
         btn20 = new javax.swing.JButton();
-        tabb1 = new javax.swing.JTabbedPane();
-        pan1 = new javax.swing.JPanel();
-        btn2 = new javax.swing.JButton();
 
         ppmMain.setFont(frames.UGui.getFont(1,1));
 
@@ -542,35 +542,6 @@ public class Man extends javax.swing.JFrame {
         pan3.add(tabb4, java.awt.BorderLayout.CENTER);
         tabb4.getAccessibleContext().setAccessibleName("<html><font size=\"3\"><b>\n&nbsp;&nbsp;\nСправочники\n&nbsp;&nbsp;");
 
-        tabb1.setPreferredSize(new java.awt.Dimension(126, 36));
-        tabb1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabb1MouseClicked(evt);
-            }
-        });
-
-        pan1.setAlignmentY(4.0F);
-        pan1.setPreferredSize(new java.awt.Dimension(106, 26));
-        pan1.setLayout(new java.awt.BorderLayout());
-
-        btn2.setFont(frames.UGui.getFont(0,1));
-        btn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b008.gif"))); // NOI18N
-        btn2.setText(bundle.getString("Меню.Калндарь")); // NOI18N
-        btn2.setActionCommand("");
-        btn2.setAlignmentY(0.0F);
-        btn2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        btn2.setMaximumSize(new java.awt.Dimension(96, 26));
-        btn2.setMinimumSize(new java.awt.Dimension(96, 26));
-        btn2.setPreferredSize(new java.awt.Dimension(96, 26));
-        pan1.add(btn2, java.awt.BorderLayout.CENTER);
-        btn2.getAccessibleContext().setAccessibleName("");
-        btn2.getAccessibleContext().setAccessibleDescription("");
-
-        tabb1.addTab("<html><font size=\"3\"><b> Гл. меню &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", new javax.swing.ImageIcon(getClass().getResource("/img16/b016.gif")), pan1); // NOI18N
-
-        pan3.add(tabb1, java.awt.BorderLayout.WEST);
-        tabb1.getAccessibleContext().setAccessibleName("");
-
         getContentPane().add(pan3, java.awt.BorderLayout.CENTER);
 
         getAccessibleContext().setAccessibleName("");
@@ -640,35 +611,37 @@ public class Man extends javax.swing.JFrame {
     }//GEN-LAST:event_btn6
 
     private void btn8(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8
-        //int projectID = Integer.valueOf(eProp.projectID.read());
-        //Record projectRec = eProject.find(projectID);        
         ProgressBar.create(Man.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                App.Specification.createFrame(Man.this, true);
+                int prjprodID = Integer.valueOf(eProp.prjprodID.getProp());
+                List<dataset.Record> prjprodList = List.of(ePrjprod.find(prjprodID));
+                new RSpecific().parseDoc(prjprodList);
             }
-        });       
+        });
     }//GEN-LAST:event_btn8
 
     private void btn9(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9
-//        int projectID = Integer.valueOf(eProp.projectID.read());
-//        Record projectRec = eProject.find(projectID);         
-//        ProgressBar.create(Man.this, new ListenerFrame() {
-//            @Override
-//            public void actionRequest(Object obj) {
-//                new RSmeta().parseDoc2(projectRec);
-//            }
-//        });
+        ProgressBar.create(Man.this, new ListenerFrame() {
+            public void actionRequest(Object obj) {
+                int progectID = Integer.valueOf(eProp.projectID.getProp());
+                List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
+                new RSmeta().parseDoc2(prjprodList);
+            }
+        });
     }//GEN-LAST:event_btn9
 
     private void btn10(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn10
+        ProgressBar.create(Man.this, new ListenerFrame() {
+            public void actionRequest(Object obj) {
+                int progectID = Integer.valueOf(eProp.projectID.getProp());
+                List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
+                new RCheck().parseDoc2(prjprodList);
+            }
+        });
     }//GEN-LAST:event_btn10
 
-    private void tabb1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabb1MouseClicked
-        ppmMain.show(pan1, pan1.getX(), pan1.getY() - pan1.getHeight());
-    }//GEN-LAST:event_tabb1MouseClicked
-
     private void mnBase(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnBase
-        
+
         String num_base = (mn61.isSelected()) ? "1" : (mn62.isSelected()) ? "2" : "3";
         List.of(App.values()).stream().filter(el -> el.frame != null && el != App.Top).forEach(el
                 -> UGui.findComponents(el.frame.getRootPane(), JTable.class
@@ -690,39 +663,37 @@ public class Man extends javax.swing.JFrame {
     }//GEN-LAST:event_mnBase
 
     private void btn15(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn15
-
-        int projectID = Integer.valueOf(eProp.prjprodID.getProp());
-        Record projectRec = eProject.find(projectID);
-        List<Record> prjprodList = List.of(projectRec);
-
         ProgressBar.create(Man.this, new ListenerFrame() {
             public void actionRequest(Object obj) {
-                //Задание в цех
+                int progectID = Integer.valueOf(eProp.projectID.getProp());
+                List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
                 new RTarget().parseDoc(prjprodList);
             }
         });
     }//GEN-LAST:event_btn15
 
     private void btn16(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn16
-        int projectID = Integer.valueOf(eProp.projectID.getProp());
-        Record projectRec = eProject.find(projectID);
-        List<Record> prjprodList = List.of(projectRec);
         ProgressBar.create(Man.this, new ListenerFrame() {
-            public void actionRequest(Object obj) {
-                new RMaterial().parseDoc2(prjprodList);
-            }
-        });
-    }//GEN-LAST:event_btn16
-
-    private void btn17(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn17
-
-        int projectID = Integer.valueOf(eProp.projectID.getProp());
-        Record projectRec = eProject.find(projectID);
-        ProgressBar.create(Man.this, new ListenerFrame() {
-            @Override
             public void actionRequest(Object obj) {
                 int prjprodID = Integer.valueOf(eProp.prjprodID.getProp());
                 List<dataset.Record> prjprodList = List.of(ePrjprod.find(prjprodID));
+                new RMaterial().parseDoc1(prjprodList);
+            }
+        });
+//        ProgressBar.create(Man.this, new ListenerFrame() {
+//            public void actionRequest(Object obj) {
+//                int progectID = Integer.valueOf(eProp.projectID.getProp());
+//                List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
+//                new RMaterial().parseDoc2(prjprodList);
+//            }
+//        });
+    }//GEN-LAST:event_btn16
+
+    private void btn17(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn17
+        ProgressBar.create(Man.this, new ListenerFrame() {
+            public void actionRequest(Object obj) {
+                int progectID = Integer.valueOf(eProp.projectID.getProp());
+                List<dataset.Record> prjprodList = ePrjprod.filter(progectID);
                 new ROffer().parseDoc(prjprodList);
             }
         });
@@ -773,7 +744,6 @@ public class Man extends javax.swing.JFrame {
     private javax.swing.JButton btn17;
     private javax.swing.JButton btn18;
     private javax.swing.JButton btn19;
-    private javax.swing.JButton btn2;
     private javax.swing.JButton btn20;
     private javax.swing.JButton btn21;
     private javax.swing.JButton btn3;
@@ -794,7 +764,6 @@ public class Man extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem mn61;
     private javax.swing.JCheckBoxMenuItem mn62;
     private javax.swing.JCheckBoxMenuItem mn63;
-    private javax.swing.JPanel pan1;
     private javax.swing.JPanel pan10;
     private javax.swing.JPanel pan11;
     private javax.swing.JPanel pan12;
@@ -812,7 +781,6 @@ public class Man extends javax.swing.JFrame {
     private javax.swing.JPopupMenu ppmMan2;
     private javax.swing.JPopupMenu ppmMan3;
     private javax.swing.JPopupMenu.Separator sep1;
-    private javax.swing.JTabbedPane tabb1;
     private javax.swing.JTabbedPane tabb4;
     // End of variables declaration//GEN-END:variables
 // </editor-fold>
