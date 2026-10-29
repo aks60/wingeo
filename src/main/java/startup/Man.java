@@ -48,14 +48,17 @@ public class Man extends javax.swing.JFrame {
         mn11 = new javax.swing.JMenuItem();
         mn12 = new javax.swing.JMenuItem();
         mn60 = new javax.swing.JMenu();
-        mn61 = new javax.swing.JCheckBoxMenuItem();
-        mn62 = new javax.swing.JCheckBoxMenuItem();
-        mn63 = new javax.swing.JCheckBoxMenuItem();
         mn20 = new javax.swing.JMenu();
         sep1 = new javax.swing.JPopupMenu.Separator();
         mn30 = new javax.swing.JMenuItem();
         buttonLookAndFiilGroup = new javax.swing.ButtonGroup();
         buttonBaseGroup = new javax.swing.ButtonGroup();
+        ppmMan1 = new javax.swing.JPopupMenu();
+        mn61 = new javax.swing.JCheckBoxMenuItem();
+        mn62 = new javax.swing.JCheckBoxMenuItem();
+        mn63 = new javax.swing.JCheckBoxMenuItem();
+        ppmMan2 = new javax.swing.JPopupMenu();
+        ppmMan3 = new javax.swing.JPopupMenu();
         pan3 = new javax.swing.JPanel();
         tabb4 = new javax.swing.JTabbedPane();
         pan5 = new javax.swing.JPanel();
@@ -82,6 +85,13 @@ public class Man extends javax.swing.JFrame {
         btn17 = new javax.swing.JButton();
         pan11 = new javax.swing.JPanel();
         btn14 = new javax.swing.JButton();
+        Pan7 = new javax.swing.JPanel();
+        pan12 = new javax.swing.JPanel();
+        btn7 = new javax.swing.JButton();
+        btn19 = new javax.swing.JButton();
+        btn21 = new javax.swing.JButton();
+        pan13 = new javax.swing.JPanel();
+        btn20 = new javax.swing.JButton();
         tabb1 = new javax.swing.JTabbedPane();
         pan1 = new javax.swing.JPanel();
         btn2 = new javax.swing.JButton();
@@ -119,38 +129,6 @@ public class Man extends javax.swing.JFrame {
         mn60.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b028.gif"))); // NOI18N
         mn60.setText(bundle.getString("Меню.База данных")); // NOI18N
         mn60.setFont(frames.UGui.getFont(1,1));
-
-        buttonBaseGroup.add(mn61);
-        mn61.setFont(frames.UGui.getFont(1,1));
-        mn61.setSelected(true);
-        mn61.setText(bundle.getString("Меню.База 1")); // NOI18N
-        mn61.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnBase(evt);
-            }
-        });
-        mn60.add(mn61);
-
-        buttonBaseGroup.add(mn62);
-        mn62.setFont(frames.UGui.getFont(1,1));
-        mn62.setText(bundle.getString("Меню.База 2")); // NOI18N
-        mn62.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnBase(evt);
-            }
-        });
-        mn60.add(mn62);
-
-        buttonBaseGroup.add(mn63);
-        mn63.setFont(frames.UGui.getFont(1,1));
-        mn63.setText(bundle.getString("Меню.База 3")); // NOI18N
-        mn63.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnBase(evt);
-            }
-        });
-        mn60.add(mn63);
-
         ppmMain.add(mn60);
 
         mn20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b061.gif"))); // NOI18N
@@ -168,6 +146,37 @@ public class Man extends javax.swing.JFrame {
             }
         });
         ppmMain.add(mn30);
+
+        buttonBaseGroup.add(mn61);
+        mn61.setFont(frames.UGui.getFont(1,1));
+        mn61.setSelected(true);
+        mn61.setText(bundle.getString("Меню.База 1")); // NOI18N
+        mn61.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnBase(evt);
+            }
+        });
+        ppmMan1.add(mn61);
+
+        buttonBaseGroup.add(mn62);
+        mn62.setFont(frames.UGui.getFont(1,1));
+        mn62.setText(bundle.getString("Меню.База 2")); // NOI18N
+        mn62.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnBase(evt);
+            }
+        });
+        ppmMan1.add(mn62);
+
+        buttonBaseGroup.add(mn63);
+        mn63.setFont(frames.UGui.getFont(1,1));
+        mn63.setText(bundle.getString("Меню.База 3")); // NOI18N
+        mn63.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnBase(evt);
+            }
+        });
+        ppmMan1.add(mn63);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("SA.OKNA   <АРМ Менеджер>");
@@ -460,6 +469,76 @@ public class Man extends javax.swing.JFrame {
 
         tabb4.addTab("<html><font size=\"3\"><b>\nОтчёты\n&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp", new javax.swing.ImageIcon(getClass().getResource("/img16/b014.gif")), pan6); // NOI18N
 
+        Pan7.setLayout(new java.awt.BorderLayout());
+
+        pan12.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 12, 2));
+
+        btn7.setFont(frames.UGui.getFont(0,1));
+        btn7.setText(bundle.getString("Меню.Установки")); // NOI18N
+        btn7.setActionCommand("");
+        btn7.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btn7.setMaximumSize(new java.awt.Dimension(120, 30));
+        btn7.setMinimumSize(new java.awt.Dimension(87, 26));
+        btn7.setPreferredSize(new java.awt.Dimension(96, 26));
+        btn7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn7(evt);
+            }
+        });
+        pan12.add(btn7);
+
+        btn19.setFont(frames.UGui.getFont(0,1));
+        btn19.setText(bundle.getString("Меню.База данных")); // NOI18N
+        btn19.setActionCommand("");
+        btn19.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btn19.setMaximumSize(new java.awt.Dimension(120, 30));
+        btn19.setMinimumSize(new java.awt.Dimension(87, 26));
+        btn19.setPreferredSize(new java.awt.Dimension(96, 26));
+        btn19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn19(evt);
+            }
+        });
+        pan12.add(btn19);
+
+        btn21.setFont(frames.UGui.getFont(0,1));
+        btn21.setText(bundle.getString("Меню.Вид интерфейса")); // NOI18N
+        btn21.setActionCommand("");
+        btn21.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btn21.setMaximumSize(new java.awt.Dimension(120, 30));
+        btn21.setMinimumSize(new java.awt.Dimension(87, 26));
+        btn21.setPreferredSize(new java.awt.Dimension(120, 26));
+        btn21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn21(evt);
+            }
+        });
+        pan12.add(btn21);
+
+        Pan7.add(pan12, java.awt.BorderLayout.CENTER);
+
+        pan13.setPreferredSize(new java.awt.Dimension(100, 30));
+        pan13.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 12, 2));
+
+        btn20.setFont(frames.UGui.getFont(0,1));
+        btn20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b009.gif"))); // NOI18N
+        btn20.setText(bundle.getString("Меню.Выход")); // NOI18N
+        btn20.setActionCommand("");
+        btn20.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btn20.setMaximumSize(new java.awt.Dimension(120, 30));
+        btn20.setMinimumSize(new java.awt.Dimension(80, 26));
+        btn20.setPreferredSize(new java.awt.Dimension(80, 26));
+        btn20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnExit(evt);
+            }
+        });
+        pan13.add(btn20);
+
+        Pan7.add(pan13, java.awt.BorderLayout.EAST);
+
+        tabb4.addTab("<html><font size=\"3\"><b>\nНастройки\n&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;", new javax.swing.ImageIcon(getClass().getResource("/img16/b015.gif")), Pan7); // NOI18N
+
         pan3.add(tabb4, java.awt.BorderLayout.CENTER);
         tabb4.getAccessibleContext().setAccessibleName("<html><font size=\"3\"><b>\n&nbsp;&nbsp;\nСправочники\n&nbsp;&nbsp;");
 
@@ -665,8 +744,25 @@ public class Man extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_btn18ActionPerformed
 
+    private void btn7(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7
+        ProgressBar.create(Man.this, new ListenerFrame() {
+            public void actionRequest(Object obj) {
+                App.Setting.createFrame(Man.this);
+            }
+        });
+    }//GEN-LAST:event_btn7
+
+    private void btn19(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn19
+        ppmMan1.show(btn19, btn19.getX() - 120, btn19.getY() + btn19.getHeight());
+    }//GEN-LAST:event_btn19
+
+    private void btn21(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn21
+        ppmMan2.show(btn21, btn21.getX() - 228, btn21.getY() + btn21.getHeight());
+    }//GEN-LAST:event_btn21
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Pan7;
     private javax.swing.JButton btn10;
     private javax.swing.JButton btn11;
     private javax.swing.JButton btn12;
@@ -676,11 +772,15 @@ public class Man extends javax.swing.JFrame {
     private javax.swing.JButton btn16;
     private javax.swing.JButton btn17;
     private javax.swing.JButton btn18;
+    private javax.swing.JButton btn19;
     private javax.swing.JButton btn2;
+    private javax.swing.JButton btn20;
+    private javax.swing.JButton btn21;
     private javax.swing.JButton btn3;
     private javax.swing.JButton btn4;
     private javax.swing.JButton btn5;
     private javax.swing.JButton btn6;
+    private javax.swing.JButton btn7;
     private javax.swing.JButton btn8;
     private javax.swing.JButton btn9;
     private javax.swing.ButtonGroup buttonBaseGroup;
@@ -697,6 +797,8 @@ public class Man extends javax.swing.JFrame {
     private javax.swing.JPanel pan1;
     private javax.swing.JPanel pan10;
     private javax.swing.JPanel pan11;
+    private javax.swing.JPanel pan12;
+    private javax.swing.JPanel pan13;
     private javax.swing.JPanel pan2;
     private javax.swing.JPanel pan3;
     private javax.swing.JPanel pan4;
@@ -706,6 +808,9 @@ public class Man extends javax.swing.JFrame {
     private javax.swing.JPanel pan8;
     private javax.swing.JPanel pan9;
     private javax.swing.JPopupMenu ppmMain;
+    private javax.swing.JPopupMenu ppmMan1;
+    private javax.swing.JPopupMenu ppmMan2;
+    private javax.swing.JPopupMenu ppmMan3;
     private javax.swing.JPopupMenu.Separator sep1;
     private javax.swing.JTabbedPane tabb1;
     private javax.swing.JTabbedPane tabb4;
@@ -720,7 +825,7 @@ public class Man extends javax.swing.JFrame {
             JCheckBoxMenuItem mnIt = new javax.swing.JCheckBoxMenuItem();
             buttonLookAndFiilGroup.add(mnIt);
             hmLookAndFill.put(laf.getName(), mnIt);
-            mn20.add(mnIt);
+            ppmMan2.add(mnIt);
             mnIt.setFont(frames.UGui.getFont(1, 1));
             mnIt.setText(laf.getName());
             mnIt.addActionListener(new java.awt.event.ActionListener() {
