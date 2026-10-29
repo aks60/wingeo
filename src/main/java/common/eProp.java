@@ -21,7 +21,6 @@ public enum eProp {
     prjprodID("-1"), //выбранный продукт для клиента
     projectID("-1"), //выбранный заказ клиента
     base_num("1"),
-    old_version("0"), //переключение на пред. версию
     base1("/opt/database/fbase/bimax.fdb?encoding=win1251"),
     base2("/opt/database/fbase/bimax.fdb?encoding=win1251"),
     base3("/opt/database/fbase/bimax.fdb?encoding=win1251"),
@@ -30,7 +29,8 @@ public enum eProp {
     cmd_html("/usr/bin/firefox ", "cmd /c start iexplore.exe "),
     fontname("Dialog"),
     font_size("11"),
-    row_height("20");
+    row_height("20"),
+    reportFormat("Excel");
 
     //Значения по умолчанию
     public String value;
@@ -39,10 +39,11 @@ public enum eProp {
     public static String password = "*";
     public static String role = null;
     public final static Locale locale = Locale.of("ru", "RU");
-    public static String typuse = "99"; //"00"-demo, "99"-developer, "01-98"-products
+    public static String typuse = "00"; //"00"-demo, "99"-developer, "01-98"-products
     public final static String version_ap = "2.0";
     public final static String version_db = "2.0";
     public static String profile = ""; //профиль разработки и тестирования
+    //public static String reportFormat = "HTML";
     //public static Timer timer = new Timer(1000, null);
 
     //Значение по умолчанию

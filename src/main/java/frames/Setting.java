@@ -23,7 +23,7 @@ public class Setting extends javax.swing.JFrame {
         textPane4 = new javax.swing.JTextPane();
         jPanel6 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        comboBox = new javax.swing.JComboBox();
+        cbFont = new javax.swing.JComboBox();
         jLabel8 = new javax.swing.JLabel();
         btnProp2 = new javax.swing.JButton();
         spinner2 = new javax.swing.JSpinner();
@@ -37,6 +37,8 @@ public class Setting extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txtHtml = new javax.swing.JTextField();
         btnProp3 = new javax.swing.JButton();
+        cbFormat = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
         pan5 = new javax.swing.JPanel();
         textPane2 = new javax.swing.JTextPane();
         jPanel4 = new javax.swing.JPanel();
@@ -55,7 +57,7 @@ public class Setting extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Установки");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/img32/d033.gif")).getImage()));
-        setPreferredSize(new java.awt.Dimension(480, 580));
+        setPreferredSize(new java.awt.Dimension(480, 590));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
@@ -88,12 +90,12 @@ public class Setting extends javax.swing.JFrame {
         jLabel7.setMinimumSize(new java.awt.Dimension(50, 22));
         jLabel7.setPreferredSize(new java.awt.Dimension(50, 22));
 
-        comboBox.setFont(frames.UGui.getFont(0,0));
-        comboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboBox.setBorder(null);
-        comboBox.setMaximumSize(new java.awt.Dimension(220, 22));
-        comboBox.setMinimumSize(new java.awt.Dimension(220, 22));
-        comboBox.setPreferredSize(new java.awt.Dimension(220, 22));
+        cbFont.setFont(frames.UGui.getFont(0,0));
+        cbFont.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbFont.setBorder(null);
+        cbFont.setMaximumSize(new java.awt.Dimension(220, 22));
+        cbFont.setMinimumSize(new java.awt.Dimension(220, 22));
+        cbFont.setPreferredSize(new java.awt.Dimension(220, 22));
 
         jLabel8.setFont(frames.UGui.getFont(0,0));
         jLabel8.setText("Размер");
@@ -109,7 +111,7 @@ public class Setting extends javax.swing.JFrame {
         btnProp2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnProp2.setMaximumSize(new java.awt.Dimension(80, 25));
         btnProp2.setMinimumSize(new java.awt.Dimension(0, 0));
-        btnProp2.setPreferredSize(new java.awt.Dimension(280, 25));
+        btnProp2.setPreferredSize(new java.awt.Dimension(280, 24));
         btnProp2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnProp2(evt);
@@ -117,6 +119,7 @@ public class Setting extends javax.swing.JFrame {
         });
 
         spinner2.setFont(frames.UGui.getFont(0,0));
+        spinner2.setBorder(null);
         spinner2.setMaximumSize(new java.awt.Dimension(80, 22));
         spinner2.setMinimumSize(new java.awt.Dimension(80, 22));
         spinner2.setPreferredSize(new java.awt.Dimension(80, 22));
@@ -135,16 +138,16 @@ public class Setting extends javax.swing.JFrame {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbFont, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnProp2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbFont, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -160,7 +163,7 @@ public class Setting extends javax.swing.JFrame {
         panCentr.add(pan3);
 
         pan4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "Офис ", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
-        pan4.setPreferredSize(new java.awt.Dimension(480, 94));
+        pan4.setPreferredSize(new java.awt.Dimension(480, 104));
         pan4.setLayout(new java.awt.BorderLayout());
 
         textPane3.setEditable(false);
@@ -219,12 +222,24 @@ public class Setting extends javax.swing.JFrame {
         btnProp3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnProp3.setMaximumSize(new java.awt.Dimension(80, 25));
         btnProp3.setMinimumSize(new java.awt.Dimension(0, 0));
-        btnProp3.setPreferredSize(new java.awt.Dimension(280, 25));
+        btnProp3.setPreferredSize(new java.awt.Dimension(280, 24));
         btnProp3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnProp3(evt);
             }
         });
+
+        cbFormat.setFont(frames.UGui.getFont(0,0));
+        cbFormat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "HTML", "Word", "Excel" }));
+        cbFormat.setBorder(null);
+        cbFormat.setPreferredSize(new java.awt.Dimension(72, 22));
+
+        jLabel5.setFont(frames.UGui.getFont(0,0));
+        jLabel5.setText("Выводить отчёты в формате");
+        jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jLabel5.setMaximumSize(new java.awt.Dimension(40, 22));
+        jLabel5.setMinimumSize(new java.awt.Dimension(40, 22));
+        jLabel5.setPreferredSize(new java.awt.Dimension(140, 22));
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -233,7 +248,6 @@ public class Setting extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnProp3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -243,8 +257,14 @@ public class Setting extends javax.swing.JFrame {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtWord, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtExcel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtHtml, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(21, Short.MAX_VALUE))
+                            .addComponent(txtHtml, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(cbFormat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnProp3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,8 +280,13 @@ public class Setting extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtHtml, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnProp3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbFormat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnProp3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pan4.add(jPanel5, java.awt.BorderLayout.CENTER);
@@ -302,7 +327,7 @@ public class Setting extends javax.swing.JFrame {
         btnProp4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnProp4.setMaximumSize(new java.awt.Dimension(80, 25));
         btnProp4.setMinimumSize(new java.awt.Dimension(0, 0));
-        btnProp4.setPreferredSize(new java.awt.Dimension(280, 25));
+        btnProp4.setPreferredSize(new java.awt.Dimension(280, 24));
         btnProp4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnProp4(evt);
@@ -313,7 +338,7 @@ public class Setting extends javax.swing.JFrame {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 309, Short.MAX_VALUE)
+            .addGap(0, 294, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addContainerGap()
@@ -323,11 +348,11 @@ public class Setting extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(txtURL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(btnProp4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(21, Short.MAX_VALUE)))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 69, Short.MAX_VALUE)
+            .addGap(0, 82, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addGap(4, 4, 4)
@@ -336,7 +361,7 @@ public class Setting extends javax.swing.JFrame {
                         .addComponent(txtURL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(btnProp4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addContainerGap(20, Short.MAX_VALUE)))
         );
 
         pan5.add(jPanel4, java.awt.BorderLayout.CENTER);
@@ -364,6 +389,7 @@ public class Setting extends javax.swing.JFrame {
         jLabel10.setPreferredSize(new java.awt.Dimension(50, 22));
 
         spinner3.setFont(frames.UGui.getFont(0,0));
+        spinner3.setBorder(null);
         spinner3.setMaximumSize(new java.awt.Dimension(80, 22));
         spinner3.setMinimumSize(new java.awt.Dimension(80, 22));
         spinner3.setPreferredSize(new java.awt.Dimension(80, 22));
@@ -375,7 +401,7 @@ public class Setting extends javax.swing.JFrame {
         btnProp5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnProp5.setMaximumSize(new java.awt.Dimension(80, 25));
         btnProp5.setMinimumSize(new java.awt.Dimension(0, 0));
-        btnProp5.setPreferredSize(new java.awt.Dimension(280, 25));
+        btnProp5.setPreferredSize(new java.awt.Dimension(280, 24));
         btnProp5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnProp5(evt);
@@ -396,7 +422,7 @@ public class Setting extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(spinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnProp5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -405,7 +431,7 @@ public class Setting extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(spinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(btnProp5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12))
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -441,7 +467,7 @@ public class Setting extends javax.swing.JFrame {
         panToolLayout.setHorizontalGroup(
             panToolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panToolLayout.createSequentialGroup()
-                .addContainerGap(379, Short.MAX_VALUE)
+                .addContainerGap(362, Short.MAX_VALUE)
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -466,7 +492,7 @@ public class Setting extends javax.swing.JFrame {
     }//GEN-LAST:event_windowClosed
 
     private void btnProp2(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProp2
-        eProp.fontname.putProp(fontName[comboBox.getSelectedIndex()]);
+        eProp.fontname.putProp(fontName[cbFont.getSelectedIndex()]);
         eProp.font_size.putProp(String.valueOf(spinner2.getValue()));
     }//GEN-LAST:event_btnProp2
 
@@ -474,6 +500,7 @@ public class Setting extends javax.swing.JFrame {
         eProp.cmd_word.putProp(txtWord.getText());
         eProp.cmd_excel.putProp(txtExcel.getText());
         eProp.cmd_html.putProp(txtHtml.getText());
+        eProp.reportFormat.putProp(String.valueOf(cbFormat.getSelectedItem()));
 }//GEN-LAST:event_btnProp3
 
     private void btnProp4(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProp4
@@ -491,11 +518,13 @@ public class Setting extends javax.swing.JFrame {
     private javax.swing.JButton btnProp3;
     private javax.swing.JButton btnProp4;
     private javax.swing.JButton btnProp5;
-    private javax.swing.JComboBox comboBox;
+    private javax.swing.JComboBox cbFont;
+    private javax.swing.JComboBox<String> cbFormat;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -521,18 +550,17 @@ public class Setting extends javax.swing.JFrame {
     private javax.swing.JTextField txtWord;
     // End of variables declaration//GEN-END:variables
 // </editor-fold> 
-    
+
     public void initElements() {
 
         App.loadLocationWin(this, btnClose, (e) -> {
             App.saveLocationWin(this, btnClose);
-        }); 
-        
+        });
+
 //        textPane1.setBackground(new java.awt.Color(212, 208, 200));
 //        textPane2.setBackground(new java.awt.Color(212, 208, 200));
 //        textPane3.setBackground(new java.awt.Color(212, 208, 200));
 //        textPane4.setBackground(new java.awt.Color(212, 208, 200));
-        
         txtWord.setText(eProp.cmd_word.getProp());
         txtExcel.setText(eProp.cmd_excel.getProp());
         txtHtml.setText(eProp.cmd_html.getProp());
@@ -540,17 +568,23 @@ public class Setting extends javax.swing.JFrame {
         txtURL.setText(eProp.url_src.getProp());
         Integer num = Integer.valueOf(eProp.web_port.getProp());
 
-        comboBox.setModel(new DefaultComboBoxModel(fontName));
-        String name = eProp.fontname.getProp();
+        cbFont.setModel(new DefaultComboBoxModel(fontName));
+        String font_name = eProp.fontname.getProp();
         Integer font_size = Integer.valueOf(eProp.font_size.getProp());
         Integer row_height = Integer.valueOf(eProp.row_height.getProp());
         for (int i = 0; i < fontName.length; i++) {
-            if (name.equals(fontName[i])) {
-                comboBox.setSelectedIndex(i);
+            if (font_name.equals(fontName[i])) {
+                cbFont.setSelectedIndex(i);
             }
         }
-        spinner2.setValue(font_size);       
-        spinner3.setValue(row_height);       
-        //checkBox1.setSelected(eProp.old_version.getProp().equals("1"));
+        eProp.reportFormat.value = eProp.reportFormat.getProp();
+        for (int i = 0; i < cbFormat.getItemCount(); i++) {
+            String item = cbFormat.getItemAt(i);
+            if (eProp.reportFormat.value.equals(item)) {
+                cbFormat.setSelectedIndex(i);
+            }
+        }
+        spinner2.setValue(font_size);
+        spinner3.setValue(row_height);
     }
 }

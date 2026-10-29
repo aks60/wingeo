@@ -24,20 +24,15 @@ public class ExecuteCmd {
 
     public static void documentType(JFrame owner) {
         if (Connect.webapp == false) {
-            ExecuteCmd.startHtml("report.html");
-            //ExecuteCmd.startExcel("report.html");
-            //ExecuteCmd.startWord("report.html");
-
-//        Object[] options = {"HTML", "WORD", "EXCEL"};
-//        int n = JOptionPane.showOptionDialog(owner, "Выберите формат файла для отчёта", "Формирование отчёта",
-//                JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
-//        if (n == 0) {
-//            ExecuteCmd.startHtml("report.html");
-//        } else if (n == 1) {
-//            ExecuteCmd.startWord("report.html");
-//        } else if (n == 2) {
-//            ExecuteCmd.startExcel("report.html");
-//        }
+            if (eProp.reportFormat.getProp().equals("HTML")) {
+                ExecuteCmd.startHtml("report.html");
+            } else if (eProp.reportFormat.getProp().equals("Word")) {
+                ExecuteCmd.startWord("report.html");
+            } else if (eProp.reportFormat.getProp().equals("Excel")) {
+                ExecuteCmd.startExcel("report.html");
+            } else {
+                ExecuteCmd.startHtml("report.html");
+            }
         }
     }
 
