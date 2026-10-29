@@ -7,6 +7,7 @@ import common.eProp;
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.List;
 import javax.swing.SwingWorker;
 import startup.App;
 
@@ -22,11 +23,8 @@ public class LogoToDb extends javax.swing.JDialog {
 
         if (eProp.typuse.equals("00") == true) {
             labMes.setText("ДЕМО ВЕРСИЯ");
-            edUser.setText("TEXNOLOG"); //user
-            edPass.setText("masterkey"); //pass
         }
-        //Автопароль при тестировании
-        if (eProp.typuse.equals("99") == true) {
+        if(List.of("00", "99").contains(eProp.typuse)) {    
             if ("adm".equals(eProp.profile)) {
                 edUser.setText("SYSDBA"); //user
                 edPass.setText("masterkey"); //pass
