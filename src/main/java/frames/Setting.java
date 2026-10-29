@@ -57,7 +57,7 @@ public class Setting extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Установки");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/img32/d033.gif")).getImage()));
-        setPreferredSize(new java.awt.Dimension(480, 590));
+        setPreferredSize(new java.awt.Dimension(490, 590));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {

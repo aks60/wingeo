@@ -21,10 +21,7 @@ public class LogoToDb extends javax.swing.JDialog {
         initComponents();
         initElements();
 
-        if (eProp.typuse.equals("00") == true) {
-            labMes.setText("делн бепяхъ");
-        }
-        if(List.of("00", "99").contains(eProp.typuse)) {    
+        if (List.of("00", "99").contains(eProp.typuse)) {
             if ("adm".equals(eProp.profile)) {
                 edUser.setText("SYSDBA"); //user
                 edPass.setText("masterkey"); //pass
@@ -38,8 +35,12 @@ public class LogoToDb extends javax.swing.JDialog {
                 edUser.setText("TEXNOLOG"); //user
                 edPass.setText("masterkey"); //pass                
             }
-            connectToDb();
-
+            if (eProp.typuse.equals("00") == true) {
+                labMes.setText("делн бепяхъ");
+            }
+            if (eProp.typuse.equals("99") == true) {
+                connectToDb();
+            }
         } else {
             edUser.setText(eProp.user.getProp());
             edPass.requestFocus();
