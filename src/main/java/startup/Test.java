@@ -9,9 +9,6 @@ import builder.param.check.JoiningTest;
 import builder.param.check.WincalcTest;
 import builder.script.GsonElem;
 import builder.script.GsonScript;
-import com.esri.core.geometry.GeometryCursor;
-import com.esri.core.geometry.OperatorCut;
-import com.esri.core.geometry.Polyline;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -23,7 +20,6 @@ import dataset.Query;
 import dataset.Record;
 import domain.eColor;
 import enums.Type;
-import frames.PSConvert;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -57,7 +53,6 @@ public class Test {
     private JFrame frame = null;
     public Geometry mlin = null;
     public Geometry mpol = null;
-    public com.esri.core.geometry.Geometry esri = null;
 
     public static Integer numDb = Integer.valueOf(eProp.base_num.getProp());
     private static GeometryFactory gf = new GeometryFactory();
@@ -152,25 +147,6 @@ public class Test {
         });
         frame.pack();
         frame.setVisible(true);
-    }
-
-    public static void init(Geometry... p) {
-        Test t = new Test();
-        t.esri(p);
-    }
-
-    public void esri(Geometry... p) {
-
-        OperatorCut opCut = OperatorCut.local();
-        Polyline line = new Polyline(new com.esri.core.geometry.Point(0.0, 0.0), new com.esri.core.geometry.Point(600.0, 600.0));
-        com.esri.core.geometry.Polygon poly = new com.esri.core.geometry.Polygon();
-        poly.startPath(0, 0);
-        poly.lineTo(0, 300);
-        poly.lineTo(300, 300);
-        poly.lineTo(300, 0);
-        GeometryCursor cur = opCut.execute(true, poly, line, null, null);
-        com.esri.core.geometry.Geometry geo = cur.next();
-        esri = geo;
     }
 
     public void mpol(Geometry... p) {

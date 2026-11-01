@@ -38,12 +38,6 @@
             <version>1.9.0</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>com.esri.geometry</groupId>
-            <artifactId>esri-geometry-api</artifactId>
-            <version>2.2.3</version>
-            <scope>compile</scope>
-        </dependency>        
     </dependencies>      
     <properties>
         <project.build.sourceEncoding>windows-1251</project.build.sourceEncoding>
