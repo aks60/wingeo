@@ -1037,7 +1037,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         north.setPreferredSize(new java.awt.Dimension(800, 29));
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img24/c009.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("hints/okno", common.eProp.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resourceshints/okno", common.eProp.locale); // NOI18N
         btnClose.setToolTipText(bundle.getString("Закрыть")); // NOI18N
         btnClose.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnClose.setFocusable(false);

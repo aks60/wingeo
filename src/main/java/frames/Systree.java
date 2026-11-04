@@ -996,7 +996,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         tool.setPreferredSize(new java.awt.Dimension(800, 29));
 
         btnIns.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img24/c033.gif"))); // NOI18N
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("hints/okno", common.eProp.locale); // NOI18N
+        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("resourceshints/okno", common.eProp.locale); // NOI18N
         btnIns.setToolTipText(bundle.getString("Добавить")); // NOI18N
         btnIns.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnIns.setFocusable(false);
