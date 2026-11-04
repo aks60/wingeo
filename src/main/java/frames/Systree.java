@@ -2332,11 +2332,11 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         //UGui.setDocumentFilter(3, txt17, txt22, txt24, txt26);
         List.of(btnIns, btnDel).forEach(b -> b.addActionListener(l -> UGui.stopCellEditing(tab2, tab3, tab4, tab5)));
         DefaultTreeCellRenderer rnd = (DefaultTreeCellRenderer) sysTree.getCellRenderer();
-        rnd.setLeafIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b038.gif")));
+        rnd.setLeafIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b077.gif")));
         rnd.setOpenIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b007.gif")));
         rnd.setClosedIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b006.gif")));
         DefaultTreeCellRenderer rnd2 = (DefaultTreeCellRenderer) winTree.getCellRenderer();
-        rnd2.setLeafIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b038.gif")));
+        rnd2.setLeafIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b077.gif")));
         rnd2.setOpenIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b007.gif")));
         rnd2.setClosedIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b006.gif")));
         sysTree.setBorder(null);

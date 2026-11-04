@@ -24,6 +24,83 @@ public class UTree {
     private static DefMutableTreeNode root = null;
     private static DefMutableTreeNode frm = null;
 
+    //Загрузка tree модели
+    public static DefMutableTreeNode loadModelTree(Wincalc winc) {
+        try {
+            root = new DefMutableTreeNode(new Com5t());
+            //Рама
+            frm = root.add(new DefMutableTreeNode(winc.root));
+            frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.LEF)));
+            frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.BOT)));
+            frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.RIG)));
+            frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.TOP)));
+            loadModelTree(winc.root.childs);
+
+        } catch (Exception e) {
+            System.err.println("Error: UTree.loadWinTree() " + e);
+        }
+        return root;
+    }
+    
+    //Функция рекурсии модели
+    public static void loadModelTree(ArrayList<Com5t> childs) {
+        try {
+            for (Com5t com : childs) {
+                //Если это не створка
+                if (com.type != Type.STVORKA) {
+                    //Если это элемент
+                    if (com instanceof ElemSimple) {
+                        frm.add(new DefMutableTreeNode(com));
+                        //Если это ареа                   
+                    } else {
+                        loadModelTree(((AreaSimple) com).childs);
+                    }
+                } else {
+                    loadModelStvorka(com); //створка
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error: UTree.loadWinTree(2) " + e);
+        }
+    }
+    
+    //Створка модели
+    public static void loadModelStvorka(Com5t com) {
+        try {
+            DefMutableTreeNode nodeStv = root.add(new DefMutableTreeNode(com)); //створка всегда на верху, нет створки в створке
+            AreaSimple stv = (AreaSimple) com;
+
+            //Цыкл по стор. створки
+            for (int i = 0; i < stv.frames.size(); i++) {
+                ElemFrame frame = (ElemFrame) stv.frames.get(i);
+                nodeStv.add(new DefMutableTreeNode(frame));
+            }
+
+            //Цикл по детям створки
+            for (Com5t com2 : ((AreaSimple) com).childs) {
+                //Если это элемент
+                if (com2 instanceof ElemSimple) {
+                    nodeStv.add(new DefMutableTreeNode(com2));
+                    //Это ареа
+                } else {
+                    for (Com5t com3 : ((AreaSimple) com2).childs) {
+                        if (com3 instanceof ElemSimple) {
+                            nodeStv.add(new DefMutableTreeNode(com3));
+                        } else {
+                            for (Com5t com4 : ((AreaSimple) com3).childs) {
+                                if (com4 instanceof ElemSimple) {
+                                    nodeStv.add(new DefMutableTreeNode(com4));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error: UTree.loadStvorka() " + e);
+        }
+    }    
+    
     //Загрузка tree конструкции
     public static DefMutableTreeNode loadWinTree(Wincalc winc) {
         try {

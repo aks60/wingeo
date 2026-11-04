@@ -2132,7 +2132,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         List.of(btnIns, btnDel).forEach(b -> b.addActionListener(l -> UGui.stopCellEditing(tab1)));
         winTree.getSelectionModel().addTreeSelectionListener(tse -> selectionTree());
         DefaultTreeCellRenderer rnd2 = (DefaultTreeCellRenderer) winTree.getCellRenderer();
-        rnd2.setLeafIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b038.gif")));
+        rnd2.setLeafIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b077.gif")));
         rnd2.setOpenIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b007.gif")));
         rnd2.setClosedIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b006.gif")));
         tab1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
