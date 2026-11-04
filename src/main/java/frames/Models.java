@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import builder.Wincalc;
 import builder.making.TJoining;
+import builder.script.GsonElem;
 import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
@@ -35,6 +36,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import common.listener.ListenerReload;
+import domain.eSysprod;
+import frames.swing.comp.DefMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import startup.App;
 
 //TODO Не работает кнопка отменить
@@ -105,22 +109,33 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             }
         }
         ((DefaultTableModel) tab.getModel()).fireTableDataChanged();
-        UGui.setSelectedRow(tab);
     }
 
-    public void selectionTab1(JTable tab) {
-        int index = UGui.getIndexRec(tab);
-        if (index != -1) {
-            Record sysmodelRec = qSysmodel.get(index);
-            Object w = sysmodelRec.get(eSysmodel.values().length);
-            if (w instanceof Wincalc) { //прорисовка окна               
-                Wincalc win = (Wincalc) w;
+    public void loadingTree(Wincalc winc) {
+        try {
+            DefMutableTreeNode root = UTree.loadWinTree(winc);
+            winTree.setModel(new DefaultTreeModel(root));
+            winTree.setRootVisible(false);
+
+        } catch (Exception e) {
+            System.err.println("Error: Systree.loadingWinTree() " + e);
+        }
+    }
+    
+    //Выбор другой конструкции    
+    public void selectionTab1() {
+        
+            Wincalc win = wincalc();
+            if (win != null) { //прорисовка окна               
+
+                loadingTree(win);
+                winTree.setSelectionRow(1);
+                
                 scene.init(win);
                 canvas.draw();
             }
-        }
     }
-
+    
     @Override
     public Query reload(boolean b) {
         try {
@@ -186,6 +201,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         scr1 = new javax.swing.JScrollPane();
         tab1 = new javax.swing.JTable();
         pan12 = new javax.swing.JPanel();
+        scr2 = new javax.swing.JScrollPane();
+        winTree = new javax.swing.JTree();
         centr = new javax.swing.JPanel();
         pan17 = new javax.swing.JPanel();
         panDesign = new javax.swing.JPanel();
@@ -199,6 +216,9 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 Models.this.windowClosed(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                Models.this.windowOpened(evt);
             }
         });
 
@@ -426,9 +446,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         pan13.setName(""); // NOI18N
         pan13.setLayout(new java.awt.BorderLayout());
 
-        scr1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        scr1.setBorder(null);
 
-        tab1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
         tab1.setFont(frames.UGui.getFont(0,0));
         tab1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -473,16 +492,14 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 
         jTabbedPane1.addTab("        Список конструкций        ", pan13);
 
-        javax.swing.GroupLayout pan12Layout = new javax.swing.GroupLayout(pan12);
-        pan12.setLayout(pan12Layout);
-        pan12Layout.setHorizontalGroup(
-            pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 360, Short.MAX_VALUE)
-        );
-        pan12Layout.setVerticalGroup(
-            pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 525, Short.MAX_VALUE)
-        );
+        pan12.setLayout(new java.awt.BorderLayout());
+
+        scr2.setBorder(null);
+
+        winTree.setBorder(null);
+        scr2.setViewportView(winTree);
+
+        pan12.add(scr2, java.awt.BorderLayout.CENTER);
 
         jTabbedPane1.addTab("    Конструктор компонента      ", pan12);
 
@@ -660,6 +677,10 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     private void btnTestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestActionPerformed
     }//GEN-LAST:event_btnTestActionPerformed
 
+    private void windowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowOpened
+        UGui.setSelectedRow(tab1);
+    }//GEN-LAST:event_windowOpened
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code">     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChoice;
@@ -682,9 +703,11 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     private javax.swing.JPanel pan17;
     private javax.swing.JPanel panDesign;
     private javax.swing.JScrollPane scr1;
+    private javax.swing.JScrollPane scr2;
     private javax.swing.JPanel south;
     private javax.swing.JTable tab1;
     private javax.swing.JPanel west;
+    private javax.swing.JTree winTree;
     // End of variables declaration//GEN-END:variables
 // </editor-fold>
     private void initElements() {
@@ -697,7 +720,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         tab1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
                 if (event.getValueIsAdjusting() == false) {
-                    selectionTab1(tab1);
+                    selectionTab1();
                 }
             }
         });

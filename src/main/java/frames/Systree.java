@@ -2115,7 +2115,6 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             }
         }
     }//GEN-LAST:event_tabMouseClicked
-
     private void btnTreebtnMove(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTreebtnMove
         if (scr1.isVisible() == true) {
             scr1.setVisible(false);
