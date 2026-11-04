@@ -181,9 +181,11 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         btnMoveD = new javax.swing.JButton();
         btnTest = new javax.swing.JButton();
         west = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
         pan13 = new javax.swing.JPanel();
         scr1 = new javax.swing.JScrollPane();
         tab1 = new javax.swing.JTable();
+        pan12 = new javax.swing.JPanel();
         centr = new javax.swing.JPanel();
         pan17 = new javax.swing.JPanel();
         panDesign = new javax.swing.JPanel();
@@ -419,7 +421,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         getContentPane().add(north, java.awt.BorderLayout.NORTH);
 
         west.setPreferredSize(new java.awt.Dimension(360, 560));
-        west.setLayout(new java.awt.CardLayout());
+        west.setLayout(new java.awt.BorderLayout());
 
         pan13.setName(""); // NOI18N
         pan13.setLayout(new java.awt.BorderLayout());
@@ -469,7 +471,22 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 
         pan13.add(scr1, java.awt.BorderLayout.CENTER);
 
-        west.add(pan13, "pan13");
+        jTabbedPane1.addTab("        Список конструкций        ", pan13);
+
+        javax.swing.GroupLayout pan12Layout = new javax.swing.GroupLayout(pan12);
+        pan12.setLayout(pan12Layout);
+        pan12Layout.setHorizontalGroup(
+            pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 360, Short.MAX_VALUE)
+        );
+        pan12Layout.setVerticalGroup(
+            pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 525, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("    Конструктор компонента      ", pan12);
+
+        west.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(west, java.awt.BorderLayout.WEST);
 
@@ -658,7 +675,9 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     private javax.swing.JButton btnTest;
     private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JPanel centr;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel north;
+    private javax.swing.JPanel pan12;
     private javax.swing.JPanel pan13;
     private javax.swing.JPanel pan17;
     private javax.swing.JPanel panDesign;
