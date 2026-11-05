@@ -402,7 +402,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         btnIns.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnIns.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInsert(evt);
+                btnOpenScript(evt);
             }
         });
 
@@ -526,7 +526,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         btnIns1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnIns1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIns1ert(evt);
+                btnInsert(evt);
             }
         });
 
@@ -697,7 +697,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         }
     }//GEN-LAST:event_btnDelete
 
-    private void btnInsert(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsert
+    private void btnOpenScript(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenScript
         try {
             String json = null;
             Record record = eSysmodel.up.newRecord(Query.INS);
@@ -756,7 +756,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         } catch (Exception e) {
             System.err.println("Error: Models.btnInsert()");
         }
-    }//GEN-LAST:event_btnInsert
+    }//GEN-LAST:event_btnOpenScript
 
     private void btnChoice(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice
         int index = UGui.getIndexRec(tab1);
@@ -916,10 +916,39 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         changeAndRedraw();
     }//GEN-LAST:event_removeMosquitAction
 
-    private void btnIns1ert(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIns1ert
-        
-        //{"version":"2.0","name":"Четырёхугольное","color1":-3,"color2":-3,"color3":-3,"id":0.0,"childs":[{"id":1.0,"type":"BOX_SIDE","x1":0.0,"y1":0.0},{"id":2.0,"type":"BOX_SIDE","x1":0.0,"y1":1400.0},{"id":3.0,"type":"BOX_SIDE","x1":900.0,"y1":1400.0},{"id":4.0,"type":"BOX_SIDE","x1":900.0,"y1":0.0},{"id":5.0,"type":"GLASS"}],"type":"RECTANGL"}
-    }//GEN-LAST:event_btnIns1ert
+    private void btnInsert(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsert
+        UGui.stopCellEditing(tab1);
+        int result = JOptionPane.showConfirmDialog(this, "Вы действительно хотите клонировать текущую запись?",
+                "Подтверждение", JOptionPane.YES_NO_OPTION);
+        if (result != JOptionPane.NO_OPTION) {
+            int index = UGui.getIndexRec(tab1);
+            Record sysmodelRec = qSysmodel.get(index);
+            String name = sysmodelRec.getStr(eSysmodel.name);
+            String script = sysmodelRec.getStr(eSysmodel.script);
+
+            UGui.insertRecordEnd(tab1, eSysmodel.up, (record) -> {
+                String ID = record.getStr(eSysmodel.id);
+                int max = qSysmodel.stream().mapToInt(rec -> rec.getInt(eSysmodel.npp)).max().orElse(0);
+                int form = -1;
+                if (btnT1.isSelected()) {
+                    form = 2001;
+                } else if (btnT2.isSelected()) {
+                    form = 2004;
+                } else if (btnT3.isSelected()) {
+                    form = 2002;
+                } else if (btnT4.isSelected()) {
+                    form = 2007;
+                }
+                record.set(eSysmodel.npp, ++max);
+                record.set(eSysmodel.form, form);
+                record.set(eSysmodel.name, "Kod:" + ID + " " + name);
+                record.set(eSysmodel.script, script);
+                Wincalc iwin = new Wincalc(script);
+                iwin.imageIcon = Canvas.createIcon(iwin, 68);
+                record.add(iwin);
+            });
+        }
+    }//GEN-LAST:event_btnInsert
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">     
     // Variables declaration - do not modify//GEN-BEGIN:variables

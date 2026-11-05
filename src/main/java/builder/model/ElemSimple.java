@@ -70,7 +70,6 @@ public abstract class ElemSimple extends Com5t {
 
                 //Если клик внутри контура
                 if (inside == true) {
-                    System.err.println("Element2=" + this.id);
                     ++passMask[1];
                     LineSegment segm = new LineSegment(this.x1(), this.y1(), this.x2(), this.y2());
                     double coeff = segm.segmentFraction(wincPress); //доля расстояния вдоль этого отрезка.
