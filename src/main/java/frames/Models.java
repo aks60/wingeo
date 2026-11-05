@@ -941,7 +941,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 }
                 record.set(eSysmodel.npp, ++max);
                 record.set(eSysmodel.form, form);
-                record.set(eSysmodel.name, "Kod:" + ID + " " + name);
+                record.set(eSysmodel.name, name + " (Клон)");
                 record.set(eSysmodel.script, script);
                 Wincalc iwin = new Wincalc(script);
                 iwin.imageIcon = Canvas.createIcon(iwin, 68);
