@@ -18,7 +18,6 @@ import builder.script.GsonRoot;
 import builder.script.GsonScript;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import common.UCom;
 import common.eProp;
 import common.listener.ListenerAction;
 import frames.swing.comp.Canvas;
@@ -38,11 +37,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import common.listener.ListenerReload;
-import domain.eGroups;
-import domain.eSyspar1;
-import domain.eSysprod;
 import frames.swing.comp.DefMutableTreeNode;
-import java.awt.CardLayout;
 import static java.util.stream.Collectors.toList;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
@@ -130,21 +125,21 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             System.err.println("Error: Models.loadingWinTree() " + e);
         }
     }
-    
+
     //Выбор другой конструкции    
     public void selectionTab1() {
-        
-            Wincalc win = wincalc();
-            if (win != null) { //прорисовка окна               
 
-                loadingTree(win);
-                winTree.setSelectionRow(1);
-                
-                scene.init(win);
-                canvas.draw();
-            }
+        Wincalc win = wincalc();
+        if (win != null) { //прорисовка окна               
+
+            loadingTree(win);
+            winTree.setSelectionRow(1);
+
+            scene.init(win);
+            canvas.draw();
+        }
     }
-    
+
     //При выборе элемента конструкции public  
     public void selectionTree() {
         try {
@@ -154,7 +149,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
                 Com5t com5t = winNode.com5t();
                 Wincalc winc = wincalc();
-                
+
                 //Таймер цвета
                 if (enums.Type.contains(com5t, enums.Type.PARAM, enums.Type.FRAME, enums.Type.JOINING) == false) {
                     if (winc.canvas != null) {
@@ -162,14 +157,14 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                         winc.canvas.repaint();
                     }
                 }
-                
+
                 UTree.changeModPpmTree(winTree, ppmTree, com5t);
             }
         } catch (Exception e) {
             System.err.println("Error: Models.selectionTree() " + e);
         }
     }
-    
+
     //Изменить скрипт в базе, пересчитать и перерисовать
     public void changeAndRedraw() {
         try {
@@ -204,7 +199,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             System.err.println("Error: Models.updateScript() " + e);
         }
     }
-    
+
     @Override
     public Query reload(boolean b) {
         try {
@@ -272,6 +267,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         btnMoveU = new javax.swing.JButton();
         btnMoveD = new javax.swing.JButton();
         btnTest = new javax.swing.JButton();
+        btnIns1 = new javax.swing.JButton();
         west = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         pan13 = new javax.swing.JPanel();
@@ -361,11 +357,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         north.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         north.setMaximumSize(new java.awt.Dimension(32767, 31));
         north.setPreferredSize(new java.awt.Dimension(800, 29));
-        north.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                panMouseClicked(evt);
-            }
-        });
 
         btnClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img24/c009.gif"))); // NOI18N
         java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("hints/okno", common.eProp.locale); // NOI18N
@@ -399,7 +390,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             }
         });
 
-        btnIns.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img24/c033.gif"))); // NOI18N
+        btnIns.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b011.gif"))); // NOI18N
         btnIns.setToolTipText(bundle.getString("Добавить")); // NOI18N
         btnIns.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnIns.setFocusable(false);
@@ -523,6 +514,22 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             }
         });
 
+        btnIns1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img24/c033.gif"))); // NOI18N
+        btnIns1.setToolTipText(bundle.getString("Добавить")); // NOI18N
+        btnIns1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnIns1.setFocusable(false);
+        btnIns1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnIns1.setMaximumSize(new java.awt.Dimension(25, 25));
+        btnIns1.setMinimumSize(new java.awt.Dimension(25, 25));
+        btnIns1.setPreferredSize(new java.awt.Dimension(25, 25));
+        btnIns1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img24/c001.gif"))); // NOI18N
+        btnIns1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnIns1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIns1ert(evt);
+            }
+        });
+
         javax.swing.GroupLayout northLayout = new javax.swing.GroupLayout(north);
         north.setLayout(northLayout);
         northLayout.setHorizontalGroup(
@@ -530,6 +537,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             .addGroup(northLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnIns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnIns1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -546,7 +555,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 .addComponent(btnT4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43)
                 .addComponent(btnChoice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 487, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 444, Short.MAX_VALUE)
                 .addComponent(btnTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -565,7 +574,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                         .addGroup(northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(btnDel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnIns, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(btnIns, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnIns1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(btnT1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnT2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnT3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -682,10 +692,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }//GEN-LAST:event_btnClose
 
     private void btnDelete(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelete
-        if (tab1.getBorder() != null) {
-            if (UGui.isDeleteRecord(tab1, this) == 0) {
-                UGui.deleteRecord(tab1);
-            }
+        if (UGui.isDeleteRecord(tab1, this) == 0) {
+            UGui.deleteRecord(tab1);
         }
     }//GEN-LAST:event_btnDelete
 
@@ -750,10 +758,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         }
     }//GEN-LAST:event_btnInsert
 
-    private void panMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panMouseClicked
-        //System.err.println(evt.getX() + " " + evt.getY());
-    }//GEN-LAST:event_panMouseClicked
-
     private void btnChoice(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChoice
         int index = UGui.getIndexRec(tab1);
         if (index != -1) {
@@ -767,7 +771,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }//GEN-LAST:event_btnChoice
 
     private void windowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowClosed
-        UGui.stopCellEditingAndExecSql(getRootPane()); 
+        UGui.stopCellEditingAndExecSql(getRootPane());
     }//GEN-LAST:event_windowClosed
 
     private void btnToggl(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnToggl
@@ -912,6 +916,10 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         changeAndRedraw();
     }//GEN-LAST:event_removeMosquitAction
 
+    private void btnIns1ert(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIns1ert
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnIns1ert
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code">     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu addImpost;
@@ -922,6 +930,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnDel;
     private javax.swing.JButton btnIns;
+    private javax.swing.JButton btnIns1;
     private javax.swing.JButton btnMoveD;
     private javax.swing.JButton btnMoveU;
     private javax.swing.JToggleButton btnT1;
@@ -950,11 +959,11 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     // End of variables declaration//GEN-END:variables
 // </editor-fold>
     private void initElements() {
-        
+
         btnTest.setVisible(eProp.typuse.equals("99"));
         App.loadLocationWin(this, btnClose, (e) -> {
             App.saveLocationWin(this, btnClose);
-        }); 
+        });
         panDesign.add(scene, java.awt.BorderLayout.CENTER);
         tab1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
@@ -967,6 +976,6 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         DefaultTreeCellRenderer rnd2 = (DefaultTreeCellRenderer) winTree.getCellRenderer();
         rnd2.setLeafIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b077.gif")));
         rnd2.setOpenIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b007.gif")));
-        rnd2.setClosedIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b006.gif")));        
+        rnd2.setClosedIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b006.gif")));
     }
 }

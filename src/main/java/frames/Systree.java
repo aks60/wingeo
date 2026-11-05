@@ -2081,7 +2081,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             JTable table = (JTable) evt.getSource();
             UGui.updateBorderAndSql(table, List.of(tab2, tab3, tab4, tab5, tab7));
             List.of(btnFind1, btnFind2, btnMoveU, btnMoveD).forEach(btn -> btn.setEnabled(false));
-            List.of(sysTree, sysTree).forEach(tree -> tree.setBorder(null));
+            List.of(sysTree, winTree).forEach(tree -> tree.setBorder(null));
             if (sysTree.isEditing()) {
                 sysTree.getCellEditor().stopCellEditing();
             }
