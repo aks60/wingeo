@@ -152,7 +152,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnIns" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="btnIns1" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnClon" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnDel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -191,7 +191,7 @@
                               <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                   <Component id="btnDel" alignment="0" max="32767" attributes="1"/>
                                   <Component id="btnIns" alignment="0" max="32767" attributes="1"/>
-                                  <Component id="btnIns1" alignment="1" max="32767" attributes="1"/>
+                                  <Component id="btnClon" alignment="1" max="32767" attributes="1"/>
                               </Group>
                               <Component id="btnT1" min="-2" max="-2" attributes="0"/>
                               <Component id="btnT2" min="-2" max="-2" attributes="0"/>
@@ -533,13 +533,13 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTestActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnIns1">
+        <Component class="javax.swing.JButton" name="btnClon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/img24/c065.gif"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-              <ResourceString bundle="hints/okno.properties" key="&#x414;&#x43e;&#x431;&#x430;&#x432;&#x438;&#x442;&#x44c;" replaceFormat="java.util.ResourceBundle.getBundle(&quot;hints/okno&quot;, common.eProp.locale).getString(&quot;&#x414;&#x43e;&#x431;&#x430;&#x432;&#x438;&#x442;&#x44c;&quot;)"/>
+              <ResourceString bundle="hints/okno.properties" key="&#x41a;&#x43b;&#x43e;&#x43d;&#x438;&#x440;&#x43e;&#x432;&#x430;&#x442;&#x44c; &#x437;&#x430;&#x43f;&#x438;&#x441;&#x44c;" replaceFormat="java.util.ResourceBundle.getBundle(&quot;hints/okno&quot;, common.eProp.locale).getString(&quot;&#x41a;&#x43b;&#x43e;&#x43d;&#x438;&#x440;&#x43e;&#x432;&#x430;&#x442;&#x44c; &#x437;&#x430;&#x43f;&#x438;&#x441;&#x44c;&quot;)"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">

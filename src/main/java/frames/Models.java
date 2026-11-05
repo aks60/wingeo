@@ -74,7 +74,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }
 
     public void loadingModel() {
-        new DefTableModel(tab1, qSysmodel, eSysmodel.npp, eSysmodel.name, eSysmodel.id);      
+        new DefTableModel(tab1, qSysmodel, eSysmodel.npp, eSysmodel.name, eSysmodel.id);
         tab1.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -202,23 +202,25 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 
     @Override
     public Query reload(boolean b) {
-        try {
-            int index = UGui.getIndexRec(tab1);
-            if (index != -1) {
-                Wincalc winc = wincalc();
-                String script = winc.gson.toJson();
-                winc.build(script);
-                winc.imageIcon = Canvas.createIcon(winc, 68);
-                Record sysmodelRec = qSysmodel.get(index);
-                sysmodelRec.set(eSysmodel.script, script);
-                sysmodelRec.set(eSysmodel.values().length, winc);
-                ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
-                UGui.setSelectedIndex(tab1, index);
-            }
-        } catch (Exception e) {
-            System.err.println("Error: Models.reload() " + e);
-        }
-        return null;
+        changeAndRedraw();
+        return qSysmodel;        
+//        try {
+//            int index = UGui.getIndexRec(tab1);
+//            if (index != -1) {
+//                Wincalc winc = wincalc();
+//                String script = winc.gson.toJson();
+//                winc.build(script);
+//                winc.imageIcon = Canvas.createIcon(winc, 68);
+//                Record sysmodelRec = qSysmodel.get(index);
+//                sysmodelRec.set(eSysmodel.script, script);
+//                sysmodelRec.set(eSysmodel.values().length, winc);
+//                ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
+//                UGui.setSelectedIndex(tab1, index);
+//            }
+//        } catch (Exception e) {
+//            System.err.println("Error: Models.reload() " + e);
+//        }
+//        return null;
     }
 
     @Override
@@ -267,7 +269,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         btnMoveU = new javax.swing.JButton();
         btnMoveD = new javax.swing.JButton();
         btnTest = new javax.swing.JButton();
-        btnIns1 = new javax.swing.JButton();
+        btnClon = new javax.swing.JButton();
         west = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         pan13 = new javax.swing.JPanel();
@@ -514,17 +516,17 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             }
         });
 
-        btnIns1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img24/c065.gif"))); // NOI18N
-        btnIns1.setToolTipText(bundle.getString("Добавить")); // NOI18N
-        btnIns1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        btnIns1.setFocusable(false);
-        btnIns1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnIns1.setMaximumSize(new java.awt.Dimension(25, 25));
-        btnIns1.setMinimumSize(new java.awt.Dimension(25, 25));
-        btnIns1.setPreferredSize(new java.awt.Dimension(25, 25));
-        btnIns1.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img24/c001.gif"))); // NOI18N
-        btnIns1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnIns1.addActionListener(new java.awt.event.ActionListener() {
+        btnClon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img24/c065.gif"))); // NOI18N
+        btnClon.setToolTipText(bundle.getString("Клонировать запись")); // NOI18N
+        btnClon.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btnClon.setFocusable(false);
+        btnClon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnClon.setMaximumSize(new java.awt.Dimension(25, 25));
+        btnClon.setMinimumSize(new java.awt.Dimension(25, 25));
+        btnClon.setPreferredSize(new java.awt.Dimension(25, 25));
+        btnClon.setPressedIcon(new javax.swing.ImageIcon(getClass().getResource("/img24/c001.gif"))); // NOI18N
+        btnClon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnClon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInsert(evt);
             }
@@ -538,7 +540,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 .addContainerGap()
                 .addComponent(btnIns, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnIns1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnClon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -575,7 +577,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                             .addGroup(northLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(btnDel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnIns, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnIns1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(btnClon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(btnT1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnT2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnT3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -791,6 +793,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }//GEN-LAST:event_btnToggl
 
     private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
+        winTree.setBorder(null);
+        UGui.updateBorderAndSql(tab1, null);
         if (listenet != null && evt.getClickCount() == 2) {
             btnChoice(null);
         }
@@ -958,10 +962,10 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     private javax.swing.JMenuItem addImpostVer;
     private javax.swing.JMenuItem addStvorka;
     private javax.swing.JButton btnChoice;
+    private javax.swing.JButton btnClon;
     private javax.swing.JButton btnClose;
     private javax.swing.JButton btnDel;
     private javax.swing.JButton btnIns;
-    private javax.swing.JButton btnIns1;
     private javax.swing.JButton btnMoveD;
     private javax.swing.JButton btnMoveU;
     private javax.swing.JToggleButton btnT1;
