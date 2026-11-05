@@ -390,7 +390,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             }
         });
 
-        btnIns.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img16/b011.gif"))); // NOI18N
+        btnIns.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img24/c097.gif"))); // NOI18N
         btnIns.setToolTipText(bundle.getString("Добавить")); // NOI18N
         btnIns.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnIns.setFocusable(false);
@@ -514,7 +514,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             }
         });
 
-        btnIns1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img24/c033.gif"))); // NOI18N
+        btnIns1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img24/c065.gif"))); // NOI18N
         btnIns1.setToolTipText(bundle.getString("Добавить")); // NOI18N
         btnIns1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         btnIns1.setFocusable(false);
@@ -917,7 +917,8 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }//GEN-LAST:event_removeMosquitAction
 
     private void btnIns1ert(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIns1ert
-        // TODO add your handling code here:
+        
+        //{"version":"2.0","name":"Четырёхугольное","color1":-3,"color2":-3,"color3":-3,"id":0.0,"childs":[{"id":1.0,"type":"BOX_SIDE","x1":0.0,"y1":0.0},{"id":2.0,"type":"BOX_SIDE","x1":0.0,"y1":1400.0},{"id":3.0,"type":"BOX_SIDE","x1":900.0,"y1":1400.0},{"id":4.0,"type":"BOX_SIDE","x1":900.0,"y1":0.0},{"id":5.0,"type":"GLASS"}],"type":"RECTANGL"}
     }//GEN-LAST:event_btnIns1ert
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">     
