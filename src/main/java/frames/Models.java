@@ -74,7 +74,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
     }
 
     public void loadingModel() {
-        new DefTableModel(tab1, qSysmodel, eSysmodel.npp, eSysmodel.name, eSysmodel.id);
+        new DefTableModel(tab1, qSysmodel, eSysmodel.npp, eSysmodel.name, eSysmodel.id);      
         tab1.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
 
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
@@ -607,7 +607,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 java.lang.Integer.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -619,6 +619,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             }
         });
         tab1.setFillsViewportHeight(true);
+        tab1.setName("tab1"); // NOI18N
         tab1.setRowHeight(68);
         tab1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tab1.addMouseListener(new java.awt.event.MouseAdapter() {

@@ -630,7 +630,7 @@
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="3" rowCount="0">
                             <Column editable="false" title="&#x2116;" type="java.lang.Integer"/>
-                            <Column editable="false" title="&#x41d;&#x430;&#x438;&#x43c;&#x435;&#x43d;&#x43e;&#x432;&#x430;&#x43d;&#x438;&#x435;" type="java.lang.String"/>
+                            <Column editable="true" title="&#x41d;&#x430;&#x438;&#x43c;&#x435;&#x43d;&#x43e;&#x432;&#x430;&#x43d;&#x438;&#x435;" type="java.lang.String"/>
                             <Column editable="false" title="&#x420;&#x438;&#x441;&#x443;&#x43d;&#x43e;&#x43a;" type="java.lang.Object"/>
                           </Table>
                         </Property>
@@ -654,6 +654,7 @@
                           </TableColumnModel>
                         </Property>
                         <Property name="fillsViewportHeight" type="boolean" value="true"/>
+                        <Property name="name" type="java.lang.String" value="tab1" noResource="true"/>
                         <Property name="rowHeight" type="int" value="68"/>
                         <Property name="selectionModel" type="javax.swing.ListSelectionModel" editor="org.netbeans.modules.form.editors2.JTableSelectionModelEditor">
                           <JTableSelectionModel selectionMode="0"/>
