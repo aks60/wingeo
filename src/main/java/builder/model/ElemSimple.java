@@ -58,7 +58,6 @@ public abstract class ElemSimple extends Com5t {
 
         //ÍÀÆÀËÈ ìûøêó
         this.winc.mousePressed.add((evt) -> {
-            System.err.println("Element1=" + this.id);
             if (this.area != null) {
                 pointPress = evt.getPoint();
                 Coordinate wincPress = new Coordinate((evt.getX() - Canvas.translateXY[0])

@@ -416,7 +416,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         }
     }
 
-    //При выборе элемента конструкции public  
+    //При выборе элемента конструкции 
     public void selectionTree2() {
         try {
             //Выделенный элемент
@@ -426,7 +426,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 Com5t com5t = winNode.com5t();
                 Wincalc winc = wincalc();
 
-                UGui.changePpmTree(winTree, ppmTree, com5t);
+                UTree.changePpmTree(winTree, ppmTree, com5t);
 
                 if (com5t.type == enums.Type.PARAM) {
                     ((CardLayout) pan7.getLayout()).show(pan7, "card11");

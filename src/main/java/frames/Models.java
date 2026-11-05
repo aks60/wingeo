@@ -122,7 +122,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 
     public void loadingTree(Wincalc winc) {
         try {
-            DefMutableTreeNode root = UTree.loadModelTree(winc);
+            DefMutableTreeNode root = UTree.loadModTree(winc);
             winTree.setModel(new DefaultTreeModel(root));
             winTree.setRootVisible(false);
 
@@ -154,8 +154,16 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 winNode = (DefMutableTreeNode) winTree.getLastSelectedPathComponent();
                 Com5t com5t = winNode.com5t();
                 Wincalc winc = wincalc();
-
-                UGui.changePpmTree(winTree, ppmTree, com5t);
+                
+                //Таймер цвета
+                if (enums.Type.contains(com5t, enums.Type.PARAM, enums.Type.FRAME, enums.Type.JOINING) == false) {
+                    if (winc.canvas != null) {
+                        com5t.timer.start();
+                        winc.canvas.repaint();
+                    }
+                }
+                
+                UTree.changeModPpmTree(winTree, ppmTree, com5t);
             }
         } catch (Exception e) {
             System.err.println("Error: Models.selectionTree() " + e);
@@ -625,6 +633,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
         scr2.setBorder(null);
 
         winTree.setBorder(null);
+        winTree.setFont(frames.UGui.getFont(0,0));
         scr2.setViewportView(winTree);
 
         pan12.add(scr2, java.awt.BorderLayout.CENTER);

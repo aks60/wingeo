@@ -13,6 +13,8 @@ import enums.TypeArt;
 import frames.swing.comp.DefMutableTreeNode;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
+import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeNode;
@@ -25,7 +27,7 @@ public class UTree {
     private static DefMutableTreeNode frm = null;
 
     //Загрузка tree модели
-    public static DefMutableTreeNode loadModelTree(Wincalc winc) {
+    public static DefMutableTreeNode loadModTree(Wincalc winc) {
         try {
             root = new DefMutableTreeNode(new Com5t());
             //Рама
@@ -34,7 +36,7 @@ public class UTree {
             frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.BOT)));
             frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.RIG)));
             frm.add(new DefMutableTreeNode(UCom.layout(winc.root.frames, Layout.TOP)));
-            loadModelTree(winc.root.childs);
+            loadModTree(winc.root.childs);
 
         } catch (Exception e) {
             System.err.println("Error: UTree.loadWinTree() " + e);
@@ -43,7 +45,7 @@ public class UTree {
     }
     
     //Функция рекурсии модели
-    public static void loadModelTree(ArrayList<Com5t> childs) {
+    public static void loadModTree(ArrayList<Com5t> childs) {
         try {
             for (Com5t com : childs) {
                 //Если это не створка
@@ -53,10 +55,10 @@ public class UTree {
                         frm.add(new DefMutableTreeNode(com));
                         //Если это ареа                   
                     } else {
-                        loadModelTree(((AreaSimple) com).childs);
+                        loadModTree(((AreaSimple) com).childs);
                     }
                 } else {
-                    loadModelStvorka(com); //створка
+                    loadModStvorka(com); //створка
                 }
             }
         } catch (Exception e) {
@@ -65,7 +67,7 @@ public class UTree {
     }
     
     //Створка модели
-    public static void loadModelStvorka(Com5t com) {
+    public static void loadModStvorka(Com5t com) {
         try {
             DefMutableTreeNode nodeStv = root.add(new DefMutableTreeNode(com)); //створка всегда на верху, нет створки в створке
             AreaSimple stv = (AreaSimple) com;
@@ -142,7 +144,7 @@ public class UTree {
                         loadWinTree(((AreaSimple) com).childs);
                     }
                 } else {
-                    loadStvorka(com); //створка
+                    loadWinStvorka(com); //створка
                 }
             }
         } catch (Exception e) {
@@ -151,7 +153,7 @@ public class UTree {
     }
 
     //Створка
-    public static void loadStvorka(Com5t com) {
+    public static void loadWinStvorka(Com5t com) {
         try {
             DefMutableTreeNode nodeStv = root.add(new DefMutableTreeNode(com)); //створка всегда на верху, нет створки в створке
             AreaSimple stv = (AreaSimple) com;
@@ -197,6 +199,92 @@ public class UTree {
         }
     }
 
+    //Меню tree
+    public static void changeModPpmTree(JTree winTree, JPopupMenu ppm, Com5t com5t) {
+        try {
+            winTree.setComponentPopupMenu(null);
+
+            if (com5t.type == Type.GLASS && com5t.owner.type != Type.STVORKA) {
+                winTree.setComponentPopupMenu(ppm);
+                if (Type.DOOR == com5t.winc.gson.type) {
+                    boolean b[] = {true, false, false, false, false, true};
+                    List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+                } else {
+                    boolean b[] = {true, false, true, false, false, true};
+                    List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+                }
+
+            } else if (com5t.type == Type.GLASS && com5t.owner.type == Type.STVORKA) {
+                winTree.setComponentPopupMenu(ppm);
+                boolean b[] = {false, false, false, false, false, true};
+                List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+
+            } else if (enums.Type.BOX_SIDE == com5t.type || enums.Type.STV_SIDE == com5t.type) {
+                winTree.setComponentPopupMenu(ppm);
+                boolean b[] = {false, false, false, false, false, true};
+                List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+
+            } else if (enums.Type.IMPOST == com5t.type) {
+                winTree.setComponentPopupMenu(ppm);
+                boolean b[] = {false, true, false, false, false, true};
+                List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+
+            } else if (enums.Type.STVORKA == com5t.type) {
+                winTree.setComponentPopupMenu(ppm);
+                boolean b[] = {false, false, false, true, false, false};
+                List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+
+            } 
+        } catch (Exception e) {
+            System.err.println("Error: UGui.changePpmTree() " + e);
+        }
+    }
+    
+    //Меню tree
+    public static void changePpmTree(JTree winTree, JPopupMenu ppm, Com5t com5t) {
+        try {
+            winTree.setComponentPopupMenu(null);
+
+            if (com5t.type == Type.GLASS && com5t.owner.type != Type.STVORKA) {
+                winTree.setComponentPopupMenu(ppm);
+                if (Type.DOOR == com5t.winc.gson.type) {
+                    boolean b[] = {true, false, false, false, false, true};
+                    List.of(0, 1, 2, 3, 4, 5).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+                } else {
+                    boolean b[] = {true, false, true, false, false, true};
+                    List.of(0, 1, 2, 3, 4, 5).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+                }
+
+            } else if (com5t.type == Type.GLASS && com5t.owner.type == Type.STVORKA) {
+                winTree.setComponentPopupMenu(ppm);
+                boolean b[] = {false, false, false, false, false, true};
+                List.of(0, 1, 2, 3, 4, 5).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+
+            } else if (enums.Type.BOX_SIDE == com5t.type || enums.Type.STV_SIDE == com5t.type) {
+                winTree.setComponentPopupMenu(ppm);
+                boolean b[] = {false, false, false, false, false, true};
+                List.of(0, 1, 2, 3, 4, 5).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+
+            } else if (enums.Type.IMPOST == com5t.type) {
+                winTree.setComponentPopupMenu(ppm);
+                boolean b[] = {false, true, false, false, false, true};
+                List.of(0, 1, 2, 3, 4, 5).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+
+            } else if (enums.Type.STVORKA == com5t.type) {
+                winTree.setComponentPopupMenu(ppm);
+                boolean b[] = {false, false, false, true, false, false};
+                List.of(0, 1, 2, 3, 4, 5).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+
+            } else if (enums.Type.MOSQUIT == com5t.type) {
+                winTree.setComponentPopupMenu(ppm);
+                boolean b[] = {false, false, false, false, true, false};
+                List.of(0, 1, 2, 3, 4, 5).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
+            }
+        } catch (Exception e) {
+            System.err.println("Error: UGui.changePpmTree() " + e);
+        }
+    }
+    
     //Загрузка tree артикулов
     public static void loadArtTree(DefaultMutableTreeNode root) {
         DefaultMutableTreeNode node = null;

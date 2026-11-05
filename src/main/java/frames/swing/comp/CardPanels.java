@@ -54,6 +54,7 @@ import startup.App;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import common.listener.ListenerGet;
+import frames.UTree;
 import javax.swing.JPanel;
 
 public class CardPanels extends javax.swing.JPanel {
@@ -97,7 +98,7 @@ public class CardPanels extends javax.swing.JPanel {
                 Com5t com5t = winNode.com5t();
                 Wincalc winc = wincalc();
 
-                UGui.changePpmTree(winTree, ppmTree, com5t);
+                UTree.changePpmTree(winTree, ppmTree, com5t);
 
                 //Таймер цвета
                 if (enums.Type.contains(com5t, enums.Type.PARAM, enums.Type.FRAME, enums.Type.JOINING) == false) {
