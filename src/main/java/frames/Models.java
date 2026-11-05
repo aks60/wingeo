@@ -651,7 +651,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 
         pan12.add(scr2, java.awt.BorderLayout.CENTER);
 
-        jTabbedPane1.addTab("  Конструктор компонента    ", pan12);
+        jTabbedPane1.addTab("  Конструктор изделия    ", pan12);
 
         west.add(jTabbedPane1, java.awt.BorderLayout.CENTER);
 

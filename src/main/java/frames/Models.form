@@ -674,8 +674,8 @@
             <Container class="javax.swing.JPanel" name="pan12">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="  &#x41a;&#x43e;&#x43d;&#x441;&#x442;&#x440;&#x443;&#x43a;&#x442;&#x43e;&#x440; &#x43a;&#x43e;&#x43c;&#x43f;&#x43e;&#x43d;&#x435;&#x43d;&#x442;&#x430;    ">
-                    <Property name="tabTitle" type="java.lang.String" value="  &#x41a;&#x43e;&#x43d;&#x441;&#x442;&#x440;&#x443;&#x43a;&#x442;&#x43e;&#x440; &#x43a;&#x43e;&#x43c;&#x43f;&#x43e;&#x43d;&#x435;&#x43d;&#x442;&#x430;    "/>
+                  <JTabbedPaneConstraints tabName="  &#x41a;&#x43e;&#x43d;&#x441;&#x442;&#x440;&#x443;&#x43a;&#x442;&#x43e;&#x440; &#x438;&#x437;&#x434;&#x435;&#x43b;&#x438;&#x44f;    ">
+                    <Property name="tabTitle" type="java.lang.String" value="  &#x41a;&#x43e;&#x43d;&#x441;&#x442;&#x440;&#x443;&#x43a;&#x442;&#x43e;&#x440; &#x438;&#x437;&#x434;&#x435;&#x43b;&#x438;&#x44f;    "/>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>
