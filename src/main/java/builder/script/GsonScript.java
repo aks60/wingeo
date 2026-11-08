@@ -123,11 +123,11 @@ public class GsonScript {
             rootGson = new GsonRoot(Type.ARCH, "Montblanc / Eco / 1 ОКНА");
             rootGson.addElem(new GsonElem(Type.BOX_SIDE, 0.0, 400.0))
                     .addElem(new GsonElem(Type.BOX_SIDE, 0.0, 1780.0))
-                    .addElem(new GsonElem(Type.BOX_SIDE, 800.0, 1780.0))
-                    .addElem(new GsonElem(Type.BOX_SIDE, 800.0, 400.0, 400.0));
+                    .addElem(new GsonElem(Type.BOX_SIDE, 1200.0, 1780.0))
+                    .addElem(new GsonElem(Type.BOX_SIDE, 1200.0, 400.0, 400.0));
 
             rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
-            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 440.0, 800.0, 440.0));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 440.0, 1200.0, 440.0));
             rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 604004) {
@@ -264,7 +264,7 @@ public class GsonScript {
                     : List.of(601006, 601001, 601002, 601003,//прямоугольные
                             507998, 604005, //арки
                             506642, 605001, 508916, //трапеции 
-                            508); //двери
+                            508841); //двери
 
         } else if (base_name.toLowerCase().contains("vidnal.fdb")) {
             return List.of(26);

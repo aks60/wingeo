@@ -322,7 +322,7 @@ public final class Bimax {
                     .addElem(new GsonElem(Type.BOX_SIDE, 1200.0, 400.0, 400.0));
 
             rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
-            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 419.5, 800.0, 419.5));
+            rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 419.5, 1200.0, 419.5));
             rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 508035) { //СМ.PS (с раскладкой)
