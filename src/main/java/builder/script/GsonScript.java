@@ -196,6 +196,15 @@ public class GsonScript {
 
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="DOOR">
+        } else if (prj == 508840) {
+            rootGson = new GsonRoot(Type.DOOR, "KBE / KBE Эксперт / 6 ВХОДНЫЕ ДВЕРИ / Дверь наружу");
+            rootGson.addElem(new GsonElem(Type.BOX_SIDE, 0.0, 0.0))
+                    .addElem(new GsonElem(Type.BOX_SIDE, 0.0, 2100.0))
+                    .addElem(new GsonElem(Type.BOX_SIDE, 900.0, 2100.0))
+                    .addElem(new GsonElem(Type.BOX_SIDE, 900.0, 0.0))
+                    .addArea(new GsonElem(Type.STVORKA))
+                    .addElem(new GsonElem(Type.GLASS));            
+            
         } else if (prj == 508841) {
             rootGson = new GsonRoot(Type.DOOR, "KBE / KBE Эксперт / 6 ВХОДНЫЕ ДВЕРИ / Дверь наружу");
             rootGson.addElem(new GsonElem(Type.BOX_SIDE, 0.0, 0.0))
@@ -264,7 +273,7 @@ public class GsonScript {
                     : List.of(601006, 601001, 601002, 601003,//прямоугольные
                             507998, 604005, //арки
                             506642, 605001, 508916, //трапеции 
-                            508841); //двери
+                            508840, 508841); //двери
 
         } else if (base_name.toLowerCase().contains("vidnal.fdb")) {
             return List.of(26);
