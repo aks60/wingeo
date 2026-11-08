@@ -1,7 +1,6 @@
 package frames;
 
 import builder.Wincalc;
-import builder.model.Com5t;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import common.eProp;
@@ -56,7 +55,6 @@ import domain.eColor;
 import domain.eFurndet;
 import domain.ePrjprod;
 import enums.PKjson;
-import enums.Type;
 import frames.swing.comp.DefMutableTreeNode;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -64,7 +62,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.swing.ImageIcon;
-import javax.swing.JPopupMenu;
 import javax.swing.JRootPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import startup.App;

@@ -7,7 +7,6 @@ import report.sup.ExecuteCmd;
 import builder.Wincalc;
 import builder.making.TRecord;
 import common.UCom;
-import common.eProp;
 import dataset.Record;
 import domain.ePrjprod;
 import domain.eProject;

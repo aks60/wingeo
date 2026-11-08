@@ -82,7 +82,6 @@ import domain.eSysuser;
 import frames.swing.comp.CardPanels;
 import frames.swing.comp.MainMenu;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toList;
 import org.locationtech.jts.geom.Envelope;
 

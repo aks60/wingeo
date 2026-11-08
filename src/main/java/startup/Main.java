@@ -2,7 +2,6 @@ package startup;
 
 import frames.LogoToDb;
 import common.eProp;
-import java.util.List;
 import java.util.Locale;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;

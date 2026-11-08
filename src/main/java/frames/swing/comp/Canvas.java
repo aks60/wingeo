@@ -2,15 +2,9 @@ package frames.swing.comp;
 
 import builder.Wincalc;
 import common.UCom;
-import java.awt.AWTException;
 import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.MouseInfo;
-import java.awt.PointerInfo;
-import java.awt.Robot;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
