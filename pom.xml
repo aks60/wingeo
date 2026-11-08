@@ -40,14 +40,9 @@
         </dependency>
     </dependencies>      
     <properties>
-<!--        <project.build.sourceEncoding>windows-1251</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>windows-1251</project.reporting.outputEncoding>
-        <maven.compiler.encoding>windows-1251</maven.compiler.encoding>-->
-                
-        <!--<project.build.sourceEncoding>windows-1251</project.build.sourceEncoding>-->
-        
         <maven.compiler.release>25</maven.compiler.release>
-        <exec.mainClass>startup.Main</exec.mainClass>
+        <!--<exec.mainClass>startup.Main</exec.mainClass>-->
+        <!--<project.build.sourceEncoding>windows-1251</project.build.sourceEncoding>-->
         <project.build.sourceEncoding>windows-1251</project.build.sourceEncoding>
     </properties>
     <build>
