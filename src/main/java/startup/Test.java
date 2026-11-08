@@ -98,7 +98,7 @@ public class Test {
         eProp.typuse = "99";
         try {
             //clearDB();
-            PSConvert.exec();
+            //PSConvert.exec();
             //frame();
             //wincalc("min");
             //param();
