@@ -318,8 +318,8 @@ public final class Bimax {
             rootGson = new GsonRoot(426766, prj, 1, 198, Type.ARCH, "Montblanc / Eco / 1 Œ Õ¿", 1009, 1009, 1009);
             rootGson.addElem(new GsonElem(Type.BOX_SIDE, 0.0, 400.0))
                     .addElem(new GsonElem(Type.BOX_SIDE, 0.0, 1780.0))
-                    .addElem(new GsonElem(Type.BOX_SIDE, 800.0, 1780.0))
-                    .addElem(new GsonElem(Type.BOX_SIDE, 800.0, 400.0, 400.0));
+                    .addElem(new GsonElem(Type.BOX_SIDE, 1200.0, 1780.0))
+                    .addElem(new GsonElem(Type.BOX_SIDE, 1200.0, 400.0, 400.0));
 
             rootGson.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
             rootGson.addElem(new GsonElem(Type.IMPOST, 0.0, 419.5, 800.0, 419.5));
