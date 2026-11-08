@@ -48,7 +48,7 @@ public class MetaField {
             this.descr = p[4].toString(); //описание поля 
             this.fname = p[5].toString(); //переопределение имени поля            
         } else {
-            System.err.println("MetaField.init() - ОШИБКА! Количество параметров... Поле <" + p[0].toString() + ">");
+            System.err.println("MetaField.init() - ERROR! Count parametrovs... Field <" + p[0].toString() + ">");
         }
     }
 

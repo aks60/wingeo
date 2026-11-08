@@ -1049,12 +1049,12 @@ public class UGeo {
         //Test проверка
         for (int i = 0; i < cooL.length; i++) {
             if (cooL[i].z % 1 != 0) {
-                PRINT("Ошибка*:UGeo.splitPolygon: ", cooL);
+                PRINT("Error:*:UGeo.splitPolygon: ", cooL);
             }
         }
         for (int i = 0; i < cooR.length; i++) {
             if (cooR[i].z % 1 != 0) {
-                PRINT("Ошибка*:UGeo.splitPolygon: ", cooR);
+                PRINT("Error:*:UGeo.splitPolygon: ", cooR);
             }
         }
 

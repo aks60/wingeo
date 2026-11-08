@@ -52,9 +52,9 @@ public class RCheck {
 
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);
-            System.err.println("Ошибка1:HtmlOfInvoice.smeta1()" + e);
+            System.err.println("Error1:HtmlOfInvoice.smeta1()" + e);
         } catch (Exception e) {
-            System.err.println("Ошибка2:Check.parseDoc1()" + e);
+            System.err.println("Error2:Check.parseDoc1()" + e);
         }
     }
 
@@ -78,9 +78,9 @@ public class RCheck {
 
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);
-            System.err.println("Ошибка1:Check.parseDoc2()" + e);
+            System.err.println("Error1:Check.parseDoc2()" + e);
         } catch (Exception e) {
-            System.err.println("Ошибка2:Check.parseDoc2()" + e);
+            System.err.println("Error2:Check.parseDoc2()" + e);
         }
     }
 

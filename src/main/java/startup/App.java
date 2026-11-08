@@ -246,7 +246,7 @@ public enum App {
             frame.setVisible(true);
 
         } catch (Exception e) {
-            System.err.println("Œÿ»¡ ¿:startup.App.createFrame() " + e);
+            System.err.println("Error:startup.App.createFrame() " + e);
         }
     }
 

@@ -1389,7 +1389,7 @@ public class Adm extends javax.swing.JFrame {
                 thread.join();
             }
         } catch (InterruptedException e) {
-            System.out.println("Ошибка:Adm.windowClosed()");
+            System.out.println("Error:Adm.windowClosed()");
         }
     }//GEN-LAST:event_windowClosed
 

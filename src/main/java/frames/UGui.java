@@ -619,7 +619,7 @@ public class UGui {
             return recordClon;
 
         } catch (Exception e) {
-            System.out.println("Ошибка:cloneRecord() " + e);
+            System.out.println("Error:cloneRecord() " + e);
             return null;
         }
     }

@@ -47,7 +47,7 @@ public class ExecuteCmd {
 //            }
             desktop.browse(url);
         } catch (URISyntaxException e) {
-            System.err.println("Синтаксическая ошибка" + e);
+            System.err.println("Syntax error" + e);
         } catch (IOException e) {
             System.err.println("Error: ExecuteCmd.startHelp" + e);
         }

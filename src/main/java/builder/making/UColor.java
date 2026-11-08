@@ -262,7 +262,7 @@ public class UColor {
             return -1;
 
         } catch (Exception e) {
-            System.err.println("Ошибка Color.colorFromArtdet() " + e);
+            System.err.println("Error: Color.colorFromArtdet() " + e);
             return -1;
         }
     }
@@ -515,7 +515,7 @@ public class UColor {
             return -1;
 
         } catch (Exception e) {
-            System.err.println("Ошибка Color.colorFromArtdet() " + e);
+            System.err.println("Error: Color.colorFromArtdet() " + e);
             return -1;
         }
     }

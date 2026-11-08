@@ -122,11 +122,11 @@ public class Connect {
             statement = connectionApp.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
         } catch (ClassNotFoundException e) {
-            //System.err.println("Ошибка1:Connect.connection() " + e);
+            //System.err.println("Error:Connect.connection() " + e);
             JOptionPane.showMessageDialog(null, eExcep.findDrive, "НЕУДАЧА", 1);
             return eExcep.findDrive;
         } catch (SQLException e) {
-            System.err.println("Ошибка2:Connect.connection() " + e);
+            System.err.println("Error2:Connect.connection() " + e);
             return eExcep.noConn;
             //return eExcep.getError(e.getErrorCode());
         }
@@ -214,7 +214,7 @@ public class Connect {
             return v;
 
         } catch (SQLException e) {
-            System.err.println("Ошибка получения версии " + e);
+            System.err.println("Error retrieving version " + e);
             return "";
         }
     }

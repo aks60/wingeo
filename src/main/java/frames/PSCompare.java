@@ -427,7 +427,7 @@ public class PSCompare extends javax.swing.JFrame {
                     }
                 }
             } catch (Exception e) {
-                System.err.println("Error: DBCompare.loadingTabGroup1() Тавлица CONNLST отсуствует!");
+                System.err.println("Error: DBCompare.loadingTabGroup1() The CONNLST table is missing!");
             }
 
             //=== Таблица 6 ===
@@ -495,7 +495,7 @@ public class PSCompare extends javax.swing.JFrame {
             }
             rs.close();
         } catch (SQLException e) {
-            System.err.println("Ошибка SQL: DBCompare.loadingTabGroup2().  " + e);
+            System.err.println("Error SQL: DBCompare.loadingTabGroup2().  " + e);
         } catch (Exception e) {
             System.err.println("Error: DBCompare.loadingTabGroup2().  " + e);
         }

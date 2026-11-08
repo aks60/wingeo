@@ -679,7 +679,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
             return nodeList2;
 
         } catch (Exception e) {
-            System.err.println("Œÿ»¡ ¿:Systree.addChild() " + e);
+            System.err.println("Error:Systree.addChild() " + e);
             return null;
         }
     }

@@ -623,7 +623,7 @@ public class Query extends Table {
                     return r1.getStr(field[3]).compareTo(r2.getStr(field[3]));
                 });
             } else {
-                System.err.println("ВНИМАНИЕ! Ошибка сортировки.");
+                System.err.println("ATTENTION! Sorting error.");
             }
         } catch (Exception e) {
             System.err.println("Error: Query.sort()");

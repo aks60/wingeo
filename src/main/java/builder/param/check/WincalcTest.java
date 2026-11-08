@@ -183,7 +183,7 @@ public class WincalcTest {
         try {
             return winc.listElem.stream().filter(e -> e.id == id).findFirst().get();
         } catch (Exception e) {
-            System.err.println("Œÿ»¡ ¿: WinacalcTest.getElem() " + e);
+            System.err.println("Error:: WinacalcTest.getElem() " + e);
         }
         return null;
     }

@@ -233,7 +233,7 @@ public class PSConvert {
 
             println(Color.BLUE, "ОБНОВЛЕНИЕ ЗАВЕРШЕНО");
         } catch (Exception e) {
-            println(Color.RED, "Ошибка: script() " + e);
+            println(Color.RED, "Error: script() " + e);
         }
     }
 
@@ -350,7 +350,7 @@ public class PSConvert {
                 }
             }
         } catch (SQLException e) {
-            println(Color.RED, "Ошибка: convertTable(), таблица " + fields[0].tname() + " - " + e);
+            println(Color.RED, "Error: convertTable(), table " + fields[0].tname() + " - " + e);
         }
     }
 
@@ -380,7 +380,7 @@ public class PSConvert {
             }
             return hmDeltaCol;
         } catch (SQLException e) {
-            println(Color.RED, "Ошибка: deltaColumn(). " + e);
+            println(Color.RED, "Error: deltaColumn(). " + e);
             return null;
         }
     }
@@ -435,7 +435,7 @@ public class PSConvert {
             deleteSql(eKitpar2.up, "psss", eKitdet.up, "kincr");//kitdet_id
 
         } catch (Exception e) {
-            println(Color.RED, "Ошибка: deletePart().  " + e);
+            println(Color.RED, "Error: deletePart().  " + e);
         }
     }
 
@@ -571,7 +571,7 @@ public class PSConvert {
                 executeSql("delete from glaspar2 where groups_id = 15030 and text = '0,97'"); //предположительно параметр добавлен в самом конце
             }
         } catch (Exception e) {
-            println(Color.RED, "Ошибка: updatePart().  " + e);
+            println(Color.RED, "Error: updatePart().  " + e);
         }
     }
 
@@ -705,7 +705,7 @@ public class PSConvert {
                     + "delete from prjprod a where a.project_id = old.id; end");
 
         } catch (Exception e) {
-            println(Color.RED, "Ошибка: metaPart().  " + e);
+            println(Color.RED, "Error: metaPart().  " + e);
         }
     }
 
@@ -737,7 +737,7 @@ public class PSConvert {
             }
             cn2.commit();
         } catch (Exception e) {
-            println(Color.RED, "Ошибка: modifyModels.  " + e);
+            println(Color.RED, "Error: modifyModels.  " + e);
         }
         try {
             int index = 0;
@@ -761,7 +761,7 @@ public class PSConvert {
             cn2.commit();
 
         } catch (Exception e) {
-            println(Color.RED, "Ошибка: modifyProducts.  " + e);
+            println(Color.RED, "Error: modifyProducts.  " + e);
         }
     }
 
@@ -839,7 +839,7 @@ public class PSConvert {
             cn2.commit();
 
         } catch (SQLException e) {
-            println(Color.RED, "Ошибка: modifyGroups().  " + e);
+            println(Color.RED, "Error: modifyGroups().  " + e);
         }
     }
 
@@ -852,7 +852,7 @@ public class PSConvert {
                 recordList.add(new Integer[]{rs.getInt("ID"), rs.getInt("CNUMB")});
             }
         } catch (SQLException e) {
-            println(Color.RED, "Ошибка: UPDATE-checkUniqueKeyColor().  " + e);
+            println(Color.RED, "Error: UPDATE-checkUniqueKeyColor().  " + e);
         }
         for (Integer[] recordArr : recordList) {
             if (set.add(recordArr[0]) == false) {
@@ -887,7 +887,7 @@ public class PSConvert {
             st2.clearBatch();
 
         } catch (Exception e) {
-            println(Color.RED, "Ошибка: deleteSql().  " + e);
+            println(Color.RED, "Error: deleteSql().  " + e);
         }
     }
 
@@ -918,7 +918,7 @@ public class PSConvert {
             st2.clearBatch();
 
         } catch (Exception e) {
-            println(Color.RED, "Ошибка: updateSql().  " + e);
+            println(Color.RED, "Error: updateSql().  " + e);
         }
     }
 
@@ -953,7 +953,7 @@ public class PSConvert {
             st2.execute(str);
             cn2.commit();
         } catch (Exception e) {
-            println(Color.RED, "Ошибка:executeSql().  <" + str + ">  " + e);
+            println(Color.RED, "Error:executeSql().  <" + str + ">  " + e);
         }
     }
 

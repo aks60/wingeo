@@ -150,9 +150,9 @@ public class ParName extends javax.swing.JDialog {
                     }
                 }
             } catch (IOException e) {
-                System.out.println("Ошибка-1:ParName.loadingHelp() " + e);
+                System.out.println("Error-1:ParName.loadingHelp() " + e);
             } catch (Exception ex) {
-                System.out.println("Ошибка-2:ParName.loadingHelp() " + ex);
+                System.out.println("Error-2:ParName.loadingHelp() " + ex);
             }
         }
         return "Нет данных";

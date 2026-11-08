@@ -55,9 +55,9 @@ public class ROffer {
 
         } catch (FileNotFoundException e) {
             JOptionPane.showMessageDialog(null, "Нет доступа к файлу. Процесс не может получить доступ к файлу, так как этот файл занят другим процессом.", "ВНИМАНИЕ!", 1);
-            System.err.println("Ошибка1:HtmlOfSmeta.smeta2()" + e);
+            System.err.println("Error1:HtmlOfSmeta.smeta2()" + e);
         } catch (Exception e) {
-            System.err.println("Ошибка2:HtmlOfSmeta.smeta2()" + e);
+            System.err.println("Error2:HtmlOfSmeta.smeta2()" + e);
         }
     }
 

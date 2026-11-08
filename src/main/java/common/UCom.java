@@ -130,7 +130,7 @@ public class UCom {
                 System.err.println("Error: UCom.getDbl() " + e);
             }
         }
-        throw new NumberFormatException("Ошибка:UCom.getDbl(\"" + str + "\")");
+        throw new NumberFormatException("Error:UCom.getDbl(\"" + str + "\")");
     }
 
     public static Double getDbl(Object obj, Double def) {
@@ -151,7 +151,7 @@ public class UCom {
                 System.err.println("Error: UCom.getDbl() " + e);
             }
         }
-        throw new NumberFormatException("Ошибка:UCom.getDbl(\"" + str + "\")");
+        throw new NumberFormatException("Error: UCom.getDbl(\"" + str + "\")");
     }
 
     public static String firstUpperCase(String word) {
