@@ -100,8 +100,8 @@ public class Test {
             //clearDB();
             //PSConvert.exec();
             //frame();
-            //wincalc("min");
-            param();
+            wincalc("700027");
+            //param();
             //query();
             //json();
             //uid();

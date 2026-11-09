@@ -231,7 +231,20 @@ public final class Bimax {
             rootGson.addArea(new GsonElem(Type.STVORKA, "{stvorkaBot: {sysprofID: 1121}, stvorkaLef: {sysprofID: 1121}"
                     + ", stvorkaRig: {sysprofID: 1121}, stvorkaTop: {sysprofID: 1121}, sysprofID:1121, typeOpen:4, sysfurnID:2916}")) //,artiklHandl:5058,colorHandl:1009}"))
                     .addElem(new GsonElem(Type.GLASS, "{artglasID:4663}"));
+            
+        } else if (prj == 700027) {  //штульповое
+            rootGson = new GsonRoot(427872, prj, 1, 198, Type.RECTANGL, "Montblanc / Eco / 1 ОКНА (штульп)", 1009, 1009, 1009, "{ioknaParam:[-8252]}"); //параметр недействительный, подогнал для ps спецификации
+            rootGson.addElem(new GsonElem(Type.BOX_SIDE, 0.0, 0.0))
+                    .addElem(new GsonElem(Type.BOX_SIDE, 0.0, 1400.0))
+                    .addElem(new GsonElem(Type.BOX_SIDE, 1300.0, 1400.0))
+                    .addElem(new GsonElem(Type.BOX_SIDE, 1300.0, 0.0));
 
+            rootGson.addArea(new GsonElem(Type.STVORKA))
+                    .addElem(new GsonElem(Type.GLASS, "{artglasID:3293}"));
+            rootGson.addElem(new GsonElem(Type.SHTULP, 450.0, 0.0, 450.0, 1400.0));
+            rootGson.addArea(new GsonElem(Type.STVORKA, "{typeOpen:4, sysfurnID:2913}"))
+                    .addElem(new GsonElem(Type.GLASS, "{artglasID:4267}"));
+            
         } else if (prj == 700032) {
             rootGson = new GsonRoot(427877, prj, 1, 168, Type.RECTANGL, "Rehau / Termo / 1 ОКНА / Открывание внутрь (ств. Z60)", 1009, 1009, 1009);
             rootGson.addElem(new GsonElem(Type.BOX_SIDE, 0.0, 0.0))
