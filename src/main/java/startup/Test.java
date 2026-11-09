@@ -2,10 +2,6 @@ package startup;
 
 import builder.model.Com5t;
 import builder.model.UGeo;
-import builder.param.check.ElementTest;
-import builder.param.check.FillingTest;
-import builder.param.check.FurnitureTest;
-import builder.param.check.JoiningTest;
 import builder.param.check.WincalcTest;
 import builder.script.GsonElem;
 import builder.script.GsonScript;
@@ -20,7 +16,6 @@ import dataset.Query;
 import dataset.Record;
 import domain.eColor;
 import enums.Type;
-import frames.PSConvert;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -29,6 +24,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.FileReader;
+import java.io.PrintStream;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -94,13 +90,13 @@ public class Test {
 
     // </editor-fold>     
     public static void main(String[] args) throws Exception {
-
+        System.setOut(new PrintStream(System.out, true, "UTF-8"));
         eProp.typuse = "99";
         try {
             //clearDB();
             //PSConvert.exec();
             //frame();
-            wincalc("700027");
+            //wincalc("700027");
             //param();
             //query();
             //json();
@@ -109,6 +105,8 @@ public class Test {
             //random();
             //geom();             
             //printJSO(eSyssize.up);
+            System.out.println("Hello World!  јксЄнов");
+            
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);

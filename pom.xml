@@ -42,7 +42,7 @@
     <properties>
         <maven.compiler.release>25</maven.compiler.release>
         <!--<exec.mainClass>startup.Main</exec.mainClass>-->
-        <!--<project.build.sourceEncoding>windows-1251</project.build.sourceEncoding>-->
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.build.sourceEncoding>windows-1251</project.build.sourceEncoding>
     </properties>
     <build>

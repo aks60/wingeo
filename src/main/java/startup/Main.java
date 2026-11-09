@@ -2,6 +2,7 @@ package startup;
 
 import frames.LogoToDb;
 import common.eProp;
+import java.io.PrintStream;
 import java.util.Locale;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -29,6 +30,7 @@ public class Main {
             public void run() {
                 try {
                     runRussifier();
+                    System.setOut(new PrintStream(System.out, true, "UTF-8"));
                     String lafname = eProp.lookandfeel.getProp();
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                     for (LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {

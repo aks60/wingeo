@@ -68,7 +68,7 @@ public class AreaStvorka extends AreaSimple {
     public void initStvorka() {
         try {
             //Если нет полигона створки в гл.окне то 'owner.area', иначе 'this.area', получается при распиле owner.area импостом
-            Geometry frameBox = (UCom.filter(winc.listElem, Type.IMPOST).isEmpty()) || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
+            Geometry frameBox = (UCom.filter(winc.listElem, Type.IMPOST, Type.SHTULP).isEmpty()) || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
 
             //Полигон створки с учётом нахлёста 
             double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
@@ -183,7 +183,7 @@ public class AreaStvorka extends AreaSimple {
 
     //Создание и коррекция сторон створки
     public void setLocation() {
-        Geometry frameBox = (UCom.filter(winc.listElem, Type.IMPOST).isEmpty())
+        Geometry frameBox = (UCom.filter(winc.listElem, Type.IMPOST, Type.SHTULP).isEmpty())
                 || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
         try {
             //Полигон створки с учётом нахлёста 
