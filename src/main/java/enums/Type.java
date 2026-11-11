@@ -14,7 +14,7 @@ public enum Type implements Enam {
     RIGEL_IMP(4, 777, "Ригель/импост"),
     STOIKA(5, 5, "Стойка"),
     STRUT_BOX(6, 777, "Стойка/коробка"),
-    ERKER(7, 7, "Эркер"),
+    ERKER(7, 10, "Эркер"),
     EDGE(8, 8, "Грань"),
     SHTULP(9, 9, "Штульп"),
     //== Заполнения ==

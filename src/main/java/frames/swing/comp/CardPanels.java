@@ -2533,14 +2533,18 @@ public class CardPanels extends javax.swing.JPanel {
         try {
             if (winNode != null) {
                 Layout layout = winNode.com5t().layout();
-                double selectID = winNode.com5t().id; //id элемента который уже есть в конструкции, это либо виртуал. либо найденный по приоритету при построении модели
                 Query qSysprofFilter = new Query(eSysprof.values(), eArtikl.values()); //тут будет список допустимых профилей из ветки системы
+                
+                List listID2 = List.of(winNode.com5t().type.id2);
+                if (List.of(3, 5, 9).contains(winNode.com5t().type.id2)) {
+                    listID2 = List.of(3, 5, 9);
+                }
                 //Цикл по профилям ветки
                 for (int index = 0; index < qSysprof.size(); ++index) {
                     Record sysprofRec = qSysprof.get(index);
 
                     //Отфильтруем подходящие по параметрам
-                    if (winNode.com5t().type.id2 == sysprofRec.getInt(eSysprof.use_type)) {
+                    if (listID2.contains(sysprofRec.getInt(eSysprof.use_type))) {
                         int useSideId = sysprofRec.getInt(eSysprof.use_side);
                         if (useSideId == layout.id
                                 || ((layout == Layout.BOT || layout == Layout.TOP) && useSideId == UseSide.HORIZ.id)
@@ -2613,7 +2617,7 @@ public class CardPanels extends javax.swing.JPanel {
         try {
             double selectID = winNode.com5t().id;
             Record systreeRec = eSystree.find(wincalc().nuni);
-            
+
             //Список доступных толщин в ветке системы например 4;5;8
             String depth = systreeRec.getStr(eSystree.depth);
             if (depth != null && depth.isEmpty() == false) {
@@ -2732,7 +2736,7 @@ public class CardPanels extends javax.swing.JPanel {
     }//GEN-LAST:event_elemsToBlinds
 
     private void artiklToBlinds(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToBlinds
-                /*try {
+        /*try {
                     double glassID = winNode.com5t().id;
                     int artiklID = ((ElemGlass) winNode.com5t()).artiklRec.getInt(eArtikl.id);
                     Query qBlinds = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2, 50);
