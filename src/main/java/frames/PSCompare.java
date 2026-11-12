@@ -185,7 +185,8 @@ public class PSCompare extends javax.swing.JFrame {
 
                 //=== Таблица 1 ===
                 ((DefaultTableModel) tab1.getModel()).getDataVector().clear();
-                rs = st.executeQuery("select a.* from SPECPAU a where a.PUNIC = " + txt19.getText() + "and a.ONUMB = " + txt20.getText() + "  and clke != -1 order by a.anumb");
+                String sql = "select a.* from SPECPAU a where a.PUNIC = " + txt19.getText() + "and a.ONUMB = " + txt20.getText() + "  and clke != -1 order by a.anumb";
+                rs = st.executeQuery(sql);
                 if (rs.isLast() == false) {
                     npp = 0;
                     while (rs.next()) {
@@ -297,8 +298,9 @@ public class PSCompare extends javax.swing.JFrame {
             Statement st = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 //            ResultSet rs = st.executeQuery("select PUNIC from LISTPRJ where PNUMB = " + txt21.getText());
 //            rs.next();
-//            int punic = rs.getInt("PUNIC");           
-            ResultSet rs = st.executeQuery("select a.* from SPECPAU a where a.PUNIC = " + txt19.getText() + " and a.ONUMB = " + txt20.getText() + " and clke != -1 order by a.anumb");
+//            int punic = rs.getInt("PUNIC");  
+            String sql = "select a.* from SPECPAU a where a.PUNIC = " + txt19.getText() + " and a.ONUMB = " + txt20.getText() + " and clke != -1 order by a.anumb";    
+            ResultSet rs = st.executeQuery(sql);
             //ResultSet rs = st.executeQuery("select a.*, b.aname from SPECPAU a, ARTIKLS b where a.PUNIC = " + txt19.getText() + " and a.ONUMB = " + txt20.getText() + " and clke != -1 and a.anumb = b.anumb order by a.anumb");
             int npp = 0;
             double sum1 = 0, sum2 = 0;
