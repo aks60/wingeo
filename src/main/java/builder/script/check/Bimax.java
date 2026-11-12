@@ -246,14 +246,14 @@ public final class Bimax {
                     .addElem(new GsonElem(Type.GLASS, "{artglasID:4267}"));
             
         } else if (prj == 700032) {
-            rootGson = new GsonRoot(427877, prj, 1, 168, Type.RECTANGL, "Rehau / Termo / 1 ОКНА / Открывание внутрь (ств. Z60)", 1009, 1009, 1009);
+            rootGson = new GsonRoot(427877, prj, 1, 169, Type.RECTANGL, "Rehau / Termo / 1 ОКНА / Открывание внутрь (ств. Z60)", 1009, 1009, 1009);
             rootGson.addElem(new GsonElem(Type.BOX_SIDE, 0.0, 0.0))
                     .addElem(new GsonElem(Type.BOX_SIDE, 0.0, 1400.0))
                     .addElem(new GsonElem(Type.BOX_SIDE, 1300.0, 1400.0))
                     .addElem(new GsonElem(Type.BOX_SIDE, 1300.0, 0.0));
 
             rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
-            rootGson.addElem(new GsonElem(Type.IMPOST, 650.0, 0.0, 650.0, 1400.0));
+            rootGson.addElem(new GsonElem(Type.SHTULP, 650.0, 0.0, 650.0, 1400.0));
             rootGson.addArea(new GsonElem(Type.STVORKA)).addElem(new GsonElem(Type.GLASS));
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="ARCH">  

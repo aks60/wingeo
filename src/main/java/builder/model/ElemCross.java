@@ -66,9 +66,9 @@ public class ElemCross extends ElemSimple {
             //Пилим полигон импостом
             LineSegment segmImp = new LineSegment(new Coordinate(this.x1(), this.y1(), this.id), new Coordinate(this.x2(), this.y2(), this.id));
             List<Geometry> geoSplit = UGeo.splitPolygon((Polygon) geoShell.copy(), segmImp);
-            Object o1 = geoSplit.get(0);
-            Object o2 = geoSplit.get(1);
-            Object o3 = geoSplit.get(2);
+            //Object o1 = geoSplit.get(0);
+            //Object o2 = geoSplit.get(1);
+            //Object o3 = geoSplit.get(2);
             owner.childs.get(0).area = (Polygon) geoSplit.get(0);
             owner.childs.get(2).area = (Polygon) geoSplit.get(1);
             
