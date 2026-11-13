@@ -245,7 +245,7 @@ public final class Bimax {
             rootGson.addArea(new GsonElem(Type.STVORKA, "{typeOpen:4, sysfurnID:2913}"))
                     .addElem(new GsonElem(Type.GLASS, "{artglasID:4267}"));
             
-        } else if (prj == 700032) {
+        } else if (prj == 700032) {  //штульповое
             rootGson = new GsonRoot(427877, prj, 1, 169, Type.RECTANGL, "Rehau / Termo / 1 ОКНА / Открывание внутрь (ств. Z60)", 1009, 1009, 1009);
             rootGson.addElem(new GsonElem(Type.BOX_SIDE, 0.0, 0.0))
                     .addElem(new GsonElem(Type.BOX_SIDE, 0.0, 1400.0))
