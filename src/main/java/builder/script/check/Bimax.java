@@ -429,23 +429,23 @@ public final class Bimax {
             stv.addElem(new GsonElem(Type.IMPOST, 0.0, 1300.0, 900.0, 1300.0));
             stv.addArea(new GsonElem(Type.AREA)).addElem(new GsonElem(Type.GLASS));
 
-        } else if (prj == 509009) {
-            rootGson = new GsonRoot(427805, prj, 1, 62, Type.DOOR, "Rehau / Brilliant / 4 ДВЕРИ ВХОДНЫЕ / Дверь внутрь", 1009, 1009, 1009);
+        } else if (prj == 509009) {  
+            rootGson = new GsonRoot(427805, prj, 1, 62, Type.RECTANGL, "Rehau / Brilliant / 4 ДВЕРИ ВХОДНЫЕ / Дверь внутрь", 1009, 1009, 1009);
             rootGson.addElem(new GsonElem(Type.BOX_SIDE, 0.0, 0.0))
                     .addElem(new GsonElem(Type.BOX_SIDE, 0.0, 2000.0))
                     .addElem(new GsonElem(Type.BOX_SIDE, 1300.0, 2000.0))
                     .addElem(new GsonElem(Type.BOX_SIDE, 1300.0, 0.0));
-            //666-высота импоста
+            
             GsonElem ctv1 = rootGson.addArea(new GsonElem(Type.STVORKA, "{typeOpen:3, sysfurnID:860}"));
             ctv1.addElem(new GsonElem(Type.GLASS))
-                    .addElem(new GsonElem(Type.IMPOST, 0.0, 666.0, 650.0, 666.0))
+                    .addElem(new GsonElem(Type.IMPOST, 0.0, 1334.0, 650.0, 1334.0))
                     .addElem(new GsonElem(Type.GLASS));
             
             rootGson.addElem(new GsonElem(Type.SHTULP, 650.0, 0.0, 650.0, 1400.0));   
             
             GsonElem ctv2 = rootGson.addArea(new GsonElem(Type.STVORKA, "{typeOpen:3, sysfurnID:860}"));
             ctv2.addElem(new GsonElem(Type.GLASS))
-                    .addElem(new GsonElem(Type.IMPOST, 650.0, 666.0, 1300.0, 666.0))
+                    .addElem(new GsonElem(Type.IMPOST, 650.0, 1334.0, 1300.0, 1334.0))
                     .addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 700009) {
