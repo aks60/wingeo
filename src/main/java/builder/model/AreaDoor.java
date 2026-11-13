@@ -14,7 +14,7 @@ public class AreaDoor extends AreaSimple {
         super(winc, gson, null);
         this.owner = this;
     }
-    
+
     //Полигон рамы. Функ. выпоняется после создания рам конструкции
     @Override
     public void setLocation() {
@@ -25,10 +25,10 @@ public class AreaDoor extends AreaSimple {
             cooBox.add(new Coordinate(this.frames.get(0).x1(), this.frames.get(0).y1(), this.frames.get(0).id));
 
             //Аrea рамы
-            Polygon geoShell = gf.createPolygon(cooBox.toArray(new Coordinate[0]));  
+            Polygon geoShell = gf.createPolygon(cooBox.toArray(new Coordinate[0]));
             Polygon geoInner = UGeo.bufferGeometry(geoShell, winc.listElem, 0, 0);
             Polygon geoFalz = UGeo.bufferGeometry(geoShell, winc.listElem, 0, 1);
-            this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});            
+            this.area = gf.createMultiPolygon(new Polygon[]{geoShell, geoInner, geoFalz});
 
             //Test.init(this.area);
         } catch (Exception e) {
@@ -53,8 +53,8 @@ public class AreaDoor extends AreaSimple {
             System.err.println("AreaRectangl.joining() " + e);
         }
     }
-    
-   @Override
+
+    @Override
     public void paint() {
         super.paint();
 
@@ -68,7 +68,7 @@ public class AreaDoor extends AreaSimple {
 //            winc.gc2d.draw(shape);
 //        }
     }
-    
+
     // <editor-fold defaultstate="collapsed" desc="GET-SET">
     // </editor-fold> 
 }
