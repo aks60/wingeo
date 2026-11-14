@@ -4,11 +4,10 @@ import dataset.Field;
 import dataset.MetaField;
 import dataset.Query;
 import dataset.Record;
-import static domain.ePrjkit.up;
 import enums.UseSide;
 import enums.UseType;
-import frames.UGui;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public enum eSysprof implements Field {
@@ -87,13 +86,13 @@ public enum eSysprof implements Field {
         if (nuni == -3) {
             return virtualRec(typ);
         }
+        List listUseType = List.of(3, 5, 9);
         return data().stream().filter(rec -> rec.getInt(systree_id) == nuni
-                && rec.getInt(use_type) == typ
                 && UseSide.MANUAL.id != rec.getInt(use_side)
-                && (us1.id == rec.getInt(use_side) || UseSide.ANY.id == rec.getInt(use_side))
+                && listUseType.contains(rec.getInt(use_type))
         ).findFirst().orElse(up.virtualRec(typ));
     }
-    
+        
     public static Record find5(int nuni, int type, UseSide us1, UseSide us2) {
         if (nuni == -3) {
             return virtualRec(type);

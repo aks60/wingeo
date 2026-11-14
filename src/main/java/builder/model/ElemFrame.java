@@ -118,6 +118,7 @@ public class ElemFrame extends ElemSimple {
                 spcRec.anglCut0 = UGeo.anglCut(coo[coo.length - 2], coo[0], coo[1]);
                 spcRec.anglCut1 = UGeo.anglCut(coo[coo.length - 5], coo[coo.length - 4], coo[coo.length - 3]);
             }
+            double delta1 = winc.syssizRec.getDbl(eSyssize.prip);
             double delta = winc.syssizRec.getDbl(eSyssize.prip) * Math.sin(Math.toRadians(45));
             double prip1 = delta, prip2 = delta;
 

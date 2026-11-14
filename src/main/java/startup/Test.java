@@ -90,13 +90,12 @@ public class Test {
 
     // </editor-fold>     
     public static void main(String[] args) throws Exception {
-        //System.setOut(new PrintStream(System.out, true, "UTF-8"));
         eProp.typuse = "99";
         try {
             //clearDB();
             //PSConvert.exec();
             //frame();
-            //wincalc("700027");
+            wincalc("min");
             //param();
             //query();
             //json();
