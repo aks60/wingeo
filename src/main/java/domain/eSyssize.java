@@ -60,7 +60,7 @@ public enum eSyssize implements Field {
         Record record = up.newRecord(Query.SEL);
         record.setNo(id, -3);
         record.setNo(name, "virtual");
-        record.setNo(prip, 3);
+        record.setNo(prip, 0);
         record.setNo(naxl, 6);
         record.setNo(falz, 14);
         record.setNo(zax, 4);

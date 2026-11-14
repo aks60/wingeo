@@ -95,7 +95,7 @@ public class Test {
             //clearDB();
             //PSConvert.exec();
             //frame();
-            wincalc("min");
+            wincalc("509009");
             //param();
             //query();
             //json();
@@ -103,9 +103,7 @@ public class Test {
             //script();
             //random();
             //geom();             
-            //printJSO(eSyssize.up);
-            System.out.println("Hello World!  јксЄнов");
-            
+            //printJSO(eSyssize.up);            
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);

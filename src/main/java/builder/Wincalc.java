@@ -57,7 +57,7 @@ public class Wincalc {
 
     public Integer nuni = 0; //код системы  
     public double nppID = 0; //для генерации ключа в спецификации
-    public Record syssizRec = null; //система константт
+    //public Record syssizRec = null; //система констант
     public double cost1 = 0; //стоимость без скидки
     public double cost2 = 0; //стоимость со скидкой
     public double weight = 0; //масса конструкции  
@@ -123,7 +123,7 @@ public class Wincalc {
             root.sysprofRec = eSysprof.find2(nuni, UseType.FRAME); //первая.запись коробки
             root.artiklRec = eArtikl.find(root.sysprofRec.getInt(eSysprof.artikl_id), false); //первый артикул из сист. профилей
             root.artiklRecAn = eArtikl.find(root.sysprofRec.getInt(eSysprof.artikl_id), true); //аналог
-            this.syssizRec = eSyssize.find(root.artiklRec); //системные константы             
+            root.syssizRec = eSyssize.find(root.artiklRec); //системные константы             
 
             parametr(gson.param); //параметры техн. + менеджера
 

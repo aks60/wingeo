@@ -52,6 +52,20 @@ public abstract class ElemSimple extends Com5t {
 
     public abstract void setSpecific();
 
+    public ElemSimple prev() {
+        if (this.type == Type.GLASS) {
+            return null;
+        }
+        return winc.listElem.stream().filter(e -> this.x1() == e.x2() && this.y1() == e.y2()).findFirst().get();
+    }
+
+    public ElemSimple next() {
+        if (this.type == Type.GLASS) {
+            return null;
+        }
+        return winc.listElem.stream().filter(e -> this.x2() == e.x1() && this.y2() == e.y1()).findFirst().get();
+    }
+
     public abstract void addSpecific(TRecord spcAdd);
 
     public void addListenerEvents() {
@@ -93,7 +107,7 @@ public abstract class ElemSimple extends Com5t {
                 winc.canvas.repaint();
             }
         });
-        
+
         //ÏÅÐÅÌÅÑÒÈËÈ ìûøêîé
         this.winc.mouseDragged.add((evt) -> {
             //Ôèëüòð äâèæóõè îòêë. êîãäà passMask[1] > 1 
@@ -137,7 +151,7 @@ public abstract class ElemSimple extends Com5t {
                 //if (X < 0 || Y < 0) { UGeo.moveGson(winc.gson, Math.abs(dX), Math.abs(dY), winc.scale); }
             }
         });
-        
+
         //ÏÅÐÅÌÅÑÒÈËÈ êëàâîé
         this.winc.keyboardPressed.add((evt) -> {
 

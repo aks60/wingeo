@@ -5,6 +5,7 @@ import static builder.model.Com5t.gf;
 import builder.script.GsonElem;
 import common.UCom;
 import domain.eArtikl;
+import domain.eSyssize;
 import enums.Layout;
 import enums.Type;
 import java.awt.Graphics2D;
@@ -224,7 +225,7 @@ public class UGeo {
         return outList;
     }
 
-    public static Polygon bufferGeometry(Geometry geoShell, ArrayList<? extends Com5t> listElem, double amend, int opt) {
+    public static Polygon bufferGeometry2(Geometry geoShell, ArrayList<? extends Com5t> listElem, double amend, int opt) {
 
         Coordinate[] cooShell = geoShell.getCoordinates();
         Map<Double, Double> hmDist = new HashMap();
@@ -236,6 +237,44 @@ public class UGeo {
                     hmDist.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);
                 } else if (opt == 1) {
                     hmDist.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + amend);
+                }
+            }
+            if (cooShell.length > Com5t.MAXSIDE) {
+                double id = cooShell[geoShell.getCoordinates().length / 2].z;
+                Polygon polyCurv = bufferCurve(geoShell, hmDist.get(id));
+                Polygon polyRect = bufferRectangl(geoShell, hmDist);
+                Polygon polyArch = (Polygon) polyRect.union(polyCurv);
+
+                LinearRing ring = polyArch.getInteriorRingN(0);
+                Polygon poly = gf.createPolygon(ring);
+                poly.normalize();
+                //Test.init(polyRect); 
+                updateZet(poly, polyRect);
+                return poly;
+
+            } else {
+                Polygon poly1 = bufferPolygon(geoShell, hmDist);
+                return poly1;
+            }
+            //Test.init(poly1, poly2); 
+        } catch (Exception e) {
+            System.err.println("Error: UGeo.buffer() " + e);
+        }
+        return null;
+    }
+
+    public static Polygon bufferGeometry(Geometry geoShell, ArrayList<? extends Com5t> listElem, double amend, int opt) {
+
+        Coordinate[] cooShell = geoShell.getCoordinates();
+        Map<Double, Double> hmDist = new HashMap();
+        try {
+            //Смещения сегментов
+            for (Com5t el : listElem) {
+                dataset.Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+                if (el.syssizRec != null && opt == 0) {
+                    hmDist.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + el.syssizRec.getDbl(eSyssize.naxl));
+                } else if (el.syssizRec != null && opt == 1) {
+                    hmDist.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + el.syssizRec.getDbl(eSyssize.naxl));
                 }
             }
             if (cooShell.length > Com5t.MAXSIDE) {
