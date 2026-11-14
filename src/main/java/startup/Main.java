@@ -30,7 +30,8 @@ public class Main {
             public void run() {
                 try {
                     runRussifier();
-                    System.setOut(new PrintStream(System.out, true, "UTF-8"));
+                    //System.setOut(new PrintStream(System.out, true, "UTF-8"));
+                    //BufferedReader br = new BufferedReader(new InputStreamReader(System.in,"Cp1251"));
                     String lafname = eProp.lookandfeel.getProp();
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                     for (LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {
