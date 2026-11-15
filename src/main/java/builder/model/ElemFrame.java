@@ -119,6 +119,8 @@ public class ElemFrame extends ElemSimple {
                 spcRec.anglCut0 = UGeo.anglCut(coo[coo.length - 2], coo[0], coo[1]);
                 spcRec.anglCut1 = UGeo.anglCut(coo[coo.length - 5], coo[coo.length - 4], coo[coo.length - 3]);
             }
+            
+            
 
             double prip1 = (prev().syssizRec.getDbl(eSyssize.prip) == 0) ? 0 : syssizRec.getDbl(eSyssize.prip);
             double prip2 = (next().syssizRec.getDbl(eSyssize.prip) == 0) ? 0 : syssizRec.getDbl(eSyssize.prip);

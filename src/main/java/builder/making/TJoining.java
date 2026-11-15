@@ -98,7 +98,7 @@ public class TJoining extends Cal5e {
                             mapJoinvar.put(elemJoin, joinvarRec.getInt(eJoinvar.id));
 
                             //Сохраним подхоящий вариант соединения из таблиц bd                           
-                            elemJoin.type(TypeJoin.get(joinvarRec.getInt(eJoinvar.types)));
+                            elemJoin.type = TypeJoin.get(joinvarRec.getInt(eJoinvar.types));
                             elemJoin.joiningRec = joiningRec1;
                             elemJoin.joinvarRec = joinvarRec;
 

@@ -20,8 +20,7 @@ public class ElemJoining {
     public Record joinvarRec = eJoinvar.up.newRecord(Query.SEL); //для рассчёта тарификации    
 
     public double id = -1; //идентификатор соединения
-    public Wincalc winc;
-    private TypeJoin type = TypeJoin.NONE;      //тип соединения (то что пишет )
+    public TypeJoin type = TypeJoin.NONE;      //тип соединения (то что пишет )
     public int vid = 0; //вид соединения ("0-Простое L-обр", "1-Крестовое †-обр") или ("0-Простое T-обр", "1-Крестовое †-обр", "2-Сложное Y-обр)
     public ElemSimple elem1 = null;  //элемент соединения 1
     public ElemSimple elem2 = null;  //элемент соединения 2
@@ -29,11 +28,9 @@ public class ElemJoining {
 
     public ElemJoining(Wincalc winc, TypeJoin type, ElemSimple elem1, ElemSimple elem2) {
         this.id = ++winc.nppID;
-        this.winc = winc;
         this.type = type; //угол варианта вычисл. динамически см. type();
         this.elem1 = elem1;
         this.elem2 = elem2;
-        //this.angl = angleBetween();
     }
 
     public void addSpecific(TRecord spcAdd) { //добавление спесификаций зависимых элементов
@@ -107,11 +104,7 @@ public class ElemJoining {
         return type;
     }
 
-    public void type(TypeJoin v) {
-        this.type = v;
-    }
-
-    //Угол неориентированный неомежду профилями
+    //Угол неориентированный между профилями
     public Double angleBetween() {
         double c1 = angle(new Coordinate(elem1.x2(), elem1.y2()), new Coordinate(elem1.x1(), elem1.y1()));
         double c2 = angle(new Coordinate(elem2.x2(), elem2.y2()), new Coordinate(elem2.x1(), elem2.y1()));
