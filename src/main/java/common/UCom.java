@@ -520,10 +520,10 @@ public class UCom {
      * 2-прилег.артикл
      * @return - класс описатель соединения
      */
-    public static ElemJoining elemJoining(ArrayList<ElemJoining> lst, ElemSimple elem, int side) {
-        boolean imp = Type.isCross(elem.type);
+    public static ElemJoining joinOb(ElemSimple elem, int side) {
         try {
-            for (ElemJoining join : lst) {
+            boolean imp = Type.isCross(elem.type);
+            for (ElemJoining join : elem.winc.listJoin) {
                 //Угл.соединение
                 if (imp == false && (side == 0 || side == 1)) {
                     if (side == 0 && elem.x1() == join.elem1.x2() && elem.y1() == join.elem1.y2()) { //0-пред.артикул
@@ -574,8 +574,7 @@ public class UCom {
      * 2-прилег.артикл
      * @return - элемент соединения
      */
-    public static ElemSimple joiningElem(ArrayList<
-            ElemJoining> lst, ElemSimple elem, int side) {
+    public static ElemSimple joinEl(ElemSimple elem, int side) {
         try {
             boolean imp = Type.isCross(elem.type);
             for (ElemJoining join : elem.winc.listJoin) {
