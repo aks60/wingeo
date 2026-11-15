@@ -574,10 +574,11 @@ public class UCom {
      * 2-прилег.артикл
      * @return - элемент соединени€
      */
-    public static ElemSimple joiningElem(ArrayList<ElemJoining> lst, ElemSimple elem, int side) {
-        boolean imp = Type.isCross(elem.type);
+    public static ElemSimple joiningElem(ArrayList<
+            ElemJoining> lst, ElemSimple elem, int side) {
         try {
-            for (ElemJoining join : lst) {
+            boolean imp = Type.isCross(elem.type);
+            for (ElemJoining join : elem.winc.listJoin) {
                 //”гл.соединение
                 if (imp == false && (side == 0 || side == 1)) {
                     if (side == 0 && elem.x1() == join.elem1.x2() && elem.y1() == join.elem1.y2()) { //0-пред.артикул
@@ -619,7 +620,6 @@ public class UCom {
         }
         return null;
     }
-    
     
     /**
      * √абариты мм.

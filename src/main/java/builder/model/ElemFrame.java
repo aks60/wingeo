@@ -122,8 +122,8 @@ public class ElemFrame extends ElemSimple {
             
             
 
-            double prip1 = (prev().syssizRec.getDbl(eSyssize.prip) == 0) ? 0 : syssizRec.getDbl(eSyssize.prip);
-            double prip2 = (next().syssizRec.getDbl(eSyssize.prip) == 0) ? 0 : syssizRec.getDbl(eSyssize.prip);
+            double prip1 = (UCom.joiningElem(winc.listJoin, this, 0).syssizRec.getDbl(eSyssize.prip) == 0) ? 0 : syssizRec.getDbl(eSyssize.prip);
+            double prip2 = (UCom.joiningElem(winc.listJoin, this, 1).syssizRec.getDbl(eSyssize.prip) == 0) ? 0 : syssizRec.getDbl(eSyssize.prip);            
             spcRec.width = (syssizRec == null) ? length() : length() + prip1 + prip2;
             spcRec.height = artiklRec.getDbl(eArtikl.height);
 
