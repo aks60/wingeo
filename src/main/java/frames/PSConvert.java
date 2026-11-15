@@ -63,7 +63,6 @@ import java.awt.Color;
 import java.util.Queue;
 import javax.swing.JOptionPane;
 import startup.App;
-import static startup.Test.numDb;
 
 /**
  * В пс3 и пс4 разное количество полей в таблицах, но список столбцов в
@@ -83,8 +82,8 @@ public class PSConvert {
     private static Statement st2;//приёмник
 
     public static void exec() {
-        cn1 = startup.Test.connect1(); //источник
-        cn2 = startup.Test.connect2(); //приёмник
+        cn1 = Connect.connect1(); //источник
+        cn2 = Connect.connect2(); //приёмник
         if (JOptionPane.showConfirmDialog(null, "КОНВЕРТАЦИЯ БАЗЫ ДАННЫХ № " + eProp.base_num.getProp(), "КОНВЕРТАЦИЯ",
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
             script();
@@ -565,6 +564,7 @@ public class PSConvert {
             updateSql(eProject.up, eProject.prjpart2_id, "kname", ePrjpart.up, "partner");
             executeSql("update prjpart set org_leve2 = trim(org_leve2)");
             executeSql("update groups set npp = 0 where grup != " + TypeGrup.CATEG_VST.id);
+            Integer numDb = Integer.valueOf(eProp.base_num.getProp());
             String db = (numDb == 1) ? eProp.base1.getProp() : (numDb == 2) ? eProp.base2.getProp() : eProp.base3.getProp();
             if (db.toUpperCase().contains("BIMAX.FDB")) {
                 executeSql("4", "update artikl set " + eArtikl.size_falz.name() + " = 20 where code = '336200'"); //поправка штульпа в bimax 

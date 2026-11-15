@@ -27,6 +27,40 @@ public class Connect {
     public final static String fbserver = "jdbc:firebirdsql:";
     public String url = "";
 
+    public static Connection connect1() {
+        try {
+            Integer numDb = Integer.valueOf(eProp.base_num.getProp());
+            String db = (numDb == 1) ? eProp.base1.getProp() : (numDb == 2) ? eProp.base2.getProp() : eProp.base3.getProp();
+            if (db.toUpperCase().contains("BIMAX")) {
+                return java.sql.DriverManager.getConnection("jdbc:firebirdsql:localhost/3050:D:\\Okna\\Database\\ps4\\ITEST.FDB?encoding=win1251", "sysdba", "masterkey");
+            } else if (db.toUpperCase().contains("SIAL3")) {
+                return java.sql.DriverManager.getConnection("jdbc:firebirdsql:localhost/3055:D:\\Okna\\Database\\ps3\\sial3b.fdb?encoding=win1251", "sysdba", "masterkey");
+            } else if (db.toUpperCase().contains("ALUTEX3")) {
+                return java.sql.DriverManager.getConnection("jdbc:firebirdsql:localhost/3055:D:\\Okna\\Database\\ps3\\alutex3.fdb?encoding=win1251", "sysdba", "masterkey");
+            } else if (db.toUpperCase().contains("ALUTECH3")) {
+                return java.sql.DriverManager.getConnection("jdbc:firebirdsql:localhost/3055:D:\\Okna\\Database\\ps3\\alutech3.fdb?encoding=win1251", "sysdba", "masterkey");
+            } else if (db.toUpperCase().contains("KRAUSS")) {
+                return java.sql.DriverManager.getConnection("jdbc:firebirdsql:localhost/3050:D:\\Okna\\Database\\ps4\\krauss.fdb?encoding=win1251", "sysdba", "masterkey");
+            } else if (db.toUpperCase().contains("VIDNAL")) {
+                return java.sql.DriverManager.getConnection("jdbc:firebirdsql:localhost/3050:D:\\Okna\\Database\\ps4\\vidnal.fdb?encoding=win1251", "sysdba", "masterkey");
+            } else if (db.toUpperCase().contains("SOKOL")) {
+                return java.sql.DriverManager.getConnection("jdbc:firebirdsql:localhost/3050:D:\\Okna\\Database\\ps4\\sokol.fdb?encoding=win1251", "sysdba", "masterkey");
+            }
+            return null;
+        } catch (Exception e) {
+            System.err.println("Error: Test.connect() " + e);
+            return null;
+        }
+    }
+
+    public static Connection connect2() {
+        Integer numDb = Integer.valueOf(eProp.base_num.getProp());
+        eProp.user.putProp("sysdba");
+        eProp.password = String.valueOf("masterkey");
+        Connect.connection(eProp.typuse, eProp.getServer(numDb.toString()), eProp.getPort(numDb.toString()), eProp.getBase(numDb.toString()), eProp.user.getProp(), eProp.password.toCharArray(), null);
+        return Connect.getConnection();
+    }
+    
     public static void setConnection(Connection connect) {
         connectionApp = connect;
     }
@@ -98,11 +132,11 @@ public class Connect {
         //JOptionPane.showMessageDialog(null, server + "-" + base, "SERVER", JOptionPane.OK_OPTION);
         webapp = false;
         try {
-//            if (typuse.equals("99")) {
-//                new Crypto().httpAsync("sa-okna.ru"); //сервер всегда смотрит на sa-okna.ru
-//            } else {
-//                new Crypto().httpAsync(server); //сервер должен смотреть на sa-okna.ru иначе швах
-//            }
+            if (typuse.equals("99")) {
+                new Crypto().httpAsync("sa-okna.ru"); //сервер всегда смотрит на sa-okna.ru
+            } else {
+                new Crypto().httpAsync(server); //сервер должен смотреть на sa-okna.ru иначе швах
+            }
             Connect.cryptoCheck = true;
             
             if (Class.forName(driver) == null) {

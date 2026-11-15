@@ -1,22 +1,22 @@
-package builder.param.check;
+package check;
 
 import java.util.HashMap;
 
-import static builder.param.check.WincalcTest.param;
-import static builder.param.check.WincalcTest.grup;
-import static builder.param.check.WincalcTest.fillingVar2;
-import static builder.param.check.WincalcTest.fillingDet2;
-import static builder.param.check.WincalcTest.fillingVar3;
-import static builder.param.check.WincalcTest.fillingDet3;
-import static builder.param.check.WincalcTest.fillingVar4;
-import static builder.param.check.WincalcTest.fillingDet4;
-import static builder.param.check.WincalcTest.glass2_left;
-import static builder.param.check.WincalcTest.glass2_right;
-import static builder.param.check.WincalcTest.glass3_top;
-import static builder.param.check.WincalcTest.glass3_left;
-import static builder.param.check.WincalcTest.glass4_left;
-import static builder.param.check.WincalcTest.stv2_left_3;
-import static builder.param.check.WincalcTest.stv4_right_3;
+import static check.WincalcTest.param;
+import static check.WincalcTest.grup;
+import static check.WincalcTest.fillingVar2;
+import static check.WincalcTest.fillingDet2;
+import static check.WincalcTest.fillingVar3;
+import static check.WincalcTest.fillingDet3;
+import static check.WincalcTest.fillingVar4;
+import static check.WincalcTest.fillingDet4;
+import static check.WincalcTest.glass2_left;
+import static check.WincalcTest.glass2_right;
+import static check.WincalcTest.glass3_top;
+import static check.WincalcTest.glass3_left;
+import static check.WincalcTest.glass4_left;
+import static check.WincalcTest.stv2_left_3;
+import static check.WincalcTest.stv4_right_3;
 
 public class FillingTest {
 

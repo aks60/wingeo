@@ -1,23 +1,21 @@
-package builder.param.check;
+package check;
 
 import builder.model.AreaSimple;
 import java.util.HashMap;
 
-import static builder.param.check.WincalcTest.param;
-import static builder.param.check.WincalcTest.grup;
-import static builder.param.check.WincalcTest.furnitureVar2;
-import static builder.param.check.WincalcTest.furnitureDet2;
-
-import static builder.param.check.WincalcTest.furnitureVar3;
-import static builder.param.check.WincalcTest.furnitureDet3;
-
-import static builder.param.check.WincalcTest.furnitureDet4;
-import static builder.param.check.WincalcTest.frame2_left;
-import static builder.param.check.WincalcTest.frame3_left;
-import static builder.param.check.WincalcTest.stv2_left_3;
-import static builder.param.check.WincalcTest.stv2_left_4;
-import static builder.param.check.WincalcTest.stv3_right_3;
-import static builder.param.check.WincalcTest.stv4_right_3;
+import static check.WincalcTest.param;
+import static check.WincalcTest.grup;
+import static check.WincalcTest.furnitureVar2;
+import static check.WincalcTest.furnitureDet2;
+import static check.WincalcTest.furnitureVar3;
+import static check.WincalcTest.furnitureDet3;
+import static check.WincalcTest.furnitureDet4;
+import static check.WincalcTest.frame2_left;
+import static check.WincalcTest.frame3_left;
+import static check.WincalcTest.stv2_left_3;
+import static check.WincalcTest.stv2_left_4;
+import static check.WincalcTest.stv3_right_3;
+import static check.WincalcTest.stv4_right_3;
 
 public class FurnitureTest {
 

@@ -4,6 +4,7 @@ import builder.Wincalc;
 import builder.making.TRecord;
 import common.UCom;
 import common.listener.ListenerFrame;
+import dataset.Connect;
 import dataset.Query;
 import dataset.Record;
 import domain.eArtikl;
@@ -39,7 +40,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import startup.App;
-import startup.Test;
 
 public class PSCompare extends javax.swing.JFrame {
 
@@ -105,7 +105,7 @@ public class PSCompare extends javax.swing.JFrame {
     public PSCompare() {
         initComponents();
         initElements();
-        cn = Test.connect1();
+        cn = Connect.connect1();
         loadingData();
         loadingTabGroup1();
         pan7.add(paintPanel, java.awt.BorderLayout.CENTER);
@@ -119,7 +119,7 @@ public class PSCompare extends javax.swing.JFrame {
     public PSCompare(Wincalc winc) {
         initComponents();
         initElements();
-        cn = Test.connect1();
+        cn = Connect.connect1();
         loadingData();
         loadingTabGroup2(winc);
         TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tab1.getModel());
@@ -145,7 +145,7 @@ public class PSCompare extends javax.swing.JFrame {
     //select distinct a.punic, a.onumb from saveelm a, specpau b where a.punic = b.punic and a.onumb = b.onumb
     public void loadingTabGroup1() {
         try {
-            cn = Test.connect1();
+            cn = Connect.connect1();
             Statement st = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             //=== Таблица 4 === 
             if (txt19.getText().isEmpty() == false) {
@@ -523,7 +523,7 @@ public class PSCompare extends javax.swing.JFrame {
         Map<String, Double> hmDbPs = new LinkedHashMap();
         Map<String, Double> hmDbSa = new LinkedHashMap();
         try {
-            Connection conn = Test.connect1();
+            Connection conn = Connect.connect1();
             Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = st.executeQuery("select PUNIC from LISTPRJ where PNUMB = " + winc.gson.prj);
             rs.next();
@@ -992,14 +992,15 @@ public class PSCompare extends javax.swing.JFrame {
             pan10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan10Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pan10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lab19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lab21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lab20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGroup(pan10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(pan10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txt19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lab19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lab21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lab20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(14, 14, 14))
         );
 

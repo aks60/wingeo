@@ -1,4 +1,4 @@
-package builder.param.check;
+package check;
 
 import builder.Wincalc;
 import builder.model.ElemSimple;

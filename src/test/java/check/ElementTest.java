@@ -1,30 +1,30 @@
-package builder.param.check;
+package check;
 
 import builder.making.UColor;
 import java.util.HashMap;
 
-import static builder.param.check.WincalcTest.param;
-import static builder.param.check.WincalcTest.grup;
-import static builder.param.check.WincalcTest.elementVar2;
-import static builder.param.check.WincalcTest.elementDet2;
-import static builder.param.check.WincalcTest.elementVar3;
-import static builder.param.check.WincalcTest.elementDet3;
-import static builder.param.check.WincalcTest.elementVar4;
-import static builder.param.check.WincalcTest.elementDet4;
-import static builder.param.check.WincalcTest.imp2_horiz;
-import static builder.param.check.WincalcTest.imp2_vert;
-import static builder.param.check.WincalcTest.glass2_top;
-import static builder.param.check.WincalcTest.glass2_left;
-import static builder.param.check.WincalcTest.frame3_left;
-import static builder.param.check.WincalcTest.glass3_top;
-import static builder.param.check.WincalcTest.glass4_left;
-import static builder.param.check.WincalcTest.frame3_top;
-import static builder.param.check.WincalcTest.shtulp4_hor;
-import static builder.param.check.WincalcTest.stv2_left_3;
-import static builder.param.check.WincalcTest.stv3_right_3;
-import static builder.param.check.WincalcTest.stv4_right_3;
-import static builder.param.check.WincalcTest.frame2_left;
-import static builder.param.check.WincalcTest.frame2_right;
+import static check.WincalcTest.param;
+import static check.WincalcTest.grup;
+import static check.WincalcTest.elementVar2;
+import static check.WincalcTest.elementDet2;
+import static check.WincalcTest.elementVar3;
+import static check.WincalcTest.elementDet3;
+import static check.WincalcTest.elementVar4;
+import static check.WincalcTest.elementDet4;
+import static check.WincalcTest.imp2_horiz;
+import static check.WincalcTest.imp2_vert;
+import static check.WincalcTest.glass2_top;
+import static check.WincalcTest.glass2_left;
+import static check.WincalcTest.frame3_left;
+import static check.WincalcTest.glass3_top;
+import static check.WincalcTest.glass4_left;
+import static check.WincalcTest.frame3_top;
+import static check.WincalcTest.shtulp4_hor;
+import static check.WincalcTest.stv2_left_3;
+import static check.WincalcTest.stv3_right_3;
+import static check.WincalcTest.stv4_right_3;
+import static check.WincalcTest.frame2_left;
+import static check.WincalcTest.frame2_right;
 
 public class ElementTest {
 

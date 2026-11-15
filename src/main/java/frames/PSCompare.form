@@ -737,14 +737,16 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="txt19" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lab19" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txt21" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lab21" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lab20" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="txt20" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="btn1" alignment="0" pref="0" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="txt19" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lab19" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txt21" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lab21" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lab20" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="txt20" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                               </Group>
