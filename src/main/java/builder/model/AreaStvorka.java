@@ -188,7 +188,8 @@ public class AreaStvorka extends AreaSimple {
         try {
             //Полигон створки с учётом нахлёста 
             double dh = root.syssizRec.getDbl(eSyssize.falz) + root.syssizRec.getDbl(eSyssize.naxl);
-            Polygon stvShell = UGeo.bufferGeometry(frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл.
+            //Polygon stvShell = UGeo.bufferGeometry(frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл.
+            Polygon stvShell = UGeo.bufferGeometry3(frameBox, winc, 0); //полигон векторов сторон створки с учётом нахл.
             Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
             for (int i = 0; i < coo.length - 1; i++) {
                 //Запишем координаты
