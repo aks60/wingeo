@@ -1,5 +1,6 @@
 package frames;
 
+import dataset.Connect;
 import dataset.Query;
 import domain.eProject;
 import javax.swing.RowFilter;
@@ -13,14 +14,13 @@ import java.sql.ResultSetMetaData;
 import java.util.Vector;
 import javax.swing.JTable;
 import startup.App;
-import startup.Test;
 
 public class PSFrame extends javax.swing.JFrame {
 
     private TableRowSorter<DefTableModel> sorter1 = null;
     private TableRowSorter<DefTableModel> sorter2 = null;
     private TableRowSorter<DefTableModel> sorter3 = null;
-    private Connection cn = Test.connect1();
+    private Connection cn = Connect.connect1();
     private Query qProject = new Query(eProject.values());
 
     public PSFrame() {
