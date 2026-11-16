@@ -119,21 +119,12 @@ public class ElemFrame extends ElemSimple {
                 spcRec.anglCut0 = UGeo.anglCut(coo[coo.length - 2], coo[0], coo[1]);
                 spcRec.anglCut1 = UGeo.anglCut(coo[coo.length - 5], coo[coo.length - 4], coo[coo.length - 3]);
             }
-            double delta = winc.syssizRec.getDbl(eSyssize.prip) * Math.sin(Math.toRadians(45));
-            double prip1 = delta, prip2 = delta;
-
-            if (spcRec.anglCut0 != 0 && spcRec.anglCut0 != 90) {
-                prip1 = delta / Math.sin(Math.toRadians(spcRec.anglCut0));
-            }
-            if (spcRec.anglCut1 != 0 && spcRec.anglCut1 != 90) {
-                prip2 = delta / Math.sin(Math.toRadians(spcRec.anglCut1));
-            }
             Record artiklRec1 = UCom.joinEl(this, 0).artiklRec;
-//            Record artiklRec2 = UCom.joinEl(this, 1).artiklRec;
-//            Record syssizRec1 = eSyssize.find(artiklRec1);
-//            Record syssizRec2 = eSyssize.find(artiklRec2);            
-//            double prip1 = (syssizRec1.getDbl(eSyssize.prip) == 0) ? 0 : syssizRec1.getDbl(eSyssize.prip);
-//            double prip2 = (syssizRec2.getDbl(eSyssize.prip) == 0) ? 0 : syssizRec2.getDbl(eSyssize.prip);
+            Record artiklRec2 = UCom.joinEl(this, 1).artiklRec;
+            Record syssizRec1 = eSyssize.find(artiklRec1);
+            Record syssizRec2 = eSyssize.find(artiklRec2);            
+            double prip1 = (syssizRec1.getDbl(eSyssize.prip) == 0) ? 0 : syssizRec1.getDbl(eSyssize.prip);
+            double prip2 = (syssizRec2.getDbl(eSyssize.prip) == 0) ? 0 : syssizRec2.getDbl(eSyssize.prip);
             spcRec.width = (winc.syssizRec == null) ? length() : length() + prip1 + prip2;
             spcRec.height = artiklRec.getDbl(eArtikl.height);
 
