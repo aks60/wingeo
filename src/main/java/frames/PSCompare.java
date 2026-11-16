@@ -4,6 +4,7 @@ import builder.Wincalc;
 import builder.making.TRecord;
 import common.UCom;
 import common.listener.ListenerFrame;
+import dataset.Connect;
 import dataset.Query;
 import dataset.Record;
 import domain.eArtikl;
@@ -39,7 +40,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import startup.App;
-import startup.Test;
 
 public class PSCompare extends javax.swing.JFrame {
 
@@ -105,7 +105,7 @@ public class PSCompare extends javax.swing.JFrame {
     public PSCompare() {
         initComponents();
         initElements();
-        cn = Test.connect1();
+        cn = Connect.connect1();
         loadingData();
         loadingTabGroup1();
         pan7.add(paintPanel, java.awt.BorderLayout.CENTER);
@@ -119,7 +119,7 @@ public class PSCompare extends javax.swing.JFrame {
     public PSCompare(Wincalc winc) {
         initComponents();
         initElements();
-        cn = Test.connect1();
+        cn = Connect.connect1();
         loadingData();
         loadingTabGroup2(winc);
         TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tab1.getModel());
@@ -145,7 +145,7 @@ public class PSCompare extends javax.swing.JFrame {
     //select distinct a.punic, a.onumb from saveelm a, specpau b where a.punic = b.punic and a.onumb = b.onumb
     public void loadingTabGroup1() {
         try {
-            cn = Test.connect1();
+            cn = Connect.connect1();
             Statement st = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             //=== Таблица 4 === 
             if (txt19.getText().isEmpty() == false) {
@@ -153,7 +153,7 @@ public class PSCompare extends javax.swing.JFrame {
                 ((DefaultTableModel) tab4.getModel()).getDataVector().clear();
                 //ResultSet rs = st.executeQuery("select * from SAVEELM where TYPP != 0 and PUNIC = " + txt19.getText() + " and ONUMB = " + txt20.getText() + " order by TYPP");
                 ResultSet rs = st.executeQuery("select SAVEELM.*, ARTIKLS.ANAME from SAVEELM, ARTIKLS  where TYPP != 0 "
-                        + " and PUNIC = " + txt19.getText() + " and ONUMB = " + txt20.getText() 
+                        + " and PUNIC = " + txt19.getText() + " and ONUMB = " + txt20.getText()
                         + " and SAVEELM.anumb = ARTIKLS.ANUMB order by TYPP");
                 if (rs.isLast() == false) {
                     while (rs.next()) {
@@ -185,7 +185,8 @@ public class PSCompare extends javax.swing.JFrame {
 
                 //=== Таблица 1 ===
                 ((DefaultTableModel) tab1.getModel()).getDataVector().clear();
-                rs = st.executeQuery("select a.* from SPECPAU a where a.PUNIC = " + txt19.getText() + "and a.ONUMB = " + txt20.getText() + "  and clke != -1 order by a.anumb");
+                String sql = "select a.* from SPECPAU a where a.PUNIC = " + txt19.getText() + "and a.ONUMB = " + txt20.getText() + "  and clke != -1 order by a.anumb";
+                rs = st.executeQuery(sql);
                 if (rs.isLast() == false) {
                     npp = 0;
                     while (rs.next()) {
@@ -208,53 +209,65 @@ public class PSCompare extends javax.swing.JFrame {
                 rs.close();
             }
             //=== Таблица 6 ===
-            Vector vectorData = new Vector();
-            Vector vectorColumn = new Vector(List.of("PUNIC", "PNUMB", "ONUMB", "ONAME", "OLENG", "OHEIG", "PDATE", "BPICT"));
-            ResultSet rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, a.oleng, a.oheig, b.pdate, a.bpict from listord a, listprj b "
-                    + "where a.punic = b.punic and b.pdate > '01.06.2005' and b.pdate < '01.01.2024' order by b.pdate");
+            if (tab6.getRowCount() < 3) {
+                Vector vectorData = new Vector();
+                
+                //Закзы со щтульпом
+                Vector vectorColumn = new Vector(List.of("PUNIC", "PNUMB", "ONUMB", "ONAME", "OLENG", "OHEIG", "PDATE", "BPICT"));
+                ResultSet rs = st.executeQuery("select a.punic, a.pnumb, b.onumb, b.oname, d.aname, b.oleng, b.oheig, a.pdate, b.bpict "
+                        + "from listprj a, listord b, specpau c, artikls d where a.punic = b.punic and b.punic = c.punic and "
+                        + "b.onumb = c.onumb and c.anumb = d.anumb and d.atypm = 1 and d.atypp = 4 order by a.pdate");
+                
+              //Закзы по датам
+//            ResultSet rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, a.oleng, a.oheig, b.pdate, a.bpict from listord a, listprj b "
+//                 + "where a.punic = b.punic and b.pdate > '01.06.2016' and b.pdate < '01.01.2024' order by b.pdate");
+              
+              //Закзы по номерам
 //            ResultSet rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, b.pdate, a.bpict from listord a, listprj b where a.punic = b.punic and b.punic in "
 //                    + "(412463, 427595, 427597, 427761, 427817, 427818 ,427819, 427820, 427840, 427838, 427842, 427848, 427851, 427852, 427858, 427872, 427422, 427565, "
 //                    + "427833, 427832, 427831, 427830, 427825, 427826, 427779, 425392, 425392, 427850, 427708, 427737, 427629, 427847, 427856,"
 //                    + "425688, 505072, 507830, 507965, 507998, 508035) order by b.pnumb");
-            if (rs.isLast() == false) {
-                while (rs.next()) {
-                    Vector vectorRec = new Vector();
-                    vectorRec.add(rs.getObject("PUNIC"));
-                    vectorRec.add(rs.getObject("PNUMB"));
-                    vectorRec.add(rs.getObject("ONUMB"));
-                    vectorRec.add(rs.getObject("ONAME"));
-                    vectorRec.add(rs.getObject("OLENG"));
-                    vectorRec.add(rs.getObject("OHEIG"));                    
-                    vectorRec.add(rs.getObject("PDATE"));
-                    try {
-                        Blob blob = rs.getBlob("BPICT");
-                        int blobLength = (int) blob.length();
-                        byte[] bytes = blob.getBytes(1, blobLength);
-                        blob.free();
-                        BufferedImage img = ImageIO.read(new java.io.ByteArrayInputStream(bytes));
-                        ImageIcon icon = new ImageIcon(img);
-                        vectorRec.add(icon);
-                        //ImageIO.write(img, "jpg", new File("img.jpg"));
 
-                    } catch (Exception e) {
-                        vectorRec.add(null);
+                if (rs.isLast() == false) {
+                    while (rs.next()) {
+                        Vector vectorRec = new Vector();
+                        vectorRec.add(rs.getObject("PUNIC"));
+                        vectorRec.add(rs.getObject("PNUMB"));
+                        vectorRec.add(rs.getObject("ONUMB"));
+                        vectorRec.add(rs.getObject("ONAME"));
+                        vectorRec.add(rs.getObject("OLENG"));
+                        vectorRec.add(rs.getObject("OHEIG"));
+                        vectorRec.add(rs.getObject("PDATE"));
+                        try {
+                            Blob blob = rs.getBlob("BPICT");
+                            int blobLength = (int) blob.length();
+                            byte[] bytes = blob.getBytes(1, blobLength);
+                            blob.free();
+                            BufferedImage img = ImageIO.read(new java.io.ByteArrayInputStream(bytes));
+                            ImageIcon icon = new ImageIcon(img);
+                            vectorRec.add(icon);
+                            //ImageIO.write(img, "jpg", new File("img.jpg"));
+
+                        } catch (Exception e) {
+                            vectorRec.add(null);
+                        }
+                        vectorData.add(vectorRec);
                     }
-                    vectorData.add(vectorRec);
                 }
+                DefaultTableModel model = new DefaultTableModel(vectorData, vectorColumn) {
+                    public Class getColumnClass(int column) {
+                        return (column == 7) ? ImageIcon.class : Object.class;
+                        //return Object.class;
+                    }
+                };
+                tab6.setModel(model);
+                tab6.getColumnModel().getColumn(0).setMaxWidth(80);
+                tab6.getColumnModel().getColumn(1).setMaxWidth(80);
+                tab6.getColumnModel().getColumn(2).setMaxWidth(80);
+                tab6.getColumnModel().getColumn(4).setMaxWidth(80);
+                tab6.getColumnModel().getColumn(5).setMaxWidth(80);
+                rs.close();
             }
-            DefaultTableModel model = new DefaultTableModel(vectorData, vectorColumn) {
-                public Class getColumnClass(int column) {
-                    return (column == 7) ? ImageIcon.class : Object.class;
-                    //return Object.class;
-                }
-            };
-            tab6.setModel(model);
-            tab6.getColumnModel().getColumn(0).setMaxWidth(80);
-            tab6.getColumnModel().getColumn(1).setMaxWidth(80);
-            tab6.getColumnModel().getColumn(2).setMaxWidth(80);
-            tab6.getColumnModel().getColumn(4).setMaxWidth(80);
-            tab6.getColumnModel().getColumn(5).setMaxWidth(80);
-            rs.close();
         } catch (SQLException e) {
             System.err.println("Error: DBCompare.loadingTab4().  " + e);
         }
@@ -297,8 +310,9 @@ public class PSCompare extends javax.swing.JFrame {
             Statement st = cn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 //            ResultSet rs = st.executeQuery("select PUNIC from LISTPRJ where PNUMB = " + txt21.getText());
 //            rs.next();
-//            int punic = rs.getInt("PUNIC");           
-            ResultSet rs = st.executeQuery("select a.* from SPECPAU a where a.PUNIC = " + txt19.getText() + " and a.ONUMB = " + txt20.getText() + " and clke != -1 order by a.anumb");
+//            int punic = rs.getInt("PUNIC");  
+            String sql = "select a.* from SPECPAU a where a.PUNIC = " + txt19.getText() + " and a.ONUMB = " + txt20.getText() + " and clke != -1 order by a.anumb";
+            ResultSet rs = st.executeQuery(sql);
             //ResultSet rs = st.executeQuery("select a.*, b.aname from SPECPAU a, ARTIKLS b where a.PUNIC = " + txt19.getText() + " and a.ONUMB = " + txt20.getText() + " and clke != -1 and a.anumb = b.anumb order by a.anumb");
             int npp = 0;
             double sum1 = 0, sum2 = 0;
@@ -374,9 +388,9 @@ public class PSCompare extends javax.swing.JFrame {
             npp = 0;
             ((DefaultTableModel) tab4.getModel()).getDataVector().clear();
             //rs = st.executeQuery("select * from SAVEELM where TYPP != 0 and PUNIC = " + txt19.getText() + "and ONUMB =" + txt20.getText() + "order by TYPP");
-                rs = st.executeQuery("select SAVEELM.*, ARTIKLS.ANAME from SAVEELM, ARTIKLS  where TYPP != 0 "
-                        + " and PUNIC = " + txt19.getText() + " and ONUMB = " + txt20.getText() 
-                        + " and SAVEELM.anumb = ARTIKLS.ANUMB order by TYPP");            
+            rs = st.executeQuery("select SAVEELM.*, ARTIKLS.ANAME from SAVEELM, ARTIKLS  where TYPP != 0 "
+                    + " and PUNIC = " + txt19.getText() + " and ONUMB = " + txt20.getText()
+                    + " and SAVEELM.anumb = ARTIKLS.ANUMB order by TYPP");
             if (rs.isLast() == false) {
                 while (rs.next()) {
                     Vector vectorRec = new Vector();
@@ -509,7 +523,7 @@ public class PSCompare extends javax.swing.JFrame {
         Map<String, Double> hmDbPs = new LinkedHashMap();
         Map<String, Double> hmDbSa = new LinkedHashMap();
         try {
-            Connection conn = Test.connect1();
+            Connection conn = Connect.connect1();
             Statement st = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ResultSet rs = st.executeQuery("select PUNIC from LISTPRJ where PNUMB = " + winc.gson.prj);
             rs.next();
@@ -587,7 +601,6 @@ public class PSCompare extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
         north = new javax.swing.JPanel();
         pan2 = new javax.swing.JPanel();
         lab1 = new javax.swing.JLabel();
@@ -613,37 +626,24 @@ public class PSCompare extends javax.swing.JFrame {
         scr3 = new javax.swing.JScrollPane();
         tab3 = new javax.swing.JTable();
         pan6 = new javax.swing.JPanel();
-        pan7 = new javax.swing.JPanel();
         pan8 = new javax.swing.JPanel();
-        scr4 = new javax.swing.JScrollPane();
-        tab4 = new javax.swing.JTable();
         pan10 = new javax.swing.JPanel();
         lab19 = new javax.swing.JLabel();
         lab20 = new javax.swing.JLabel();
         txt19 = new javax.swing.JTextField();
         txt20 = new javax.swing.JTextField();
         btn1 = new javax.swing.JButton();
-        labFurn = new javax.swing.JLabel();
         txt21 = new javax.swing.JTextField();
         lab21 = new javax.swing.JLabel();
+        pan13 = new javax.swing.JPanel();
+        pan7 = new javax.swing.JPanel();
+        scr4 = new javax.swing.JScrollPane();
+        tab4 = new javax.swing.JTable();
         pan11 = new javax.swing.JPanel();
         scr6 = new javax.swing.JScrollPane();
         tab6 = new javax.swing.JTable();
         south = new javax.swing.JPanel();
         labSum = new javax.swing.JLabel();
-
-        jPanel1.setPreferredSize(new java.awt.Dimension(895, 60));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 895, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 44, Short.MAX_VALUE)
-        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("DBCompare");
@@ -912,12 +912,106 @@ public class PSCompare extends javax.swing.JFrame {
 
         pan6.setLayout(new java.awt.BorderLayout());
 
+        pan8.setLayout(new java.awt.BorderLayout());
+
+        pan10.setPreferredSize(new java.awt.Dimension(100, 40));
+
+        lab19.setFont(frames.UGui.getFont(0,0));
+        lab19.setText("PUNIC");
+        lab19.setToolTipText("");
+        lab19.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        lab19.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
+        lab19.setMinimumSize(new java.awt.Dimension(34, 14));
+        lab19.setPreferredSize(new java.awt.Dimension(60, 18));
+
+        lab20.setFont(frames.UGui.getFont(0,0));
+        lab20.setText("ONUMB");
+        lab20.setToolTipText("");
+        lab20.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        lab20.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
+        lab20.setMinimumSize(new java.awt.Dimension(34, 14));
+        lab20.setPreferredSize(new java.awt.Dimension(60, 20));
+
+        txt19.setFont(frames.UGui.getFont(0,0));
+        txt19.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        txt19.setPreferredSize(new java.awt.Dimension(80, 18));
+        txt19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt19ActionPerformed(evt);
+            }
+        });
+
+        txt20.setFont(frames.UGui.getFont(0,0));
+        txt20.setText("1");
+        txt20.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        txt20.setPreferredSize(new java.awt.Dimension(40, 18));
+
+        btn1.setText("Пересчитать");
+        btn1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        btn1.setPreferredSize(new java.awt.Dimension(74, 30));
+        btn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn1(evt);
+            }
+        });
+
+        txt21.setFont(frames.UGui.getFont(0,0));
+        txt21.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        txt21.setPreferredSize(new java.awt.Dimension(80, 18));
+
+        lab21.setFont(frames.UGui.getFont(0,0));
+        lab21.setText("PNUMB");
+        lab21.setToolTipText("");
+        lab21.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        lab21.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
+        lab21.setMinimumSize(new java.awt.Dimension(34, 14));
+        lab21.setPreferredSize(new java.awt.Dimension(60, 18));
+
+        javax.swing.GroupLayout pan10Layout = new javax.swing.GroupLayout(pan10);
+        pan10.setLayout(pan10Layout);
+        pan10Layout.setHorizontalGroup(
+            pan10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pan10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lab19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lab21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lab20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(315, Short.MAX_VALUE))
+        );
+        pan10Layout.setVerticalGroup(
+            pan10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pan10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(pan10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txt19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lab19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lab21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lab20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(14, 14, 14))
+        );
+
+        pan8.add(pan10, java.awt.BorderLayout.NORTH);
+
+        pan13.setLayout(new java.awt.BorderLayout());
+
         pan7.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
         pan7.setPreferredSize(new java.awt.Dimension(400, 4));
         pan7.setLayout(new java.awt.BorderLayout());
-        pan6.add(pan7, java.awt.BorderLayout.WEST);
-
-        pan8.setLayout(new java.awt.BorderLayout());
+        pan13.add(pan7, java.awt.BorderLayout.LINE_START);
 
         tab4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -944,114 +1038,9 @@ public class PSCompare extends javax.swing.JFrame {
             tab4.getColumnModel().getColumn(3).setPreferredWidth(300);
         }
 
-        pan8.add(scr4, java.awt.BorderLayout.CENTER);
+        pan13.add(scr4, java.awt.BorderLayout.CENTER);
 
-        pan10.setPreferredSize(new java.awt.Dimension(100, 60));
-
-        lab19.setFont(frames.UGui.getFont(0,0));
-        lab19.setText("PUNIC");
-        lab19.setToolTipText("");
-        lab19.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        lab19.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
-        lab19.setMinimumSize(new java.awt.Dimension(34, 14));
-        lab19.setPreferredSize(new java.awt.Dimension(60, 18));
-
-        lab20.setFont(frames.UGui.getFont(0,0));
-        lab20.setText("ONUMB");
-        lab20.setToolTipText("");
-        lab20.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        lab20.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
-        lab20.setMinimumSize(new java.awt.Dimension(34, 14));
-        lab20.setPreferredSize(new java.awt.Dimension(60, 20));
-
-        txt19.setFont(frames.UGui.getFont(0,0));
-        txt19.setText("426594");
-        txt19.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt19.setPreferredSize(new java.awt.Dimension(80, 18));
-        txt19.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt19ActionPerformed(evt);
-            }
-        });
-
-        txt20.setFont(frames.UGui.getFont(0,0));
-        txt20.setText("1");
-        txt20.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt20.setPreferredSize(new java.awt.Dimension(40, 18));
-
-        btn1.setText("Пересчитать");
-        btn1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        btn1.setMaximumSize(new java.awt.Dimension(18, 18));
-        btn1.setMinimumSize(new java.awt.Dimension(18, 18));
-        btn1.setPreferredSize(new java.awt.Dimension(18, 18));
-        btn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn1(evt);
-            }
-        });
-
-        labFurn.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        labFurn.setPreferredSize(new java.awt.Dimension(200, 19));
-
-        txt21.setFont(frames.UGui.getFont(0,0));
-        txt21.setText("507830");
-        txt21.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        txt21.setPreferredSize(new java.awt.Dimension(80, 18));
-
-        lab21.setFont(frames.UGui.getFont(0,0));
-        lab21.setText("PNUMB");
-        lab21.setToolTipText("");
-        lab21.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        lab21.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
-        lab21.setMinimumSize(new java.awt.Dimension(34, 14));
-        lab21.setPreferredSize(new java.awt.Dimension(60, 18));
-
-        javax.swing.GroupLayout pan10Layout = new javax.swing.GroupLayout(pan10);
-        pan10.setLayout(pan10Layout);
-        pan10Layout.setHorizontalGroup(
-            pan10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pan10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pan10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pan10Layout.createSequentialGroup()
-                        .addComponent(lab19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(lab21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(pan10Layout.createSequentialGroup()
-                        .addComponent(lab20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(labFurn, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
-        );
-        pan10Layout.setVerticalGroup(
-            pan10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan10Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pan10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lab19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lab21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pan10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pan10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lab20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txt20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(labFurn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(10, Short.MAX_VALUE))
-        );
-
-        pan8.add(pan10, java.awt.BorderLayout.PAGE_START);
+        pan8.add(pan13, java.awt.BorderLayout.CENTER);
 
         pan6.add(pan8, java.awt.BorderLayout.CENTER);
 
@@ -1113,6 +1102,9 @@ public class PSCompare extends javax.swing.JFrame {
     }//GEN-LAST:event_tabMousePressed
 
     private void btn1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1
+        txt19.setText(String.valueOf(tab6.getValueAt(tab6.getSelectedRow(), 0)));
+        txt21.setText(String.valueOf(tab6.getValueAt(tab6.getSelectedRow(), 1)));
+        txt20.setText(String.valueOf(tab6.getValueAt(tab6.getSelectedRow(), 2)));
         loadingTabGroup1();
     }//GEN-LAST:event_btn1
 
@@ -1163,18 +1155,17 @@ public class PSCompare extends javax.swing.JFrame {
     private javax.swing.JButton btnFindArtikl;
     private javax.swing.JPanel center;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lab1;
     private javax.swing.JLabel lab19;
     private javax.swing.JLabel lab20;
     private javax.swing.JLabel lab21;
-    private javax.swing.JLabel labFurn;
     private javax.swing.JLabel labSum;
     private javax.swing.JPanel north;
     private javax.swing.JPanel pan1;
     private javax.swing.JPanel pan10;
     private javax.swing.JPanel pan11;
     private javax.swing.JPanel pan12;
+    private javax.swing.JPanel pan13;
     private javax.swing.JPanel pan2;
     private javax.swing.JPanel pan3;
     private javax.swing.JPanel pan4;
@@ -1209,7 +1200,7 @@ public class PSCompare extends javax.swing.JFrame {
 
         App.loadLocationWin(this, btnClose, (e) -> {
             App.saveLocationWin(this, btnClose);
-        }); 
+        });
 
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1);
         south.add(filterTable, 0);
