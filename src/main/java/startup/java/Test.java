@@ -2,7 +2,7 @@
 
 import builder.model.Com5t;
 import builder.model.UGeo;
-import check.WincalcTest;
+import builder.param.check.WincalcTest;
 import builder.script.GsonElem;
 import builder.script.GsonScript;
 import com.google.gson.GsonBuilder;

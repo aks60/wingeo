@@ -1,27 +1,27 @@
-package check;
+package builder.param.check;
 
 import java.util.HashMap;
 
-import static check.WincalcTest.param;
-import static check.WincalcTest.grup;
-import static check.WincalcTest.joiningVar2;
-import static check.WincalcTest.joiningDet2;
-import static check.WincalcTest.joiningVar3;
-import static check.WincalcTest.joiningDet3;
-import static check.WincalcTest.joiningVar4;
-import static check.WincalcTest.iwin2;
-import static check.WincalcTest.iwin3;
-import static check.WincalcTest.iwin4;
-import static check.WincalcTest.imp2_horiz;
-import static check.WincalcTest.frame3_left;
-import static check.WincalcTest.frame3_right;
-import static check.WincalcTest.frame4_left;
-import static check.WincalcTest.frame4_right;
-import static check.WincalcTest.stv2_left_3;
-import static check.WincalcTest.stv4_right_3;
+import static builder.param.check.WincalcTest.param;
+import static builder.param.check.WincalcTest.grup;
+import static builder.param.check.WincalcTest.joiningVar2;
+import static builder.param.check.WincalcTest.joiningDet2;
+import static builder.param.check.WincalcTest.joiningVar3;
+import static builder.param.check.WincalcTest.joiningDet3;
+import static builder.param.check.WincalcTest.joiningVar4;
+import static builder.param.check.WincalcTest.iwin2;
+import static builder.param.check.WincalcTest.iwin3;
+import static builder.param.check.WincalcTest.iwin4;
+import static builder.param.check.WincalcTest.imp2_horiz;
+import static builder.param.check.WincalcTest.frame3_left;
+import static builder.param.check.WincalcTest.frame3_right;
+import static builder.param.check.WincalcTest.frame4_left;
+import static builder.param.check.WincalcTest.frame4_right;
+import static builder.param.check.WincalcTest.stv2_left_3;
+import static builder.param.check.WincalcTest.stv4_right_3;
 import common.UCom;
-import static check.WincalcTest.frame2_left;
-import static check.WincalcTest.frame2_right;
+import static builder.param.check.WincalcTest.frame2_left;
+import static builder.param.check.WincalcTest.frame2_right;
 
 public class JoiningTest {
 
