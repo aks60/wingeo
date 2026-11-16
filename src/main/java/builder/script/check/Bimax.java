@@ -22,7 +22,7 @@ public final class Bimax {
                     .addElem(new GsonElem(Type.GLASS));
 
         } else if (prj == 507931) {
-            rootGson = new GsonRoot(426697, prj, 1, 29, Type.RECTANGL, "Montblanc / Nord / 1 Œ Õ¿", 1009, 1009, 1009);
+            rootGson = new GsonRoot(426697, prj, 3, 29, Type.RECTANGL, "Montblanc / Nord / 1 Œ Õ¿", 1009, 1009, 1009);
             rootGson.addElem(new GsonElem(Type.BOX_SIDE, 0.0, 0.0))
                     .addElem(new GsonElem(Type.BOX_SIDE, 0.0, 2070.0))
                     .addElem(new GsonElem(Type.BOX_SIDE, 1843.0, 2070.0))

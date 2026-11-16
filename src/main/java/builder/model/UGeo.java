@@ -26,6 +26,7 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import java.util.Map;
 import java.util.Set;
+import dataset.Record;
 import org.locationtech.jts.geom.LinearRing;
 
 /**
@@ -231,11 +232,51 @@ public class UGeo {
         try {
             //Смещения сегментов
             for (Com5t el : listElem) {
-                dataset.Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+                Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
                 if (opt == 0) {
                     hmDist.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) + amend);
                 } else if (opt == 1) {
                     hmDist.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + amend);
+                }
+            }
+            if (cooShell.length > Com5t.MAXSIDE) {
+                double id = cooShell[geoShell.getCoordinates().length / 2].z;
+                Polygon polyCurv = bufferCurve(geoShell, hmDist.get(id));
+                Polygon polyRect = bufferRectangl(geoShell, hmDist);
+                Polygon polyArch = (Polygon) polyRect.union(polyCurv);
+
+                LinearRing ring = polyArch.getInteriorRingN(0);
+                Polygon poly = gf.createPolygon(ring);
+                poly.normalize();
+                //Test.init(polyRect); 
+                updateZet(poly, polyRect);
+                return poly;
+
+            } else {
+                Polygon poly1 = bufferPolygon(geoShell, hmDist);
+                return poly1;
+            }
+            //Test.init(poly1, poly2); 
+        } catch (Exception e) {
+            System.err.println("Error: UGeo.buffer() " + e);
+        }
+        return null;
+    }
+
+    public static Polygon bufferGeometry2(Geometry geoShell, ArrayList<? extends Com5t> listElem, double amend, int opt) {
+
+        Coordinate[] cooShell = geoShell.getCoordinates();
+        Map<Double, Double> hmDist = new HashMap();
+        try {
+            //Смещения сегментов
+            for (Com5t el : listElem) {
+                Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+                double height_for_center = rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr);
+                double size_falz = rec.getDbl(eArtikl.size_falz);
+                if (opt == 0) {
+                    hmDist.put(el.id, height_for_center - size_falz + amend);
+                } else if (opt == 1) {
+                    hmDist.put(el.id, height_for_center - size_falz + amend);
                 }
             }
             if (cooShell.length > Com5t.MAXSIDE) {

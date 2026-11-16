@@ -187,8 +187,8 @@ public class AreaStvorka extends AreaSimple {
                 || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
         try {
             //Полигон створки с учётом нахлёста 
-            double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            Polygon stvShell = UGeo.bufferGeometry(frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл.
+            double amend =  winc.syssizRec.getDbl(eSyssize.naxl);
+            Polygon stvShell = UGeo.bufferGeometry2(frameBox, winc.listElem, -amend, 0); //полигон векторов сторон створки с учётом нахл.
             Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
             for (int i = 0; i < coo.length - 1; i++) {
                 //Запишем координаты
