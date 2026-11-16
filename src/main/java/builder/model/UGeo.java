@@ -28,8 +28,8 @@ import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.util.AffineTransformation;
 import java.util.Map;
 import java.util.Set;
-import static java.util.stream.Collectors.toList;
 import org.locationtech.jts.geom.LinearRing;
+import dataset.Record;
 
 /**
  * Утилиты JTS
@@ -227,36 +227,33 @@ public class UGeo {
         return outList;
     }
     
-    /*public static Polygon bufferGeometry(Geometry geoShell, Wincalc winc, List<? extends Com5t> listElem, int opt) {
+    public static Polygon bufferGeometry2(Geometry geoShell, List<? extends Com5t> listElem, double amend, int opt) {
         try {
-            Map<Double, Double> hmDist = new HashMap();
-            double naxl_profile = winc.syssizRec.getDbl(eSyssize.naxl);
-            
+            Map<Double, Double> hmDist = new HashMap();            
             //Смещения сегментов
             for (Com5t el : listElem) {
-                dataset.Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+                Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
                 double falz_profile = rec.getDbl(eArtikl.size_falz);
-                double width_elem = rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr); 
+                double heigh_from_center = rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr); 
                 if (opt == 0) {
                     
                     //Штульр
                     if (el.type == Type.SHTULP) {
                         //Object o1 = width_elem - falz_profile - naxl_profile;
-                        hmDist.put(el.id, width_elem - falz_profile - naxl_profile);
+                        hmDist.put(el.id, heigh_from_center - falz_profile  + amend);
                     } else {
                         //Object  o1 = width_elem - rec.getDbl(eArtikl.size_falz) - naxl_profile;
-                        hmDist.put(el.id, width_elem - rec.getDbl(eArtikl.size_falz) - naxl_profile);
+                        hmDist.put(el.id, heigh_from_center - falz_profile + amend);
                     }
                 } else if (opt == 1) {
 
                     //Штульр
                     if (el.type == Type.SHTULP) {
-                        hmDist.put(el.id, width_elem - rec.getDbl(eArtikl.size_falz) + naxl_profile);
+                        hmDist.put(el.id, heigh_from_center - falz_profile + amend);
 
                         //Остальные
                     } else {
-                        hmDist.put(el.id, width_elem - rec.getDbl(eArtikl.size_falz) + naxl_profile);
-                        //hmDist.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + amend);
+                        hmDist.put(el.id, heigh_from_center - falz_profile + amend);
                     }
                 }
             }
@@ -284,7 +281,7 @@ public class UGeo {
             System.err.println("Error: UGeo.buffer() " + e);
         }
         return null;
-    }*/
+    }
     
     public static Polygon bufferGeometry(Geometry geoShell, List<? extends Com5t> listElem, double amend, int opt) {
 

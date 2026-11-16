@@ -18,6 +18,7 @@ import java.util.stream.IntStream;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
+import dataset.Record;
 
 public class ElemFrame extends ElemSimple {
 
@@ -118,9 +119,12 @@ public class ElemFrame extends ElemSimple {
                 spcRec.anglCut0 = UGeo.anglCut(coo[coo.length - 2], coo[0], coo[1]);
                 spcRec.anglCut1 = UGeo.anglCut(coo[coo.length - 5], coo[coo.length - 4], coo[coo.length - 3]);
             }
-            
-            double prip1 = (winc.syssizRec.getDbl(eSyssize.prip) == 0) ? 0 : winc.syssizRec.getDbl(eSyssize.prip);
-            double prip2 = (winc.syssizRec.getDbl(eSyssize.prip) == 0) ? 0 : winc.syssizRec.getDbl(eSyssize.prip);            
+            Record artiklRec1 = UCom.joinEl(this, 0).artiklRec;
+            Record artiklRec2 = UCom.joinEl(this, 1).artiklRec;
+            Record syssizRec1 = eSyssize.find(artiklRec1);
+            Record syssizRec2 = eSyssize.find(artiklRec2);            
+            double prip1 = (syssizRec1.getDbl(eSyssize.prip) == 0) ? 0 : syssizRec1.getDbl(eSyssize.prip);
+            double prip2 = (syssizRec2.getDbl(eSyssize.prip) == 0) ? 0 : syssizRec2.getDbl(eSyssize.prip);
             spcRec.width = (winc.syssizRec == null) ? length() : length() + prip1 + prip2;
             spcRec.height = artiklRec.getDbl(eArtikl.height);
 

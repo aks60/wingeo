@@ -184,14 +184,14 @@ public class AreaStvorka extends AreaSimple {
 
     //Создание и коррекция сторон створки
     public void setLocation() {
-        Geometry frameBox = (UCom.filter(winc.listElem, Type.IMPOST, Type.SHTULP).isEmpty())
-                || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
         try {
+            Geometry frameBox = (UCom.filter(winc.listElem, Type.IMPOST, Type.SHTULP).isEmpty())
+                    || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
             //Полигон створки с учётом нахлёста 
-            double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
-            List<Com5t> listElem = winc.listElem.stream().filter(e -> e.type == Type.BOX_SIDE || 
-                    e.type == Type.IMPOST || e.type == Type.SHTULP || e.type == Type.STOIKA).collect(toList());
-            Polygon stvShell = UGeo.bufferGeometry(frameBox, listElem, dh, 0); //полигон векторов сторон створки с учётом нахл.
+            double amend = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
+            List<Com5t> listElem = winc.listElem.stream().filter(e -> e.type == Type.BOX_SIDE
+                    || e.type == Type.IMPOST || e.type == Type.SHTULP || e.type == Type.STOIKA).collect(toList());
+            Polygon stvShell = UGeo.bufferGeometry(frameBox, listElem, -amend, 0); //полигон векторов сторон створки с учётом нахл.
             Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
             for (int i = 0; i < coo.length - 1; i++) {
                 //Запишем координаты
