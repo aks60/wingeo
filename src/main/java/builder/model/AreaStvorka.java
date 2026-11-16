@@ -25,6 +25,7 @@ import frames.swing.comp.Canvas;
 import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.List;
+import static java.util.stream.Collectors.toList;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Geometry;
@@ -72,7 +73,7 @@ public class AreaStvorka extends AreaSimple {
 
             //Полигон створки с учётом нахлёста 
             double dh = root.syssizRec.getDbl(eSyssize.falz) + root.syssizRec.getDbl(eSyssize.naxl);
-            Polygon stvShell = UGeo.bufferGeometry(frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
+            Polygon stvShell = UGeo.bufferGeometry(frameBox, winc, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
             Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
             for (int i = 0; i < coo.length - 1; i++) {
 
@@ -188,8 +189,9 @@ public class AreaStvorka extends AreaSimple {
         try {
             //Полигон створки с учётом нахлёста 
             double dh = root.syssizRec.getDbl(eSyssize.falz) + root.syssizRec.getDbl(eSyssize.naxl);
-            //Polygon stvShell = UGeo.bufferGeometry(frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл.
-            Polygon stvShell = UGeo.bufferGeometry3(frameBox, winc, 0); //полигон векторов сторон створки с учётом нахл.
+            List<Com5t> listElem = winc.listElem.stream().filter(e -> e.type == Type.BOX_SIDE || 
+                    e.type == Type.IMPOST || e.type == Type.SHTULP || e.type == Type.STOIKA).collect(toList());
+            Polygon stvShell = UGeo.bufferGeometry(frameBox, winc, listElem, 0); //полигон векторов сторон створки с учётом нахл.
             Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
             for (int i = 0; i < coo.length - 1; i++) {
                 //Запишем координаты
@@ -202,8 +204,8 @@ public class AreaStvorka extends AreaSimple {
             }
             coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
 
-            Polygon stvInner = UGeo.bufferGeometry(stvShell, this.frames, 0, 0);
-            Polygon stvFalz = UGeo.bufferGeometry(stvShell, this.frames, 0, 1);
+            Polygon stvInner = UGeo.bufferGeometry(stvShell, winc, this.frames, 0, 0);
+            Polygon stvFalz = UGeo.bufferGeometry(stvShell, winc, this.frames, 0, 1);
             this.area = gf.createMultiPolygon(new Polygon[]{stvShell, stvInner, stvFalz, (Polygon) frameBox});
 
             //Высота ручки

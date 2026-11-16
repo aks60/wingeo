@@ -227,7 +227,66 @@ public class UGeo {
         return outList;
     }
     
-    public static Polygon bufferGeometry(Geometry geoShell, ArrayList<? extends Com5t> listElem, double amend, int opt) {
+    public static Polygon bufferGeometry(Geometry geoShell, Wincalc winc, List<? extends Com5t> listElem, int opt) {
+        try {
+            Map<Double, Double> hmDist = new HashMap();
+            double falz_profile = winc.root.syssizRec.getDbl(eSyssize.falz);
+            double naxl_profile = winc.root.syssizRec.getDbl(eSyssize.naxl);
+            
+            //Смещения сегментов
+            for (Com5t el : listElem) {
+                dataset.Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
+                double width_elem = rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr); 
+                if (el.syssizRec != null && opt == 0) {
+                    
+                    //Штульр
+                    if (el.type == Type.SHTULP) {
+                        //Object o1 = width_elem - falz_profile - naxl_profile;
+                        hmDist.put(el.id, width_elem - falz_profile - naxl_profile);
+                    } else {
+                        //Object  o1 = width_elem - rec.getDbl(eArtikl.size_falz) - naxl_profile;
+                        hmDist.put(el.id, width_elem - rec.getDbl(eArtikl.size_falz) - naxl_profile);
+                    }
+                } else if (el.syssizRec != null && opt == 1) {
+
+                    //Штульр
+                    if (el.type == Type.SHTULP) {
+                        hmDist.put(el.id, width_elem - rec.getDbl(eArtikl.size_falz) + naxl_profile);
+
+                        //Остальные
+                    } else {
+                        hmDist.put(el.id, width_elem - rec.getDbl(eArtikl.size_falz) + naxl_profile);
+                        //hmDist.put(el.id, rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr) - rec.getDbl(eArtikl.size_falz) + amend);
+                    }
+                }
+            }
+            
+            Coordinate[] cooShell = geoShell.getCoordinates();
+            if (cooShell.length > Com5t.MAXSIDE) {
+                double id = cooShell[geoShell.getCoordinates().length / 2].z;
+                Polygon polyCurv = bufferCurve(geoShell, hmDist.get(id));
+                Polygon polyRect = bufferRectangl(geoShell, hmDist);
+                Polygon polyArch = (Polygon) polyRect.union(polyCurv);
+
+                LinearRing ring = polyArch.getInteriorRingN(0);
+                Polygon poly = gf.createPolygon(ring);
+                poly.normalize();
+                //Test.init(polyRect); 
+                updateZet(poly, polyRect);
+                return poly;
+
+            } else {
+                Polygon poly1 = bufferPolygon(geoShell, hmDist);
+                return poly1;
+            }
+            //Test.init(poly1, poly2); 
+        } catch (Exception e) {
+            System.err.println("Error: UGeo.buffer() " + e);
+        }
+        return null;
+    }
+    
+    public static Polygon bufferGeometry(Geometry geoShell, Wincalc winc, List<? extends Com5t> listElem, double amend, int opt) {
 
         Coordinate[] cooShell = geoShell.getCoordinates();
         Map<Double, Double> hmDist = new HashMap();
@@ -264,119 +323,7 @@ public class UGeo {
         }
         return null;
     }
-    
-    public static Polygon bufferGeometry2(Geometry geoShell, ArrayList<? extends Com5t> listElem, double amend, int opt) {
-
-        Coordinate[] cooShell = geoShell.getCoordinates();
-        Map<Double, Double> hmDist = new HashMap();
-        try {
-            //Смещения сегментов
-            for (Com5t el : listElem) {
-                dataset.Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-                double width_el = rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr); 
-                if (el.syssizRec != null && opt == 0) {
-                    
-                    //Штульр
-                    if (el.type == Type.SHTULP) {
-                        hmDist.put(el.id, width_el - rec.getDbl(eArtikl.size_falz) - el.syssizRec.getDbl(eSyssize.naxl));
-                    } else {
-                        hmDist.put(el.id, width_el + el.syssizRec.getDbl(eSyssize.naxl));
-                    }
-                } else if (el.syssizRec != null && opt == 1) {
-
-//                    //Штульр
-//                    if (el.type == Type.SHTULP) {
-//                        hmDist.put(el.id, widthEl - rec.getDbl(eArtikl.size_falz) + el.syssizRec.getDbl(eSyssize.naxl));
-//
-//                        //Остальные
-//                    } else {
-                        hmDist.put(el.id, width_el - rec.getDbl(eArtikl.size_falz) + el.syssizRec.getDbl(eSyssize.naxl));
-//                    }
-                }
-            }
-            if (cooShell.length > Com5t.MAXSIDE) {
-                double id = cooShell[geoShell.getCoordinates().length / 2].z;
-                Polygon polyCurv = bufferCurve(geoShell, hmDist.get(id));
-                Polygon polyRect = bufferRectangl(geoShell, hmDist);
-                Polygon polyArch = (Polygon) polyRect.union(polyCurv);
-
-                LinearRing ring = polyArch.getInteriorRingN(0);
-                Polygon poly = gf.createPolygon(ring);
-                poly.normalize();
-                //Test.init(polyRect); 
-                updateZet(poly, polyRect);
-                return poly;
-
-            } else {
-                Polygon poly1 = bufferPolygon(geoShell, hmDist);
-                return poly1;
-            }
-            //Test.init(poly1, poly2); 
-        } catch (Exception e) {
-            System.err.println("Error: UGeo.buffer() " + e);
-        }
-        return null;
-    }
-    
-    public static Polygon bufferGeometry3(Geometry geoShell, Wincalc winc, int opt) {
-        try {
-            Map<Double, Double> hmDist = new HashMap();
-            double falz_profile = winc.root.syssizRec.getDbl(eSyssize.falz);
-            double naxl_profile = winc.root.syssizRec.getDbl(eSyssize.naxl);
-            List<Com5t> listElem = winc.listElem.stream().filter(e -> e.type == Type.BOX_SIDE || 
-                    e.type == Type.IMPOST || e.type == Type.SHTULP || e.type == Type.STOIKA).collect(toList());
-            //Смещения сегментов
-            for (Com5t el : listElem) {
-                dataset.Record rec = (el.artiklRec == null) ? eArtikl.virtualRec() : el.artiklRec;
-                double width_elem = rec.getDbl(eArtikl.height) - rec.getDbl(eArtikl.size_centr); 
-                if (el.syssizRec != null && opt == 0) {
-                    
-                    //Штульр
-                    if (el.type == Type.SHTULP) {
-                        Object o1 = width_elem - falz_profile - naxl_profile;
-                        hmDist.put(el.id, width_elem - falz_profile - naxl_profile);
-                    } else {
-                        Object  o1 = width_elem - rec.getDbl(eArtikl.size_falz) - naxl_profile;
-                        hmDist.put(el.id, width_elem - rec.getDbl(eArtikl.size_falz) - naxl_profile);
-                    }
-                } else if (el.syssizRec != null && opt == 1) {
-
-//                    //Штульр
-//                    if (el.type == Type.SHTULP) {
-//                        hmDist.put(el.id, widthEl - rec.getDbl(eArtikl.size_falz) + naxl_profile);
-//
-//                        //Остальные
-//                    } else {
-                        hmDist.put(el.id, width_elem - rec.getDbl(eArtikl.size_falz) + naxl_profile);
-//                    }
-                }
-            }
-            
-            Coordinate[] cooShell = geoShell.getCoordinates();
-            if (cooShell.length > Com5t.MAXSIDE) {
-                double id = cooShell[geoShell.getCoordinates().length / 2].z;
-                Polygon polyCurv = bufferCurve(geoShell, hmDist.get(id));
-                Polygon polyRect = bufferRectangl(geoShell, hmDist);
-                Polygon polyArch = (Polygon) polyRect.union(polyCurv);
-
-                LinearRing ring = polyArch.getInteriorRingN(0);
-                Polygon poly = gf.createPolygon(ring);
-                poly.normalize();
-                //Test.init(polyRect); 
-                updateZet(poly, polyRect);
-                return poly;
-
-            } else {
-                Polygon poly1 = bufferPolygon(geoShell, hmDist);
-                return poly1;
-            }
-            //Test.init(poly1, poly2); 
-        } catch (Exception e) {
-            System.err.println("Error: UGeo.buffer() " + e);
-        }
-        return null;
-    }
-
+        
     //TODO Гадкая функция. Надо переписать!
     //При слиянии двух полигонов появляются точки соединения с непонятным Z значением
     public static void updateZet(Polygon arc, Polygon rec) {

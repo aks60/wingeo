@@ -137,7 +137,7 @@ public class Connect {
             } else {
                 new Crypto().httpAsync(server); //сервер должен смотреть на sa-okna.ru иначе швах
             }
-            Connect.cryptoCheck = true;
+            //Connect.cryptoCheck = true; //для тестирование в обход крипто
             
             if (Class.forName(driver) == null) {
                 JOptionPane.showMessageDialog(null, eExcep.loadDrive.mes,

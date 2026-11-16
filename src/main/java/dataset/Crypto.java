@@ -137,6 +137,8 @@ public class Crypto {
             byte[] encryptMesBytes = encryptCipher.doFinal(randomMesBytes); //закодированный 
             String encodeMesStr = Base64.getEncoder().encodeToString(encryptMesBytes);
 
+            Object o1 = "http://" + server + "/winnet/Crypto?action=secret&message=" + encodeMesStr;
+            
             //Отправить на сервер закодированное случайное сообщениеtry 
             var request = HttpRequest.newBuilder()
                     .uri(URI.create("http://" + server + "/winnet/Crypto?action=secret&message=" + encodeMesStr))
