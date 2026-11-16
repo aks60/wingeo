@@ -43,7 +43,6 @@ public class ElemCross extends ElemSimple {
         }
         artiklRec = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), false);
         artiklRecAn = eArtikl.find(sysprofRec.getInt(eSysprof.artikl_id), true);
-        syssizRec = eSyssize.find(artiklRec); //системные константы
 
         //Сделано для коррекции ширины импостов
         if (artiklRecAn.getDbl(eArtikl.id) == -3) {
@@ -124,7 +123,7 @@ public class ElemCross extends ElemSimple {
                     ls.setCoordinates(cooImp[i - 1], cooImp[i]);
                     spcRec.width = (spcRec.width < ls.getLength()) ? ls.getLength() : spcRec.width;
                 }
-                double zax = this.syssizRec.getDbl(eSyssize.zax, 0);
+                double zax = winc.syssizRec.getDbl(eSyssize.zax, 0);
                 spcRec.width = spcRec.width + 2 * zax;
 
             } else if (type == Type.SHTULP || type == Type.STOIKA) {

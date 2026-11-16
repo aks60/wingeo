@@ -121,7 +121,7 @@ public class ElemGlass extends ElemSimple {
             new TFilling(winc, true).fill(this);
 
             //ѕолигон стеклопакета
-            this.area = UGeo.bufferGeometry(owner.area.getGeometryN(0), winc, winc.listElem, gzazo, 1);
+            this.area = UGeo.bufferGeometry(owner.area.getGeometryN(0), winc.listElem, gzazo, 1);
 
             Envelope env = this.area.getEnvelopeInternal();
             spcRec.width = env.getWidth();
@@ -237,7 +237,7 @@ public class ElemGlass extends ElemSimple {
     public void rascladkaPaint() {
         if (this.rascRec.isVirtual() == false) {
             ArrayList<ElemSimple> list = UCom.filter(winc.listElem, Type.BOX_SIDE, Type.STV_SIDE, Type.IMPOST, Type.SHTULP);
-            Polygon areaProf = UGeo.bufferGeometry(owner.area.getGeometryN(0), winc, list, 0, 0);  //полигон внут. по ширине профил€ дл€ прорисовки раскладки
+            Polygon areaProf = UGeo.bufferGeometry(owner.area.getGeometryN(0), list, 0, 0);  //полигон внут. по ширине профил€ дл€ прорисовки раскладки
             Envelope envRasc = areaProf.getEnvelopeInternal();
 
             double artH = Math.round(this.rascRec.getDbl(eArtikl.height));

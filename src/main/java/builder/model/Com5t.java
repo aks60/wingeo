@@ -37,7 +37,6 @@ public class Com5t {
     public GsonElem gson = null; //gson object конструкции    
     public Type type = Type.NONE; //тип элемента или окна
     public Geometry area = null; //ареа компонента 
-    public Record syssizRec = null; //система константт
     public Timer timer = new javax.swing.Timer(1200, new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
             if (winc != null && winc.canvas != null) {

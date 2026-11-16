@@ -68,7 +68,8 @@ public class Wincalc {
     public Canvas canvas = null;
     public boolean sceleton = false;
     public GsonRoot gson = null; //объектная модель конструкции 1-го уровня
-    public AreaSimple root = null; //объектная модель конструкции 2-го уровня    
+    public AreaSimple root = null; //объектная модель конструкции 2-го уровня 
+    public Record syssizRec = null; //система константт
 
     public ListenerAction sizeEvent = () -> {
     };
@@ -123,7 +124,7 @@ public class Wincalc {
             root.sysprofRec = eSysprof.find2(nuni, UseType.FRAME); //первая.запись коробки
             root.artiklRec = eArtikl.find(root.sysprofRec.getInt(eSysprof.artikl_id), false); //первый артикул из сист. профилей
             root.artiklRecAn = eArtikl.find(root.sysprofRec.getInt(eSysprof.artikl_id), true); //аналог
-            root.syssizRec = eSyssize.find(root.artiklRec); //системные константы             
+            this.syssizRec = eSyssize.find(root.artiklRec); //системные константы             
 
             parametr(gson.param); //параметры техн. + менеджера
 

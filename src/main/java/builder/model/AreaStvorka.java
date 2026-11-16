@@ -72,8 +72,8 @@ public class AreaStvorka extends AreaSimple {
             Geometry frameBox = (UCom.filter(winc.listElem, Type.IMPOST, Type.SHTULP).isEmpty()) || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
 
             //Полигон створки с учётом нахлёста 
-            double dh = root.syssizRec.getDbl(eSyssize.falz) + root.syssizRec.getDbl(eSyssize.naxl);
-            Polygon stvShell = UGeo.bufferGeometry(frameBox, winc, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
+            double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
+            Polygon stvShell = UGeo.bufferGeometry(frameBox, winc.listElem, -dh, 0); //полигон векторов сторон створки с учётом нахл. 
             Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
             for (int i = 0; i < coo.length - 1; i++) {
 
@@ -188,10 +188,10 @@ public class AreaStvorka extends AreaSimple {
                 || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
         try {
             //Полигон створки с учётом нахлёста 
-            double dh = root.syssizRec.getDbl(eSyssize.falz) + root.syssizRec.getDbl(eSyssize.naxl);
+            double dh = winc.syssizRec.getDbl(eSyssize.falz) + winc.syssizRec.getDbl(eSyssize.naxl);
             List<Com5t> listElem = winc.listElem.stream().filter(e -> e.type == Type.BOX_SIDE || 
                     e.type == Type.IMPOST || e.type == Type.SHTULP || e.type == Type.STOIKA).collect(toList());
-            Polygon stvShell = UGeo.bufferGeometry(frameBox, winc, listElem, 0); //полигон векторов сторон створки с учётом нахл.
+            Polygon stvShell = UGeo.bufferGeometry(frameBox, listElem, dh, 0); //полигон векторов сторон створки с учётом нахл.
             Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
             for (int i = 0; i < coo.length - 1; i++) {
                 //Запишем координаты
@@ -204,8 +204,8 @@ public class AreaStvorka extends AreaSimple {
             }
             coo[coo.length - 1].z = coo[0].z;  //т.к в цикле нет последней точки
 
-            Polygon stvInner = UGeo.bufferGeometry(stvShell, winc, this.frames, 0, 0);
-            Polygon stvFalz = UGeo.bufferGeometry(stvShell, winc, this.frames, 0, 1);
+            Polygon stvInner = UGeo.bufferGeometry(stvShell, this.frames, 0, 0);
+            Polygon stvFalz = UGeo.bufferGeometry(stvShell, this.frames, 0, 1);
             this.area = gf.createMultiPolygon(new Polygon[]{stvShell, stvInner, stvFalz, (Polygon) frameBox});
 
             //Высота ручки
