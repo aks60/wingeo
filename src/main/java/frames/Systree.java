@@ -1229,10 +1229,10 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
 
         centr.add(scr1, java.awt.BorderLayout.WEST);
 
-        split1.setDividerLocation(400);
+        split1.setDividerLocation(300);
         split1.setDividerSize(2);
         split1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-        split1.setResizeWeight(0.7);
+        split1.setResizeWeight(0.3);
         split1.setName("split1"); // NOI18N
         split1.setPreferredSize(new java.awt.Dimension(900, 550));
 
@@ -1301,7 +1301,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
         );
         pan12Layout.setVerticalGroup(
             pan12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 387, Short.MAX_VALUE)
+            .addGap(0, 277, Short.MAX_VALUE)
         );
 
         pan7.add(pan12, "card12");
@@ -1557,7 +1557,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                         .addGroup(pan6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lab14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(133, Short.MAX_VALUE))
         );
 
         tabb1.addTab("   Основные   ", pan6);

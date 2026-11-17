@@ -211,23 +211,22 @@ public class PSCompare extends javax.swing.JFrame {
             //=== Таблица 6 ===
             if (tab6.getRowCount() < 3) {
                 Vector vectorData = new Vector();
-                
-                //Закзы со щтульпом
                 Vector vectorColumn = new Vector(List.of("PUNIC", "PNUMB", "ONUMB", "ONAME", "OLENG", "OHEIG", "PDATE", "BPICT"));
-                ResultSet rs = st.executeQuery("select a.punic, a.pnumb, b.onumb, b.oname, d.aname, b.oleng, b.oheig, a.pdate, b.bpict "
-                        + "from listprj a, listord b, specpau c, artikls d where a.punic = b.punic and b.punic = c.punic and "
-                        + "b.onumb = c.onumb and c.anumb = d.anumb and d.atypm = 1 and d.atypp = 4 order by a.pdate");
-                
-              //Закзы по датам
-//            ResultSet rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, a.oleng, a.oheig, b.pdate, a.bpict from listord a, listprj b "
-//                 + "where a.punic = b.punic and b.pdate > '01.06.2016' and b.pdate < '01.01.2024' order by b.pdate");
-              
-              //Закзы по номерам
-//            ResultSet rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, b.pdate, a.bpict from listord a, listprj b where a.punic = b.punic and b.punic in "
-//                    + "(412463, 427595, 427597, 427761, 427817, 427818 ,427819, 427820, 427840, 427838, 427842, 427848, 427851, 427852, 427858, 427872, 427422, 427565, "
-//                    + "427833, 427832, 427831, 427830, 427825, 427826, 427779, 425392, 425392, 427850, 427708, 427737, 427629, 427847, 427856,"
-//                    + "425688, 505072, 507830, 507965, 507998, 508035) order by b.pnumb");
 
+                //Закзы со щтульпом
+//                ResultSet rs = st.executeQuery("select a.punic, a.pnumb, b.onumb, b.oname, d.aname, b.oleng, b.oheig, a.pdate, b.bpict "
+//                        + "from listprj a, listord b, specpau c, artikls d where a.punic = b.punic and b.punic = c.punic and "
+//                        + "b.onumb = c.onumb and c.anumb = d.anumb and d.atypm = 1 and d.atypp = 4 order by a.pdate");
+                //Закзы по датам
+                //ResultSet rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, a.oleng, a.oheig, b.pdate, a.bpict from listord a, listprj b "
+                //        + "where a.punic = b.punic and b.pdate > '01.06.2014' and b.pdate < '01.01.2026' order by b.pdate");
+                //Закзы по номерам
+                ResultSet rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, a.oleng, a.oheig, b.pdate, a.bpict "
+                        + "from listord a, listprj b where a.punic = b.punic and b.pnumb in "
+                        + "(316631, 507931, 777001, 508852, 508865, 508920, 508954, 601001, 601002, "
+                        + "601003, 601004, 601005, 601006, 601007, 601008, 601009, 601010, 700027, "
+                        + "700032, 498590, 499391, 508908, 505072, 507000147965, 507998, 508035, 604009, "
+                        + "604004, 604005, 506642, 605001, 508916, 509009, 700009, 700014) order by b.pnumb");
                 if (rs.isLast() == false) {
                     while (rs.next()) {
                         Vector vectorRec = new Vector();
@@ -269,7 +268,7 @@ public class PSCompare extends javax.swing.JFrame {
                 rs.close();
             }
         } catch (SQLException e) {
-            System.err.println("Error: DBCompare.loadingTab4().  " + e);
+            System.err.println("Error: DBCompare.loadingTabGroup1().  " + e);
         }
     }
 
