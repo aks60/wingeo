@@ -23,14 +23,16 @@ public class Main {
         if (args.length != 0) { //&& List.of("adm", "tex", "man").contains(args[0])) {
             //eProp.typuse = "99";
             eProp.profile = args[0];
-        }        
+        }
 
         SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
                 try {
                     runRussifier();
-                    System.setOut(new PrintStream(System.out, true, "UTF-8"));
+                    if (System.getProperty("os.name").equals("Windows 10")) {
+                        System.setOut(new PrintStream(System.out, true, "UTF-8"));
+                    }
                     String lafname = eProp.lookandfeel.getProp();
                     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                     for (LookAndFeelInfo laf : UIManager.getInstalledLookAndFeels()) {

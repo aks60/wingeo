@@ -1,7 +1,5 @@
 package startup;
 
-
-
 import builder.model.Com5t;
 import builder.model.UGeo;
 import builder.param.check.WincalcTest;
@@ -93,7 +91,10 @@ public class Test {
 
     // </editor-fold>     
     public static void main(String[] args) throws Exception {
-        System.setOut(new PrintStream(System.out, true, "UTF-8"));
+        
+        if (System.getProperty("os.name").equals("Windows 10")) {
+            System.setOut(new PrintStream(System.out, true, "UTF-8"));
+        }
         eProp.typuse = "99";
         try {
             //clearDB();
@@ -109,7 +110,6 @@ public class Test {
             //geom();             
             //printJSO(eSyssize.up);
             System.out.println("Hello World!  јксЄнов");
-            
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
@@ -266,7 +266,6 @@ public class Test {
 //        FurnitureTest t4 = new FurnitureTest();
 //        t4.furnitureVar();
 //        t4.furnitureDet();
-
 //        Set set = new HashSet();
 //        Map<String, Set> map = new HashMap<String, Set>();
 //        for (Enam en : ParamList.values()) {
