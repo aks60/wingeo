@@ -218,15 +218,15 @@ public class PSCompare extends javax.swing.JFrame {
 //                        + "from listprj a, listord b, specpau c, artikls d where a.punic = b.punic and b.punic = c.punic and "
 //                        + "b.onumb = c.onumb and c.anumb = d.anumb and d.atypm = 1 and d.atypp = 4 order by a.pdate");
                 //Закзы по датам
-                //ResultSet rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, a.oleng, a.oheig, b.pdate, a.bpict from listord a, listprj b "
-                //        + "where a.punic = b.punic and b.pdate > '01.06.2014' and b.pdate < '01.01.2026' order by b.pdate");
+                ResultSet rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, a.oleng, a.oheig, b.pdate, a.bpict from listord a, listprj b "
+                        + "where a.punic = b.punic and b.pdate > '01.01.2015' and b.pdate < '01.01.2016'"); // order by b.pdate");
                 //Закзы по номерам
-                ResultSet rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, a.oleng, a.oheig, b.pdate, a.bpict "
-                        + "from listord a, listprj b where a.punic = b.punic and b.pnumb in "
-                        + "(316631, 507931, 777001, 508852, 508865, 508920, 508954, 601001, 601002, "
-                        + "601003, 601004, 601005, 601006, 601007, 601008, 601009, 601010, 700027, "
-                        + "700032, 498590, 499391, 508908, 505072, 507000147965, 507998, 508035, 604009, "
-                        + "604004, 604005, 506642, 605001, 508916, 509009, 700009, 700014) order by b.pnumb");
+//                ResultSet rs = st.executeQuery("select b.punic, b.pnumb, a.onumb, a.oname, a.oleng, a.oheig, b.pdate, a.bpict "
+//                        + "from listord a, listprj b where a.punic = b.punic and b.pnumb in "
+//                        + "(316631, 507931, 777001, 508852, 508865, 508920, 508954, 601001, 601002, "
+//                        + "601003, 601004, 601005, 601006, 601007, 601008, 601009, 601010, 700027, "
+//                        + "700032, 498590, 499391, 508908, 505072, 507000147965, 507998, 508035, 604009, "
+//                        + "604004, 604005, 506642, 605001, 508916, 509009, 700009, 700014) order by b.pnumb");
                 if (rs.isLast() == false) {
                     while (rs.next()) {
                         Vector vectorRec = new Vector();
@@ -764,11 +764,6 @@ public class PSCompare extends javax.swing.JFrame {
         });
         tab1.setFillsViewportHeight(true);
         tab1.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        tab1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                tabMousePressed(evt);
-            }
-        });
         scr.setViewportView(tab1);
         if (tab1.getColumnModel().getColumnCount() > 0) {
             tab1.getColumnModel().getColumn(0).setPreferredWidth(40);
@@ -1096,10 +1091,6 @@ public class PSCompare extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnClose
 
-    private void tabMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMousePressed
-
-    }//GEN-LAST:event_tabMousePressed
-
     private void btn1(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1
         txt19.setText(String.valueOf(tab6.getValueAt(tab6.getSelectedRow(), 0)));
         txt21.setText(String.valueOf(tab6.getValueAt(tab6.getSelectedRow(), 1)));
@@ -1204,6 +1195,10 @@ public class PSCompare extends javax.swing.JFrame {
         TableFieldFilter filterTable = new TableFieldFilter(0, tab1);
         south.add(filterTable, 0);
         filterTable.getTxt().grabFocus();
+        TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(tab1.getModel());
+        tab1.setRowSorter(sorter);
+        tab1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
+
 
         DefaultTableCellRenderer cellRenderer3 = new DefaultTableCellRenderer() {
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {

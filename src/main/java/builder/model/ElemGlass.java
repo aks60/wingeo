@@ -41,6 +41,8 @@ public class ElemGlass extends ElemSimple {
     public Record rascRec = eArtikl.virtualRec(); //раскладка
     public int rascColor = -3; //цвет раскладки
     public int[] rascNumber = {2, 2}; //количество проёмов раскладки 
+    public List<Polygon> listHor = null;
+    public List<Polygon> listVer = null;
 
     public ElemGlass(Wincalc winc, GsonElem gson, AreaSimple owner) {
         super(winc, gson, owner);

@@ -10,18 +10,6 @@ public final class Bimax {
     public static String systemScript(Integer prj) {
 
 // <editor-fold defaultstate="collapsed" desc="RECTANGL">
-//        if (prj == 316631) {
-//            rootGson = new GsonRoot(389458, prj, 1, 54, Type.RECTANGL, "KBE / KBE Эксперт / 1 ОКНА / Открывание внутрь (ств. Z 77)",
-//                    1009, 1009, 1009, "{ioknaParam: [-9504]}");  //маскитка Р400);
-//            rootGson.addElem(new GsonElem(Type.BOX_SIDE, 0.0, 0.0))
-//                    .addElem(new GsonElem(Type.BOX_SIDE, 0.0, 950.0))
-//                    .addElem(new GsonElem(Type.BOX_SIDE, 1120.0, 950.0))
-//                    .addElem(new GsonElem(Type.BOX_SIDE, 1120.0, 0.0));
-//
-//            rootGson.addArea(new GsonElem(Type.STVORKA))
-//                    .addElem(new GsonElem(Type.GLASS));
-//
-//        } else 
         if (prj == 507931) {
             rootGson = new GsonRoot(426697, prj, 3, 29, Type.RECTANGL, "Montblanc / Nord / 1 ОКНА", 1009, 1009, 1009);
             rootGson.addElem(new GsonElem(Type.BOX_SIDE, 0.0, 0.0))
@@ -397,7 +385,7 @@ public final class Bimax {
                     .addElem(new GsonElem(Type.GLASS));
 
 // </editor-fold>
-// <editor-fold defaultstate="collapsed" desc="TRAPEZE"> 
+// <editor-fold defaultstate="collapsed" desc="TRAPEZE">             
         } else if (prj == 506642) {
             rootGson = new GsonRoot(425392, prj, 1, 54, Type.TRAPEZE, "KBE / KBE Эксперт / 1 ОКНА / Открывание внутрь (ств. Z 77)", 1009, 10009, 1009);
             rootGson.addElem(new GsonElem(Type.BOX_SIDE, 0.0, 0.0))

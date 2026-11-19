@@ -153,13 +153,13 @@ public class CardPanels extends javax.swing.JPanel {
                     dataset.Record colorRec = eColor.find(com5t.colorID1);
                     setText(txt34, colorRec.getStr(eColor.name));
                     setIcon(btn25, UPar.isFinite(com5t.gson.param, PKjson.colorID1));
-                    dataset.Record rasclRec = ((ElemGlass) com5t).rascRec;
+                    dataset.Record rasclRec = elem.rascRec;
                     setText(txt49, rasclRec.getStr(eArtikl.code));
                     setText(txt50, rasclRec.getStr(eArtikl.name));
-                    dataset.Record colorRascl = eColor.find(((ElemGlass) com5t).rascColor);
+                    dataset.Record colorRascl = eColor.find(elem.rascColor);
                     setText(txt51, colorRascl.getStr(eColor.name));
-                    spinHor.setValue(((ElemGlass) com5t).rascNumber[0]);
-                    spinVert.setValue(((ElemGlass) com5t).rascNumber[1]);
+                    spinHor.setValue(elem.rascNumber[0]);
+                    spinVert.setValue(elem.rascNumber[1]);
                     //Помощь менеджеру для коррекция импоста
 //                    if (joiningElem.deltaDY != null) {  
 //                        ElemSimple el = winc.listElem.stream().filter(e -> e.type == enums.Type.IMPOST).findFirst().orElse(null);

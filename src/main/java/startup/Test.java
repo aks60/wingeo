@@ -109,7 +109,6 @@ public class Test {
             //random();
             //geom();             
             //printJSO(eSyssize.up);
-            System.out.println("Hello World!  јксЄнов");
 
         } catch (Exception e) {
             System.err.println("TEST-MAIN: " + e);
