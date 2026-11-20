@@ -355,9 +355,6 @@ public class Wincalc {
             //Прорисовка стеклопакетов
             UCom.filter(this.listElem, Type.GLASS).stream().forEach(el -> el.paint());
 
-            //Прорисовка раскладок
-            UCom.filter(this.listElem, Type.GLASS).stream().forEach(el -> ((ElemGlass) el).rascladkaPaint());
-
             //Прорисовка москиток
             UCom.filter(this.listElem, Type.MOSQUIT).stream().forEach(el -> ((ElemMosquit) el).paint());
 
