@@ -153,10 +153,9 @@ public class CardPanels extends javax.swing.JPanel {
                     dataset.Record colorRec = eColor.find(com5t.colorID1);
                     setText(txt34, colorRec.getStr(eColor.name));
                     setIcon(btn25, UPar.isFinite(com5t.gson.param, PKjson.colorID1));
-                    dataset.Record rasclRec = elem.rascRec;
-                    setText(txt49, rasclRec.getStr(eArtikl.code));
-                    setText(txt50, rasclRec.getStr(eArtikl.name));
-                    dataset.Record colorRascl = eColor.find(elem.rascColor);
+                    setText(txt49, elem.rascRec.getStr(eArtikl.code));
+                    setText(txt50, elem.rascRec.getStr(eArtikl.name));
+                    dataset.Record colorRascl = eColor.find(elem.rascColorID);
                     setText(txt51, colorRascl.getStr(eColor.name));
                     spinHor.setValue(elem.rascNumber[0]);
                     spinVert.setValue(elem.rascNumber[1]);
@@ -2534,7 +2533,7 @@ public class CardPanels extends javax.swing.JPanel {
             if (winNode != null) {
                 Layout layout = winNode.com5t().layout();
                 Query qSysprofFilter = new Query(eSysprof.values(), eArtikl.values()); //тут будет список допустимых профилей из ветки системы
-                
+
                 List listID2 = List.of(winNode.com5t().type.id2);
                 if (List.of(3, 5, 9).contains(winNode.com5t().type.id2)) {
                     listID2 = List.of(3, 5, 9);
@@ -2673,6 +2672,8 @@ public class CardPanels extends javax.swing.JPanel {
                     UPar.remove(classElem.gson.param, List.of(PKjson.colorRasc));
                     UPar.remove(classElem.gson.param, List.of(PKjson.horRasc));
                     UPar.remove(classElem.gson.param, List.of(PKjson.verRasc));
+                    classElem.rascRec = eArtikl.virtualRec();
+                    classElem.rascColorID = -3;
                 }
                 changeAndRedraw();
 
