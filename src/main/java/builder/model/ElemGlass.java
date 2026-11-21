@@ -11,23 +11,22 @@ import domain.eArtikl;
 import domain.eColor;
 import domain.eSystree;
 import enums.PKjson;
-import enums.Type;
 import enums.TypeArt;
 import enums.UseUnit;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Shape;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import static java.util.stream.Collectors.toList;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 import org.locationtech.jts.algorithm.Angle;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
+import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Polygon;
 
 public class ElemGlass extends ElemSimple {
@@ -113,22 +112,12 @@ public class ElemGlass extends ElemSimple {
                 final int numX = (gson.param.get(PKjson.horRasc) == null) ? 2 : gson.param.get(PKjson.horRasc).getAsInt();
                 final int numY = (gson.param.get(PKjson.verRasc) == null) ? 2 : gson.param.get(PKjson.verRasc).getAsInt();
                 final double lengthY = (envRasc.getMaxY() - envRasc.getMinY()) / numY, lengthX = (envRasc.getMaxX() - envRasc.getMinX()) / numX;
-                //Арка
-                if (owner.area.getNumPoints() > Com5t.MAXSIDE) {
-//                    double arcID = winc.listElem.stream().filter(e -> e.h() != null).findFirst().get().id;
-//                    List listC = Stream.of(areaInner.getCoordinates()).filter(c -> c.z == arcID).collect(toList());
-//                    double w = 0;
-//                    for (int i = 1; i < numX; i++) {
-//                        w = w + lengthX;
-//                        Polygon p = UGeo.newPolygon(Math.round(envRasc.getMinX() + w - deltaH / 2), envRasc.getMinY(), deltaH, (envRasc.getMaxY() - envRasc.getMinY()));
-//                        //Shape shape = new ShapeWriter().toShape(p);
-//                        //winc.gc2d.fill(shape);
-//                        // winc.gc2d.fillRect((int) Math.round(envRasc.getMinX() + w - artH / 2), (int) envRasc.getMinY(), (int) artH, (int) (envRasc.getMaxY() - envRasc.getMinY()));
-//                    }
-                    //Полигон раскладки
-                } else {
+
+                //Полигон раскладки
+                if (owner.area.getNumPoints() < Com5t.MAXSIDE) {
+                    
                     double h = 0;
-                    for (int i = 0; i < numY; i++) {
+                    for (int i = 1; i < numY; i++) {
                         h = h + lengthY;
                         LineSegment segmRasc = new LineSegment(new Coordinate(envRasc.getMinX(), envRasc.getMinY() + h), new Coordinate(envRasc.getMaxX(), envRasc.getMinY() + h));
                         LineSegment offsetSegment[] = {segmRasc.offset(+deltaH), segmRasc.offset(-deltaH)}; //левый и правый сегмент вдоль раскладки
@@ -145,7 +134,7 @@ public class ElemGlass extends ElemSimple {
                     }
 
                     double w = 0;
-                    for (int i = 0; i < numX; i++) {
+                    for (int i = 1; i < numX; i++) {
                         w = w + lengthX;
                         LineSegment segmRasc = new LineSegment(new Coordinate(envRasc.getMinX() + w, envRasc.getMinY()), new Coordinate(envRasc.getMinX() + w, envRasc.getMaxX()));
                         LineSegment offsetSegment[] = {segmRasc.offset(+deltaH), segmRasc.offset(-deltaH)};  //левый и правый сегмент вдоль раскладки
@@ -186,6 +175,33 @@ public class ElemGlass extends ElemSimple {
             spcRec.width = env.getWidth();
             spcRec.height = env.getHeight();
 
+            if (this.rascRec.isVirtual() == false) {
+                for (Polygon polygonRascp : this.listRasc) {
+                    
+                    Envelope env2 = polygonRascp.getEnvelopeInternal();
+                    TRecord spcAdd = new TRecord(this.id, this);
+                    spcAdd.place = "ВСТ.x";
+                    this.spcRec.spcList.add(spcAdd);
+                    spcAdd.artiklRec(rascRec);
+                    spcAdd.color(rascColorID, rascColorID, rascColorID);
+
+                    //По вертикали
+                    if (env2.getWidth() > env2.getHeight()) {
+
+                        spcAdd.height = rascRec.getDbl(eArtikl.height);
+                        spcAdd.width = (env2.getWidth() > env2.getHeight()) ? env2.getWidth() : env2.getHeight();
+                        spcAdd.width = (spcAdd.width - spcAdd.height * rascNumber[0]) / rascNumber[0];
+                        //spcAdd.anglCut0 = 90;
+                        //spcAdd.anglCut1 = 90;
+                    }
+
+                    for (int i = 1; i < rascNumber[0]; ++i) {
+                        spcAdd.height = rascRec.getDbl(eArtikl.height);
+                        spcAdd.width = (env2.getWidth() > env2.getHeight()) ? env2.getWidth() : env2.getHeight();
+                        spcAdd.width = (spcAdd.width - spcAdd.height * rascNumber[0]) / rascNumber[0];
+                    }
+                }
+            }
             //Test.init() 
         } catch (Exception e) {
             System.err.println("Error: ElemGlass.setSpecific() " + e);
@@ -304,11 +320,13 @@ public class ElemGlass extends ElemSimple {
             winc.gc2d.fill(shape);
 
             if (this.rascRec.isVirtual() == false) {
+                winc.gc2d.setStroke(new BasicStroke(1));
                 if (owner.area.getNumPoints() < Com5t.MAXSIDE) {
                     Record colorRasc = eColor.find(this.rascColorID);
                     winc.gc2d.setColor(new Color(colorRasc.getInt(eColor.rgb)));
                     for (Polygon p : this.listRasc) {
                         shape = new ShapeWriter().toShape(p);
+                        winc.gc2d.setColor(new Color(colorRasc.getInt(eColor.rgb)));
                         winc.gc2d.fill(shape);
                         winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
                         winc.gc2d.draw(shape);
