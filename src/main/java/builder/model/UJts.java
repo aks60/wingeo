@@ -18,7 +18,16 @@ import org.locationtech.jts.operation.distance.DistanceOp;
 public class UJts {
 
     //Индексируем исходные сегменты с их ключами
-    public static STRtree buildSegmentIndex(List<LineString> originalSegments) {
+    public static STRtree buildSegmentIndex(Polygon originalPolygon) {
+        STRtree indexTree = new STRtree();
+        List<LineString> originalSegments = List.of(originalPolygon.getExteriorRing());       
+        for (LineString seg : originalSegments) {
+            indexTree.insert(seg.getEnvelopeInternal(), seg);
+        }
+        indexTree.build();
+        return indexTree;
+    }
+    public static STRtree buildSegmentIndex2(List<LineString> originalSegments) {
         STRtree index = new STRtree();
         for (LineString seg : originalSegments) {
             // Добавляем сегмент в R-tree по его ограничивающему прямоугольнику (Envelope)
@@ -28,8 +37,25 @@ public class UJts {
         return index;
     }
 
-    //После разреза полигона восстанавливаем ключи для новых сегментов
-    public static List<LineString> restoreKeysAfterSplit(Polygon newPolygon, STRtree originalIndex) {
+    //После разреза полигона восстанавливаем ключи
+    public static void restoreKeysAfterSplit(Polygon newPolygon, STRtree indexTree ){
+        Coordinate[] coords = newPolygon.getExteriorRing().getCoordinates();
+        for (int i = 0; i < coords.length - 1; i++) {
+            
+            LineString newSeg = Com5t.gf.createLineString(new Coordinate[]{coords[i], coords[i + 1]});
+            Point midPoint = newSeg.getCentroid();          
+            @SuppressWarnings("unchecked") //ищем кандидатов в индексе
+            List<LineString> candidates = indexTree.query(midPoint.getEnvelopeInternal());
+            for (LineString oldSeg : candidates) {
+
+                if (oldSeg.isWithinDistance(midPoint, 1e-6)) {
+                    coords[i].setZ(oldSeg.getCoordinates()[0].z);
+                    break;
+                }
+            }
+        }
+    }
+    public static List<LineString> restoreKeysAfterSplit2(Polygon newPolygon, STRtree originalIndex) {
         GeometryFactory gf = newPolygon.getFactory();
         Coordinate[] coords = newPolygon.getExteriorRing().getCoordinates();
         List<LineString> newSegments = new ArrayList<>();
