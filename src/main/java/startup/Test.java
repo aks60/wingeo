@@ -2,6 +2,7 @@ package startup;
 
 import builder.model.Com5t;
 import builder.model.UGeo;
+import builder.model.UJts;
 import builder.param.check.WincalcTest;
 import builder.script.GsonElem;
 import builder.script.GsonScript;
@@ -30,6 +31,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,9 +44,10 @@ import org.locationtech.jts.algorithm.PointLocation;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
+import org.locationtech.jts.index.strtree.STRtree;
 import org.locationtech.jts.io.WKTReader;
+import org.locationtech.jts.operation.polygonize.Polygonizer;
 import org.locationtech.jts.util.GeometricShapeFactory;
-import startup.App;
 
 public class Test {
 
@@ -91,7 +94,7 @@ public class Test {
 
     // </editor-fold>     
     public static void main(String[] args) throws Exception {
-        
+
         if (System.getProperty("os.name").equals("Windows 10")) {
             System.setOut(new PrintStream(System.out, true, "UTF-8"));
         }
@@ -99,7 +102,7 @@ public class Test {
         try {
             //clearDB();
             //PSConvert.exec();
-            //frame();
+            frame();
             //wincalc("700027");
             //param();
             //query();
@@ -170,7 +173,7 @@ public class Test {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Test().draw();
+                new Test().draw11();
             }
         });
     }
@@ -468,6 +471,33 @@ public class Test {
 // <editor-fold defaultstate="collapsed" desc="TEMP">
     public void draw() {
 
+    }
+
+    public void draw11() {
+        Coordinate[] coord = new Coordinate[]{
+            new Coordinate(100, 150, 1), new Coordinate(100, 340, 2),
+            new Coordinate(350, 340, 3), new Coordinate(350, 150, 4),
+            new Coordinate(100, 150, 1)};
+        Polygon poly = gf.createPolygon(coord);
+        LineString line = gf.createLineString(new Coordinate[]{new Coordinate(0,0,0), new Coordinate(400,400,9)});
+        
+        //List<Polygon> listPoly = UJts.splitPolygon(poly, line);
+        STRtree strTree = UJts.buildSegmentIndex(poly);
+        Geometry nodedLinework = poly.getBoundary().union(line);
+
+        Polygonizer polygonizer = new Polygonizer();
+        polygonizer.add(nodedLinework);
+
+        // 3. Получаем все замкнутые полигоны, которые удалось собрать
+        @SuppressWarnings("unchecked")
+        Collection<Polygon> polyList = polygonizer.getPolygons();
+        Polygon poly1 = polyList.stream().skip(0).findFirst().orElse(null);
+        Polygon poly2 = polyList.stream().skip(1).findFirst().orElse(null);
+
+        mpol = poly1;
+        mlin = poly2;
+        UGeo.PRINT(poly1);
+        UGeo.PRINT(poly2);
     }
 
     public void draw10() {

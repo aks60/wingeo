@@ -1,9 +1,11 @@
 package builder.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
+import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Point;
@@ -13,9 +15,37 @@ import org.locationtech.jts.linearref.LengthIndexedLine;
 import org.locationtech.jts.linearref.LinearLocation;
 import org.locationtech.jts.linearref.LocationIndexedLine;
 import org.locationtech.jts.operation.distance.DistanceOp;
+import org.locationtech.jts.operation.overlayng.OverlayNG;
+import org.locationtech.jts.operation.polygonize.Polygonizer;
 
-//https://www.google.com/search?q=swing+jts+%D0%9D%D1%83%D0%B6%D0%BD%D0%BE+%D0%BF%D1%80%D0%B8%D0%BC%D0%B0%D0%B3%D0%BD%D0%B8%D1%82%D0%B8%D1%82%D1%8C+%D1%82%D0%BE%D1%87%D0%BA%D1%83+%D0%BA+%D1%80%D0%B5%D0%B1%D1%80%D1%83+%D0%BF%D0%BE%D0%BB%D0%B8%D0%B3%D0%BE%D0%BD%D0%B0+%D0%B1%D0%B5%D0%B7+%D0%B4%D1%8B%D1%80+%D0%B2%D1%8B%D0%B1%D0%B8%D1%80%D0%B0%D1%8F+%D0%B1%D0%BB%D0%B8%D0%B6%D0%B0%D0%B9%D1%88%D1%83%D1%8E&oq=swing+jts+%D0%9D%D1%83%D0%B6%D0%BD%D0%BE+%D0%BF%D1%80%D0%B8%D0%BC%D0%B0%D0%B3%D0%BD%D0%B8%D1%82%D0%B8%D1%82%D1%8C+%D1%82%D0%BE%D1%87%D0%BA%D1%83+%D0%BA+%D1%80%D0%B5%D0%B1%D1%80%D1%83+%D0%BF%D0%BE%D0%BB%D0%B8%D0%B3%D0%BE%D0%BD%D0%B0+%D0%B1%D0%B5%D0%B7+%D0%B4%D1%8B%D1%80+%D0%B2%D1%8B%D0%B1%D0%B8%D1%80%D0%B0%D1%8F+%D0%B1%D0%BB%D0%B8%D0%B6%D0%B0%D0%B9%D1%88%D1%83%D1%8E&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCTM2MzVqMGoxNagCCLACAQ&sourceid=chrome&source=chrome.rb&ie=UTF-8
 public class UJts {
+
+    public static List<Polygon> splitPolygon(Polygon polygon, LineString line) {
+        // 1. Получаем внешнюю границу полигона (т.к. по условию дырок нет)
+        Geometry boundary = polygon.getBoundary();
+
+        // 2. Объединяем границу полигона и разрезающую линию через OverlayNG.
+        // OverlayNG автоматически разобьет линии в точках пересечения (noding)
+        // и линейно проинтерполирует Z-координаты для новых вершин.
+        Geometry nodedLinework = OverlayNG.overlay(boundary, line, OverlayNG.UNION);
+
+        // 3. Собираем новые полигоны из получившейся сетки линий
+        Polygonizer polygonizer = new Polygonizer();
+        polygonizer.add(nodedLinework);
+
+        @SuppressWarnings("unchecked")
+        Collection<Polygon> polys = polygonizer.getPolygons();
+
+        // 4. Фильтруем полигоны, оставляя только те, что лежат внутри исходного
+        // (на случай, если линия выходила за пределы полигона и образовала петли снаружи)
+        List<Polygon> result = new ArrayList<>();
+        for (Polygon p : polys) {
+            if (polygon.contains(p.getInteriorPoint())) {
+                result.add(p);
+            }
+        }
+        return result;
+    }
 
     //Индексируем исходные сегменты с их ключами
     public static STRtree buildSegmentIndex(Polygon originalPolygon) {
