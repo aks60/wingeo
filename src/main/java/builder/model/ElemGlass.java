@@ -119,7 +119,7 @@ public class ElemGlass extends ElemSimple {
                 if (owner.area.getNumPoints() < Com5t.MAXSIDE) {
 
                     Polygonizer polygonizer = new Polygonizer();
-                    polygonizer.add(areaInner.getExteriorRing());
+                    polygonizer.add(areaInner);
                     Polygon areaCanvas = UGeo.newPolygon(0, 0, 0, 10000, 10000, 10000, 10000, 0);
 
                     double w = 0;
