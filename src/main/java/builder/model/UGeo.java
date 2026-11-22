@@ -27,7 +27,9 @@ import org.locationtech.jts.geom.util.AffineTransformation;
 import java.util.Map;
 import java.util.Set;
 import dataset.Record;
+import java.util.Collection;
 import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.operation.polygonize.Polygonizer;
 
 /**
  * ”тилиты JTS
@@ -225,6 +227,31 @@ public class UGeo {
         return outList;
     }
 
+    public static List<Polygon> splitPolygon(Polygon polygon, LineString line) {
+        // 1. ѕолучаем границу полигона (внешний контур + внутренние вырезы/дырки)
+        Geometry polygonBoundary = polygon.getBoundary();
+
+        // 2. ќбъедин€ем границу полигона с разрезающей линией.
+        // ¬ажно: union() разбивает линии в точках их пересечени€ (noding).
+        Geometry nodedBoundary = polygonBoundary.union(line);
+
+        // 3. —обираем новые полигоны из получившейс€ сетки линий
+        Polygonizer polygonizer = new Polygonizer();
+        polygonizer.add(nodedBoundary);
+        Collection<Polygon> candidatePolygons = polygonizer.getPolygons();
+
+        // 4. ‘ильтруем: оставл€ем только те части, которые лежат внутри исходного полигона
+        List<Polygon> result = new ArrayList<>();
+        for (Polygon candidate : candidatePolygons) {
+            // getInteriorPoint() гарантированно возвращает точку строго внутри полигона
+            if (polygon.contains(candidate.getInteriorPoint())) {
+                result.add(candidate);
+            }
+        }
+
+        return result;
+    }    
+    
     public static Polygon bufferGeometry(Geometry geoShell, ArrayList<? extends Com5t> listElem, double amend, int opt) {
 
         Coordinate[] cooShell = geoShell.getCoordinates();
