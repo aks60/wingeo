@@ -2,7 +2,6 @@ package startup;
 
 import builder.model.Com5t;
 import builder.model.UGeo;
-import builder.model.UJts;
 import builder.param.check.WincalcTest;
 import builder.script.GsonElem;
 import builder.script.GsonScript;
@@ -31,7 +30,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,9 +42,7 @@ import org.locationtech.jts.algorithm.PointLocation;
 import org.locationtech.jts.awt.ShapeWriter;
 import org.locationtech.jts.geom.*;
 import org.locationtech.jts.geom.util.AffineTransformation;
-import org.locationtech.jts.index.strtree.STRtree;
 import org.locationtech.jts.io.WKTReader;
-import org.locationtech.jts.operation.polygonize.Polygonizer;
 import org.locationtech.jts.util.GeometricShapeFactory;
 
 public class Test {
@@ -474,30 +470,28 @@ public class Test {
     }
 
     public void draw11() {
-        Coordinate[] coord = new Coordinate[]{
-            new Coordinate(100, 150, 1), new Coordinate(100, 340, 2),
-            new Coordinate(350, 340, 3), new Coordinate(350, 150, 4),
-            new Coordinate(100, 150, 1)};
-        Polygon poly = gf.createPolygon(coord);
-        LineString line = gf.createLineString(new Coordinate[]{new Coordinate(0,0,0), new Coordinate(400,400,9)});
-        
-        //List<Polygon> listPoly = UJts.splitPolygon(poly, line);
-        STRtree strTree = UJts.buildSegmentIndex(poly);
-        Geometry nodedLinework = poly.getBoundary().union(line);
+        try {
+            Coordinate[] coord = new Coordinate[]{
+                new Coordinate(100, 150, 1), new Coordinate(100, 340, 2),
+                new Coordinate(350, 340, 3), new Coordinate(350, 150, 4),
+                new Coordinate(100, 150, 1)};
+            Polygon poly = gf.createPolygon(coord);
+            LineString line = gf.createLineString(new Coordinate[]{new Coordinate(0, 0, 7), new Coordinate(400, 400, 9)});
+            LineSegment segm = new LineSegment(new Coordinate(0, 0, 7), new Coordinate(400, 400, 0));
 
-        Polygonizer polygonizer = new Polygonizer();
-        polygonizer.add(nodedLinework);
+            List<Geometry> polyList = UGeo.splitPolygon(poly, segm);
 
-        // 3. Получаем все замкнутые полигоны, которые удалось собрать
-        @SuppressWarnings("unchecked")
-        Collection<Polygon> polyList = polygonizer.getPolygons();
-        Polygon poly1 = polyList.stream().skip(0).findFirst().orElse(null);
-        Polygon poly2 = polyList.stream().skip(1).findFirst().orElse(null);
+            Geometry poly1 = polyList.stream().skip(0).findFirst().orElse(null);
+            Geometry poly2 = polyList.stream().skip(1).findFirst().orElse(null);
 
-        mpol = poly1;
-        mlin = poly2;
-        UGeo.PRINT(poly1);
-        UGeo.PRINT(poly2);
+            mpol = gf.createMultiPolygon(new Polygon[]{(Polygon)poly1, (Polygon)poly2});
+            mlin = line;
+            UGeo.PRINT(poly1);
+            UGeo.PRINT(poly2);
+
+        } catch (Exception e) {
+            System.err.println("startup.Test.draw11() " + e);
+        }
     }
 
     public void draw10() {
