@@ -28,7 +28,9 @@ import java.util.Map;
 import java.util.Set;
 import dataset.Record;
 import java.util.Collection;
+import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LinearRing;
+import org.locationtech.jts.index.strtree.STRtree;
 import org.locationtech.jts.operation.polygonize.Polygonizer;
 
 /**
@@ -678,7 +680,6 @@ public class UGeo {
                 (int) (x2 - arrowLen * Math.cos(angle + Math.toRadians(30))),
                 (int) (y2 - arrowLen * Math.sin(angle + Math.toRadians(30))));
     }
-
 // <editor-fold defaultstate="collapsed" desc="TEMP">    
 //
 //    public static Geometry polygonize(Geometry geometry) {
