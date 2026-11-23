@@ -179,8 +179,8 @@ public class ElemGlass extends ElemSimple {
                 final int numH = (gson.param.get(PKjson.horRasc) == null) ? 2 : gson.param.get(PKjson.horRasc).getAsInt();
                 final int numV = (gson.param.get(PKjson.verRasc) == null) ? 2 : gson.param.get(PKjson.verRasc).getAsInt();                  
                 Polygon areaInner = (Polygon) owner.area.getGeometryN(1);              
-                double heightNumRasc = areaInner.getEnvelopeInternal().getMinX() + rascRec.getDbl(eArtikl.height) / numH;
-                LineSegment lineSegm = new LineSegment(new Coordinate(heightNumRasc, 0), new Coordinate(heightNumRasc, 10000));
+                double height_num_rasc = areaInner.getEnvelopeInternal().getMinX() + rascRec.getDbl(eArtikl.height) * numH;
+                LineSegment lineSegm = new LineSegment(new Coordinate(height_num_rasc, 0), new Coordinate(height_num_rasc, 10000));
                 List<Geometry> areaList = UGeo.splitPolygon(areaInner, lineSegm);
                 Polygon area2Inner = (Polygon) areaList.get(1);
                 
@@ -213,7 +213,7 @@ public class ElemGlass extends ElemSimple {
                         Envelope envVRasc = areaVRasc.getEnvelopeInternal();
                         TRecord spcAdd = new TRecord("ВСТ", null, rascRec, this, null);
                         spcAdd.width = envVRasc.getMaxY() - envVRasc.getMinY();
-                        spcAdd.height = 18;
+                        spcAdd.height = rascRec.getDbl(eArtikl.height);
                         spcAdd.color(this.rascColorID, this.rascColorID, this.rascColorID);
                         spcAdd.setAnglCut(90, 90);
                         this.spcRec.spcList.add(spcAdd); //в спецификацию
@@ -242,7 +242,7 @@ public class ElemGlass extends ElemSimple {
                             Envelope envHRasc = areaHRasc.getEnvelopeInternal();
                             TRecord spcAdd = new TRecord("ВСТ", null, rascRec, this, null);
                             spcAdd.width = envHRasc.getMaxX() - envHRasc.getMinX();
-                            spcAdd.height = 18;
+                            spcAdd.height = rascRec.getDbl(eArtikl.height);
                             spcAdd.color(this.rascColorID, this.rascColorID, this.rascColorID);
                             spcAdd.setAnglCut(90, 90);
                             this.spcRec.spcList.add(spcAdd); //в спецификацию
