@@ -134,7 +134,6 @@ public class ElemGlass extends ElemSimple {
                         Polygon areaRasc = (Polygon) areaEnvelope.intersection(areaInner); //полигон элемента конструкции 
                         this.listRasc.add(areaRasc);
                     }
-
                     for (int i = 1; i < numH; i++) {
                         w = w + lengthX;
                         LineSegment segmRasc = new LineSegment(new Coordinate(envRasc.getMinX() + w, envRasc.getMinY()), new Coordinate(envRasc.getMinX() + w, envRasc.getMaxX()));
@@ -177,14 +176,19 @@ public class ElemGlass extends ElemSimple {
             //Раскладка
             if (this.rascRec.isVirtual() == false) {
                 this.listRasc.clear();
-                Polygon areaInner = (Polygon) owner.area.getGeometryN(1);
-                Envelope envRasc = areaInner.getEnvelopeInternal();
+                final int numH = (gson.param.get(PKjson.horRasc) == null) ? 2 : gson.param.get(PKjson.horRasc).getAsInt();
+                final int numV = (gson.param.get(PKjson.verRasc) == null) ? 2 : gson.param.get(PKjson.verRasc).getAsInt();                  
+                Polygon areaInner = (Polygon) owner.area.getGeometryN(1);              
+                double heightNumRasc = areaInner.getEnvelopeInternal().getMinX() + rascRec.getDbl(eArtikl.height) / numH;
+                LineSegment lineSegm = new LineSegment(new Coordinate(heightNumRasc, 0), new Coordinate(heightNumRasc, 10000));
+                List<Geometry> areaList = UGeo.splitPolygon(areaInner, lineSegm);
+                Polygon area2Inner = (Polygon) areaList.get(1);
+                
+                Envelope envRasc = area2Inner.getEnvelopeInternal();
                 List<Geometry> geomList = new ArrayList<>();
                 double deltaH = Math.round(this.rascRec.getDbl(eArtikl.height) - this.rascRec.getDbl(eArtikl.size_centr)); //ширина
-                final int numH = (gson.param.get(PKjson.horRasc) == null) ? 2 : gson.param.get(PKjson.horRasc).getAsInt();
-                final int numV = (gson.param.get(PKjson.verRasc) == null) ? 2 : gson.param.get(PKjson.verRasc).getAsInt();
                 final double lengthY = (envRasc.getMaxY() - envRasc.getMinY()) / numV, lengthX = (envRasc.getMaxX() - envRasc.getMinX()) / numH;
-                geomList.add(areaInner.getBoundary());
+                geomList.add(area2Inner.getBoundary());
 
                 //Полигоны раскладки
                 if (owner.area.getNumPoints() < Com5t.MAXSIDE) {
@@ -205,7 +209,7 @@ public class ElemGlass extends ElemSimple {
 
                         //Ареа  раскладки
                         Polygon areaVEnvelope = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
-                        Polygon areaVRasc = (Polygon) areaVEnvelope.intersection(areaInner); //полигон элемента конструкции 
+                        Polygon areaVRasc = (Polygon) areaVEnvelope.intersection(area2Inner); //полигон элемента конструкции 
                         Envelope envVRasc = areaVRasc.getEnvelopeInternal();
                         TRecord spcAdd = new TRecord("ВСТ", null, rascRec, this, null);
                         spcAdd.width = envVRasc.getMaxY() - envVRasc.getMinY();
