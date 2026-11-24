@@ -212,7 +212,7 @@ public class ElemGlass extends ElemSimple {
                         Polygon areaVRasc = (Polygon) areaVEnvelope.intersection(area2Inner); //полигон элемента конструкции 
                         Envelope envVRasc = areaVRasc.getEnvelopeInternal();
                         TRecord spcAdd = new TRecord("ВСТ", null, rascRec, this, null);
-                        spcAdd.width = envVRasc.getMaxY() - envVRasc.getMinY();
+                        spcAdd.width = envVRasc.getMaxY() - envVRasc.getMinY() + 10; //поправка 5мм с каждой стороны
                         spcAdd.height = rascRec.getDbl(eArtikl.height);
                         spcAdd.color(this.rascColorID, this.rascColorID, this.rascColorID);
                         spcAdd.setAnglCut(90, 90);
@@ -241,7 +241,7 @@ public class ElemGlass extends ElemSimple {
                             Polygon areaHRasc = (Polygon) areaHEnvelope.intersection(polyCell); //полигон элемента конструкции
                             Envelope envHRasc = areaHRasc.getEnvelopeInternal();
                             TRecord spcAdd = new TRecord("ВСТ", null, rascRec, this, null);
-                            spcAdd.width = envHRasc.getMaxX() - envHRasc.getMinX();
+                            spcAdd.width = envHRasc.getMaxX() - envHRasc.getMinX() + 10; //поправка 5мм с каждой стороны
                             spcAdd.height = rascRec.getDbl(eArtikl.height);
                             spcAdd.color(this.rascColorID, this.rascColorID, this.rascColorID);
                             spcAdd.setAnglCut(90, 90);

@@ -369,6 +369,7 @@ public class JoiningVar extends Par5s {
                     listenerList.add(() -> {
                         elemJoin.elem1.spcRec.width -= rec.getDbl(TEXT);
                     });
+                    //elem5e.spcRec.mapParam.put(grup, rec.getStr(TEXT));
                     break;
                 case 4046:  //Длина Артикула 1, мм 
                     listenerList.add(() -> {
