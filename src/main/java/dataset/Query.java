@@ -304,7 +304,7 @@ public class Query extends Table {
         }
         return this;
     }
-
+    
     public Query sq2(List<Record> data, Field field, int value, Field field2, int value2) {
         clear();
         if (Query.conf.equals("NET")) {
@@ -314,6 +314,23 @@ public class Query extends Table {
         }
         return this;
     }
+
+//    public Query sql(List<Record> data, Field field, int value, Field field2, int value2, String p) {
+//        clear();
+//        if (Query.conf.equals("NET")) {
+//            if (p.equals("and")) {
+//                addAll(data.stream().filter(rec -> rec.getInt(field) == value && rec.getInt(field2) == value2).collect(Collectors.toList()));
+//            } else if (p.equals("or")) {
+//                addAll(data.stream().filter(rec -> rec.getInt(field) == value || rec.getInt(field2) == value2).collect(Collectors.toList()));
+//            } else if (p.equals("eq")) {
+//                addAll(data.stream().filter(rec -> value.equals(rec.getStr(field)) || value2.equals(rec.getInt(field2))).collect(Collectors.toList()));
+//            }
+//        } else {
+//            String q = (p.equals("and")) ? "and" : (p.equals("or")) ? "or" : "or";
+//            select(field.fields()[0], "where", field, "=", value, " + q + ", field2, "=", value2);
+//        }
+//        return this;
+//    }
 
     public Query sq2(List<Record> data, Field field, String value, Field field2, String value2) {
         clear();

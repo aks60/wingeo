@@ -5,10 +5,14 @@ import builder.making.TFilling;
 import builder.making.TRecord;
 import builder.script.GsonElem;
 import common.UCom;
+import dataset.Query;
 import dataset.Record;
 import domain.eArtdet;
 import domain.eArtikl;
 import domain.eColor;
+import domain.eJoining;
+import domain.eJoinpar1;
+import domain.eJoinvar;
 import domain.eSystree;
 import enums.PKjson;
 import enums.TypeArt;
@@ -199,7 +203,6 @@ public class ElemGlass extends ElemSimple {
                         w = w + lengthX;
                         LineSegment segmVRasc = new LineSegment(new Coordinate(envRasc.getMinX() + w, envRasc.getMinY()), new Coordinate(envRasc.getMinX() + w, envRasc.getMaxY()));
                         LineString lineVRasc = Com5t.gf.createLineString(new Coordinate[]{segmVRasc.p0, segmVRasc.p1});
-
                         geomList.add(lineVRasc);
                         LineSegment offsetVSegment[] = {segmVRasc.offset(+deltaH), segmVRasc.offset(-deltaH)}; //левый и правый сегмент вдоль раскладки
 
@@ -213,6 +216,10 @@ public class ElemGlass extends ElemSimple {
                         Envelope envVRasc = areaVRasc.getEnvelopeInternal();
                         TRecord spcAdd = new TRecord("ВСТ", null, rascRec, this, null);
                         spcAdd.width = envVRasc.getMaxY() - envVRasc.getMinY() + 10; //поправка 5мм с каждой стороны
+                        Query qJoining = new Query(eJoining.values()).sql(eJoining.data(), eJoining.artikl_id1, 2, eJoining.artikl_id2, 3);
+                        Query qJoinvar = new Query(eJoinvar.values()).sql(eJoinvar.data(), eJoinvar.joining_id, 2);
+                        Query qJoinpar1 = new Query(eJoinpar1.values()).sql(eJoinpar1.data(), eJoinpar1.joinvar_id, 2);
+                        
                         spcAdd.height = rascRec.getDbl(eArtikl.height);
                         spcAdd.color(this.rascColorID, this.rascColorID, this.rascColorID);
                         spcAdd.setAnglCut(90, 90);
