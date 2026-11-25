@@ -295,7 +295,7 @@ public class Query extends Table {
         return this;
     }
 
-    public Query sql(List<Record> data, Field field, int value, Field field2, int value2) {
+    public Query sq3(List<Record> data, Field field, int value, Field field2, int value2) {
         clear();
         if (Query.conf.equals("NET")) {
             addAll(data.stream().filter(rec -> rec.getInt(field) == value && rec.getInt(field2) != value2).collect(Collectors.toList()));
@@ -304,22 +304,39 @@ public class Query extends Table {
         }
         return this;
     }
-    
-    public Query sql(List<Record> data, Field field, Object value, Field field2, Object value2, String p) {
+
+    public Query sql(List<Record> data, Field field, int value1, Field field2, int value2, String p) {
         clear();
         if (Query.conf.equals("NET")) {
             if (p.equals("and")) {
-                int v1 = Integer.parseInt(value.toString()), v2 = Integer.parseInt(value2.toString());
-                addAll(data.stream().filter(rec -> rec.getInt(field) == v1 && rec.getInt(field2) == v2).collect(Collectors.toList()));
+                addAll(data.stream().filter(rec -> rec.getInt(field) == value1 && rec.getInt(field2) == value2).collect(Collectors.toList()));
             } else if (p.equals("or")) {
-                int v1 = Integer.parseInt(value.toString()), v2 = Integer.parseInt(value2.toString());
-                addAll(data.stream().filter(rec -> rec.getInt(field) == v1 || rec.getInt(field2) == v2).collect(Collectors.toList()));
-            } else if (p.equals("eq")) {
-                addAll(data.stream().filter(rec -> value.equals(rec.getStr(field)) || value2.equals(rec.getInt(field2))).collect(Collectors.toList()));
+                addAll(data.stream().filter(rec -> rec.getInt(field) == value1 || rec.getInt(field2) == value2).collect(Collectors.toList()));
             }
         } else {
-            String q = (p.equals("and")) ? "and" : (p.equals("or")) ? "or" : "or";
-            select(field.fields()[0], "where", field, "=", value, " + q + ", field2, "=", value2);
+            if (p.equals("and")) {
+                select(field.fields()[0], "where", field, "=", value1, "and", field2, "=", value2);
+            } else if (p.equals("or")) {
+                select(field.fields()[0], "where", field, "=", value1, "or", field2, "=", value2);
+            }
+        }
+        return this;
+    }
+
+    public Query sql(List<Record> data, Field field, String value1, Field field2, String value2, String p) {
+        clear();
+        if (Query.conf.equals("NET")) {
+            if (p.equals("and")) {
+                addAll(data.stream().filter(rec -> value1.equals(rec.getStr(field)) && value2.equals(rec.getStr(field2))).collect(Collectors.toList()));
+            } else if (p.equals("or")) {
+                addAll(data.stream().filter(rec -> value1.equals(rec.getStr(field)) || value2.equals(rec.getStr(field2))).collect(Collectors.toList()));
+            }
+        } else {
+            if (p.equals("and")) {
+                select(field.fields()[0], "where", field, "=", value1, "and", field2, "=", value2);
+            } else if (p.equals("or")) {
+                select(field.fields()[0], "where", field, "=", value1, "or", field2, "=", value2);
+            }
         }
         return this;
     }

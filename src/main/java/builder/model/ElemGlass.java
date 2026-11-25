@@ -181,13 +181,13 @@ public class ElemGlass extends ElemSimple {
             if (this.rascRec.isVirtual() == false) {
                 this.listRasc.clear();
                 final int numH = (gson.param.get(PKjson.horRasc) == null) ? 2 : gson.param.get(PKjson.horRasc).getAsInt();
-                final int numV = (gson.param.get(PKjson.verRasc) == null) ? 2 : gson.param.get(PKjson.verRasc).getAsInt();                  
-                Polygon areaInner = (Polygon) owner.area.getGeometryN(1);              
+                final int numV = (gson.param.get(PKjson.verRasc) == null) ? 2 : gson.param.get(PKjson.verRasc).getAsInt();
+                Polygon areaInner = (Polygon) owner.area.getGeometryN(1);
                 double height_num_rasc = areaInner.getEnvelopeInternal().getMinX() + rascRec.getDbl(eArtikl.height) * numH;
                 LineSegment lineSegm = new LineSegment(new Coordinate(height_num_rasc, 0), new Coordinate(height_num_rasc, 10000));
                 List<Geometry> areaList = UGeo.splitPolygon(areaInner, lineSegm);
                 Polygon area2Inner = (Polygon) areaList.get(1);
-                
+
                 Envelope envRasc = area2Inner.getEnvelopeInternal();
                 List<Geometry> geomList = new ArrayList<>();
                 double deltaH = Math.round(this.rascRec.getDbl(eArtikl.height) - this.rascRec.getDbl(eArtikl.size_centr)); //ширина
@@ -198,6 +198,19 @@ public class ElemGlass extends ElemSimple {
                 if (owner.area.getNumPoints() < Com5t.MAXSIDE) {
 
                     double w = 0;
+                    double paramDw = 0;
+                    int artikl_id1 = rascRec.getInt(eArtikl.id);
+                    int artikl_id2 = owner.artiklRec.getInt(eArtikl.id);
+                    Query qJoining = new Query(eJoining.values()).sql(eJoining.data(), eJoining.artikl_id1, artikl_id1, eJoining.artikl_id2, artikl_id2, "and");
+                    if (!qJoining.isEmpty()) {
+                        Query qJoinvar = new Query(eJoinvar.values()).sql(eJoinvar.data(), eJoinvar.joining_id, qJoining.get(0).getInt(eJoining.id), eJoinvar.types, 40, "and");
+                        if (!qJoinvar.isEmpty()) {
+                            Query qJoinpar1 = new Query(eJoinpar1.values()).sql(eJoinpar1.data(), eJoinpar1.joinvar_id, qJoinvar.get(0).getStr(eJoinvar.id), eJoinpar1.groups_id, "4044", "and");
+                            if (!qJoinpar1.isEmpty()) {
+                                paramDw = (qJoinpar1.get(0).get(eJoinpar1.text) instanceof Double) ? 0 : qJoinpar1.get(0).getDbl(eJoinpar1.text);
+                            }
+                        }
+                    }
                     Polygon areaCanvas = UGeo.newPolygon(0, 0, 0, 10000, 10000, 10000, 10000, 0);
                     for (int i = 1; i < numH; i++) {
                         w = w + lengthX;
@@ -215,13 +228,8 @@ public class ElemGlass extends ElemSimple {
                         Polygon areaVRasc = (Polygon) areaVEnvelope.intersection(area2Inner); //полигон элемента конструкции 
                         Envelope envVRasc = areaVRasc.getEnvelopeInternal();
                         TRecord spcAdd = new TRecord("ВСТ", null, rascRec, this, null);
-                        spcAdd.width = envVRasc.getMaxY() - envVRasc.getMinY() + 10; //поправка 5мм с каждой стороны
-                        
-                        //Query qJoining = new Query(eJoining.values()).sql(eJoining.data(), eJoining.artikl_id1, 2, eJoining.artikl_id2, 3, "and");
-                        //Query qJoinvar = new Query(eJoinvar.values()).sql(eJoinvar.data(), eJoinvar.joining_id, 2);
-                        //Query qJoinpar1 = new Query(eJoinpar1.values()).sql(eJoinpar1.data(), eJoinpar1.joinvar_id, 77777);
-                        //double dw = (qJoinpar1.size() == 0) ?0 : qJoinpar1.get(0).getDbl(eJoinpar1.text);
-                        //System.out.println("aks = " + dw);
+                        spcAdd.width = envVRasc.getMaxY() - envVRasc.getMinY() + 2 * paramDw + 2 * 5; //поправка 5мм с каждой стороны
+
                         spcAdd.height = rascRec.getDbl(eArtikl.height);
                         spcAdd.color(this.rascColorID, this.rascColorID, this.rascColorID);
                         spcAdd.setAnglCut(90, 90);
@@ -250,7 +258,7 @@ public class ElemGlass extends ElemSimple {
                             Polygon areaHRasc = (Polygon) areaHEnvelope.intersection(polyCell); //полигон элемента конструкции
                             Envelope envHRasc = areaHRasc.getEnvelopeInternal();
                             TRecord spcAdd = new TRecord("ВСТ", null, rascRec, this, null);
-                            spcAdd.width = envHRasc.getMaxX() - envHRasc.getMinX() + 10; //поправка 5мм с каждой стороны
+                            spcAdd.width = envHRasc.getMaxX() - envHRasc.getMinX() + 2 * 5 + 2 * paramDw; //поправка 5мм с каждой стороны
                             spcAdd.height = rascRec.getDbl(eArtikl.height);
                             spcAdd.color(this.rascColorID, this.rascColorID, this.rascColorID);
                             spcAdd.setAnglCut(90, 90);
