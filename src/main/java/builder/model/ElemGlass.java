@@ -193,10 +193,11 @@ public class ElemGlass extends ElemSimple {
                         }
                     }
                 }
-                final double deltaBox = (paramDw == 0) ? 5 : paramDw;  //поправка по умолчанию 5мм с каждой стороны
-                final double deltaH = Math.round(this.rascRec.getDbl(eArtikl.height) / 2); //ширина
+                final double deltaBox = (paramDw == 0) ? -5 : paramDw;  //поправка по умолчанию 5мм с каждой стороны
+                final double height_rasc = Math.round(this.rascRec.getDbl(eArtikl.height)); //ширина
                 final int numH = (gson.param.get(PKjson.horRasc) == null) ? 2 : gson.param.get(PKjson.horRasc).getAsInt();
                 final int numV = (gson.param.get(PKjson.verRasc) == null) ? 2 : gson.param.get(PKjson.verRasc).getAsInt();
+
                 Polygon areaInner = (Polygon) owner.area.getGeometryN(1);
                 Envelope envInner = areaInner.getEnvelopeInternal();
 
@@ -209,7 +210,7 @@ public class ElemGlass extends ElemSimple {
                     for (int i = 1; i < numH; i++) {
                         w = w + lengthX;
                         LineSegment segmVRasc = new LineSegment(new Coordinate(envInner.getMinX() + w, envInner.getMinY()), new Coordinate(envInner.getMinX() + w, envInner.getMaxY()));
-                        LineSegment offsetVSegment[] = {segmVRasc.offset(+deltaH), segmVRasc.offset(-deltaH)}; //левый и правый сегмент вдоль раскладки
+                        LineSegment offsetVSegment[] = {segmVRasc.offset(+height_rasc / 2), segmVRasc.offset(-height_rasc / 2)}; //левый и правый сегмент вдоль раскладки
 
                         //Точки пересечения канвы сегментами раскладки
                         Coordinate C1[] = UGeo.crossGeoOfLine(areaCanvas, offsetVSegment[0]);
@@ -219,7 +220,7 @@ public class ElemGlass extends ElemSimple {
                         Polygon areaVEnvelope = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
                         Polygon areaVRasc = (Polygon) areaVEnvelope.intersection(areaInner); //полигон элемента конструкции 
                         Envelope envVRasc = areaVRasc.getEnvelopeInternal();
-                        
+
                         TRecord spcAdd = new TRecord("ВСТ", null, rascRec, this, null);
                         spcAdd.width = envVRasc.getMaxY() - envVRasc.getMinY() - deltaBox * 2;
                         spcAdd.height = rascRec.getDbl(eArtikl.height);
@@ -233,7 +234,7 @@ public class ElemGlass extends ElemSimple {
                     for (int k = 1; k < numV; k++) {
                         h = h + lengthY;
                         LineSegment segmHRasc = new LineSegment(new Coordinate(envInner.getMinX(), envInner.getMinY() + h), new Coordinate(envInner.getMaxX(), envInner.getMinY() + h));
-                        LineSegment offsetHSegment[] = {segmHRasc.offset(+deltaH), segmHRasc.offset(-deltaH)};  //левый и правый сегмент вдоль раскладки
+                        LineSegment offsetHSegment[] = {segmHRasc.offset(+height_rasc / 2), segmHRasc.offset(-height_rasc / 2)};  //левый и правый сегмент вдоль раскладки
 
                         //Точки пересечения канвы сегментами раскладки
                         Coordinate C3[] = UGeo.crossGeoOfLine(areaCanvas, offsetHSegment[0]);
@@ -243,9 +244,9 @@ public class ElemGlass extends ElemSimple {
                         Polygon areaHEnvelope = UGeo.newPolygon(C4[0].x, C4[0].y, C3[0].x, C3[0].y, C3[1].x, C3[1].y, C4[1].x, C4[1].y);
                         Polygon areaHRasc = (Polygon) areaHEnvelope.intersection(areaInner); //полигон элемента конструкции
                         Envelope envHRasc = areaHRasc.getEnvelopeInternal();
-                        
+
                         TRecord spcAdd = new TRecord("ВСТ", null, rascRec, this, null);
-                        spcAdd.width = (envHRasc.getMaxX() - envHRasc.getMinX() - deltaBox * 2 - deltaH * 2 * numV) / (numV + 1);
+                        spcAdd.width = (envHRasc.getMaxX() - envHRasc.getMinX() - deltaBox * 2 - height_rasc * (numH - 1)) / numH;
                         spcAdd.height = rascRec.getDbl(eArtikl.height);
                         spcAdd.color(this.rascColorID, this.rascColorID, this.rascColorID);
                         spcAdd.setAnglCut(90, 90);
