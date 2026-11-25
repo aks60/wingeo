@@ -365,6 +365,8 @@ public class JoiningVar extends Par5s {
                 }
                 break;
                 case 4040:  //Размер от оси профиля, мм.
+                    message(rec.getInt(GRUP));
+                    break;                    
                 case 4044:  //Размер от края пакета, мм 
                     break;
                 case 4046:  //Длина Артикула 1, мм 
