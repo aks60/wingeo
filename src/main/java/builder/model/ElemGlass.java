@@ -180,43 +180,35 @@ public class ElemGlass extends ElemSimple {
             //Раскладка
             if (this.rascRec.isVirtual() == false) {
                 this.listRasc.clear();
+                double paramDw = 0;
+                int artikl_id1 = rascRec.getInt(eArtikl.id);
+                int artikl_id2 = owner.artiklRec.getInt(eArtikl.id);
+                Query qJoining = new Query(eJoining.values()).sql(eJoining.data(), eJoining.artikl_id1, artikl_id1, eJoining.artikl_id2, artikl_id2, "and");
+                if (!qJoining.isEmpty()) {
+                    Query qJoinvar = new Query(eJoinvar.values()).sql(eJoinvar.data(), eJoinvar.joining_id, qJoining.get(0).getInt(eJoining.id), eJoinvar.types, 40, "and");
+                    if (!qJoinvar.isEmpty()) {
+                        Query qJoinpar1 = new Query(eJoinpar1.values()).sql(eJoinpar1.data(), eJoinpar1.joinvar_id, qJoinvar.get(0).getStr(eJoinvar.id), eJoinpar1.groups_id, "4044", "and");
+                        if (!qJoinpar1.isEmpty()) {
+                            paramDw = (qJoinpar1.get(0).get(eJoinpar1.text) instanceof Double) ? qJoinpar1.get(0).getDbl(eJoinpar1.text) : 0;
+                        }
+                    }
+                }
+                final double deltaBox = (paramDw == 0) ? 5 : paramDw;  //поправка по умолчанию 5мм с каждой стороны
+                final double deltaH = Math.round(this.rascRec.getDbl(eArtikl.height) / 2); //ширина
                 final int numH = (gson.param.get(PKjson.horRasc) == null) ? 2 : gson.param.get(PKjson.horRasc).getAsInt();
                 final int numV = (gson.param.get(PKjson.verRasc) == null) ? 2 : gson.param.get(PKjson.verRasc).getAsInt();
                 Polygon areaInner = (Polygon) owner.area.getGeometryN(1);
-                double height_num_rasc = areaInner.getEnvelopeInternal().getMinX() + rascRec.getDbl(eArtikl.height) * numH;
-                LineSegment lineSegm = new LineSegment(new Coordinate(height_num_rasc, 0), new Coordinate(height_num_rasc, 10000));
-                List<Geometry> areaList = UGeo.splitPolygon(areaInner, lineSegm);
-                Polygon area2Inner = (Polygon) areaList.get(1);
-
-                Envelope envRasc = area2Inner.getEnvelopeInternal();
-                List<Geometry> geomList = new ArrayList<>();
-                double deltaH = Math.round(this.rascRec.getDbl(eArtikl.height) - this.rascRec.getDbl(eArtikl.size_centr)); //ширина
-                final double lengthY = (envRasc.getMaxY() - envRasc.getMinY()) / numV, lengthX = (envRasc.getMaxX() - envRasc.getMinX()) / numH;
-                geomList.add(area2Inner.getBoundary());
+                Envelope envInner = areaInner.getEnvelopeInternal();
 
                 //Полигоны раскладки
                 if (owner.area.getNumPoints() < Com5t.MAXSIDE) {
 
                     double w = 0;
-                    double paramDw = 0;
-                    int artikl_id1 = rascRec.getInt(eArtikl.id);
-                    int artikl_id2 = owner.artiklRec.getInt(eArtikl.id);
-                    Query qJoining = new Query(eJoining.values()).sql(eJoining.data(), eJoining.artikl_id1, artikl_id1, eJoining.artikl_id2, artikl_id2, "and");
-                    if (!qJoining.isEmpty()) {
-                        Query qJoinvar = new Query(eJoinvar.values()).sql(eJoinvar.data(), eJoinvar.joining_id, qJoining.get(0).getInt(eJoining.id), eJoinvar.types, 40, "and");
-                        if (!qJoinvar.isEmpty()) {
-                            Query qJoinpar1 = new Query(eJoinpar1.values()).sql(eJoinpar1.data(), eJoinpar1.joinvar_id, qJoinvar.get(0).getStr(eJoinvar.id), eJoinpar1.groups_id, "4044", "and");
-                            if (!qJoinpar1.isEmpty()) {
-                                paramDw = (qJoinpar1.get(0).get(eJoinpar1.text) instanceof Double) ? 0 : qJoinpar1.get(0).getDbl(eJoinpar1.text);
-                            }
-                        }
-                    }
+                    final double lengthX = (envInner.getMaxX() - envInner.getMinX()) / numH;
                     Polygon areaCanvas = UGeo.newPolygon(0, 0, 0, 10000, 10000, 10000, 10000, 0);
                     for (int i = 1; i < numH; i++) {
                         w = w + lengthX;
-                        LineSegment segmVRasc = new LineSegment(new Coordinate(envRasc.getMinX() + w, envRasc.getMinY()), new Coordinate(envRasc.getMinX() + w, envRasc.getMaxY()));
-                        LineString lineVRasc = Com5t.gf.createLineString(new Coordinate[]{segmVRasc.p0, segmVRasc.p1});
-                        geomList.add(lineVRasc);
+                        LineSegment segmVRasc = new LineSegment(new Coordinate(envInner.getMinX() + w, envInner.getMinY()), new Coordinate(envInner.getMinX() + w, envInner.getMaxY()));
                         LineSegment offsetVSegment[] = {segmVRasc.offset(+deltaH), segmVRasc.offset(-deltaH)}; //левый и правый сегмент вдоль раскладки
 
                         //Точки пересечения канвы сегментами раскладки
@@ -225,45 +217,39 @@ public class ElemGlass extends ElemSimple {
 
                         //Ареа  раскладки
                         Polygon areaVEnvelope = UGeo.newPolygon(C2[0].x, C2[0].y, C1[0].x, C1[0].y, C1[1].x, C1[1].y, C2[1].x, C2[1].y);
-                        Polygon areaVRasc = (Polygon) areaVEnvelope.intersection(area2Inner); //полигон элемента конструкции 
+                        Polygon areaVRasc = (Polygon) areaVEnvelope.intersection(areaInner); //полигон элемента конструкции 
                         Envelope envVRasc = areaVRasc.getEnvelopeInternal();
+                        
                         TRecord spcAdd = new TRecord("ВСТ", null, rascRec, this, null);
-                        spcAdd.width = envVRasc.getMaxY() - envVRasc.getMinY() + 2 * paramDw + 2 * 5; //поправка 5мм с каждой стороны
-
+                        spcAdd.width = envVRasc.getMaxY() - envVRasc.getMinY() - deltaBox * 2;
                         spcAdd.height = rascRec.getDbl(eArtikl.height);
                         spcAdd.color(this.rascColorID, this.rascColorID, this.rascColorID);
                         spcAdd.setAnglCut(90, 90);
                         this.spcRec.spcList.add(spcAdd); //в спецификацию
                     }
 
-                    Geometry nodedLines = Com5t.gf.buildGeometry(geomList).union();
-                    Polygonizer polygonizer = new Polygonizer();
-                    polygonizer.add(nodedLines);
-                    @SuppressWarnings("unchecked")
-                    Collection<Polygon> polyList = polygonizer.getPolygons();
-                    for (Polygon polyCell : polyList) {
+                    double h = 0;
+                    final double lengthY = (envInner.getMaxY() - envInner.getMinY()) / numV;
+                    for (int k = 1; k < numV; k++) {
+                        h = h + lengthY;
+                        LineSegment segmHRasc = new LineSegment(new Coordinate(envInner.getMinX(), envInner.getMinY() + h), new Coordinate(envInner.getMaxX(), envInner.getMinY() + h));
+                        LineSegment offsetHSegment[] = {segmHRasc.offset(+deltaH), segmHRasc.offset(-deltaH)};  //левый и правый сегмент вдоль раскладки
 
-                        double h = 0;
-                        for (int k = 1; k < numV; k++) {
-                            h = h + lengthY;
-                            LineSegment segmHRasc = new LineSegment(new Coordinate(envRasc.getMinX(), envRasc.getMinY() + h), new Coordinate(envRasc.getMaxX(), envRasc.getMinY() + h));
-                            LineSegment offsetHSegment[] = {segmHRasc.offset(+deltaH), segmHRasc.offset(-deltaH)};  //левый и правый сегмент вдоль раскладки
+                        //Точки пересечения канвы сегментами раскладки
+                        Coordinate C3[] = UGeo.crossGeoOfLine(areaCanvas, offsetHSegment[0]);
+                        Coordinate C4[] = UGeo.crossGeoOfLine(areaCanvas, offsetHSegment[1]);
 
-                            //Точки пересечения канвы сегментами раскладки
-                            Coordinate C3[] = UGeo.crossGeoOfLine(areaCanvas, offsetHSegment[0]);
-                            Coordinate C4[] = UGeo.crossGeoOfLine(areaCanvas, offsetHSegment[1]);
-
-                            //Ареа  раскладки
-                            Polygon areaHEnvelope = UGeo.newPolygon(C4[0].x, C4[0].y, C3[0].x, C3[0].y, C3[1].x, C3[1].y, C4[1].x, C4[1].y);
-                            Polygon areaHRasc = (Polygon) areaHEnvelope.intersection(polyCell); //полигон элемента конструкции
-                            Envelope envHRasc = areaHRasc.getEnvelopeInternal();
-                            TRecord spcAdd = new TRecord("ВСТ", null, rascRec, this, null);
-                            spcAdd.width = envHRasc.getMaxX() - envHRasc.getMinX() + 2 * 5 + 2 * paramDw; //поправка 5мм с каждой стороны
-                            spcAdd.height = rascRec.getDbl(eArtikl.height);
-                            spcAdd.color(this.rascColorID, this.rascColorID, this.rascColorID);
-                            spcAdd.setAnglCut(90, 90);
-                            this.spcRec.spcList.add(spcAdd); //в спецификацию
-                        }
+                        //Ареа  раскладки
+                        Polygon areaHEnvelope = UGeo.newPolygon(C4[0].x, C4[0].y, C3[0].x, C3[0].y, C3[1].x, C3[1].y, C4[1].x, C4[1].y);
+                        Polygon areaHRasc = (Polygon) areaHEnvelope.intersection(areaInner); //полигон элемента конструкции
+                        Envelope envHRasc = areaHRasc.getEnvelopeInternal();
+                        
+                        TRecord spcAdd = new TRecord("ВСТ", null, rascRec, this, null);
+                        spcAdd.width = (envHRasc.getMaxX() - envHRasc.getMinX() - deltaBox * 2 - deltaH * 2 * numV) / (numV + 1);
+                        spcAdd.height = rascRec.getDbl(eArtikl.height);
+                        spcAdd.color(this.rascColorID, this.rascColorID, this.rascColorID);
+                        spcAdd.setAnglCut(90, 90);
+                        this.spcRec.spcList.add(spcAdd); //в спецификацию
                     }
                 }
             }
