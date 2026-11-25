@@ -159,7 +159,7 @@ public class Systree extends javax.swing.JFrame implements ListenerReload, Liste
                 this.systreeID = sysprodRec.getInt(eSysprod.systree_id);
             }
         }
-        qGroups.sq2(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id, eGroups.grup, TypeGrup.COLOR_MAP.id);
+        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id, eGroups.grup, TypeGrup.COLOR_MAP.id, "or");
         qSystree.sql(eSystree.data(), eSystree.up).sort(eSystree.npp);
         qParams.sql(eParams.data(), eParams.up);
         qArtikl.sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, 11, 12);

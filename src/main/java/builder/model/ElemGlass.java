@@ -216,10 +216,12 @@ public class ElemGlass extends ElemSimple {
                         Envelope envVRasc = areaVRasc.getEnvelopeInternal();
                         TRecord spcAdd = new TRecord("ВСТ", null, rascRec, this, null);
                         spcAdd.width = envVRasc.getMaxY() - envVRasc.getMinY() + 10; //поправка 5мм с каждой стороны
-                        Query qJoining = new Query(eJoining.values()).sql(eJoining.data(), eJoining.artikl_id1, 2, eJoining.artikl_id2, 3);
-                        Query qJoinvar = new Query(eJoinvar.values()).sql(eJoinvar.data(), eJoinvar.joining_id, 2);
-                        Query qJoinpar1 = new Query(eJoinpar1.values()).sql(eJoinpar1.data(), eJoinpar1.joinvar_id, 2);
                         
+                        //Query qJoining = new Query(eJoining.values()).sql(eJoining.data(), eJoining.artikl_id1, 2, eJoining.artikl_id2, 3, "and");
+                        //Query qJoinvar = new Query(eJoinvar.values()).sql(eJoinvar.data(), eJoinvar.joining_id, 2);
+                        //Query qJoinpar1 = new Query(eJoinpar1.values()).sql(eJoinpar1.data(), eJoinpar1.joinvar_id, 77777);
+                        //double dw = (qJoinpar1.size() == 0) ?0 : qJoinpar1.get(0).getDbl(eJoinpar1.text);
+                        //System.out.println("aks = " + dw);
                         spcAdd.height = rascRec.getDbl(eArtikl.height);
                         spcAdd.color(this.rascColorID, this.rascColorID, this.rascColorID);
                         spcAdd.setAnglCut(90, 90);

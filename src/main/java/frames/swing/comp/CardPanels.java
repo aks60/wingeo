@@ -299,7 +299,7 @@ public class CardPanels extends javax.swing.JPanel {
         try {
             double stvorkaID = winNode.com5t().id;
             int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
-            Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, level2);
+            Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, level2, "and");
             Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
             new DicArtikl(thiz, (artiklRec) -> {
 
@@ -2660,7 +2660,7 @@ public class CardPanels extends javax.swing.JPanel {
         try {
             ElemGlass classElem = (ElemGlass) winNode.com5t();
             double selectID = winNode.com5t().id;
-            Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 1, eArtikl.level2, 12);
+            Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 1, eArtikl.level2, 12, "and");
 
             new DicArtikl(thiz, (artiklRec) -> {
 
@@ -2707,7 +2707,7 @@ public class CardPanels extends javax.swing.JPanel {
         try {
             double stvorkaID = winNode.com5t().id;
             int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
-            Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, 11);
+            Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, 11, "and");
             Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
             new DicArtikl(thiz, (artiklRec) -> {
 
@@ -2904,7 +2904,7 @@ public class CardPanels extends javax.swing.JPanel {
     private void artiklToMosq(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToMosq
         try {
             AreaStvorka areaStv = (AreaStvorka) winNode.com5t();
-            Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2, 20);
+            Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2, 20, "and");
             Com5t com5tMosq = wincalc().listAll.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
             int artiklID = (com5tMosq != null && com5tMosq.artiklRec != null) ? com5tMosq.artiklRec.getInt(eArtikl.id) : -1; //id курсора в справочнике
             new DicArtikl(thiz, artiklID, (artiklRec) -> {

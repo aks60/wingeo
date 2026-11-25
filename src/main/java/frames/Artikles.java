@@ -321,7 +321,7 @@ public class Artikles extends javax.swing.JFrame {
             if (e == TypeArt.ROOT) {
                 qArtikl.sql(eArtikl.data(), eArtikl.up).sort(eArtikl.level1, eArtikl.code);
             } else if (node.isLeaf()) {
-                qArtikl.sql(eArtikl.data(), eArtikl.level1, e.id1, eArtikl.level2, e.id2).sort(eArtikl.level1, eArtikl.code);
+                qArtikl.sql(eArtikl.data(), eArtikl.level1, e.id1, eArtikl.level2, e.id2, "and").sort(eArtikl.level1, eArtikl.code);
             } else {
                 qArtikl.sql(eArtikl.data(), eArtikl.level1, e.id1).sort(eArtikl.level1, eArtikl.code);
             }

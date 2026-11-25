@@ -131,7 +131,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
     }
 
     private void loadingData() {
-        qGroups.sq2(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id, eGroups.grup, TypeGrup.COLOR_MAP.id);
+        qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id, eGroups.grup, TypeGrup.COLOR_MAP.id, "or");
         qParams.sql(eParams.data(), eParams.up);
         qCurrenc.sql(eCurrenc.data(), eCurrenc.up).sort(eCurrenc.name);
         String login = eProp.user.getProp();
@@ -754,7 +754,7 @@ public class Project extends javax.swing.JFrame implements ListenerReload, Liste
         try {
             double stvorkaID = winNode.com5t().id;
             int furnitureID = ((AreaStvorka) winNode.com5t()).sysfurnRec.getInt(eSysfurn.furniture_id);
-            Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, level2);
+            Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 2, eArtikl.level2, level2, "and");
             Query qResult = UGui.artTypeToFurndetList(furnitureID, qArtikl);
             new DicArtikl(this, (artiklRec) -> {
 
