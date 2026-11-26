@@ -16,6 +16,7 @@ import dataset.Query;
 import dataset.Record;
 import domain.eColor;
 import enums.Type;
+import frames.PSConvert;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -97,9 +98,9 @@ public class Test {
         eProp.typuse = "99";
         try {
             //clearDB();
-            //PSConvert.exec();
+            PSConvert.exec();
             //frame();
-            wincalc("min");
+            //wincalc("min");
             //param();
             //query();
             //json();

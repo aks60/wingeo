@@ -11,7 +11,8 @@ public enum TypeGrup implements Enam {
     CATEG_VST(8, "Категории составов"),
     SYS_DATA(9, "Расчётные данные"),
     CATEG_KIT(10, "Категории комплектов"),
-    GROUP_VST(11, "Группы составов");
+    GROUP_VST(11, "Группы составов"),
+    CATEG_JOIN(13, "Группы составов");
 
     public int id = 0;
     public String name = "";

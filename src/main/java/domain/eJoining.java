@@ -12,7 +12,8 @@ public enum eJoining implements Field {
     is_main("16", "5", "1", " Битовая маска", "CVARF"), //0x100=256 - установлен флаг Основное соединение. Смысл других бит пока неизвестен.
     analog("12", "32", "1", "Аналоги", "CEQUV"),
     artikl_id1("4", "10", "1", "Артикул", "artikl_id1"),
-    artikl_id2("4", "10", "1", "Артикул", "artikl_id2");
+    artikl_id2("4", "10", "1", "Артикул", "artikl_id2"),
+    groups_id("4", "10", "1", "Категории", "groups_id");
 
     private MetaField meta = new MetaField(this);
     private static Query query = new Query(values());

@@ -2659,25 +2659,28 @@ public class CardPanels extends javax.swing.JPanel {
     private void artiklToRascladka(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_artiklToRascladka
         try {
             ElemGlass classElem = (ElemGlass) winNode.com5t();
-            double selectID = winNode.com5t().id;
-            Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 1, eArtikl.level2, 12, "and");
+            if (classElem.owner.area.getNumPoints() < Com5t.MAXSIDE) {
+                
+                double selectID = winNode.com5t().id;
+                Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 1, eArtikl.level2, 12, "and");
 
-            new DicArtikl(thiz, (artiklRec) -> {
+                new DicArtikl(thiz, (artiklRec) -> {
 
-                if (artiklRec.get(eArtikl.id) != null) {
-                    //classElem.gson.param.addProperty(PKjson.artiklRasc, artiklRec.getStr(eArtikl.id));
-                    UPar.addProperty(classElem.gson, List.of(PKjson.artiklRasc), artiklRec.getInt(eArtikl.id));
-                } else {
-                    UPar.remove(classElem.gson.param, List.of(PKjson.artiklRasc));
-                    UPar.remove(classElem.gson.param, List.of(PKjson.colorRasc));
-                    UPar.remove(classElem.gson.param, List.of(PKjson.horRasc));
-                    UPar.remove(classElem.gson.param, List.of(PKjson.verRasc));
-                    classElem.rascRec = eArtikl.virtualRec();
-                    classElem.rascColorID = -3;
-                }
-                changeAndRedraw();
+                    if (artiklRec.get(eArtikl.id) != null) {
+                        //classElem.gson.param.addProperty(PKjson.artiklRasc, artiklRec.getStr(eArtikl.id));
+                        UPar.addProperty(classElem.gson, List.of(PKjson.artiklRasc), artiklRec.getInt(eArtikl.id));
+                    } else {
+                        UPar.remove(classElem.gson.param, List.of(PKjson.artiklRasc));
+                        UPar.remove(classElem.gson.param, List.of(PKjson.colorRasc));
+                        UPar.remove(classElem.gson.param, List.of(PKjson.horRasc));
+                        UPar.remove(classElem.gson.param, List.of(PKjson.verRasc));
+                        classElem.rascRec = eArtikl.virtualRec();
+                        classElem.rascColorID = -3;
+                    }
+                    changeAndRedraw();
 
-            }, qArtikl);
+                }, qArtikl);
+            }
 
         } catch (Exception e) {
             System.err.println("Error: Systree.rascladkaToGlass() " + e);

@@ -494,6 +494,7 @@ public class PSConvert {
             updateSql(eJoinvar.up, eJoinvar.joining_id, "cconn", eJoining.up, "cconn");
             updateSql(eJoindet.up, eJoindet.joinvar_id, "cunic", eJoinvar.up, "cunic");
             updateSql(eJoindet.up, eJoindet.artikl_id, "anumb", eArtikl.up, "code");
+            executeSql("update joining set groups_id = (select id from groups a where grup = 13 and a.name = joining.cpref)");
             executeSql("update joinvar set types = types * 10 + cnext");
             executeSql("update joindet set color_fk = (select id from color a where a.cnumb = joindet.color_fk) where joindet.color_fk > 0 and joindet.color_fk != 100000");
             executeSql("update joindet set color_fk = (select id from groups a where a.grup = 7 and a.npp = joindet.color_fk) where joindet.color_fk < 0");
@@ -827,6 +828,13 @@ public class PSConvert {
             while (rs.next()) {
                 String sql = "insert into " + eGroups.up.tname() + "(ID, GRUP, NAME, NPP) values ("
                         + Connect.genId(eGroups.up) + "," + TypeGrup.CATEG_VST.id + ",'" + rs.getString("VPREF") + "'," + rs.getInt("ATYPM") + ")";
+                st2.executeUpdate(sql);
+            }
+            //Категории соединений
+            rs = st1.executeQuery("select distinct CPREF, from CONNLST order by CPREF");
+            while (rs.next()) {
+                String sql = "insert into " + eGroups.up.tname() + "(ID, GRUP, NAME) values ("
+                        + Connect.genId(eGroups.up) + "," + TypeGrup.CATEG_JOIN.id + ",'" + rs.getString("CPREF") + ")";
                 st2.executeUpdate(sql);
             }
             //Категории комплектов

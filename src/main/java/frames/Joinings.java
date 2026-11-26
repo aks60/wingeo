@@ -41,6 +41,7 @@ import startup.App;
 import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;
 import domain.eArtdet;
+import domain.eKits;
 import domain.eParmap;
 import frames.dialog.DicArtikl2;
 import frames.swing.comp.DefCellEditorBtn;
@@ -56,6 +57,7 @@ import report.sup.RTable;
 public class Joinings extends javax.swing.JFrame {
 
     private Query qGroups = new Query(eGroups.values());
+     private Query qCateg = new Query(eGroups.values());
     private Query qColor = new Query(eColor.id, eColor.groups_id, eColor.name);
     private Query qArtikl = new Query(eArtikl.values());
     private Query qJoining = new Query(eJoining.values());
@@ -232,6 +234,19 @@ public class Joinings extends javax.swing.JFrame {
         UGui.setSelectedRow(tab1);
     }
 
+    public void selectionTab0(ListSelectionEvent event) {
+        List.of(qJoining, qJoinvar, qJoindet, qJoinpar1, qJoinpar2).forEach(q -> q.execsql());
+        UGui.clearTable(tab1, tab2, tab3, tab4, tab5);
+        int index = UGui.getIndexRec(tab0);
+        if (index != -1) {
+            Record record = qCateg.get(index);
+            Integer id = record.getInt(eGroups.id);
+            qJoining.sql(eJoining.data(), eJoining.id, id).sort(eJoining.name);
+            ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
+            UGui.setSelectedRow(tab1);
+        }
+    }
+    
     public void selectionTab1(ListSelectionEvent event) {
         UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
         List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> UGui.getQuery(tab).execsql());
@@ -554,6 +569,8 @@ public class Joinings extends javax.swing.JFrame {
         pan4 = new javax.swing.JPanel();
         scr1 = new javax.swing.JScrollPane();
         tab1 = new javax.swing.JTable();
+        scr0 = new javax.swing.JScrollPane();
+        tab0 = new javax.swing.JTable();
         pan1 = new javax.swing.JPanel();
         scr2 = new javax.swing.JScrollPane();
         tab2 = new javax.swing.JTable();
@@ -591,7 +608,6 @@ public class Joinings extends javax.swing.JFrame {
         setTitle("Соединения");
         setIconImage((new javax.swing.ImageIcon(getClass().getResource("/img32/d033.gif")).getImage()));
         setMinimumSize(new java.awt.Dimension(800, 500));
-        setPreferredSize(new java.awt.Dimension(800, 600));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 Joinings.this.windowClosed(evt);
@@ -828,6 +844,38 @@ public class Joinings extends javax.swing.JFrame {
         }
 
         pan4.add(scr1, java.awt.BorderLayout.CENTER);
+
+        scr0.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0), " ", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.DEFAULT_POSITION, frames.UGui.getFont(0,0)));
+        scr0.setPreferredSize(new java.awt.Dimension(140, 404));
+
+        tab0.setFont(frames.UGui.getFont(0,0));
+        tab0.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Категория"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tab0.setFillsViewportHeight(true);
+        tab0.setName("tab1"); // NOI18N
+        tab0.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tab0.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabMouseClicked(evt);
+            }
+        });
+        scr0.setViewportView(tab0);
+
+        pan4.add(scr0, java.awt.BorderLayout.WEST);
 
         pan2.add(pan4);
 
@@ -1151,14 +1199,14 @@ public class Joinings extends javax.swing.JFrame {
     private void tabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMouseClicked
 
         if (evt.getButton() == MouseEvent.BUTTON3) {
-            JTable table = List.of(tab1, tab2, tab3, tab4, tab5).stream().filter(it -> it == evt.getSource()).findFirst().get();
-            List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> tab.setBorder(null));
+            JTable table = List.of(tab1, tab2, tab3, tab4, tab5, tab0).stream().filter(it -> it == evt.getSource()).findFirst().get();
+            List.of(tab1, tab2, tab3, tab4, tab5, tab0).forEach(tab -> tab.setBorder(null));
             table.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 255, 255)));
             ppmCrud.show(table, evt.getX(), evt.getY());
 
         } else if (evt.getButton() == MouseEvent.BUTTON1) {
             JTable table = (JTable) evt.getSource();
-            UGui.updateBorderAndSql(table, List.of(tab1, tab2, tab3, tab4, tab5));
+            UGui.updateBorderAndSql(table, List.of(tab1, tab2, tab3, tab4, tab5, tab0));
             List.of(btnClone, btnFind1, btnFind2).forEach(btn -> btn.setEnabled(false));
             if (tab1.getBorder() != null) {
                 List.of(btnClone, btnFind1, btnFind2).forEach(btn -> btn.setEnabled(true));
@@ -1201,12 +1249,14 @@ public class Joinings extends javax.swing.JFrame {
     private javax.swing.JPanel pan4;
     private javax.swing.JPanel pan5;
     private javax.swing.JPopupMenu ppmCrud;
+    private javax.swing.JScrollPane scr0;
     private javax.swing.JScrollPane scr1;
     private javax.swing.JScrollPane scr2;
     private javax.swing.JScrollPane scr3;
     private javax.swing.JScrollPane scr4;
     private javax.swing.JScrollPane scr5;
     private javax.swing.JPanel south;
+    private javax.swing.JTable tab0;
     private javax.swing.JTable tab1;
     private javax.swing.JTable tab2;
     private javax.swing.JTable tab3;
@@ -1228,6 +1278,13 @@ public class Joinings extends javax.swing.JFrame {
         filterTable.getTxt().grabFocus();
 
         List.of(btnIns, btnDel).forEach(b -> b.addActionListener(l -> UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5)));
+        tab0.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                if (event.getValueIsAdjusting() == false) {
+                    //selectionTab0(event);
+                }
+            }
+        });
         tab1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
                 if (event.getValueIsAdjusting() == false) {
