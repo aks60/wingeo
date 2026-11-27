@@ -67,7 +67,7 @@ public class Adm extends javax.swing.JFrame {
     public Adm() {
         initComponents();
         initElements();
-        timer.setRepeats(false);
+        timer.setRepeats(true);
     }
 
     private void loadingPath() {
