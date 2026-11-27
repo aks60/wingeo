@@ -834,7 +834,7 @@ public class PSConvert {
             rs = st1.executeQuery("select distinct CPREF from CONNLST order by CPREF");
             while (rs.next()) {
                 String sql = "insert into " + eGroups.up.tname() + "(ID, GRUP, NAME) values ("
-                        + Connect.genId(eGroups.up) + "," + TypeGrup.CATEG_JOIN.id + ",'" + rs.getString("CPREF") + ")";
+                        + Connect.genId(eGroups.up) + "," + TypeGrup.CATEG_JOIN.id + ",'" + rs.getString("CPREF") + "')";
                 st2.executeUpdate(sql);
             }
             //Категории комплектов
