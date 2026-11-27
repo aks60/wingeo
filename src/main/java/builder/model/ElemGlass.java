@@ -364,30 +364,34 @@ public class ElemGlass extends ElemSimple {
     //Линии размерности
     @Override
     public void paint() {
-        Geometry geoFalz = owner.area.getGeometryN(2);
-        if (geoFalz != null && winc.sceleton == false) {
+        try {
+            Geometry geoFalz = owner.area.getGeometryN(2);
+            if (geoFalz != null && winc.sceleton == false) {
 
-            winc.gc2d.setColor(this.color());
-            Shape shape = new ShapeWriter().toShape(geoFalz);
-            winc.gc2d.fill(shape);
+                winc.gc2d.setColor(this.color());
+                Shape shape = new ShapeWriter().toShape(geoFalz);
+                winc.gc2d.fill(shape);
 
-            if (this.rascRec.isVirtual() == false) {
-                winc.gc2d.setStroke(new BasicStroke(1));
-                if (owner.area.getNumPoints() < Com5t.MAXSIDE) {
-                    Record colorRasc = eColor.find(this.rascColorID);
-                    winc.gc2d.setColor(new Color(colorRasc.getInt(eColor.rgb)));
-                    for (Polygon p : this.listRasc) {
-                        shape = new ShapeWriter().toShape(p);
+                if (this.rascRec.isVirtual() == false) {
+                    winc.gc2d.setStroke(new BasicStroke(1));
+                    if (owner.area.getNumPoints() < Com5t.MAXSIDE) {
+                        Record colorRasc = eColor.find(this.rascColorID);
                         winc.gc2d.setColor(new Color(colorRasc.getInt(eColor.rgb)));
-                        winc.gc2d.fill(shape);
-                        winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
-                        winc.gc2d.draw(shape);
+                        for (Polygon p : this.listRasc) {
+                            shape = new ShapeWriter().toShape(p);
+                            winc.gc2d.setColor(new Color(colorRasc.getInt(eColor.rgb)));
+                            winc.gc2d.fill(shape);
+                            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
+                            winc.gc2d.draw(shape);
+                        }
                     }
                 }
-            }
 
-        } else if (geoFalz != null) {
-            //
+            } else if (geoFalz != null) {
+                //
+            }
+        } catch (Exception e) {
+            System.err.println("Error: ElemClass.paint() " + e);
         }
     }
 

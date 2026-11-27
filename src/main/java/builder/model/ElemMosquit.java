@@ -39,7 +39,7 @@ public class ElemMosquit extends ElemSimple {
         } else {
             Record artdetRec = eArtdet.find(artiklRec.getInt(eArtikl.id));
             Record colorRec = eColor.find3(artdetRec.getInt(eArtdet.color_fk));
-            colorID1 = colorRec.getInt(eColor.id);            
+            colorID1 = colorRec.getInt(eColor.id);
         }
 
         //Состав москитки. ВНИМАЕИЕ! elementID подменён на sysprofRec
@@ -80,9 +80,9 @@ public class ElemMosquit extends ElemSimple {
     @Override
     public void addSpecific(TRecord spcAdd) {
         try {
-            if(spcAdd.artiklRec.getStr(eArtikl.code).substring(0, 1).equals("@")) {
+            if (spcAdd.artiklRec.getStr(eArtikl.code).substring(0, 1).equals("@")) {
                 return;
-            }            
+            }
             spcAdd.count = UPar.to_11030_12060_14030_15040_25060_33030_34060_38030_39060(spcAdd); //кол. ед. с учётом парам.
             spcAdd.count += UPar.to_14050_24050_33050_38050(spcRec, spcAdd); //кол. ед. с шагом
             spcAdd.width += UPar.to_12050_15050_34051_39020(spcAdd); //поправка мм            
@@ -120,22 +120,26 @@ public class ElemMosquit extends ElemSimple {
     //Линии размерности
     @Override
     public void paint() {
-        if (this.artiklRec.isVirtual() == false && winc.sceleton == false) {
-            Envelope envMosq = owner.area.getGeometryN(1).getEnvelopeInternal();
-            int z = (winc.scale < 0.1) ? 80 : 30;
-            int h = 0, w = 0;
-            Record colorMosq = eColor.find(this.colorID1);
-            winc.gc2d.setColor(this.color());
-            winc.gc2d.setStroke(new BasicStroke(1));
+        try {
+            if (this.artiklRec.isVirtual() == false && winc.sceleton == false) {
+                Envelope envMosq = owner.area.getGeometryN(1).getEnvelopeInternal();
+                int z = (winc.scale < 0.1) ? 80 : 30;
+                int h = 0, w = 0;
+                Record colorMosq = eColor.find(this.colorID1);
+                winc.gc2d.setColor(this.color());
+                winc.gc2d.setStroke(new BasicStroke(1));
 
-            for (int i = 1; i < (envMosq.getMaxY() - envMosq.getMinY()) / z; i++) {
-                h = h + z;
-                winc.gc2d.drawLine((int) envMosq.getMinX(), (int) (envMosq.getMinY() + h), (int) envMosq.getMaxX(), (int) (envMosq.getMinY() + h));
+                for (int i = 1; i < (envMosq.getMaxY() - envMosq.getMinY()) / z; i++) {
+                    h = h + z;
+                    winc.gc2d.drawLine((int) envMosq.getMinX(), (int) (envMosq.getMinY() + h), (int) envMosq.getMaxX(), (int) (envMosq.getMinY() + h));
+                }
+                for (int i = 1; i < (envMosq.getMaxX() - envMosq.getMinX()) / z; i++) {
+                    w = w + z;
+                    winc.gc2d.drawLine((int) (envMosq.getMinX() + w), (int) envMosq.getMinY(), (int) (envMosq.getMinX() + w), (int) envMosq.getMaxY());
+                }
             }
-            for (int i = 1; i < (envMosq.getMaxX() - envMosq.getMinX()) / z; i++) {
-                w = w + z;
-                winc.gc2d.drawLine((int) (envMosq.getMinX() + w), (int) envMosq.getMinY(), (int) (envMosq.getMinX() + w), (int) envMosq.getMaxY());
-            }
+        } catch (Exception e) {
+            System.err.println("Error: ElemMosquit.paint() " + e);
         }
     }
 

@@ -68,7 +68,7 @@ public class AreaStvorka extends AreaSimple {
     public void initStvorka() {
         try {
             //Если нет полигона створки в гл.окне то 'owner.area', иначе 'this.area', получается при распиле owner.area импостом
-            Geometry frameBox = (UCom.filter(winc.listElem, Type.IMPOST, Type.SHTULP).isEmpty()) 
+            Geometry frameBox = (UCom.filter(winc.listElem, Type.IMPOST, Type.SHTULP).isEmpty())
                     || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
 
             //Полигон створки с учётом нахлёста 
@@ -188,7 +188,7 @@ public class AreaStvorka extends AreaSimple {
                 || (root.type == Type.DOOR) ? owner.area.getGeometryN(0) : this.area.getGeometryN(0);
         try {
             //Полигон створки с учётом нахлёста 
-            double amend =  winc.syssizRec.getDbl(eSyssize.naxl);
+            double amend = winc.syssizRec.getDbl(eSyssize.naxl);
             Polygon stvShell = UGeo.bufferGeometry(frameBox, winc.listElem, -amend, 1); //полигон векторов сторон створки с учётом нахл.
             Coordinate[] coo = stvShell.getGeometryN(0).getCoordinates();
             for (int i = 0; i < coo.length - 1; i++) {
@@ -298,37 +298,41 @@ public class AreaStvorka extends AreaSimple {
     }
 
     public void paint() {
-        if (winc.sceleton == false) {
-            winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
+        try {
+            if (winc.sceleton == false) {
+                winc.gc2d.setColor(new java.awt.Color(0, 0, 0));
 
-            if (this.lineOpenHor != null) { //линии горизонт. открывания
-                Shape shape = new ShapeWriter().toShape(this.lineOpenHor);
-                winc.gc2d.draw(shape);
+                if (this.lineOpenHor != null) { //линии горизонт. открывания
+                    Shape shape = new ShapeWriter().toShape(this.lineOpenHor);
+                    winc.gc2d.draw(shape);
+                }
+                if (this.lineOpenVer != null) { //линии вертик. открывания
+                    Shape shape = new ShapeWriter().toShape(this.lineOpenVer);
+                    winc.gc2d.draw(shape);
+                }
+                //Для картинок в строках winc.canvas равен null
+                if (this.areaHand != null) {
+                    Shape shape = new ShapeWriter().toShape(this.areaHand);
+                    int handColor2 = (handColor[1] == -3) ? handColor[0] : handColor[1];
+                    Record colorRec = eColor.find(handColor2);
+                    int rgb = colorRec.getInt(eColor.rgb);
+                    winc.gc2d.setColor(new java.awt.Color(rgb));
+                    winc.gc2d.fill(shape);
+                    winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
+                    winc.gc2d.draw(shape);
+                }
+                if (timer.isRunning() == true) {
+                    this.frames.stream().filter(e -> e.type == Type.STV_SIDE).forEach(e -> ((Com5t) e).timer.start());
+                }
+            } else if (this.area != null) {
+                winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
+                for (int i = 0; i < 3; ++i) {
+                    Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(i));
+                    winc.gc2d.draw(shape);
+                }
             }
-            if (this.lineOpenVer != null) { //линии вертик. открывания
-                Shape shape = new ShapeWriter().toShape(this.lineOpenVer);
-                winc.gc2d.draw(shape);
-            }
-            //Для картинок в строках winc.canvas равен null
-            //if (winc.canvas != null) {
-            Shape shape = new ShapeWriter().toShape(this.areaHand);
-            int handColor2 = (handColor[1] == -3) ? handColor[0] : handColor[1];
-            Record colorRec = eColor.find(handColor2);
-            int rgb = colorRec.getInt(eColor.rgb);
-            winc.gc2d.setColor(new java.awt.Color(rgb));
-            winc.gc2d.fill(shape);
-            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
-            winc.gc2d.draw(shape);
-            //}
-            if (timer.isRunning() == true) {
-                this.frames.stream().filter(e -> e.type == Type.STV_SIDE).forEach(e -> ((Com5t) e).timer.start());
-            }
-        } else if (this.area != null) {
-            winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
-            for (int i = 0; i < 3; ++i) {
-                Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(i));
-                winc.gc2d.draw(shape);
-            }
+        } catch (Exception e) {
+            System.err.println("Error: AreaStvorka.paint() " + e);
         }
     }
 

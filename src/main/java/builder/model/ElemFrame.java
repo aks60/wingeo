@@ -122,7 +122,7 @@ public class ElemFrame extends ElemSimple {
             Record artiklRec1 = UCom.joinEl(this, 0).artiklRec;
             Record artiklRec2 = UCom.joinEl(this, 1).artiklRec;
             Record syssizRec1 = eSyssize.find(artiklRec1);
-            Record syssizRec2 = eSyssize.find(artiklRec2);            
+            Record syssizRec2 = eSyssize.find(artiklRec2);
             double prip1 = (syssizRec1.getDbl(eSyssize.prip) == 0) ? 0 : syssizRec1.getDbl(eSyssize.prip);
             double prip2 = (syssizRec2.getDbl(eSyssize.prip) == 0) ? 0 : syssizRec2.getDbl(eSyssize.prip);
             spcRec.width = (winc.syssizRec == null) ? length() : length() + prip1 + prip2;
@@ -268,20 +268,24 @@ public class ElemFrame extends ElemSimple {
     //Линии размерности
     @Override
     public void paint() {
-        if (this.area != null && winc.sceleton == false) {
+        try {
+            if (this.area != null && winc.sceleton == false) {
 
-            super.paint();
-            winc.gc2d.setColor(this.color());
-            Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(0));
-            winc.gc2d.fill(shape);
+                super.paint();
+                winc.gc2d.setColor(this.color());
+                Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(0));
+                winc.gc2d.fill(shape);
 
-            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
-            winc.gc2d.draw(shape);
+                winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
+                winc.gc2d.draw(shape);
 
-        } else if (this.area != null) {
-            winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
-            Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(0));
-            winc.gc2d.draw(shape);
+            } else if (this.area != null) {
+                winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
+                Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(0));
+                winc.gc2d.draw(shape);
+            }
+        } catch (Exception e) {
+            System.err.println("Error: ElemFrame.paint() " + e);
         }
     }
 

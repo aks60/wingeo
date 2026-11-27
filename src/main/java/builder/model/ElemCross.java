@@ -69,14 +69,14 @@ public class ElemCross extends ElemSimple {
 
             owner.childs.get(0).area = (Polygon) geoSplit.get(0);
             owner.childs.get(2).area = (Polygon) geoSplit.get(1);
-            
+
             //Если импост изменились координаты
             LineString lineImp = (LineString) geoSplit.get(2);
-            if(segmImp.toGeometry(gf).equals(lineImp) == false) {
+            if (segmImp.toGeometry(gf).equals(lineImp) == false) {
                 this.x1(lineImp.getCoordinateN(0).x);
                 this.y1(lineImp.getCoordinateN(0).y);
                 this.x2(lineImp.getCoordinateN(1).x);
-                this.y2(lineImp.getCoordinateN(1).y);                
+                this.y2(lineImp.getCoordinateN(1).y);
             }
 
             //Левый и правый сегмент вдоль импоста
@@ -193,22 +193,26 @@ public class ElemCross extends ElemSimple {
     //Линии размерности
     @Override
     public void paint() {
-        if (this.area != null && winc.sceleton == false) {
-            winc.gc2d.setColor(this.color());
+        try {
+            if (this.area != null && winc.sceleton == false) {
+                winc.gc2d.setColor(this.color());
 
-            super.paint();
+                super.paint();
 
-            Geometry geoInne = owner.area.getGeometryN(1);
-            Polygon geoPain = (Polygon) this.area.intersection(geoInne); //полигон для рисования
-            Shape shape = new ShapeWriter().toShape(geoPain);
-            winc.gc2d.fill(shape);
-            winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
-            winc.gc2d.draw(shape);
+                Geometry geoInne = owner.area.getGeometryN(1);
+                Polygon geoPain = (Polygon) this.area.intersection(geoInne); //полигон для рисования
+                Shape shape = new ShapeWriter().toShape(geoPain);
+                winc.gc2d.fill(shape);
+                winc.gc2d.setColor(new java.awt.Color(000, 000, 000));
+                winc.gc2d.draw(shape);
 
-        } else if (this.area != null) {
-            winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
-            Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(0));
-            winc.gc2d.draw(shape);
+            } else if (this.area != null) {
+                winc.gc2d.setColor(new java.awt.Color(000, 000, 255));
+                Shape shape = new ShapeWriter().toShape(this.area.getGeometryN(0));
+                winc.gc2d.draw(shape);
+            }
+        } catch (Exception e) {
+            System.err.println("Error: AreaCross.paint() " + e);
         }
     }
 
