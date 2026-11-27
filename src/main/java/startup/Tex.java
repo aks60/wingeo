@@ -6,7 +6,7 @@ import frames.swing.comp.ProgressBar;
 import common.eProp;
 import dataset.Record;
 import builder.Wincalc;
-import domain.eSysprod;
+import metadb.domain.eSysprod;
 import java.awt.Frame;
 import java.util.HashMap;
 import javax.swing.JCheckBoxMenuItem;

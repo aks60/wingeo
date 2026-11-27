@@ -2,7 +2,7 @@ package frames;
 
 import dataset.Connect;
 import dataset.Query;
-import domain.eProject;
+import metadb.domain.eProject;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;

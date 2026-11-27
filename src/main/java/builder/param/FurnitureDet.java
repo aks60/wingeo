@@ -1,10 +1,10 @@
 package builder.param;
 
 import dataset.Record;
-import domain.eArtikl;
-import domain.eFurndet;
-import domain.eFurnpar2;
-import enums.Layout;
+import metadb.domain.eArtikl;
+import metadb.domain.eFurndet;
+import metadb.domain.eFurnpar2;
+import metadb.enums.Layout;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
@@ -14,10 +14,10 @@ import builder.model.AreaSimple;
 import builder.model.AreaStvorka;
 import builder.model.ElemSimple;
 import common.UCom;
-import domain.eColor;
-import domain.eGroups;
-import enums.LayoutHand;
-import enums.Type;
+import metadb.domain.eColor;
+import metadb.domain.eGroups;
+import metadb.enums.LayoutHand;
+import metadb.enums.Type;
 
 //Фурнитура
 public class FurnitureDet extends Par5s {

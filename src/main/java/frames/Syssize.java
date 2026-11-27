@@ -1,7 +1,7 @@
 package frames;
 
 import dataset.Query;
-import domain.eSyssize;
+import metadb.domain.eSyssize;
 import java.awt.Frame;
 import java.awt.Window;
 import javax.swing.JTable;

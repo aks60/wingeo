@@ -3,7 +3,7 @@ package frames.dialog;
 import frames.UGui;
 import dataset.Query;
 import dataset.Record;
-import domain.eParams;
+import metadb.domain.eParams;
 import frames.swing.comp.DefTableModel;
 import common.listener.ListenerRecord;
 import dataset.Field;

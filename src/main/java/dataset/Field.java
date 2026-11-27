@@ -45,7 +45,7 @@ public interface Field {
 
     default String tname() {
 
-        String str = this.getClass().toString().substring(14);
+        String str = this.getClass().toString().substring(21);
         StringBuffer str2 = new StringBuffer(str);
         int sep = 0;
         for (int index = 1; index < str.length(); ++index) {

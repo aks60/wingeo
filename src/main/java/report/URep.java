@@ -3,7 +3,7 @@ package report;
 import builder.Wincalc;
 import common.eProp;
 import dataset.Record;
-import domain.ePrjprod;
+import metadb.domain.ePrjprod;
 import frames.swing.comp.Canvas;
 import java.awt.image.BufferedImage;
 import java.io.File;

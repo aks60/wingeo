@@ -16,23 +16,23 @@ import common.UCom;
 import common.listener.ListenerAction;
 import dataset.Field;
 import dataset.Query;
-import domain.eArtdet;
-import domain.eArtikl;
-import domain.eColor;
-import domain.eElement;
-import domain.eFurniture;
-import domain.eJoining;
-import domain.eJoinvar;
-import domain.eSysfurn;
-import domain.eSysprof;
-import domain.eSystree;
+import metadb.domain.eArtdet;
+import metadb.domain.eArtikl;
+import metadb.domain.eColor;
+import metadb.domain.eElement;
+import metadb.domain.eFurniture;
+import metadb.domain.eJoining;
+import metadb.domain.eJoinvar;
+import metadb.domain.eSysfurn;
+import metadb.domain.eSysprof;
+import metadb.domain.eSystree;
 import dataset.Record;
-import enums.Layout;
-import enums.LayoutHand;
-import enums.PKjson;
-import enums.TypeJoin;
-import enums.TypeOpen1;
-import enums.UseSide;
+import metadb.enums.Layout;
+import metadb.enums.LayoutHand;
+import metadb.enums.PKjson;
+import metadb.enums.TypeJoin;
+import metadb.enums.TypeOpen1;
+import metadb.enums.UseSide;
 import frames.UGui;
 import frames.dialog.DicArtikl;
 import frames.dialog.DicColor;
@@ -101,15 +101,15 @@ public class CardPanels extends javax.swing.JPanel {
                 UTree.changePpmTree(winTree, ppmTree, com5t);
 
                 //Таймер цвета
-                if (enums.Type.contains(com5t, enums.Type.PARAM, enums.Type.FRAME, enums.Type.JOINING) == false) {
+                if (metadb.enums.Type.contains(com5t, metadb.enums.Type.PARAM, metadb.enums.Type.FRAME, metadb.enums.Type.JOINING) == false) {
                     if (winc.canvas != null) {
                         com5t.timer.start();
                         winc.canvas.repaint();
                     }
                 }
                 //Коробка
-                if (List.of(enums.Type.RECTANGL, enums.Type.TRAPEZE,
-                        enums.Type.ARCH, enums.Type.DOOR).contains(com5t.type)) {
+                if (List.of(metadb.enums.Type.RECTANGL, metadb.enums.Type.TRAPEZE,
+                        metadb.enums.Type.ARCH, metadb.enums.Type.DOOR).contains(com5t.type)) {
                     ((CardLayout) panCont.getLayout()).show(panCont, "card18");
                     ((TitledBorder) pan12.getBorder()).setTitle(winc.root.type.name);
                     setText(txt9, eColor.find(winc.root.colorID1).getStr(eColor.name));
@@ -126,8 +126,8 @@ public class CardPanels extends javax.swing.JPanel {
                     setText(txt67, eArtikl.find2(com5t.artiklRec.getInt(eArtikl.analog_id)).getStr(eArtikl.code));
 
                     //Рама, импост...
-                } else if (List.of(enums.Type.BOX_SIDE, enums.Type.STV_SIDE, enums.Type.IMPOST,
-                        enums.Type.STOIKA, enums.Type.SHTULP).contains(com5t.type)) {
+                } else if (List.of(metadb.enums.Type.BOX_SIDE, metadb.enums.Type.STV_SIDE, metadb.enums.Type.IMPOST,
+                        metadb.enums.Type.STOIKA, metadb.enums.Type.SHTULP).contains(com5t.type)) {
                     ((CardLayout) panCont.getLayout()).show(panCont, "card13");
                     ((TitledBorder) pan13.getBorder()).setTitle(winNode.toString());
                     setText(txt32, com5t.artiklRec.getStr(eArtikl.code));
@@ -143,7 +143,7 @@ public class CardPanels extends javax.swing.JPanel {
                     setIcon(btn20, UPar.isFinite(com5t.gson.param, PKjson.colorID3));
 
                     //Стеклопакет
-                } else if (com5t.type == enums.Type.GLASS) {
+                } else if (com5t.type == metadb.enums.Type.GLASS) {
                     ElemGlass elem = (ElemGlass) com5t;
                     ((CardLayout) panCont.getLayout()).show(panCont, "card15");
                     dataset.Record artiklRec = com5t.artiklRec;
@@ -173,7 +173,7 @@ public class CardPanels extends javax.swing.JPanel {
 //                    }
 
                     //Створка
-                } else if (com5t.type == enums.Type.STVORKA) {
+                } else if (com5t.type == metadb.enums.Type.STVORKA) {
                     //через сокр. тарификацию
                     ((CardLayout) panCont.getLayout()).show(panCont, "card16");
                     AreaStvorka stv = (AreaStvorka) com5t;
@@ -215,7 +215,7 @@ public class CardPanels extends javax.swing.JPanel {
                     setText(txt48, eColor.find(stv.lockColor[0]).getStr(eColor.name));
                     setIcon(btn24, UPar.isFinite(stv.gson.param, PKjson.colorLock));
                     //Москитка
-                    Com5t mosq = stv.childs.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
+                    Com5t mosq = stv.childs.stream().filter(e -> e.type == metadb.enums.Type.MOSQUIT).findFirst().orElse(null);
                     List.of(txt54, txt55, txt60, txt56).forEach(e -> e.setText(null));
                     List.of(btn16, btn32).forEach(btn -> setIcon(btn, false));
                     if (mosq != null) {
@@ -229,7 +229,7 @@ public class CardPanels extends javax.swing.JPanel {
                     }
 
                     //Соединения
-                } else if (com5t.type == enums.Type.JOINING) {
+                } else if (com5t.type == metadb.enums.Type.JOINING) {
                     ((CardLayout) panCont.getLayout()).show(panCont, "card17");
                     DefMutableTreeNode nodeParent = (DefMutableTreeNode) winNode.getParent();
                     ElemSimple elem5e = (ElemSimple) nodeParent.com5t();
@@ -330,7 +330,7 @@ public class CardPanels extends javax.swing.JPanel {
 
             HashSet<dataset.Record> colorFilterSet = DicColor.filterTxt(eColor.data(), colorFilterTxt);
             HashSet<dataset.Record> colorSet = DicColor.filterDet(colorFilterSet, artdetList, colorFilterMark);
-            if (comElem.type == enums.Type.STV_SIDE) {
+            if (comElem.type == metadb.enums.Type.STV_SIDE) {
                 if (comElem.layout() == Layout.BOT) {
                     keys.add(PKjson.stvorkaBot);
                 } else if (comElem.layout() == Layout.RIG) {
@@ -350,7 +350,7 @@ public class CardPanels extends javax.swing.JPanel {
             }
 
             new DicColor(thiz, (colorRec) -> {
-                final Com5t com5t = (comElem.type == enums.Type.STV_SIDE) ? comElem.owner : comElem;
+                final Com5t com5t = (comElem.type == metadb.enums.Type.STV_SIDE) ? comElem.owner : comElem;
 
                 if (colorRec.get(1) == null) {
                     UPar.remove(com5t.gson.param, keys);
@@ -2560,7 +2560,7 @@ public class CardPanels extends javax.swing.JPanel {
 
                 new DicSysprof(thiz, paramRec.getInt(eSysprof.id), (sysprofRec) -> {
                     Wincalc winc = wincalc();
-                    if (winNode.com5t().type == enums.Type.BOX_SIDE) { //рама окна
+                    if (winNode.com5t().type == metadb.enums.Type.BOX_SIDE) { //рама окна
                         double elemId = winNode.com5t().id;
                         GsonElem gsonRama = UCom.gson(winc.listAll, elemId);
                         if (sysprofRec.get(1) == null) {
@@ -2570,7 +2570,7 @@ public class CardPanels extends javax.swing.JPanel {
                         }
                         changeAndRedraw();
 
-                    } else if (winNode.com5t().type == enums.Type.STV_SIDE) { //рама створки
+                    } else if (winNode.com5t().type == metadb.enums.Type.STV_SIDE) { //рама створки
                         double stvId = winNode.com5t().owner.id;
                         Com5t com5tStv = winc.listArea.stream().filter(el -> el.id == stvId).findFirst().get();
                         String stvSide = null;
@@ -2908,7 +2908,7 @@ public class CardPanels extends javax.swing.JPanel {
         try {
             AreaStvorka areaStv = (AreaStvorka) winNode.com5t();
             Query qArtikl = new Query(eArtikl.values()).sql(eArtikl.data(), eArtikl.level1, 5, eArtikl.level2, 20, "and");
-            Com5t com5tMosq = wincalc().listAll.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
+            Com5t com5tMosq = wincalc().listAll.stream().filter(e -> e.type == metadb.enums.Type.MOSQUIT).findFirst().orElse(null);
             int artiklID = (com5tMosq != null && com5tMosq.artiklRec != null) ? com5tMosq.artiklRec.getInt(eArtikl.id) : -1; //id курсора в справочнике
             new DicArtikl(thiz, artiklID, (artiklRec) -> {
                 //Удаление
@@ -2923,7 +2923,7 @@ public class CardPanels extends javax.swing.JPanel {
                         UPar.addProperty(com5tMosq.gson, List.of(PKjson.artiklID), artiklRec.getInt(eArtikl.id));
 
                     } else {  //если москидки нет
-                        GsonElem mosqNew = new GsonElem(enums.Type.MOSQUIT);
+                        GsonElem mosqNew = new GsonElem(metadb.enums.Type.MOSQUIT);
                         areaStv.gson.childs.add(mosqNew); //добавим ребёнка родителю
                         UPar.addProperty(mosqNew, List.of(PKjson.artiklID), artiklRec.getInt(eArtikl.id));
                     }
@@ -2938,7 +2938,7 @@ public class CardPanels extends javax.swing.JPanel {
     }//GEN-LAST:event_artiklToMosq
 
     private void colorToMosk(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_colorToMosk
-        Com5t mosq = wincalc().listAll.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
+        Com5t mosq = wincalc().listAll.stream().filter(e -> e.type == metadb.enums.Type.MOSQUIT).findFirst().orElse(null);
         if (mosq != null) {
             dicColorToElement(mosq.gson, PKjson.colorID1, mosq.artiklRec);
         }
@@ -2947,7 +2947,7 @@ public class CardPanels extends javax.swing.JPanel {
     private void elemsToMosq(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elemsToMosq
         try {
             AreaStvorka areaStv = (AreaStvorka) winNode.com5t();
-            Com5t mosq = areaStv.childs.stream().filter(e -> e.type == enums.Type.MOSQUIT).findFirst().orElse(null);
+            Com5t mosq = areaStv.childs.stream().filter(e -> e.type == metadb.enums.Type.MOSQUIT).findFirst().orElse(null);
             if (mosq != null) {
                 int recordID = (mosq.sysprofRec == null) ? -1 : mosq.sysprofRec.getInt(eSysprof.id);
                 Query qElements = new Query(eElement.values()).sql(eElement.data(), eElement.artikl_id, mosq.artiklRec.getInt(eArtikl.id));

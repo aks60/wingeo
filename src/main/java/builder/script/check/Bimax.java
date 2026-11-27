@@ -3,7 +3,7 @@ package builder.script.check;
 import builder.script.GsonElem;
 import builder.script.GsonRoot;
 import static builder.script.GsonScript.rootGson;
-import enums.Type;
+import metadb.enums.Type;
 
 public final class Bimax {
 

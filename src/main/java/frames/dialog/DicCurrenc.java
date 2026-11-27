@@ -1,7 +1,7 @@
 package frames.dialog;
 
 import dataset.Query;
-import domain.eCurrenc;
+import metadb.domain.eCurrenc;
 import java.awt.Frame;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;

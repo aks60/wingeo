@@ -1,14 +1,14 @@
 package builder.param;
 
 import dataset.Record;
-import domain.eSetting;
+import metadb.domain.eSetting;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
 import builder.making.TRecord;
 import common.listener.ListenerAction;
 import common.listener.ListenerRecord;
-import domain.eSyspar1;
+import metadb.domain.eSyspar1;
 import java.util.ArrayList;
 
 import org.mozilla.javascript.Context;

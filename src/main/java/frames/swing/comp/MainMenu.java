@@ -2,7 +2,7 @@ package frames.swing.comp;
 
 import common.eProp;
 import common.listener.ListenerFrame;
-import domain.ePrjprod;
+import metadb.domain.ePrjprod;
 import java.util.List;
 import report.RCheck;
 import report.RMaterial;

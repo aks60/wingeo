@@ -1,12 +1,15 @@
 package builder.model;
 
+import metadb.enums.PKjson;
+import metadb.enums.UseType;
+import metadb.enums.TypeJoin;
+import metadb.enums.Type;
 import builder.Wincalc;
 import builder.making.UColor;
 import builder.script.GsonElem;
 import common.UCom;
-import domain.eArtikl;
-import domain.eSysprof;
-import enums.*;
+import metadb.domain.eArtikl;
+import metadb.domain.eSysprof;
 import java.awt.Font;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
@@ -103,7 +106,7 @@ public class AreaSimple extends Com5t {
                 if (imp.id != frm.id) {
                     Geometry line = UGeo.newLineString(frm.x1(), frm.y1(), frm.x2(), frm.y2());
 
-                    if (frm.type == enums.Type.BOX_SIDE) {
+                    if (frm.type == metadb.enums.Type.BOX_SIDE) {
                         if (line.intersects(p1)) { //левая сторона
                             winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, frm, imp));
                         }
@@ -111,7 +114,7 @@ public class AreaSimple extends Com5t {
                             winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, imp, frm));;
                         }
 
-                    } else if (frm.type == enums.Type.IMPOST && imp.owner.area.buffer(.0001).contains(line)) {
+                    } else if (frm.type == metadb.enums.Type.IMPOST && imp.owner.area.buffer(.0001).contains(line)) {
                         if (line.intersects(p1)) { //левая сторона
                             winc.listJoin.add(new ElemJoining(this.winc, TypeJoin.TIMP, frm, imp));
                         }

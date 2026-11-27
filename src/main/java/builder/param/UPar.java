@@ -6,15 +6,15 @@ import builder.model.ElemSimple;
 import builder.model.UGeo;
 import common.UCom;
 import dataset.Record;
-import domain.eArtikl;
-import domain.eElement;
-import domain.eFurniture;
-import domain.eSysfurn;
-import domain.eSysprof;
-import domain.eSystree;
-import enums.Layout;
-import enums.Type;
-import enums.TypeOpen1;
+import metadb.domain.eArtikl;
+import metadb.domain.eElement;
+import metadb.domain.eFurniture;
+import metadb.domain.eSysfurn;
+import metadb.domain.eSysprof;
+import metadb.domain.eSystree;
+import metadb.enums.Layout;
+import metadb.enums.Type;
+import metadb.enums.TypeOpen1;
 import java.util.List;
 
 /**

@@ -7,7 +7,7 @@ import common.listener.ListenerFrame;
 import dataset.Connect;
 import dataset.Query;
 import dataset.Record;
-import domain.eArtikl;
+import metadb.domain.eArtikl;
 import frames.swing.comp.ProgressBar;
 import frames.swing.comp.TableFieldFilter;
 import java.awt.BasicStroke;

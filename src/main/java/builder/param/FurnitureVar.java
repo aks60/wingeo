@@ -1,9 +1,9 @@
 package builder.param;
 
 import dataset.Record;
-import domain.eArtikl;
-import domain.eFurnpar1;
-import domain.eFurnside1;
+import metadb.domain.eArtikl;
+import metadb.domain.eFurnpar1;
+import metadb.domain.eFurnside1;
 import java.util.List;
 import builder.Wincalc;
 import builder.model.AreaStvorka;
@@ -11,9 +11,9 @@ import builder.model.Com5t;
 import builder.model.ElemSimple;
 import builder.model.UGeo;
 import common.UCom;
-import domain.eSystree;
-import enums.LayoutHand;
-import enums.Type;
+import metadb.domain.eSystree;
+import metadb.enums.LayoutHand;
+import metadb.enums.Type;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;

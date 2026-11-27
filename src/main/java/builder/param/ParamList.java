@@ -1,11 +1,11 @@
 package builder.param;
 
 import dataset.Query;
-import domain.eArtikl;
-import domain.eColor;
+import metadb.domain.eArtikl;
+import metadb.domain.eColor;
 import java.util.Arrays;
 import java.util.List;
-import enums.Enam;
+import metadb.enums.Enam;
 import java.util.ArrayList;
 
 public class ParamList {

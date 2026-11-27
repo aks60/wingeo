@@ -1,13 +1,13 @@
 package builder.model;
 
 import builder.making.TRecord;
-import domain.eArtikl;
+import metadb.domain.eArtikl;
 import builder.param.ParamList;
 import builder.script.GsonElem;
 import com.google.gson.JsonObject;
-import enums.UseUnit;
+import metadb.enums.UseUnit;
 import common.UCom;
-import enums.Layout;
+import metadb.enums.Layout;
 import java.util.HashMap;
 import java.util.List;
 

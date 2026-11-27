@@ -1,9 +1,9 @@
 package builder.making;
 
 import dataset.Record;
-import domain.eArtikl;
-import domain.eColor;
-import enums.UseUnit;
+import metadb.domain.eArtikl;
+import metadb.domain.eColor;
+import metadb.enums.UseUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Vector;

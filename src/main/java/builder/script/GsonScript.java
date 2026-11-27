@@ -2,7 +2,7 @@ package builder.script;
 
 import builder.script.check.Bimax;
 import common.eProp;
-import enums.Type;
+import metadb.enums.Type;
 import java.util.List;
 
 //Модели конструкций. Загружаются в таблицу SYSMODEL.

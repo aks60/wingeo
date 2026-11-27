@@ -1,15 +1,15 @@
 package builder.param;
 
 import dataset.Record;
-import domain.eGlasgrp;
-import domain.eGlaspar1;
+import metadb.domain.eGlasgrp;
+import metadb.domain.eGlaspar1;
 import java.util.List;
 import builder.Wincalc;
 import builder.model.Com5t;
 import builder.model.ElemSimple;
 import builder.model.UGeo;
 import common.UCom;
-import domain.eArtikl;
+import metadb.domain.eArtikl;
 import java.util.Arrays;
 import java.util.Collections;
 import org.locationtech.jts.geom.Geometry;

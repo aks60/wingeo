@@ -7,9 +7,9 @@ import builder.model.ElemFrame;
 import builder.model.ElemSimple;
 import builder.script.GsonElem;
 import common.UCom;
-import enums.Layout;
-import enums.Type;
-import enums.TypeArt;
+import metadb.enums.Layout;
+import metadb.enums.Type;
+import metadb.enums.TypeArt;
 import frames.swing.comp.DefMutableTreeNode;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -219,17 +219,17 @@ public class UTree {
                 boolean b[] = {false, false, false, false, false, true};
                 List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
 
-            } else if (enums.Type.BOX_SIDE == com5t.type || enums.Type.STV_SIDE == com5t.type) {
+            } else if (metadb.enums.Type.BOX_SIDE == com5t.type || metadb.enums.Type.STV_SIDE == com5t.type) {
                 winTree.setComponentPopupMenu(ppm);
                 boolean b[] = {false, false, false, false, false, true};
                 List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
 
-            } else if (enums.Type.IMPOST == com5t.type) {
+            } else if (metadb.enums.Type.IMPOST == com5t.type) {
                 winTree.setComponentPopupMenu(ppm);
                 boolean b[] = {false, true, false, false, false, true};
                 List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
 
-            } else if (enums.Type.STVORKA == com5t.type) {
+            } else if (metadb.enums.Type.STVORKA == com5t.type) {
                 winTree.setComponentPopupMenu(ppm);
                 boolean b[] = {false, false, false, true, false, false};
                 List.of(0, 1, 2, 3, 4).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
@@ -260,22 +260,22 @@ public class UTree {
                 boolean b[] = {false, false, false, false, false, true};
                 List.of(0, 1, 2, 3, 4, 5).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
 
-            } else if (enums.Type.BOX_SIDE == com5t.type || enums.Type.STV_SIDE == com5t.type) {
+            } else if (metadb.enums.Type.BOX_SIDE == com5t.type || metadb.enums.Type.STV_SIDE == com5t.type) {
                 winTree.setComponentPopupMenu(ppm);
                 boolean b[] = {false, false, false, false, false, true};
                 List.of(0, 1, 2, 3, 4, 5).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
 
-            } else if (enums.Type.IMPOST == com5t.type) {
+            } else if (metadb.enums.Type.IMPOST == com5t.type) {
                 winTree.setComponentPopupMenu(ppm);
                 boolean b[] = {false, true, false, false, false, true};
                 List.of(0, 1, 2, 3, 4, 5).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
 
-            } else if (enums.Type.STVORKA == com5t.type) {
+            } else if (metadb.enums.Type.STVORKA == com5t.type) {
                 winTree.setComponentPopupMenu(ppm);
                 boolean b[] = {false, false, false, true, false, false};
                 List.of(0, 1, 2, 3, 4, 5).forEach(i -> ppm.getComponent(i).setVisible(b[i]));
 
-            } else if (enums.Type.MOSQUIT == com5t.type) {
+            } else if (metadb.enums.Type.MOSQUIT == com5t.type) {
                 winTree.setComponentPopupMenu(ppm);
                 boolean b[] = {false, false, false, false, true, false};
                 List.of(0, 1, 2, 3, 4, 5).forEach(i -> ppm.getComponent(i).setVisible(b[i]));

@@ -5,10 +5,10 @@ import builder.making.TRecord;
 import builder.script.GsonElem;
 import common.UCom;
 import dataset.Query;
-import domain.eArtikl;
-import domain.eElement;
-import enums.PKjson;
-import enums.UseUnit;
+import metadb.domain.eArtikl;
+import metadb.domain.eElement;
+import metadb.enums.PKjson;
+import metadb.enums.UseUnit;
 import org.locationtech.jts.geom.Envelope;
 //TODO - Реализовать жалюзи
 //Жалюзи

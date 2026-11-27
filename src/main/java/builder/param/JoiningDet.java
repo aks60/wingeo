@@ -1,16 +1,16 @@
 package builder.param;
 
 import dataset.Record;
-import domain.eArtikl;
-import domain.eJoindet;
-import domain.eJoinpar2;
+import metadb.domain.eArtikl;
+import metadb.domain.eJoindet;
+import metadb.domain.eJoinpar2;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
 import builder.model.ElemJoining;
 import builder.model.ElemSimple;
 import common.UCom;
-import enums.Type;
+import metadb.enums.Type;
 import java.util.ArrayList;
 
 //Cоединения

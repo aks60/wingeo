@@ -6,7 +6,7 @@ import builder.model.ElemGlass;
 import builder.model.ElemMosquit;
 import builder.model.ElemSimple;
 import dataset.Record;
-import domain.eSystree;
+import metadb.domain.eSystree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 public class DefMutableTreeNode<E> extends DefaultMutableTreeNode {

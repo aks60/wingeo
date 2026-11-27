@@ -1,11 +1,11 @@
 package builder.param;
 
 import dataset.Record;
-import domain.eArtikl;
-import domain.eElement;
-import domain.eJoinpar1;
-import domain.eJoinvar;
-import domain.eSystree;
+import metadb.domain.eArtikl;
+import metadb.domain.eElement;
+import metadb.domain.eJoinpar1;
+import metadb.domain.eJoinvar;
+import metadb.domain.eSystree;
 import java.util.List;
 import builder.Wincalc;
 import builder.model.AreaStvorka;
@@ -14,9 +14,9 @@ import builder.model.ElemSimple;
 import builder.model.UGeo;
 import common.UCom;
 import common.listener.ListenerAction;
-import enums.Layout;
-import enums.Type;
-import enums.TypeJoin;
+import metadb.enums.Layout;
+import metadb.enums.Type;
+import metadb.enums.TypeJoin;
 import java.util.ArrayList;
 
 //Соединения

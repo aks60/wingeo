@@ -1,10 +1,10 @@
 package builder.making;
 
 import dataset.Record;
-import domain.eArtikl;
-import domain.eJoindet;
-import domain.eJoining;
-import domain.eJoinvar;
+import metadb.domain.eArtikl;
+import metadb.domain.eJoindet;
+import metadb.domain.eJoining;
+import metadb.domain.eJoinvar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -15,9 +15,9 @@ import builder.param.ElementDet;
 import builder.param.JoiningDet;
 import builder.param.JoiningVar;
 import builder.model.ElemSimple;
-import domain.eSetting;
-import enums.TypeJoin;
-import enums.Type;
+import metadb.domain.eSetting;
+import metadb.enums.TypeJoin;
+import metadb.enums.Type;
 import java.util.ArrayList;
 
 //Соединения

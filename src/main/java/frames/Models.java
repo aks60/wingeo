@@ -2,7 +2,7 @@ package frames;
 
 import dataset.Query;
 import dataset.Record;
-import domain.eSysmodel;
+import metadb.domain.eSysmodel;
 import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -151,7 +151,7 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
                 Wincalc winc = wincalc();
 
                 //Таймер цвета
-                if (enums.Type.contains(com5t, enums.Type.PARAM, enums.Type.FRAME, enums.Type.JOINING) == false) {
+                if (metadb.enums.Type.contains(com5t, metadb.enums.Type.PARAM, metadb.enums.Type.FRAME, metadb.enums.Type.JOINING) == false) {
                     if (winc.canvas != null) {
                         com5t.timer.start();
                         winc.canvas.repaint();
@@ -833,9 +833,9 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             if (glass.owner.gson.childs.get(i).id == glass.id) {
                 Envelope env = glass.owner.area.getEnvelopeInternal();
                 double x1 = env.getMinX(), x2 = env.getMaxX(), y = env.getMinY() + env.getHeight() / 2;
-                glass.owner.gson.childs.set(i, new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS)));
-                glass.owner.gson.childs.add(i, new GsonElem(enums.Type.IMPOST, x1, y, x2, y));
-                glass.owner.gson.childs.add(i, new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS)));
+                glass.owner.gson.childs.set(i, new GsonElem(metadb.enums.Type.AREA).addElem(new GsonElem(metadb.enums.Type.GLASS)));
+                glass.owner.gson.childs.add(i, new GsonElem(metadb.enums.Type.IMPOST, x1, y, x2, y));
+                glass.owner.gson.childs.add(i, new GsonElem(metadb.enums.Type.AREA).addElem(new GsonElem(metadb.enums.Type.GLASS)));
             }
         }
         changeAndRedraw();
@@ -847,9 +847,9 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             if (glass.owner.gson.childs.get(i).id == glass.id) {
                 Envelope env = glass.owner.area.getEnvelopeInternal();
                 double y1 = env.getMinY(), y2 = env.getMaxY(), x = env.getMinX() + env.getWidth() / 2;
-                glass.owner.gson.childs.set(i, new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS)));
-                glass.owner.gson.childs.add(i, new GsonElem(enums.Type.IMPOST, x, y1, x, y2));
-                glass.owner.gson.childs.add(i, new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS)));
+                glass.owner.gson.childs.set(i, new GsonElem(metadb.enums.Type.AREA).addElem(new GsonElem(metadb.enums.Type.GLASS)));
+                glass.owner.gson.childs.add(i, new GsonElem(metadb.enums.Type.IMPOST, x, y1, x, y2));
+                glass.owner.gson.childs.add(i, new GsonElem(metadb.enums.Type.AREA).addElem(new GsonElem(metadb.enums.Type.GLASS)));
             }
         }
         changeAndRedraw();
@@ -857,16 +857,16 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
 
     private void removeImpostAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeImpostAction
         Com5t owner = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t().owner;
-        owner.gson.childs = owner.gson.childs.stream().filter(e -> e.type == enums.Type.BOX_SIDE).collect(toList());
-        owner.gson.addElem(new GsonElem(enums.Type.GLASS));
+        owner.gson.childs = owner.gson.childs.stream().filter(e -> e.type == metadb.enums.Type.BOX_SIDE).collect(toList());
+        owner.gson.addElem(new GsonElem(metadb.enums.Type.GLASS));
         changeAndRedraw();
     }//GEN-LAST:event_removeImpostAction
 
     private void addStvorkaAction(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addStvorkaAction
         try {
             GsonElem gsonGlass = ((DefMutableTreeNode) winTree.getLastSelectedPathComponent()).com5t().gson;
-            GsonElem gsonStvorka = new GsonElem(enums.Type.STVORKA);
-            gsonStvorka.addArea(new GsonElem(enums.Type.GLASS));
+            GsonElem gsonStvorka = new GsonElem(metadb.enums.Type.STVORKA);
+            gsonStvorka.addArea(new GsonElem(metadb.enums.Type.GLASS));
             gsonStvorka.owner = gsonGlass.owner;
 
             if (gsonGlass.owner instanceof GsonRoot) {
@@ -895,15 +895,15 @@ public final class Models extends javax.swing.JFrame implements ListenerFrame<Ob
             if (stv.owner.gson.childs.get(i).id == stv.id) {
                 if (stv.owner.gson instanceof GsonRoot) { //первый уровень
 
-                    if (wincalc().listElem.stream().anyMatch(e -> e.type == enums.Type.IMPOST)) {
-                        GsonElem glass = new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS));
+                    if (wincalc().listElem.stream().anyMatch(e -> e.type == metadb.enums.Type.IMPOST)) {
+                        GsonElem glass = new GsonElem(metadb.enums.Type.AREA).addElem(new GsonElem(metadb.enums.Type.GLASS));
                         stv.owner.gson.childs.set(i, glass);
                     } else {
-                        GsonElem glass = new GsonElem(enums.Type.GLASS);
+                        GsonElem glass = new GsonElem(metadb.enums.Type.GLASS);
                         stv.owner.gson.childs.set(i, glass);
                     }
                 } else { //второй, третий... уровни
-                    GsonElem glass = new GsonElem(enums.Type.AREA).addElem(new GsonElem(enums.Type.GLASS));
+                    GsonElem glass = new GsonElem(metadb.enums.Type.AREA).addElem(new GsonElem(metadb.enums.Type.GLASS));
                     stv.owner.gson.childs.set(i, glass);
                 }
             }

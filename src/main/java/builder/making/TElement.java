@@ -1,10 +1,10 @@
 package builder.making;
 
 import dataset.Record;
-import domain.eArtikl;
-import domain.eElemdet;
-import domain.eElement;
-import enums.TypeArt;
+import metadb.domain.eArtikl;
+import metadb.domain.eElemdet;
+import metadb.domain.eElement;
+import metadb.enums.TypeArt;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
@@ -13,7 +13,7 @@ import builder.param.ElementDet;
 import builder.param.ElementVar;
 import builder.model.ElemSimple;
 import common.UCom;
-import enums.Type;
+import metadb.enums.Type;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 

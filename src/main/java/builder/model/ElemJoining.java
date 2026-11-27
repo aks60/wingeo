@@ -2,13 +2,13 @@ package builder.model;
 
 import builder.Wincalc;
 import dataset.Record;
-import enums.TypeJoin;
+import metadb.enums.TypeJoin;
 import builder.making.TRecord;
 import dataset.Query;
-import domain.eArtikl;
-import domain.eJoining;
-import domain.eJoinvar;
-import enums.Layout;
+import metadb.domain.eArtikl;
+import metadb.domain.eJoining;
+import metadb.domain.eJoinvar;
+import metadb.enums.Layout;
 import java.util.List;
 import static org.locationtech.jts.algorithm.Angle.angle;
 import static org.locationtech.jts.algorithm.Angle.diff;

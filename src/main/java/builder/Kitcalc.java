@@ -2,14 +2,14 @@ package builder;
 
 import builder.making.TRecord;
 import builder.making.TTariffic;
-import domain.eArtikl;
-import domain.eGroups;
-import domain.ePrjkit;
-import domain.ePrjprod;
+import metadb.domain.eArtikl;
+import metadb.domain.eGroups;
+import metadb.domain.ePrjkit;
+import metadb.domain.ePrjprod;
 import java.util.ArrayList;
 import java.util.List;
 import dataset.Record;
-import domain.eProject;
+import metadb.domain.eProject;
 
 public class Kitcalc {
 

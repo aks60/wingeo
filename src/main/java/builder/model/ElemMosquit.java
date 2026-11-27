@@ -6,12 +6,12 @@ import builder.script.GsonElem;
 import common.UCom;
 import dataset.Query;
 import dataset.Record;
-import domain.eArtdet;
-import domain.eArtikl;
-import domain.eColor;
-import domain.eElement;
-import enums.PKjson;
-import enums.UseUnit;
+import metadb.domain.eArtdet;
+import metadb.domain.eArtikl;
+import metadb.domain.eColor;
+import metadb.domain.eElement;
+import metadb.enums.PKjson;
+import metadb.enums.UseUnit;
 import java.awt.BasicStroke;
 import org.locationtech.jts.geom.Envelope;
 

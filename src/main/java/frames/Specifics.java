@@ -5,10 +5,10 @@ import frames.swing.comp.ProgressBar;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import dataset.Record;
-import domain.eElemdet;
-import domain.eFurndet;
-import domain.eGlasdet;
-import domain.eJoindet;
+import metadb.domain.eElemdet;
+import metadb.domain.eFurndet;
+import metadb.domain.eGlasdet;
+import metadb.domain.eJoindet;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -17,7 +17,7 @@ import builder.Wincalc;
 import builder.making.TRecord;
 import common.UCom;
 import common.eProp;
-import domain.eSysprod;
+import metadb.domain.eSysprod;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -29,13 +29,13 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import startup.App;
 import common.listener.ListenerFrame;
-import domain.eArtikl;
-import domain.eColor;
-import domain.eGroups;
-import domain.ePrjprod;
-import domain.eProject;
-import domain.eSystree;
-import enums.Scale;
+import metadb.domain.eArtikl;
+import metadb.domain.eColor;
+import metadb.domain.eGroups;
+import metadb.domain.ePrjprod;
+import metadb.domain.eProject;
+import metadb.domain.eSystree;
+import metadb.enums.Scale;
 import frames.swing.comp.DefCellRendererNumb;
 import frames.swing.comp.TableFieldFilter;
 import frames.swing.column.ColumnGroup;
@@ -161,7 +161,7 @@ public class Specifics extends javax.swing.JFrame {
         Iterator<TreeNode> ir = root.children().asIterator();
         while (ir.hasNext()) {
             DefaultMutableTreeNode node = (DefaultMutableTreeNode) ir.next();
-            enums.TypeArt type = (enums.TypeArt) node.getUserObject();
+            metadb.enums.TypeArt type = (metadb.enums.TypeArt) node.getUserObject();
             JMenu jm = new JMenu(type.name);
             jm.setFont(frames.UGui.getFont(0, 0));
             jm.setIcon(image[3]);
@@ -181,7 +181,7 @@ public class Specifics extends javax.swing.JFrame {
             Iterator<TreeNode> in = node.children().asIterator();
             while (in.hasNext()) {
                 DefaultMutableTreeNode nod3 = (DefaultMutableTreeNode) in.next();
-                enums.TypeArt typ2 = (enums.TypeArt) nod3.getUserObject();
+                metadb.enums.TypeArt typ2 = (metadb.enums.TypeArt) nod3.getUserObject();
                 JMenuItem mn2 = new JMenuItem(typ2.name, image[3]); //следующте элемены списка
                 mn2.setFont(frames.UGui.getFont(0, 0));
                 mn2.addActionListener(new java.awt.event.ActionListener() {

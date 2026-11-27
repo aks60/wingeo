@@ -8,7 +8,7 @@ import javax.swing.JCheckBoxMenuItem;
 import common.listener.ListenerFrame;
 import common.eProp;
 import dataset.Query;
-import domain.ePrjprod;
+import metadb.domain.ePrjprod;
 import frames.PathToDb;
 import java.util.List;
 import javax.swing.JTable;

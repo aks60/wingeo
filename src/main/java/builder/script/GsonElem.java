@@ -4,7 +4,7 @@ import builder.Wincalc;
 import builder.model.Com5t;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import enums.Type;
+import metadb.enums.Type;
 import java.util.ArrayList;
 import java.util.List;
 

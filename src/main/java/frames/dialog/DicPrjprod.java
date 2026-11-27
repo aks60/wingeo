@@ -5,7 +5,7 @@ import dataset.Record;
 import frames.UGui;
 import frames.swing.comp.DefTableModel;
 import common.listener.ListenerRecord;
-import domain.ePrjprod;
+import metadb.domain.ePrjprod;
 import java.util.Arrays;
 import startup.App;
 

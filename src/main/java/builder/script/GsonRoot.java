@@ -3,7 +3,7 @@ package builder.script;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import enums.Type;
+import metadb.enums.Type;
 
 public class GsonRoot extends GsonElem {
 

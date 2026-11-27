@@ -1,10 +1,10 @@
 package builder.making;
 
 import dataset.Record;
-import domain.eArtikl;
-import domain.eGlasdet;
-import domain.eGlasgrp;
-import domain.eGlasprof;
+import metadb.domain.eArtikl;
+import metadb.domain.eGlasdet;
+import metadb.domain.eGlasgrp;
+import metadb.domain.eGlasprof;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
@@ -14,7 +14,7 @@ import builder.param.FillingDet;
 import builder.param.FillingVar;
 import builder.model.ElemSimple;
 import common.UCom;
-import enums.Type;
+import metadb.enums.Type;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;

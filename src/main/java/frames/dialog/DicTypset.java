@@ -2,7 +2,7 @@ package frames.dialog;
 
 import frames.UGui;
 import dataset.Record;
-import enums.TypeSet;
+import metadb.enums.TypeSet;
 import javax.swing.table.DefaultTableModel;
 import common.listener.ListenerRecord;
 import java.util.Arrays;

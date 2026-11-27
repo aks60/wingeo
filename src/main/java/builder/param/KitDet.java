@@ -4,8 +4,8 @@ import dataset.Record;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
-import domain.eKitdet;
-import domain.eKitpar2;
+import metadb.domain.eKitdet;
+import metadb.domain.eKitpar2;
 
 //Заполнения
 public class KitDet extends Par5s {

@@ -1,9 +1,9 @@
 package builder.param;
 
 import dataset.Record;
-import domain.eArtikl;
-import domain.eElement;
-import domain.eElempar1;
+import metadb.domain.eArtikl;
+import metadb.domain.eElement;
+import metadb.domain.eElempar1;
 import java.util.List;
 import builder.Wincalc;
 import builder.model.AreaStvorka;
@@ -12,8 +12,8 @@ import builder.model.ElemSimple;
 import builder.model.UGeo;
 import common.UCom;
 import common.listener.ListenerAction;
-import enums.Type;
-import enums.TypeJoin;
+import metadb.enums.Type;
+import metadb.enums.TypeJoin;
 import java.util.ArrayList;
 import org.locationtech.jts.geom.Envelope;
 

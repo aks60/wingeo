@@ -1,18 +1,18 @@
 package builder.param;
 
 import dataset.Record;
-import domain.eArtikl;
-import domain.eGlasdet;
-import domain.eGlaspar2;
-import domain.eSystree;
+import metadb.domain.eArtikl;
+import metadb.domain.eGlasdet;
+import metadb.domain.eGlaspar2;
+import metadb.domain.eSystree;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
 import builder.model.ElemSimple;
 import builder.model.UGeo;
 import common.UCom;
-import enums.Layout;
-import enums.Type;
+import metadb.enums.Layout;
+import metadb.enums.Type;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.LineSegment;
 

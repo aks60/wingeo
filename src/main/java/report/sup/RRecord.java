@@ -1,9 +1,9 @@
 package report.sup;
 
 import builder.making.TRecord;
-import domain.eColor;
+import metadb.domain.eColor;
 import common.UCom;
-import enums.UseUnit;
+import metadb.enums.UseUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;

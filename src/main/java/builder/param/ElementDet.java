@@ -1,16 +1,16 @@
 package builder.param;
 
 import dataset.Record;
-import domain.eElemdet;
-import domain.eElempar2;
+import metadb.domain.eElemdet;
+import metadb.domain.eElempar2;
 import java.util.HashMap;
 import java.util.List;
 import builder.Wincalc;
 import builder.model.Com5t;
 import builder.model.ElemSimple;
 import common.UCom;
-import domain.eArtikl;
-import enums.Type;
+import metadb.domain.eArtikl;
+import metadb.enums.Type;
 
 //Составы 33000, 34000, 38000, 39000, 40000
 public class ElementDet extends Par5s {

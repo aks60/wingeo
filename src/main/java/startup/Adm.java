@@ -8,7 +8,7 @@ import dataset.Field;
 import dataset.Query;
 import dataset.Record;
 import dataset.eExcep;
-import domain.eSysuser;
+import metadb.domain.eSysuser;
 import frames.PathToDb;
 import frames.UGui;
 import frames.swing.comp.FileFilter;
