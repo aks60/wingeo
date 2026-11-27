@@ -114,7 +114,14 @@ public class Record<E> extends ArrayList<E> {
     }
 
     public String getStr(Field field) {
-        return (super.get(field.ordinal()) == null) ? "" : String.valueOf(super.get(field.ordinal()));
+        if (super.get(field.ordinal()) == null) {
+            return "";
+        } else if (super.get(field.ordinal()).equals("@") || super.get(field.ordinal()).equals("virtual")) {
+            return "";
+        } else {
+            return String.valueOf(super.get(field.ordinal()));
+        }
+//        return (super.get(field.ordinal()) == null) ? "" : String.valueOf(super.get(field.ordinal()));
     }
 
     public int getInt(Field field) {
