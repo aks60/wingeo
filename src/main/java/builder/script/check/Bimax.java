@@ -10,7 +10,7 @@ public final class Bimax {
     public static String systemScript(Integer prj) {
 
 // <editor-fold defaultstate="collapsed" desc="RECTANGL">
-        if (prj == 507931) {
+        if (prj == 507931) {  //רעףכüןמגמו
             rootGson = new GsonRoot(426697, prj, 3, 29, Type.RECTANGL, "Montblanc / Nord / 1 ÎÊÍÀ", 1009, 1009, 1009);
             rootGson.addElem(new GsonElem(Type.BOX_SIDE, 0.0, 0.0))
                     .addElem(new GsonElem(Type.BOX_SIDE, 0.0, 2070.0))
