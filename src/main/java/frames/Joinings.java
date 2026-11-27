@@ -40,14 +40,16 @@ import javax.swing.table.DefaultTableCellRenderer;
 import startup.App;
 import common.listener.ListenerRecord;
 import common.listener.ListenerFrame;
+import dataset.Connect;
 import domain.eArtdet;
-import domain.eKits;
+import static domain.eArtikl.level1;
 import domain.eParmap;
 import frames.dialog.DicArtikl2;
 import frames.swing.comp.DefCellEditorBtn;
 import frames.swing.comp.TableFieldFilter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import report.sup.ExecuteCmd;
@@ -57,7 +59,7 @@ import report.sup.RTable;
 public class Joinings extends javax.swing.JFrame {
 
     private Query qGroups = new Query(eGroups.values());
-     private Query qCateg = new Query(eGroups.values());
+    private Query qGrCateg = new Query(eGroups.values());
     private Query qColor = new Query(eColor.id, eColor.groups_id, eColor.name);
     private Query qArtikl = new Query(eArtikl.values());
     private Query qJoining = new Query(eJoining.values());
@@ -65,7 +67,7 @@ public class Joinings extends javax.swing.JFrame {
     private Query qJoindet = new Query(eJoindet.values());
     private Query qJoinpar1 = new Query(eJoinpar1.values());
     private Query qJoinpar2 = new Query(eJoinpar2.values());
-    private int joinID = -1;
+    private int joiningID = -1;
     private ListenerRecord listenerArtikl, listenerJoinvar, listenerColor, listenerColvar1, listenerColvar2, listenerColvar3;
 
     //Запуск из Tex (главное меню)
@@ -80,7 +82,7 @@ public class Joinings extends javax.swing.JFrame {
 
     //Запуск из Systree
     public Joinings(ElemJoining join) {
-        this.joinID = join.joiningRec.getInt(1);
+        this.joiningID = join.joiningRec.getInt(1);
         initComponents();
         initElements();
         loadingData();
@@ -108,18 +110,26 @@ public class Joinings extends javax.swing.JFrame {
     public void loadingData() {
 
         tab1.setToolTipText("");
+        qGrCateg.sql(eGroups.data(), eGroups.grup, TypeGrup.CATEG_JOIN.id).sort(eGroups.npp, eGroups.name);
         qGroups.sql(eGroups.data(), eGroups.grup, TypeGrup.PARAM_USER.id, TypeGrup.COLOR_MAP.id).sort(eGroups.npp, eGroups.name);
         qColor.sql(eColor.data(), eColor.up);
         qArtikl.sql(eArtikl.data(), eArtikl.up);
-        if (joinID == -1) {
+        if (joiningID == -1) {
             qJoining.sql(eJoining.data(), eJoining.up).sort(eJoining.name);
         } else {
-            qJoining.sql(eJoining.data(), eJoining.id, joinID).sort(eJoining.name);
+            qJoining.sql(eJoining.data(), eJoining.id, joiningID).sort(eJoining.name);
         }
+        Record groups1Rec = eGroups.up.newRecord(Query.SEL);
+        groups1Rec.setNo(eGroups.id, -1);
+        groups1Rec.setNo(eGroups.npp, 1);
+        groups1Rec.setNo(eGroups.name, "<html><font size='3' color='red'>&nbsp;&nbsp;&nbsp;ПОКАЗАТЬ ВСЕ</font>");
+        qGrCateg.set(0, groups1Rec);
     }
 
     public void loadingModel() {
 
+        tab0.getTableHeader().setEnabled(false);
+        new DefTableModel(tab0, qGrCateg, eGroups.name);
         new DefTableModel(tab1, qJoining, eJoining.artikl_id1, eJoining.artikl_id2, eJoining.name, eJoining.is_main, eJoining.analog) {
 
             public Object getValueAt(int col, int row, Object val) {
@@ -231,7 +241,7 @@ public class Joinings extends javax.swing.JFrame {
         });
         tab2.getColumnModel().getColumn(2).setCellRenderer(new DefCellRendererBool());
 
-        UGui.setSelectedRow(tab1);
+        UGui.setSelectedRow(tab0);
     }
 
     public void selectionTab0(ListSelectionEvent event) {
@@ -239,14 +249,23 @@ public class Joinings extends javax.swing.JFrame {
         UGui.clearTable(tab1, tab2, tab3, tab4, tab5);
         int index = UGui.getIndexRec(tab0);
         if (index != -1) {
-            Record record = qCateg.get(index);
-            Integer id = record.getInt(eGroups.id);
-            qJoining.sql(eJoining.data(), eJoining.id, id).sort(eJoining.name);
+            Record groupRec = qGrCateg.get(index);
+            int groupID = groupRec.getInt(eGroups.id);
+            qJoining.clear();
+            if (groupID == -1) { //все соединения(-1)
+                if (joiningID == -1) {
+                    qJoining.sql(eJoining.data(), eJoining.up).sort(eJoining.name);
+                } else {
+                    qJoining.sql(eJoining.data(), eJoining.id, joiningID).sort(eJoining.name);
+                }
+            } else {
+                qJoining.sql(eJoining.data(), eJoining.groups_id, groupID).sort(eJoining.name);
+            }
             ((DefaultTableModel) tab1.getModel()).fireTableDataChanged();
             UGui.setSelectedRow(tab1);
         }
     }
-    
+
     public void selectionTab1(ListSelectionEvent event) {
         UGui.stopCellEditing(tab1, tab2, tab3, tab4, tab5);
         List.of(tab1, tab2, tab3, tab4, tab5).forEach(tab -> UGui.getQuery(tab).execsql());
@@ -555,6 +574,8 @@ public class Joinings extends javax.swing.JFrame {
         ppmCrud = new javax.swing.JPopupMenu();
         mInsert = new javax.swing.JMenuItem();
         mDelit = new javax.swing.JMenuItem();
+        ppmCateg = new javax.swing.JPopupMenu();
+        itCateg = new javax.swing.JMenuItem();
         north = new javax.swing.JPanel();
         btnClose = new javax.swing.JButton();
         btnDel = new javax.swing.JButton();
@@ -603,6 +624,14 @@ public class Joinings extends javax.swing.JFrame {
             }
         });
         ppmCrud.add(mDelit);
+
+        itCateg.setText("КАТЕГОРИИ");
+        itCateg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ppmCateg(evt);
+            }
+        });
+        ppmCateg.add(itCateg);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Соединения");
@@ -866,7 +895,7 @@ public class Joinings extends javax.swing.JFrame {
             }
         });
         tab0.setFillsViewportHeight(true);
-        tab0.setName("tab1"); // NOI18N
+        tab0.setName("tab0"); // NOI18N
         tab0.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tab0.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1093,17 +1122,18 @@ public class Joinings extends javax.swing.JFrame {
 
     private void btnInsert(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsert
 
-        if (tab1.getBorder() != null) {
+        if (tab0.getBorder() != null) {
+            ppmCateg.show(north, btnIns.getX(), btnIns.getY() + 18);
+
+        } else if (tab1.getBorder() != null) {
             UGui.insertRecordCur(tab1, eJoining.up, (record) -> {
                 //record.setDev(eJoining.name, "Соединение-");
             });
-
         } else if (tab2.getBorder() != null) {
             UGui.insertRecordCur(tab2, eJoinvar.up, (record) -> {
                 int id = qJoining.getAs(UGui.getIndexRec(tab1), eJoining.id);
                 record.set(eJoinvar.joining_id, id);
             });
-
         } else if (tab3.getBorder() != null) {
             UGui.insertRecordCur(tab3, eJoinpar1.up, (record) -> {
                 int id = qJoinvar.getAs(UGui.getIndexRec(tab2), eJoinvar.id);
@@ -1229,6 +1259,29 @@ public class Joinings extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnFind2
 
+    private void ppmCateg(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ppmCateg
+
+        JMenuItem ppm = (JMenuItem) evt.getSource();
+        String result = JOptionPane.showInputDialog(Joinings.this, "Название", "Категория", JOptionPane.QUESTION_MESSAGE);
+        int id = Connect.genId(eGroups.up);
+        Record joiningRec = eGroups.up.newRecord(Query.INS);
+        joiningRec.setNo(eGroups.id, id);
+        joiningRec.setNo(eGroups.grup, TypeGrup.CATEG_JOIN.id);
+        joiningRec.setNo(eGroups.npp, 0);
+        joiningRec.setNo(eGroups.name, result);
+        qGrCateg.insert(joiningRec);
+        eGroups.up.query().add(joiningRec);
+        loadingData();
+        for (int i = 0; i < qGrCateg.size(); ++i) {
+            if (qGrCateg.get(i).getInt(eGroups.id) == id) {
+                UGui.setSelectedIndex(tab0, i - 1);
+                ((DefaultTableModel) tab0.getModel()).fireTableRowsInserted(i - 1, i - 1);
+                UGui.scrollRectToRow(i, tab0);
+                break;
+            }
+        }
+    }//GEN-LAST:event_ppmCateg
+
 // <editor-fold defaultstate="collapsed" desc="Generated Code">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnClone;
@@ -1240,6 +1293,7 @@ public class Joinings extends javax.swing.JFrame {
     private javax.swing.JButton btnReport;
     private javax.swing.JButton btnTest;
     private javax.swing.JPanel centr;
+    private javax.swing.JMenuItem itCateg;
     private javax.swing.JMenuItem mDelit;
     private javax.swing.JMenuItem mInsert;
     private javax.swing.JPanel north;
@@ -1248,6 +1302,7 @@ public class Joinings extends javax.swing.JFrame {
     private javax.swing.JPanel pan3;
     private javax.swing.JPanel pan4;
     private javax.swing.JPanel pan5;
+    private javax.swing.JPopupMenu ppmCateg;
     private javax.swing.JPopupMenu ppmCrud;
     private javax.swing.JScrollPane scr0;
     private javax.swing.JScrollPane scr1;
@@ -1281,7 +1336,7 @@ public class Joinings extends javax.swing.JFrame {
         tab0.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
                 if (event.getValueIsAdjusting() == false) {
-                    //selectionTab0(event);
+                    selectionTab0(event);
                 }
             }
         });

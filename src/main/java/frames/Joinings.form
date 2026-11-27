@@ -38,6 +38,22 @@
         </MenuItem>
       </SubComponents>
     </Container>
+    <Container class="javax.swing.JPopupMenu" name="ppmCateg">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+      <SubComponents>
+        <MenuItem class="javax.swing.JMenuItem" name="itCateg">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#x41a;&#x410;&#x422;&#x415;&#x413;&#x41e;&#x420;&#x418;&#x418;"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ppmCateg"/>
+          </Events>
+        </MenuItem>
+      </SubComponents>
+    </Container>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
@@ -560,7 +576,7 @@
                           </Table>
                         </Property>
                         <Property name="fillsViewportHeight" type="boolean" value="true"/>
-                        <Property name="name" type="java.lang.String" value="tab1" noResource="true"/>
+                        <Property name="name" type="java.lang.String" value="tab0" noResource="true"/>
                         <Property name="selectionModel" type="javax.swing.ListSelectionModel" editor="org.netbeans.modules.form.editors2.JTableSelectionModelEditor">
                           <JTableSelectionModel selectionMode="0"/>
                         </Property>
